@@ -1,0 +1,17 @@
+.accounts-shell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.accounts-shell__banner {
+    width: 50%;
+    height: 100%;
+}
+
+.accounts-shell__outlet {
+    width: 50%;
+    height: 100%;
+}
