@@ -1,0 +1,44 @@
+@import "../../../styles/reacteasy.scss";
+
+.react-easy-button {
+    padding: 0.5rem 0.75rem;
+
+    &.primary-group {
+        background-color: $primary-color;
+        color: $white-color;
+        border-color: $primary-color;
+    }
+
+    &.secondary-group {
+        background-color: $white-color;
+        color: $black-color;
+        border-color: $black-color;
+
+        &:hover {
+            border-color: $primary-color;
+            color: $primary-color
+        }
+    }
+
+    &.text-group {
+        background-color: $white-color;
+        border-width: 0px;
+        color: $black-color;
+
+        &:hover {
+            color: $primary-color
+        }
+    }
+    
+    &.large-size {
+        font-size: 1.5rem;
+    }
+
+    &.medium-size {
+        font-size: 1rem;
+    }
+
+    &.small-size {
+        font-size: 0.75rem;
+    }
+}
