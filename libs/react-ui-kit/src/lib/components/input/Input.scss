@@ -1,0 +1,11 @@
+@import "../../../styles/reacteasy.scss";
+
+.react-easy-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: 1px solid $primary-color;
+
+    &:focus, &:hover {
+        outline: 1px solid $primary-color;
+    }
+}
