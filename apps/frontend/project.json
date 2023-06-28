@@ -35,7 +35,8 @@
           "buildTarget": "frontend:build:production",
           "hmr": false
         }
-      }
+      },
+      "dependsOn": ["react-ui-kit"]
     },
     "preview": {
       "executor": "@nx/vite:preview-server",
