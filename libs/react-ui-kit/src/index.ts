@@ -1,1 +1,3 @@
-export * from './lib/react-ui-kit';
+export { 
+    Button, 
+} from "./lib/components";
