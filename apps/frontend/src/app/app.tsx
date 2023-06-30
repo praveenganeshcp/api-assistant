@@ -1,8 +1,11 @@
 
+import { AppRoutes } from './App.routes';
+import './app.scss';
+
 export function App() {
   return (
-    <div>
-      <h1>hello</h1>
+    <div className='app-router'>
+      <AppRoutes />
     </div>
   );
 }
