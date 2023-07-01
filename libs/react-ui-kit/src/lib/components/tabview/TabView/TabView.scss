@@ -8,7 +8,6 @@
     display: flex;
 
     .react-easy-tab-titles {
-        width: 20%;
         height: 100%;
         display: flex;
         align-items: flex-start;
@@ -37,7 +36,7 @@
     }
 
     .react-easy-tab-content {
+        padding: 0.5rem;
         height: 100%;
-        width: 80%;
     }
 }

@@ -5,9 +5,12 @@ import "./TabView.scss";
 interface ReactEasyTabProps extends Pick<AllHTMLAttributes<HTMLElement>, "children"> {
     activeIndex: number;
     onChangeTab: (index: number) => unknown;
+    titleWidth: string;
+    contentWidth: string;
 }
 
-export function TabView({activeIndex, children, onChangeTab} : ReactEasyTabProps) {
+export function TabView(props : ReactEasyTabProps) {
+    const {activeIndex, children, onChangeTab, titleWidth, contentWidth} = props;
     let tabs: any[] = !Array.isArray(children) ? [children] : children;
 
     const allTabProps: TabProps[] = (tabs as any[])
@@ -16,7 +19,7 @@ export function TabView({activeIndex, children, onChangeTab} : ReactEasyTabProps
     return (
         <div 
             className="react-easy-tab-view">
-            <div className="react-easy-tab-titles">
+            <div className="react-easy-tab-titles" style={{width: titleWidth}}>
                 {
                     allTabProps.map(
                         (tabProp, index) => 
@@ -31,7 +34,7 @@ export function TabView({activeIndex, children, onChangeTab} : ReactEasyTabProps
                     )
                 }
             </div>
-            <div className="react-easy-tab-content">
+            <div className="react-easy-tab-content" style={{width: contentWidth}}>
                 {tabs[activeIndex]}
             </div>
         </div>
