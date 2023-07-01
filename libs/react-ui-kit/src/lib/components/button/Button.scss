@@ -1,12 +1,12 @@
 @import "../../../styles/reacteasy.scss";
 
 .react-easy-button {
-    padding: 0.5rem 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-color: transparent;
 
     &.primary-group {
         background-color: $primary-color;
         color: $white-color;
-        border-color: $primary-color;
     }
 
     &.secondary-group {
@@ -40,5 +40,19 @@
 
     &.small-size {
         font-size: 0.75rem;
+    }
+
+    &:disabled {
+        background-color: $disabled-background-color;
+        color: $disabled-color;
+
+        &:hover {
+            background-color: $disabled-background-color;
+            color: $disabled-color;
+        }
+    }
+
+    &:focus {
+        outline-width: 0;
     }
 }
