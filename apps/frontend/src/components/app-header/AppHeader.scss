@@ -1,0 +1,17 @@
+.api-assistant-app-header {
+    width: 100%;
+    height: 10%;
+    background-color: royalblue;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+
+    a {
+        color: white;
+        text-decoration: none;
+        
+        &:first-child {
+            font-size: 1.5rem;
+        }
+    }
+}
