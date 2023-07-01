@@ -1,4 +1,6 @@
 export { 
     Button, 
-    Input 
+    Input,
+    Tab,
+    TabView
 } from "./lib/components";
