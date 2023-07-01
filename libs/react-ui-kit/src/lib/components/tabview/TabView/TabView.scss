@@ -1,0 +1,43 @@
+@import "../../../../styles/reacteasy.scss";
+
+.react-easy-tab-view {
+    height: 100%;
+    width: 100%;
+    border: 1px solid $primary-color;
+    border-radius: 2px;
+    display: flex;
+
+    .react-easy-tab-titles {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        border-right: 1px solid $primary-color;
+    }
+
+    .react-easy-tab-title {
+        background-color: transparent;
+        border-color: $primary-color;
+        border-width: 0;
+        border-bottom-width: 1px;
+        padding: 0.4rem;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+
+        &:focus {
+            outline-width: 0px;
+        }
+
+        &.react-easy-active-tab {
+            background-color: $primary-color;
+            color: $white-color;
+        }
+    }
+
+    .react-easy-tab-content {
+        height: 100%;
+        width: 80%;
+    }
+}
