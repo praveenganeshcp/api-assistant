@@ -1,0 +1,47 @@
+@import "../../../styles/reacteasy.scss";
+
+
+.react-easy-table {
+    border: 1px solid $primary-color;
+    height: auto;
+    width: 100%;
+
+    thead {
+
+        tr {
+            display: flex;
+            align-items: center;
+        }
+
+        td {
+            border: 0.5px solid $white-color;
+            padding: 0.5rem 1rem;
+            background-color: $primary-color;
+            color: $white-color;
+        }
+    }
+
+    tbody {
+        a {
+            text-decoration: none;
+            color: $primary-color;
+        }
+
+        tr {
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $secondary-color;
+                color: $primary-color;
+            }
+        }
+
+        td {
+            padding: 0.5rem;
+            border-top: 0.5px solid $primary-color;
+            border-right: 0.5px solid $primary-color;
+        }
+    }
+}

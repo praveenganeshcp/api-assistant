@@ -2,5 +2,8 @@ export {
     Button, 
     Input,
     Tab,
-    TabView
+    TabView,
+    Table
 } from "./lib/components";
+
+export type { TableColumn, TableRowData } from "./lib/components/table/table.types";
