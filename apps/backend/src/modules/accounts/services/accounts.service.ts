@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { AccountsRepository } from "../repository/accounts.repository";
-import { CanBeNull, valueIsDefined } from "apps/backend/src/utils/types";
 import { User } from "../entities/user.entity";
 import { ObjectId } from "mongodb";
+import { CanBeNull, valueIsDefined } from "@api-assistant/utils";
 
 @Injectable()
 export class AccountsService {
