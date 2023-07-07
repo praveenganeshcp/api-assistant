@@ -1,24 +1,31 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ConfigType } from "@nestjs/config";
 
 import { AppModule } from "./modules/app/app.module"
 import { useContainer } from 'class-validator';
+import { appConfig } from './config/app.config';
 
 async function bootstrap() {
+  // bootstrap app module
   const app = await NestFactory.create(AppModule);
+
+  // set global prefix
   const globalPrefix = 'api/v6';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3000;
+  
+  // global pipes
   app.useGlobalPipes(new ValidationPipe())
-  await app.listen(port);
+
+  // class-validator DI settings
   useContainer(app.select(AppModule), {fallbackOnErrors: true});
+
+  // set app port
+  const applicationConfig: ConfigType<typeof appConfig> = app.get(appConfig.KEY)
+  await app.listen(applicationConfig.PORT);
+
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${applicationConfig.PORT}/${globalPrefix}`
   );
 }
 

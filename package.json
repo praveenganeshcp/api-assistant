@@ -71,6 +71,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.1.1",
+    "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^9.1.1",
     "@nestjs/platform-express": "^9.1.1",
     "@swc/helpers": "~0.5.0",

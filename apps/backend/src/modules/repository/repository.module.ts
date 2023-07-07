@@ -1,5 +1,6 @@
 import { Global, Module } from "@nestjs/common";
 import { createDbConnection } from "./db-connection";
+import { dbConfig } from "../../config/db.config";
 
 export const MONGO_DB_CONNECTION = "MONGO_DB_CONNECTION"
 
@@ -9,6 +10,7 @@ export const MONGO_DB_CONNECTION = "MONGO_DB_CONNECTION"
         {
             provide: MONGO_DB_CONNECTION,
             useFactory: createDbConnection,
+            inject: [dbConfig.KEY]
         },
     ],
     exports: [
