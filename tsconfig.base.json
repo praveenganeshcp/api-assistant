@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@praveenkumarcp/reacteasy": ["libs/react-ui-kit/src/index.ts"]
-    }
+    },
+    "strict": true
   },
   "exclude": ["node_modules", "tmp"]
 }
