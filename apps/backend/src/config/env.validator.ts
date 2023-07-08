@@ -20,6 +20,9 @@ class EnvironmentVariables {
 
   @IsString()
   DB_NAME!: string;
+
+  @IsString()
+  JWT_SECRET!: string;
 }
 
 export const ENV_VARIABLES: EnvironmentVariables = plainToInstance(

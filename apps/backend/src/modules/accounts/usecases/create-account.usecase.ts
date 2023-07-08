@@ -19,7 +19,7 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, string> {
         const createdUserAccount = await this.accountsRepository.save(
             this.createUserAccountData(data)
         )
-        return this.jwtService.signToken(createdUserAccount.emailId)
+        return this.jwtService.signToken(createdUserAccount._id.toString())
     }
 
     private createUserAccountData(data: CreateAccountDTO): OptionalId<User> {

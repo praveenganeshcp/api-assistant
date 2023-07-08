@@ -10,3 +10,5 @@ export interface User {
     lastLoggedInOn: Date;
     isVerified: boolean;
 }
+
+export type UserDetails = Omit<User, "password" | "_id">;
