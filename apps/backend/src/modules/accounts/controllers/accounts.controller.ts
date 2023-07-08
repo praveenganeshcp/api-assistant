@@ -3,7 +3,7 @@ import { CreateAccountDTO } from "../dto/create-account.dto";
 import { CreateAccountUsecase } from "../usecases/create-account.usecase";
 import { Response } from "express";
 import { UserDetails } from "../entities/user.entity";
-import { AuthUser } from "apps/backend/src/utils/decorators";
+import { AuthUser } from "@api-assistant/utils";
 import { LoginDTO } from "../dto/login.dto";
 import { LoginUseCase } from "../usecases/login.usecase";
 

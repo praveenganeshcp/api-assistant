@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AccountsRepository } from "../repository/accounts.repository";
-import { Usecase } from "apps/backend/src/utils/types";
+import { Usecase } from "@api-assistant/utils";
 import { CreateAccountDTO } from "../dto/create-account.dto";
 import { User } from "../entities/user.entity";
 import { OptionalId } from "mongodb";

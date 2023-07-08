@@ -2,7 +2,7 @@ import { Collection, Db, Filter, FindOptions, OptionalId, OptionalUnlessRequired
 import { DB_COLLECTIONS } from "./db-collections";
 import { Inject } from "@nestjs/common";
 import { MONGO_DB_CONNECTION } from "./repository.module";
-import { CanBeNull } from "../../utils/types";
+import { CanBeNull } from "@api-assistant/utils";
 import { Document as MongoDocument } from "mongodb";
 
 export class AbstractRepository<T extends MongoDocument> {
