@@ -1,4 +1,3 @@
-import { CanBeNull, Usecase, valueIsDefined } from "apps/backend/src/utils/types";
 import { LoginDTO } from "../dto/login.dto";
 import { User } from "../entities/user.entity";
 import { AccountsService } from "../services/accounts.service";
@@ -7,6 +6,7 @@ import { Injectable } from "@nestjs/common";
 import { JWTService } from "../services/jwt.service";
 import { AccountNotVerifiedException, InvalidEmailIdPasswordException } from "../exceptions/accounts.exceptions";
 import { AccountsRepository } from "../repository/accounts.repository";
+import { Usecase, CanBeNull, valueIsDefined } from "@api-assistant/utils";
 
 
 @Injectable()

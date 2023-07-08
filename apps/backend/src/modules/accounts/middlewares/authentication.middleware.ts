@@ -1,10 +1,10 @@
 import { Injectable, NestMiddleware } from "@nestjs/common";
-import { valueIsDefined, valueIsNotEmptyString } from "apps/backend/src/utils/types";
 import { Request, Response } from "express";
 import { JWTService } from "../services/jwt.service";
 import { AccountsService } from "../services/accounts.service";
 import { UserDetails } from "../entities/user.entity";
 import { AccountNotVerifiedException, InvalidAuthTokenException } from "../exceptions/accounts.exceptions";
+import { valueIsNotEmptyString, valueIsDefined } from "@api-assistant/utils";
 
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
