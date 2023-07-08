@@ -1,3 +1,4 @@
+import { CanBeNull } from "apps/backend/src/utils/types";
 import { ObjectId } from "mongodb";
 
 export interface User {
@@ -7,7 +8,7 @@ export interface User {
     emailId: string;
     isActive: boolean;
     createdOn: Date;
-    lastLoggedInOn: Date;
+    lastLoggedInOn: CanBeNull<Date>;
     isVerified: boolean;
 }
 

@@ -1,4 +1,4 @@
-import { Collection, Db, Filter, FindOptions, OptionalId, OptionalUnlessRequiredId } from "mongodb";
+import { Collection, Db, Filter, FindOptions, OptionalId, OptionalUnlessRequiredId, UpdateFilter } from "mongodb";
 import { DB_COLLECTIONS } from "./db-collections";
 import { Inject } from "@nestjs/common";
 import { MONGO_DB_CONNECTION } from "./repository.module";
@@ -33,6 +33,10 @@ export class AbstractRepository<T extends MongoDocument> {
         const savedData: unknown =
             await this.collection.findOne({_id: saveResult.insertedId} as Filter<T>)
         return savedData as T;
+    }
+
+    public async updateOne(filter: Filter<T>, updateFilter: UpdateFilter<T> | Partial<T>) {
+        return this.collection.updateOne(filter, updateFilter);
     }
 
 }

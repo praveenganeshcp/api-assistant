@@ -8,7 +8,7 @@ import { JWTService } from "../services/jwt.service";
 import { PasswordManagerService } from "../services/password-manager.service";
 
 @Injectable()
-export class CreateAccountUsecase implements Usecase<CreateAccountDTO, string> {
+export class CreateAccountUsecase implements Usecase<CreateAccountDTO, User> {
 
     constructor(
         private readonly accountsRepository: AccountsRepository,
@@ -16,11 +16,10 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, string> {
         private readonly passwordManagerService: PasswordManagerService
     ) {}
 
-    public async execute(data: CreateAccountDTO): Promise<string> {
-        const createdUserAccount = await this.accountsRepository.save(
+    public async execute(data: CreateAccountDTO): Promise<User> {
+        return this.accountsRepository.save(
             await this.createUserAccountData(data)
         )
-        return this.jwtService.signToken(createdUserAccount._id.toString())
     }
 
     private async createUserAccountData(data: CreateAccountDTO): Promise<OptionalId<User>> {
@@ -31,7 +30,7 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, string> {
             isActive: true,
             isVerified: false,
             createdOn: new Date(),
-            lastLoggedInOn: new Date()
+            lastLoggedInOn: null
         }
     }
 
