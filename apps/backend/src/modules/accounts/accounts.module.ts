@@ -6,6 +6,8 @@ import { AccountsService } from "./services/accounts.service";
 import { CreateAccountUsecase } from "./usecases/create-account.usecase";
 import { JWTService } from "./services/jwt.service";
 import { AuthenticationMiddleware } from "./middlewares/authentication.middleware";
+import { PasswordManagerService } from "./services/password-manager.service";
+import { LoginUseCase } from "./usecases/login.usecase";
 
 @Module({
     controllers: [
@@ -16,7 +18,9 @@ import { AuthenticationMiddleware } from "./middlewares/authentication.middlewar
         AccountsRepository,
         IsEmailIDUnique,
         CreateAccountUsecase,
-        JWTService
+        JWTService,
+        PasswordManagerService,
+        LoginUseCase
     ]
 })
 export class AccountsModule implements NestModule {
