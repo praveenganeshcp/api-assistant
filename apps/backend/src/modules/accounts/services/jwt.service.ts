@@ -1,16 +1,33 @@
-import { Injectable } from "@nestjs/common";
-import { decode, sign } from "jsonwebtoken";
+import { Inject, Injectable } from "@nestjs/common";
+import { ConfigType } from "@nestjs/config";
+import { appConfig } from "apps/backend/src/config/app.config";
+import { CanBeNull } from "apps/backend/src/utils/types";
+import { verify, sign, JwtPayload, SignOptions } from "jsonwebtoken";
 
 @Injectable()
 export class JWTService {
-    public signToken(emailId: string): string {
-        return sign({}, "secret", {
-            algorithm: "HS512",
-            subject: emailId
+
+    private readonly jwtSecret: string;
+
+    private readonly JWT_ALGORITHM: SignOptions['algorithm'] = "HS512";
+
+    private readonly TOKEN_EXPIRES_IN: string = '1d';
+
+    constructor(
+        @Inject(appConfig.KEY) private applicationConfig: ConfigType<typeof appConfig>
+    ) {
+        this.jwtSecret = applicationConfig.JWT_SECRET;
+    }
+
+    public signToken(userId: string): string {
+        return sign({}, this.jwtSecret, {
+            algorithm: this.JWT_ALGORITHM,
+            subject: userId,
+            expiresIn: this.TOKEN_EXPIRES_IN
         })
     }
 
-    public verifyToken(token: string) {
-        return decode(token)
+    public verifyToken(token: string): CanBeNull<JwtPayload> {
+        return verify(token, this.jwtSecret) as JwtPayload;
     }
 }
