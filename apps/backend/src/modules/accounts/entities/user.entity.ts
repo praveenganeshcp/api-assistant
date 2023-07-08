@@ -1,4 +1,4 @@
-import { CanBeNull } from "apps/backend/src/utils/types";
+import { CanBeNull } from "@api-assistant/utils";
 import { ObjectId } from "mongodb";
 
 export interface User {
