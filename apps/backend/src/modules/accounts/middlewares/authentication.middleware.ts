@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import { JWTService } from "../services/jwt.service";
 import { AccountsService } from "../services/accounts.service";
 import { UserDetails } from "../entities/user.entity";
-import { AccountNotVerifiedException, InvalidAuthTokenException } from "../exceptions/accounts.exceptions";
+import { InvalidAuthTokenException } from "../exceptions/accounts.exceptions";
 import { valueIsNotEmptyString, valueIsDefined } from "@api-assistant/utils";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
@@ -15,9 +16,17 @@ export class AuthenticationMiddleware implements NestMiddleware {
     ) {}
 
     async use(req: Request, res: Response, next: (error?: any) => void) {
-        const jwt: string = req.cookies.token || "";
-        req['authUser'] = await this.fetchUserDetails(jwt);
-        next();
+        try {
+            const jwt: string = req.cookies.token || "";
+            req['authUser'] = await this.fetchUserDetails(jwt);
+            next();
+        }
+        catch(err) {
+            if(err instanceof JsonWebTokenError) {
+                throw new InvalidAuthTokenException();
+            }
+            throw err;
+        }
     }
 
     private async fetchUserDetails(jwt: string): Promise<UserDetails> {
@@ -31,9 +40,6 @@ export class AuthenticationMiddleware implements NestMiddleware {
         const user = await this.accountsService.findUserById(jwtPayload.sub as string);
         if(!valueIsDefined(user)) {
             throw new InvalidAuthTokenException();
-        }
-        if(!user.isVerified) {
-            throw new AccountNotVerifiedException();
         }
         return {
             username: user.username,
