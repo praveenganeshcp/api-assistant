@@ -15,10 +15,19 @@ export function AppShell() {
         dispatch<any>(loadUserProfile());
     }, [])
 
-    useEffect(() => {
+    function navigateUser() {
         if(!isLoading && (error) && pathname.startsWith("/app")) {
             navigate("/accounts/login")
         }
+        else if(!isLoading && authUser) {
+            if(pathname === "/accounts/login" || pathname === "/accounts/signup") {
+                navigate("/app/dashboard")
+            }
+        }
+    }
+
+    useEffect(() => {
+       navigateUser();
     }, [authUser, isLoading, error])
 
     if(isLoading) {

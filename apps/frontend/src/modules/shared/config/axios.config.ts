@@ -6,11 +6,12 @@ export const axiosHttpClient = axios.create({
         "Accept": "application/json",
         "Content-Type": "application/json"
     },
-    timeout: 3000,
+    timeout: 13000,
+    withCredentials: true,
 })
 
 axiosHttpClient.interceptors.response.use(
-    (successResponse) => successResponse.data,
+    (successResponse) => successResponse,
     (errorResponse) => {
         console.log(errorResponse)
         return Promise.reject(
