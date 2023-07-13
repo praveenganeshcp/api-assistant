@@ -1,11 +1,16 @@
 
+import { appStore } from '../store/app.store';
 import { AppRoutes } from './App.routes';
+import { AppShell } from './AppShell';
 import './app.scss';
+import { Provider } from "react-redux";
 
 export function App() {
   return (
     <div className='app-router'>
-      <AppRoutes />
+      <Provider store={appStore}>
+        <AppShell />
+      </Provider>
     </div>
   );
 }
