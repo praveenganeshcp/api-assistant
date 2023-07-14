@@ -1,13 +1,18 @@
 import { CanBeNull } from "@api-assistant/utils";
-import { EntityState } from "../shared/models/entity-state.model";
+import { EntityState, resetState } from "../shared/models/entity-state.model";
 import { UserProfile } from "./models/user-profile.model";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosHttpClient } from "../shared/config/axios.config";
 import { fetchUserProfile } from "./accounts.api";
 
 const SLICE_NAME: string = "authUser";
 
 export interface AuthUserState extends EntityState<UserProfile> {}
+
+const AUTH_USER_INITIAL_STATE: AuthUserState = {
+    isLoading: true,
+    data: null,
+    error: ""
+}
 
 export const loadUserProfile = createAsyncThunk<CanBeNull<UserProfile>, void>(
     SLICE_NAME,
@@ -16,11 +21,7 @@ export const loadUserProfile = createAsyncThunk<CanBeNull<UserProfile>, void>(
 
 const authUserSlice = createSlice<AuthUserState, {}, string>({
     name: SLICE_NAME,
-    initialState: {
-        isLoading: true,
-        data: null,
-        error: ""
-    },
+    initialState: AUTH_USER_INITIAL_STATE,
     reducers: {},
     extraReducers(builder) {
         builder.addCase(loadUserProfile.rejected, (state, action) => {
@@ -31,6 +32,9 @@ const authUserSlice = createSlice<AuthUserState, {}, string>({
         }),
         builder.addCase(loadUserProfile.pending, (state, action) => {
             return { isLoading: true, error: "", data: null }
+        }),
+        builder.addCase(resetState, (state, action) => {
+            return {...AUTH_USER_INITIAL_STATE, isLoading: false}
         })
     },
 })

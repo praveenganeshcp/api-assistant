@@ -39,4 +39,11 @@ export class AccountsController {
             .status(200)
             .json({message: "Authenticated successfully"});
     }
+
+    @Post("logout")
+    public logout(@Res({passthrough: true}) response: Response) {
+        response
+            .cookie('token', '')
+            .json()
+    }
 }
