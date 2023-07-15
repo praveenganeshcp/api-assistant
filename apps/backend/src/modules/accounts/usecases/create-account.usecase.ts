@@ -9,6 +9,7 @@ import { PasswordManagerService } from "../services/password-manager.service";
 import { EmailNotificationService } from "../../notification/services/email/email-notification.service";
 import { appConfig } from "apps/backend/src/config/app.config";
 import { ConfigType } from "@nestjs/config";
+import { createHash } from "crypto";
 
 @Injectable()
 export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: UserDetails, token: string}> {
@@ -50,12 +51,12 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: Us
             isVerified: false,
             createdOn: new Date(),
             lastLoggedInOn: null,
-            accountVerificationId: this.createAccountVerificationId()
+            accountVerificationId: this.createAccountVerificationId(data.emailId)
         }
     }
 
-    private createAccountVerificationId(): string {
-        return new Date().getTime().toString();
+    private createAccountVerificationId(emailId: string): string {
+        return createHash('sha256').update(emailId).digest('hex');
     }
 
     private sendAccountVerificationLink(newUserAccount: User): void {
@@ -64,7 +65,7 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: Us
             subject: "Welcome to API Assistant",
             cta: {
                 label: "Verify Account",
-                link: `${this.appConfiguration.FE_HOST_ADDRESS}/accounts/verify-account/${newUserAccount.accountVerificationId}`
+                link: `${this.appConfiguration.FE_HOST_ADDRESS}/verify-account/${newUserAccount.accountVerificationId}`
             },
             text: "Your account has been successfully created. Click on the below link to verify your email id.",
             username: newUserAccount.username
