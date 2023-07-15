@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, Res } from "@nestjs/common";
 import { CreateAccountDTO } from "../dto/create-account.dto";
 import { CreateAccountUsecase } from "../usecases/create-account.usecase";
 import { Response } from "express";
@@ -6,13 +6,15 @@ import { UserDetails } from "../entities/user.entity";
 import { AuthUser } from "@api-assistant/utils";
 import { LoginDTO } from "../dto/login.dto";
 import { LoginUseCase } from "../usecases/login.usecase";
+import { VerifyAccountUsecase } from "../usecases/verify-account.usecase";
 
 @Controller('accounts')
 export class AccountsController {
 
     constructor(
         private readonly createAccountUsecase: CreateAccountUsecase,
-        private readonly loginUsecase: LoginUseCase
+        private readonly loginUsecase: LoginUseCase,
+        private verifyAccountUsecase: VerifyAccountUsecase
     ) {}
 
     @Post('signup')
@@ -50,5 +52,17 @@ export class AccountsController {
             .cookie('token', '')
             .status(200)
             .json()
+    }
+
+    @Patch('verify-account')
+    public async verifyAccount(
+        @Res({ passthrough: true }) response: Response,
+        @Body('verificationKey') verificationKey: string
+    ) {
+        const { token, user } = 
+            await this.verifyAccountUsecase.execute(verificationKey);
+        response
+            .cookie('token', token)
+            .json(user)
     }
 }

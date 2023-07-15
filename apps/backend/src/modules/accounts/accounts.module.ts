@@ -9,6 +9,7 @@ import { AuthenticationMiddleware } from "./middlewares/authentication.middlewar
 import { PasswordManagerService } from "./services/password-manager.service";
 import { LoginUseCase } from "./usecases/login.usecase";
 import { NotificationsModule } from "../notification/notification.module";
+import { VerifyAccountUsecase } from "./usecases/verify-account.usecase";
 
 @Module({
     imports: [NotificationsModule],
@@ -22,7 +23,8 @@ import { NotificationsModule } from "../notification/notification.module";
         CreateAccountUsecase,
         JWTService,
         PasswordManagerService,
-        LoginUseCase
+        LoginUseCase,
+        VerifyAccountUsecase
     ]
 })
 export class AccountsModule implements NestModule {
