@@ -10,6 +10,7 @@ export interface User {
     createdOn: Date;
     lastLoggedInOn: CanBeNull<Date>;
     isVerified: boolean;
+    accountVerificationId: string;
 }
 
-export type UserDetails = Omit<User, "password" | "_id">;
+export type UserDetails = Omit<User, "password" | "_id" | "accountVerificationId">;
