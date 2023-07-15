@@ -8,8 +8,10 @@ import { JWTService } from "./services/jwt.service";
 import { AuthenticationMiddleware } from "./middlewares/authentication.middleware";
 import { PasswordManagerService } from "./services/password-manager.service";
 import { LoginUseCase } from "./usecases/login.usecase";
+import { NotificationsModule } from "../notification/notification.module";
 
 @Module({
+    imports: [NotificationsModule],
     controllers: [
         AccountsController
     ],

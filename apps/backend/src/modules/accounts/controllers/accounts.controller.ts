@@ -18,9 +18,13 @@ export class AccountsController {
     @Post('signup')
     public async createAccount(
         @Body() createAccountPayload: CreateAccountDTO,
+        @Res({ passthrough: true }) response: Response
     ) {
-        await this.createAccountUsecase.execute(createAccountPayload);
-        return {message: "User account created successfully"};
+        const { token, user } = 
+            await this.createAccountUsecase.execute(createAccountPayload);
+        response
+            .cookie('token', token)
+            .json(user)
     }
 
     @Get("profile")
@@ -33,17 +37,18 @@ export class AccountsController {
         @Body() loginDTO: LoginDTO,
         @Res({passthrough: true}) response: Response
     ) {
-        const jwt = await this.loginUsecase.execute(loginDTO);
+        const { token, user } = await this.loginUsecase.execute(loginDTO);
         response
-            .cookie('token', jwt)
+            .cookie('token', token)
             .status(200)
-            .json({message: "Authenticated successfully"});
+            .json(user);
     }
 
     @Post("logout")
     public logout(@Res({passthrough: true}) response: Response) {
         response
             .cookie('token', '')
+            .status(200)
             .json()
     }
 }

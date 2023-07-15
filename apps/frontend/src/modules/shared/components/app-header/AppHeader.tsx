@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { APP_CONFIG } from "../../constants";
+import { APP_CONFIG } from "../../../../constants";
 import "./AppHeader.scss";
 import { Button } from "@praveenkumarcp/reacteasy";
-import { axiosHttpClient } from "../../modules/shared/config/axios.config";
+import { axiosHttpClient } from "../../config/axios.config";
 import { useDispatch } from "react-redux";
-import { resetState } from "../../modules/shared/models/entity-state.model";
+import { resetState } from "../../models/entity-state.model";
 
 export function AppHeader() {
 

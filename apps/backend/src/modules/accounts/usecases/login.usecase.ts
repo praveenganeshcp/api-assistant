@@ -1,16 +1,16 @@
 import { LoginDTO } from "../dto/login.dto";
-import { User } from "../entities/user.entity";
+import { User, UserDetails } from "../entities/user.entity";
 import { AccountsService } from "../services/accounts.service";
 import { PasswordManagerService } from "../services/password-manager.service";
 import { Injectable } from "@nestjs/common";
 import { JWTService } from "../services/jwt.service";
-import { AccountNotVerifiedException, InvalidEmailIdPasswordException } from "../exceptions/accounts.exceptions";
+import { InvalidEmailIdPasswordException } from "../exceptions/accounts.exceptions";
 import { AccountsRepository } from "../repository/accounts.repository";
 import { Usecase, CanBeNull, valueIsDefined } from "@api-assistant/utils";
 
 
 @Injectable()
-export class LoginUseCase implements Usecase<LoginDTO, string> {
+export class LoginUseCase implements Usecase<LoginDTO, {user: UserDetails, token: string}> {
 
     constructor(
         private readonly accountsService: AccountsService,
@@ -19,7 +19,7 @@ export class LoginUseCase implements Usecase<LoginDTO, string> {
         private readonly accountsRepository: AccountsRepository
     ) {}
 
-    async execute(loginDTO: LoginDTO): Promise<string> {
+    async execute(loginDTO: LoginDTO): Promise<{user: UserDetails, token:string}> {
         const userAccount: CanBeNull<User> = 
             await this.accountsService.findUserByEmailID(loginDTO.emailId);
         if(!valueIsDefined(userAccount)) {
@@ -32,13 +32,20 @@ export class LoginUseCase implements Usecase<LoginDTO, string> {
         if(!isPasswordMatched) {
             throw new InvalidEmailIdPasswordException();
         }
-        if(!userAccount.isVerified) {
-            throw new AccountNotVerifiedException();
-        }
         await this.accountsRepository.updateOne(
             {_id: userAccount._id}, 
             {$set: {lastLoggedInOn: new Date()}}
         )
-        return this.jwtService.signToken(userAccount._id.toString());
+        return {
+            token: this.jwtService.signToken(userAccount._id.toString()),
+            user: {
+                emailId: userAccount.emailId,
+                username: userAccount.username,
+                lastLoggedInOn: userAccount.lastLoggedInOn,
+                isActive: userAccount.isActive,
+                isVerified: userAccount.isVerified,
+                createdOn: userAccount.createdOn
+            }
+        }
     }
 }
