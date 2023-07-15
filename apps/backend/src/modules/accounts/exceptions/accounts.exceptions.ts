@@ -17,3 +17,9 @@ export class InvalidEmailIdPasswordException extends UnauthorizedException {
         super("EmailID and password does not match");
     }
 }
+
+export class InvalidVerificationKeyException extends UnauthorizedException {
+    constructor() {
+        super("Invalid key or account already verified")
+    }
+}
