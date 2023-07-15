@@ -23,6 +23,15 @@ class EnvironmentVariables {
 
   @IsString()
   JWT_SECRET!: string;
+
+  @IsString()
+  EMAIL_AUTH_USER!: string;
+
+  @IsString()
+  EMAIL_AUTH_PASS!: string;
+
+  @IsString()
+  FE_HOST_ADDRESS!: string;
 }
 
 export const ENV_VARIABLES: EnvironmentVariables = plainToInstance(
