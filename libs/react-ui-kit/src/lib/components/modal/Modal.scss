@@ -1,0 +1,77 @@
+@import "../../../styles/reacteasy.scss";
+
+.react-easy-modal {
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(156, 151, 151, 0.5);
+    margin:0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 0;
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .react-easy-modal-container {
+        height: 60vh;
+        width: 50vw; 
+        border-radius: 5px;
+        box-shadow: 2px 2px 9px 3px $secondary-color;
+        display: flex;
+        flex-direction: column;
+        background-color: $white-color;
+
+        .react-easy-modal-container__header {
+            height: 15%;
+            width: 100%;
+            border-bottom: 1px solid $secondary-color;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0 1rem;
+
+            button {
+                background-color: transparent;
+                border: none;
+            }
+        }
+
+        .react-easy-modal-container__body {
+            height: 70%;
+            width: 100%;
+        }
+        
+        .react-easy-modal-container__footer {
+            height: 15%;
+            width: 100%;
+            border-top: 1px solid $secondary-color;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            button {
+                margin-right: 1.5rem;
+                padding: 0.5rem;
+                border: none;
+                border-radius: 5px;
+
+                &:first-child {
+                    background-color: $white-color;
+
+                    &:hover {
+                        background-color: $secondary-color;
+                    }
+                }
+
+                &:nth-child(2) {
+                    background-color: $primary-color;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}

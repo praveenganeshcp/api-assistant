@@ -3,7 +3,8 @@ export {
     Input,
     Tab,
     TabView,
-    Table
+    Table,
+    Modal
 } from "./lib/components";
 
 export type { TableColumn, TableRowData } from "./lib/components/table/table.types";
