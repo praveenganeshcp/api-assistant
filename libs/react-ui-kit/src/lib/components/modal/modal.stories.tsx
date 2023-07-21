@@ -2,7 +2,7 @@ import { Modal } from "./Modal";
 import type { Meta, StoryObj } from '@storybook/react';
 
 export default {
-    title: 'Modal',
+    title: 'React Easy/Modal',
     component: Modal
 } as Meta
 

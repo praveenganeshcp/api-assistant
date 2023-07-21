@@ -1,12 +1,12 @@
 @import "../../../styles/reacteasy.scss";
 
 .react-easy-input-container {
-    width: 100%;
+    width: auto;
     display: flex;
     flex-direction: column;
 
     .react-easy-input {
-        width: 100%;
+        width: auto;
         font-size: 1rem;
         padding: 0.5rem;
         border: 1px solid $primary-color;
