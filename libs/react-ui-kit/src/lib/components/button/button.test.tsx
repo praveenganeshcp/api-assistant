@@ -11,7 +11,7 @@ describe('Button component should', () => {
         buttonElement = screen.getByRole("button");
     }
 
-    test('rendered in the DOM', () => {
+    test('be rendered in the DOM', () => {
         mountComponent()
         expect(buttonElement).toBeDefined();
         expect(buttonElement).toBeInstanceOf(HTMLButtonElement)
