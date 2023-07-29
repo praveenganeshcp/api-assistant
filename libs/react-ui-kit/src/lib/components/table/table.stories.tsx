@@ -14,8 +14,8 @@ export default {
     }
 } as Meta;
 
-type Story = StoryObj<typeof Table>
-export const Demo: Story = {
+type TableStory = StoryObj<typeof Table>
+export const Demo: TableStory = {
     args: {
         rows: [
             { id: 1, name: "Praveen", college: "ABC", location: "abc", pincode: 123 },

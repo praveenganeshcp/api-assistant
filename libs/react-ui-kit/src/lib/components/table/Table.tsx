@@ -3,11 +3,24 @@ import { TableColumn, TableRowData } from "./table.types";
 import "./Table.scss";
 import { TableRow } from "./TableRow";
 
+/**
+ * Props to customise table columns and row cell value and appearance.
+ */
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
+    /**
+     * List of column configuration
+     */
     columns: TableColumn[];
+    /**
+     * Array of objects to render as table rows.
+     */
     rows: TableRowData[];
 }
 
+/**
+ * The Table Component offers customizable column names and cell content using 
+ * HTML elements for enhanced flexibility and versatility.
+ */
 export function Table(props: TableProps) {
     const { columns, rows } = props;
     return (
