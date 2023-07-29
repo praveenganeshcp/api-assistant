@@ -7,9 +7,9 @@ export default {
     component: Input
 } as Meta
 
-type Story = StoryObj<typeof Input>
+type InputStory = StoryObj<typeof Input>
 
-export const Demo: Story = {
+export const Demo: InputStory = {
     args: {
         id: "username",
         placeholder: "Username"
