@@ -23,7 +23,7 @@ npm install @praveenkumarcp/reacteasy
 
 For detailed documentation and examples, please visit the React Easy Storybook Documentation.
 
-The storybpok includes usage instructions, component API references, and code examples.
+The storybook includes usage instructions, component API references, and code examples.
 
 ## License
 
