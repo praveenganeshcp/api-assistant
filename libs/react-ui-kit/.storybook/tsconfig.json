@@ -21,7 +21,8 @@
     "../src/**/*.stories.jsx",
     "../src/**/*.stories.tsx",
     "../src/**/*.stories.mdx",
+    "../src/**/*.mdx",
     "*.ts",
     "*.js"
-  ]
+, "preview.tsx"  ]
 }

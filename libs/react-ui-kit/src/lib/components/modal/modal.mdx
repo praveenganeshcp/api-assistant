@@ -1,0 +1,17 @@
+import { Meta, Title, Controls, Canvas, Source } from "@storybook/blocks"
+import * as ModalStories from "./modal.stories";
+
+<Meta of={ModalStories} />
+
+<Title>Modal</Title>
+
+The Modal Component is a reusable and customizable user interface element designed to display content in a modal dialog. It provides an efficient way to present information, receive user input, or trigger specific actions.
+
+## Props
+
+<Canvas of={ModalStories.Demo} sourceState='none' withToolbar={false} />
+
+<Controls />
+
+## Sample code
+<Source of={ModalStories.Demo} />

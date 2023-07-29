@@ -3,11 +3,19 @@ import { Table } from "./Table";
 
 export default {
     title: "React Easy/Table",
-    component: Table 
+    component: Table,
+    argTypes: {
+        rows: {
+            description: "Array of objects to render as table rows. NOTE: Each object should have id key with unique value to identify rows."
+        },
+        columns: {
+            description: "List of column configuration that defines how to render a cell content from the given row objects",
+        }
+    }
 } as Meta;
 
 type Story = StoryObj<typeof Table>
-export const SimpleTable: Story = {
+export const Demo: Story = {
     args: {
         rows: [
             { id: 1, name: "Praveen", college: "ABC", location: "abc", pincode: 123 },
@@ -51,5 +59,3 @@ export const SimpleTable: Story = {
         ]
     }
 }
-
-SimpleTable.storyName = "Table"

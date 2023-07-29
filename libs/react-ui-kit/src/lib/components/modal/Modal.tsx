@@ -4,14 +4,15 @@ import { MdClose } from "react-icons/md";
 interface ModalProps {
     isOpen: boolean;
     title: string;
-    cancelText: string;
-    confirmText: string;
-    onCancel: () => void;
-    onConfirm: () => void;
+    secondaryCTALabel: string;
+    primaryCTALabel: string;
+    onPerformPrimaryAction: () => void;
+    onPerformSecondaryAction: () => void;
+    onClose: () => void;
     children: any
 }
 
-export function Modal(props: ModalProps) {
+export function Modal(props: Partial<ModalProps>) {
     if(!props.isOpen) {
         return <></>
     }
@@ -23,7 +24,7 @@ export function Modal(props: ModalProps) {
     return (
         <div 
             className="react-easy-modal" 
-            onClick={props.onCancel}
+            onClick={props.onClose}
         >
             <div 
                 onClick={handleClickOnModalContainer} 
@@ -33,7 +34,7 @@ export function Modal(props: ModalProps) {
                     className="react-easy-modal-container__header"
                 >
                     <h3>{props.title}</h3>
-                    <button onClick={props.onCancel}>
+                    <button onClick={props.onClose}>
                         <MdClose />
                     </button>
                 </div>
@@ -42,15 +43,15 @@ export function Modal(props: ModalProps) {
                 </div>
                 <div className="react-easy-modal-container__footer">
                     {
-                        props.cancelText && 
-                        <button onClick={props.onCancel}>
-                            {props.cancelText}
+                        props.secondaryCTALabel && props.onPerformSecondaryAction &&
+                        <button onClick={props.onPerformSecondaryAction}>
+                            {props.secondaryCTALabel}
                         </button>
                     }
                     {
-                        props.confirmText && 
-                        <button onClick={props.onConfirm}>
-                            {props.confirmText}
+                        props.primaryCTALabel && props.onPerformPrimaryAction &&
+                        <button onClick={props.onPerformPrimaryAction}>
+                            {props.primaryCTALabel}
                         </button>
                     }
                 </div>
