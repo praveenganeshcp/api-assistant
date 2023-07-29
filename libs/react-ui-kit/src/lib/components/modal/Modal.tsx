@@ -2,16 +2,45 @@ import "./Modal.scss";
 import { MdClose } from "react-icons/md";
 
 interface ModalProps {
+    /**
+     * Whether the modal is open
+     */
     isOpen: boolean;
+    /**
+     * Title of the modal.
+     */
     title: string;
+    /**
+     * Secondary action button label
+     */
     secondaryCTALabel: string;
+    /**
+     * Primary action button label
+     */
     primaryCTALabel: string;
+    /**
+     * Method to handle primary action.
+     */
     onPerformPrimaryAction: () => void;
+    /**
+     * Method to handle secondary action.
+     */
     onPerformSecondaryAction: () => void;
+    /**
+     * Triggered when modal is closed. 
+     */
     onClose: () => void;
+    /**
+     * Modal HTML content.
+     */
     children: any
 }
 
+/**
+ * The Modal Component is a reusable and customizable user interface element 
+ * designed to display content in a modal dialog. It provides an efficient way to present 
+ * information, receive user input, or trigger specific actions.
+ */
 export function Modal(props: Partial<ModalProps>) {
     if(!props.isOpen) {
         return <></>

@@ -1,4 +1,5 @@
 import { Modal } from "./Modal";
+import { action } from "@storybook/addon-actions"
 import type { Meta, StoryObj } from '@storybook/react';
 
 export default {
@@ -45,17 +46,17 @@ export default {
     }
 } as Meta
 
-type Story = StoryObj<typeof Modal>;
+type ModalStory = StoryObj<typeof Modal>;
 
-export const Demo: Story = {
+export const Demo: ModalStory = {
     args: {
         isOpen: true,
         secondaryCTALabel: "Cancel",
         primaryCTALabel: "Confirm",
-        onPerformSecondaryAction: () => {console.log('on cancel')},
-        onPerformPrimaryAction: () => {console.log('on confirm')},
-        children: <span>Modal body content</span>,
+        onPerformSecondaryAction: action('on cancel'),
+        onPerformPrimaryAction: action('on confirm'),
+        children: <div>Modal body content</div>,
         title: "Add Modal title",
-        onClose: () => {console.log('closed')}
+        onClose: action('closed')
     }
 }
