@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { within, userEvent } from "@storybook/testing-library";
 import { Input } from "./Input";
 
 export default {
@@ -6,12 +7,18 @@ export default {
     component: Input
 } as Meta
 
-type Story = StoryObj<typeof Input>
+type InputStory = StoryObj<typeof Input>
 
-export const Primary: Story = {
+export const Demo: InputStory = {
     args: {
         id: "username",
         placeholder: "Username"
     },
+    play: async({canvasElement}) => {
+        const canvas = within(canvasElement);
+        const emailInput = canvas.getByRole('textbox');
+        await userEvent.type(emailInput, 'Hello, this is the react easy input component', {
+            delay: 100,
+        });
+    }
 }
-Primary.storyName = "Input"

@@ -2,16 +2,46 @@ import "./Modal.scss";
 import { MdClose } from "react-icons/md";
 
 interface ModalProps {
+    /**
+     * Whether the modal is open
+     */
     isOpen: boolean;
+    /**
+     * Title of the modal.
+     */
     title: string;
-    cancelText: string;
-    confirmText: string;
-    onCancel: () => void;
-    onConfirm: () => void;
+    /**
+     * Secondary action button label
+     */
+    secondaryCTALabel: string;
+    /**
+     * Primary action button label
+     */
+    primaryCTALabel: string;
+    /**
+     * Method to handle primary action.
+     */
+    onPerformPrimaryAction: () => void;
+    /**
+     * Method to handle secondary action.
+     */
+    onPerformSecondaryAction: () => void;
+    /**
+     * Triggered when modal is closed. 
+     */
+    onClose: () => void;
+    /**
+     * Modal HTML content.
+     */
     children: any
 }
 
-export function Modal(props: ModalProps) {
+/**
+ * The Modal Component is a reusable and customizable user interface element 
+ * designed to display content in a modal dialog. It provides an efficient way to present 
+ * information, receive user input, or trigger specific actions.
+ */
+export function Modal(props: Partial<ModalProps>) {
     if(!props.isOpen) {
         return <></>
     }
@@ -23,7 +53,7 @@ export function Modal(props: ModalProps) {
     return (
         <div 
             className="react-easy-modal" 
-            onClick={props.onCancel}
+            onClick={props.onClose}
         >
             <div 
                 onClick={handleClickOnModalContainer} 
@@ -33,7 +63,7 @@ export function Modal(props: ModalProps) {
                     className="react-easy-modal-container__header"
                 >
                     <h3>{props.title}</h3>
-                    <button onClick={props.onCancel}>
+                    <button onClick={props.onClose}>
                         <MdClose />
                     </button>
                 </div>
@@ -42,15 +72,15 @@ export function Modal(props: ModalProps) {
                 </div>
                 <div className="react-easy-modal-container__footer">
                     {
-                        props.cancelText && 
-                        <button onClick={props.onCancel}>
-                            {props.cancelText}
+                        props.secondaryCTALabel && props.onPerformSecondaryAction &&
+                        <button onClick={props.onPerformSecondaryAction}>
+                            {props.secondaryCTALabel}
                         </button>
                     }
                     {
-                        props.confirmText && 
-                        <button onClick={props.onConfirm}>
-                            {props.confirmText}
+                        props.primaryCTALabel && props.onPerformPrimaryAction &&
+                        <button onClick={props.onPerformPrimaryAction}>
+                            {props.primaryCTALabel}
                         </button>
                     }
                 </div>

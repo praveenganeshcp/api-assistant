@@ -1,0 +1,18 @@
+import { Meta, Controls, Canvas, Title, Description, Source } from "@storybook/blocks";
+import * as TableStories from "./table.stories";
+
+<Meta of={TableStories} />
+
+<Title>Table</Title>
+
+<Description of={TableStories} />
+
+## Props
+
+<Canvas of={TableStories.Demo} sourceState='none' withToolbar={false} />
+
+<Controls />
+
+## Sample source code
+
+<Source of={TableStories.Demo} />

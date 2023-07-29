@@ -1,19 +1,62 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
+import { action } from "@storybook/addon-actions";
 
 export default {
+    title: "React Easy/Button",
     component: Button,
-    title: "React Easy/Button"
+    parameters: {
+        layout: 'centered',
+        docs: {
+            controls: {
+                exclude: ['onClick']
+            }
+        }
+    },
+    argTypes: {
+        size: {
+            table: {
+                defaultValue: { summary: 'medium' },
+            },
+            description: "Controls the size of button"
+        },
+        label: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            description: "Label text for the button"
+        },
+        group: {
+            table: {
+                defaultValue: { summary: 'primary' },
+            },
+            description: "Variant of the button"
+        },
+    },
+    args: {
+        label: "Click me",
+        size: "medium",
+        onClick: action("Button clicked"),
+    }
 } as Meta;
 
-type Story = StoryObj<typeof Button>
+type ButtonStory = StoryObj<typeof Button>
 
-export const Primary: Story = {
+export const Primary: ButtonStory = {
     args: {
-        group: "primary",
-        size: "medium",
-        label: "Click me"
+        group: "primary"
     }
 }
 
-Primary.storyName = "Button"
+export const Secondary: ButtonStory = {
+    args: {
+        group: "secondary"
+    }
+}
+
+export const Text: ButtonStory = {
+    args: {
+        group: "text"
+    }
+}
+

@@ -1,0 +1,17 @@
+import { Meta, Title, Controls, Description, Canvas, Source } from "@storybook/blocks"
+import * as ModalStories from "./modal.stories";
+
+<Meta of={ModalStories} />
+
+<Title>Modal</Title>
+
+<Description of={ModalStories} />
+
+## Props
+
+<Canvas of={ModalStories.Demo} sourceState='none' withToolbar={false} />
+
+<Controls />
+
+## Sample code
+<Source of={ModalStories.Demo} />

@@ -1,10 +1,16 @@
 import { TableColumn, TableRowData } from "./table.types";
 
+/**
+ * Props to render a table row based on the provided column configuration.
+ */
 interface TableRowProps {
     columns: TableColumn[];
     row: TableRowData;
 }
 
+/**
+ * Render individual table rows by mapping row object values from column config.
+ */
 export function TableRow(props: TableRowProps) {
     const { columns, row } = props;
     
