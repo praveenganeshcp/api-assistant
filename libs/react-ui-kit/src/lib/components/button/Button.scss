@@ -6,27 +6,46 @@
     border-radius: 4px;
 
     &.primary-group {
-        background-color: $primary-color;
-        color: $white-color;
+        background-color: var(--primary-color-500);
+        color: var(--white-color);
+
+        &:hover {
+            background-color: var(--primary-color-900);
+        }
+
+        &:disabled {
+            background-color: var(--secondary-color-400);
+            color: var(--secondary-color-800)
+        }
     }
 
     &.secondary-group {
-        background-color: $white-color;
-        color: $black-color;
-        outline: 1px solid $primary-color;
+        background-color: var(--white-color);
+        color: var(--primary-color-700);
+        outline: 1px solid var(--primary-color-700);
 
         &:hover {
-            color: $primary-color
+            color: var(--primary-color-900);
+            outline-color: var(--primary-color-900);
+        }
+
+        &:disabled {
+            outline-color: var(--secondary-color-800);
+            color: var(--secondary-color-800);
         }
     }
 
     &.text-group {
-        background-color: $white-color;
+        background-color: var(--white-color);
         border-width: 0px;
-        color: $black-color;
+        color: var(--primary-color-700);
 
         &:hover {
-            color: $primary-color
+            color: var(--primary-color-900);
+        }
+
+        &:disabled {
+            color: var(--secondary-color-800);
         }
     }
     
@@ -40,16 +59,6 @@
 
     &.small-size {
         font-size: 0.75rem;
-    }
-
-    &:disabled {
-        background-color: $disabled-background-color;
-        color: $disabled-color;
-
-        &:hover {
-            background-color: $disabled-background-color;
-            color: $disabled-color;
-        }
     }
 
     &:focus {

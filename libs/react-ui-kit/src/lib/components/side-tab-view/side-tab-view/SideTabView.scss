@@ -3,8 +3,7 @@
 .react-easy-side-tab-view {
     height: 100%;
     width: 100%;
-    border: 1px solid $primary-color;
-    border-radius: 2px;
+    border: 1px solid var(--secondary-color-600);
     display: flex;
     border-radius: 4px;
 
@@ -13,12 +12,11 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        border-right: 1px solid $primary-color;      
+        border-right: 1px solid var(--secondary-color-600);      
     }
 
     .react-easy-side-tab-title {
-        background-color: transparent;
-        border-color: $primary-color;
+        background-color: var(--white-color);
         border-width: 0;
         border-bottom-width: 1px;
         padding: 0.4rem;
@@ -26,9 +24,13 @@
         display: flex;
         justify-content: flex-start;
 
-        &:focus {
-            outline: none;
-            color: $primary-color;
+        &:hover {
+            background-color: var(--secondary-color-300);
+        }
+
+        &:disabled {
+            background-color: var(--secondary-color-300);
+            color: var(--secondary-color-600);
         }
 
         &:last-child {
@@ -36,8 +38,7 @@
         }
 
         &.react-easy-active-side-tab {
-            background-color: $primary-color;
-            color: $white-color;
+            background-color: var(--secondary-color-300);
         }
     }
 

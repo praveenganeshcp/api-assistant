@@ -37,7 +37,7 @@ export const Demo: SideTabViewStory = {
             <SideTabView {...args}>
                 <SideTabContent title="Tab 1">content 1</SideTabContent>
                 <SideTabContent title="Tab 2">content 2</SideTabContent>
-                <SideTabContent title="Tab 3">content 3</SideTabContent>
+                <SideTabContent disabled title="Tab 3">content 3</SideTabContent>
                 <SideTabContent title="Tab 4">content 4</SideTabContent>
             </SideTabView>
         </div>

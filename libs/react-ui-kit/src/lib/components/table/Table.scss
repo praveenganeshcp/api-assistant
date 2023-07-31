@@ -2,7 +2,7 @@
 
 
 .react-easy-table {
-    border: 1px solid $primary-color;
+    border: 1px solid var(--secondary-color-600);
     height: auto;
     width: 100%;
     border-radius: 4px;
@@ -15,18 +15,19 @@
         }
 
         td {
-            border: 0.5px solid $white-color;
+            border: 0.5px solid var(--white-color);
             padding: 0.5rem 1rem;
-            background-color: $primary-color;
-            color: $white-color;
+            background-color: var(--secondary-color-500);
+            color: var(--white-color);
             text-align: center;
         }
     }
 
     tbody {
+
         a {
             text-decoration: none;
-            color: $primary-color;
+            color: var(--primary-color-500);
         }
 
         tr {
@@ -35,19 +36,18 @@
 
             &:hover {
                 cursor: pointer;
-                background-color: $secondary-color;
-                color: $primary-color;
+                background-color: var(--secondary-color-200);
             }
 
             &:nth-child(even) {
-                background-color: $secondary-color;
+                background-color: var(--secondary-color-200);
             }
         }
 
         td {
             padding: 0.5rem;
-            border-top: 1px solid $primary-color;
             text-align: center;
+            border-right: 1px solid var(--white-color);
         }
     }
 }
