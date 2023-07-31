@@ -1,0 +1,28 @@
+@import "../../../styles/reacteasy.scss";
+
+.react-easy-switch-track {
+
+    width: 50px;
+    height: 12px;
+    background-color: $secondary-color;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+
+    .react-easy-switch-thumb {
+        width: 23px;
+        height: 23px;
+        background-color: $primary-color;
+        border-radius: 4px;
+        transition: margin 0.6s;
+        border: none;
+
+        &.is-on {
+            margin-left: 27px;
+        }
+
+        &:disabled {
+            background-color: $disabled-color;
+        }
+    }
+}

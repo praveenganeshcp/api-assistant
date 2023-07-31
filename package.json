@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "backend:dev": "nx serve backend"
+    "backend:dev": "nx serve backend",
+    "storybook:dev": "nx storybook react-ui-kit"
   },
   "private": true,
   "devDependencies": {
