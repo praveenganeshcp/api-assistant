@@ -4,7 +4,8 @@ export {
     Table,
     Modal,
     SideTabView,
-    SideTabContent
+    SideTabContent,
+    Switch
 } from "./lib/components";
 
 export type { TableColumn, TableRowData } from "./lib/components/table/table.types";
