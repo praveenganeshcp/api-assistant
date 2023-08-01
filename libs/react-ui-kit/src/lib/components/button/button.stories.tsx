@@ -14,11 +14,11 @@ export default {
         }
     },
     argTypes: {
-        size: {
+        disabled: {
             table: {
-                defaultValue: { summary: 'medium' },
+                defaultValue: { summary: false },
             },
-            description: "Controls the size of button"
+            description: "Whether to disable the button."
         },
         label: {
             table: {
@@ -35,7 +35,7 @@ export default {
     },
     args: {
         label: "Click me",
-        size: "medium",
+        disabled: false,
         onClick: action("Button clicked"),
     }
 } as Meta;
