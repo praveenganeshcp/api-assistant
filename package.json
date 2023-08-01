@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "backend:dev": "nx serve backend",
-    "storybook:dev": "nx storybook react-ui-kit"
+    "storybook:dev": "nx storybook react-ui-kit",
+    "build-storybook": "nx build-storybook react-ui-kit"
   },
   "private": true,
   "devDependencies": {
@@ -51,6 +52,7 @@
     "@vitest/coverage-c8": "^0.31.0",
     "@vitest/ui": "^0.31.0",
     "babel-jest": "^29.4.1",
+    "chromatic": "^6.20.0",
     "cypress": "^12.11.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
@@ -101,5 +103,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "@api-assistant/source@0.0.0"
 }
