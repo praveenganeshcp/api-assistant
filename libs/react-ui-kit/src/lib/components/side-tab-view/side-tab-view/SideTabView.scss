@@ -12,17 +12,19 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        border-right: 1px solid var(--secondary-color-600);      
+        border-right: 1px solid var(--secondary-color-600);  
     }
 
     .react-easy-side-tab-title {
         background-color: var(--white-color);
         border-width: 0;
         border-bottom-width: 1px;
-        padding: 0.4rem;
+        padding: 0.5rem 0.75rem;
         width: 100%;
         display: flex;
         justify-content: flex-start;
+        @extend .re-text-subtitle1;
+        color: var(--secondary-color-800);
 
         &:hover {
             background-color: var(--secondary-color-300);
@@ -30,7 +32,7 @@
 
         &:disabled {
             background-color: var(--secondary-color-300);
-            color: var(--secondary-color-600);
+            color: var(--secondary-color-500);
         }
 
         &:last-child {
