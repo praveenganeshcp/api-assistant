@@ -3,7 +3,7 @@
 .react-easy-modal {
     height: 100vh;
     width: 100%;
-    background-color: rgba(156, 151, 151, 0.5);
+    background-color: var(--secondary-color-300);
     margin:0;
     display: flex;
     align-items: center;
@@ -19,23 +19,25 @@
         height: 60vh;
         width: 50vw; 
         border-radius: 5px;
-        box-shadow: 2px 2px 9px 3px $secondary-color;
+        box-shadow: 2px 2px 9px 3px var(--secondary-color-400);
         display: flex;
         flex-direction: column;
-        background-color: $white-color;
+        background-color: var(--white-color);
 
         .react-easy-modal-container__header {
             height: 15%;
             width: 100%;
-            border-bottom: 1px solid $secondary-color;
+            border-bottom: 1px solid var(--secondary-color-400);
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-sizing: border-box;
             padding: 0 1rem;
+            @extend .re-text-subtitle1;
+            color: var(--secondary-color-700);
 
             button {
-                background-color: transparent;
+                background-color: var(--white-color);
                 border: none;
             }
         }
@@ -48,29 +50,13 @@
         .react-easy-modal-container__footer {
             height: 15%;
             width: 100%;
-            border-top: 1px solid $secondary-color;
+            border-top: 1px solid var(--secondary-color-400);
             display: flex;
             align-items: center;
             justify-content: flex-end;
 
             button {
-                margin-right: 1.5rem;
-                padding: 0.5rem;
-                border: none;
-                border-radius: 5px;
-
-                &:first-child {
-                    background-color: $white-color;
-
-                    &:hover {
-                        background-color: $secondary-color;
-                    }
-                }
-
-                &:nth-child(2) {
-                    background-color: $primary-color;
-                    color: $white-color;
-                }
+                margin-right: 1rem;
             }
         }
     }

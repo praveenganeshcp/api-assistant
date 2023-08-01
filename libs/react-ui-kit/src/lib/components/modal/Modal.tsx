@@ -1,5 +1,6 @@
 import "./Modal.scss";
 import { MdClose } from "react-icons/md";
+import { Button } from "../button/Button";
 
 interface ModalProps {
     /**
@@ -73,15 +74,19 @@ export function Modal(props: Partial<ModalProps>) {
                 <div className="react-easy-modal-container__footer">
                     {
                         props.secondaryCTALabel && props.onPerformSecondaryAction &&
-                        <button onClick={props.onPerformSecondaryAction}>
-                            {props.secondaryCTALabel}
-                        </button>
+                        <Button 
+                            label={props.secondaryCTALabel} 
+                            group="secondary" 
+                            onClick={props.onPerformSecondaryAction} 
+                        />
                     }
                     {
                         props.primaryCTALabel && props.onPerformPrimaryAction &&
-                        <button onClick={props.onPerformPrimaryAction}>
-                            {props.primaryCTALabel}
-                        </button>
+                        <Button 
+                            group="primary" 
+                            label={props.primaryCTALabel} 
+                            onClick={props.onPerformPrimaryAction} 
+                        />
                     }
                 </div>
             </div>
