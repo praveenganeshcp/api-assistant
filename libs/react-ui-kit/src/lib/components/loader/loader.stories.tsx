@@ -5,7 +5,17 @@ export default {
     title: "React Easy/Loader",
     component: Loader,
     parameters: {
-        layout: 'centered'
+        layout: 'centered',
+        docs: {
+            controls: {
+                exclude: ['style']
+            }
+        }
+    },
+    argTypes: {
+        size: {
+            description: "Size of the loader"
+        }
     }
 } as Meta;
 
