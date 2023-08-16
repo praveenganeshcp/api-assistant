@@ -1,4 +1,4 @@
-import { Tab, TabView } from "@praveenkumarcp/reacteasy";
+import { SideTabView, SideTabContent } from "@praveenkumarcp/reacteasy";
 import { useState } from "react";
 import { ProjectDatabase } from "../project-database/ProjectDatabase";
 import { ProjectInfo } from "../project-info/ProjectInfo";
@@ -12,31 +12,30 @@ export function ProjectShell() {
     return (
         <div className="h-100 w-100 d-flex align-items-center flex-column justify-content-center">
             <div className="mt-3 project-shell-tab-view">
-                <TabView 
+                <SideTabView 
                     activeIndex={activeIndex} 
                     onChangeTab={setActiveIndex}
-                    contentWidth={'85%'}
-                    titleWidth={'15%'}
+                    titleWidth={10}                    
                 >
-                    <Tab title="Project Info">
+                    <SideTabContent title="Project Info">
                         <ProjectInfo />
-                    </Tab>
-                    <Tab title="Database">
+                    </SideTabContent>
+                    <SideTabContent title="Database">
                         <ProjectDatabase />
-                    </Tab>
-                    <Tab title="Files">
+                    </SideTabContent>
+                    <SideTabContent title="Files">
                         <ProjectObjectsExplorer />
-                    </Tab>
-                    <Tab disabled title="Settings">
+                    </SideTabContent>
+                    <SideTabContent disabled title="Settings">
                         <h1>Settings</h1>
-                    </Tab>
-                    <Tab title="Access Token">
+                    </SideTabContent>
+                    <SideTabContent title="Access Token">
                         <h1>Access token</h1>
-                    </Tab>
-                    <Tab title="Logs">
+                    </SideTabContent>
+                    <SideTabContent title="Logs">
                         <h1>Logs</h1>
-                    </Tab>
-                </TabView>
+                    </SideTabContent>
+                </SideTabView>
             </div>
         </div>
     )
