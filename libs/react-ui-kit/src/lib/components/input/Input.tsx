@@ -1,4 +1,5 @@
 import { InputHTMLAttributes } from "react";
+import React from "react";
 import "./Input.scss";
 
 /**
@@ -11,7 +12,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement>
  * labels when 'id' and 'placeholder' attributes are provided. Simplify form creation 
  * with this versatile feature.
  */
-export function Input(props: InputProps) {
+export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     return (
         <div className="react-easy-input-container">
             {
@@ -23,9 +24,10 @@ export function Input(props: InputProps) {
             }
             <input  
                 {...props}
+                ref={ref}
                 placeholder=""
                 className={`react-easy-input ${props.className}`}
             />
         </div>
     )
-}
+})
