@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "frontend:dev": "nx serve frontend",
     "backend:dev": "nx serve backend",
     "storybook:dev": "nx storybook react-ui-kit",
     "build-storybook": "nx build-storybook react-ui-kit"
@@ -98,6 +99,7 @@
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.4",
     "react-icons": "^4.10.1",
     "react-redux": "^8.1.1",
     "react-router-dom": "6.11.2",
