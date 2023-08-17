@@ -8,7 +8,9 @@
     "types": ["vite/client", "vitest"]
   },
   "files": [],
-  "include": [],
+  "include": [
+    "src/frontend.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"

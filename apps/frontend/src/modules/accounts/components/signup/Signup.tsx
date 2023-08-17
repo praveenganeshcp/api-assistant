@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Input, Button } from "@praveenkumarcp/reacteasy";
 import "./Signup.scss";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { createAccount } from "../../accounts.api";
 import { useDispatch } from "react-redux";
 import { loadUserProfile } from "../../auth-user.slice";
@@ -10,16 +10,28 @@ export function Signup() {
 
     const dispatch = useDispatch();
 
+
     const [username, setUsername] = useState('');
     const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        (window as any).sdClickwrap.on("acceptanceToggled", () => {
+            console.log((window as any).sdClickwrap.isAccepted())
+        })
+    }, [])
+
     async function onSignup(e: FormEvent) {
         e.preventDefault();
-        const newUserAccount = await createAccount(
-            username, emailId, password
-        )
-        dispatch(loadUserProfile.fulfilled(newUserAccount, ""));
+        if((window as any).sdClickwrap.isAccepted() === true) {
+            (window as any).sdClickwrap.submit({
+                user_identifier: "test_praveen"
+            }).then(console.log, console.error)
+        }
+        // const newUserAccount = await createAccount(
+        //     username, emailId, password
+        // )
+        // dispatch(loadUserProfile.fulfilled(newUserAccount, ""));
     }
 
     return (
@@ -48,6 +60,7 @@ export function Signup() {
                     placeholder="Password" 
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <div id="clickwrap-host"></div>
                 <Button 
                     type="submit" 
                     className="mt-3" 
