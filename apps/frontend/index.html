@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Frontend</title>
     <base href="/" />
-    <script type="module" src="https://sdk.spotdraft.com/clickwrap/v1/sdk.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/src/styles.scss" />
@@ -15,14 +15,5 @@ crossorigin="anonymous">
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      window.addEventListener("sdClickwrapLoaded", function() {
-        sdClickwrap.init({
-          clickwrapId: "9f1bc3b5-0562-4833-b341-5f59093ea718",
-          hostLocationDomId: "clickwrap-host",
-          baseUrl: "https://api.eu.dev.spotdraft.com"
-        }).then(console.log, console.error)
-      })
-    </script>
   </body>
 </html>
