@@ -34,7 +34,12 @@ jobs:
             host: ${{ secrets.SSH_HOST }}
             username: ${{ secrets.SSH_USERNAME }}
             key: ${{ secrets.SSH_PASS }}
-            script: ls
+            script: |
+              cd applications/api-assistant
+              git pull origin main
+              npm i
+              npx nx build frontend
+              sudo nginx -s reload
 
 
   backend-app:
