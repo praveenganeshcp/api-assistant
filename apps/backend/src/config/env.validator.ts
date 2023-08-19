@@ -34,14 +34,8 @@ class EnvironmentVariables {
   FE_HOST_ADDRESS!: string;
 }
 
-export const ENV_VARIABLES: EnvironmentVariables = plainToInstance(
-    EnvironmentVariables,
-    process.env,
-    { 
-        enableImplicitConversion: true,
-    },
-  );
-
+export const ENV_VARIABLES: EnvironmentVariables =  
+  process.env as unknown as EnvironmentVariables;
 export function validateEnvVariables(config: Record<string, unknown>) {
   const validatedConfig = plainToInstance(
     EnvironmentVariables,
