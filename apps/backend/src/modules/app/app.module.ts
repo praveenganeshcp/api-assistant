@@ -13,13 +13,14 @@ import { emailconfig } from '../../config/email.config';
 
 @Module({
   imports: [
-    AccountsModule, 
-    RepositoryModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validate: validateEnvVariables,
+      cache: false,
       load: [appConfig, dbConfig, emailconfig]
     }),
+    AccountsModule, 
+    RepositoryModule,
     NotificationsModule
   ],
   controllers: [AppController],

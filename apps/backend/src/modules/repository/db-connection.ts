@@ -4,9 +4,11 @@ import { dbConfig } from "../../config/db.config";
 import { ConfigType } from "@nestjs/config";
 
 export async function createDbConnection(
-    databaseConfig: ConfigType<typeof dbConfig>
+    databaseConfig: any
 ): Promise<Db> {
+    databaseConfig = process.env;
     const logger = new Logger(createDbConnection.name);
+    logger.log(databaseConfig)
     try {
         logger.log("Connecting to DB...");
         const mongoClient = new MongoClient(databaseConfig.DB_URL);
