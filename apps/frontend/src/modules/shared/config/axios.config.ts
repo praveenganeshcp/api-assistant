@@ -1,7 +1,8 @@
 import axios from "axios";
+import { environment } from "../environment";
 
 export const axiosHttpClient = axios.create({
-    baseURL: "http://localhost:3000/api/v6/",
+    baseURL: `${environment.API_URL}/api/v6/`,
     headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
