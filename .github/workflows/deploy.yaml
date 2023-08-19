@@ -1,0 +1,51 @@
+name: API Assistant CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  frontend-app:
+    name: Build, Test, and Deploy frontend App
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && needs.nestjs-app.result != 'failure' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+      - name: Build frontend app
+        run: npx nx build frontend
+
+      - name: Test frontend app
+        run: npx nx test frontend
+
+
+  backend-app:
+    name: Build, Test, and Deploy backend App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+     - name: Build backend app
+        run: npx nx build backend
+
+      - name: Test backend app
+        run: npx nx test backend
