@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
-     - name: Build backend app
+      - name: Build backend app
         run: npx nx build backend
 
       - name: Test backend app
