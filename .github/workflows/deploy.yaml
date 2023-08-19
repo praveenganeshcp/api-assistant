@@ -62,3 +62,17 @@ jobs:
 
       - name: Test backend app
         run: npx nx test backend
+
+      - name: Deploy backend
+        uses: appleboy/ssh-action@master
+        with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USERNAME }}
+            key: ${{ secrets.SSH_PASS }}
+            script: |
+              cd applications/api-assistant
+              git pull origin main
+              npm i
+              npx nx build backend
+              cp ./.env ./dist/apps/backend
+              pm2 restart 0
