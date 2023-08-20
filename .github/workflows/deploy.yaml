@@ -22,13 +22,24 @@ jobs:
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
-      - name: Build frontend app
+      - name: Check for changes
+        id: react-changes
+        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "apps/frontend")
+
+      - name: Lint
+        if: steps.react-changes.outputs.changed == 'apps/frontend'
+        run: npx nx lint frontend
+
+      - name: Build
+        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npx nx build frontend
 
-      - name: Test frontend app
+      - name: Test
+        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npx nx test frontend
         
-      - name: Deploy frontend
+      - name: Deploy
+        if: steps.react-changes.outputs.changed == 'apps/frontend'
         uses: appleboy/ssh-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
