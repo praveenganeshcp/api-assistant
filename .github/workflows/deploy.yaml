@@ -7,7 +7,7 @@ on:
 
 jobs:
   frontend-app:
-    name: Build, Test, and Deploy frontend App
+    name: Lint, Build, Test, and Deploy frontend App
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && needs.nestjs-app.result != 'failure' }}
     steps:
@@ -19,12 +19,13 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install dependencies
-        run: npm install --frozen-lockfile
-
       - name: Check for changes
         id: react-changes
         run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "apps/frontend")
+        
+      - name: Install dependencies
+        if: steps.react-changes.outputs.changed == 'apps/frontend'
+        run: npm install --frozen-lockfile
 
       - name: Lint
         if: steps.react-changes.outputs.changed == 'apps/frontend'
@@ -54,7 +55,7 @@ jobs:
 
 
   backend-app:
-    name: Build, Test, and Deploy backend App
+    name: Lint, Build, Test, and Deploy backend App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,16 +66,28 @@ jobs:
         with:
           node-version: 14
 
+      - name: Check for changes
+        id: backend-changes
+        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "apps/backend")
+
       - name: Install dependencies
+        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npm install --frozen-lockfile
 
+      - name: Lint
+        if: steps.backend-changes.outputs.changed == 'apps/backend'
+        run: npx nx lint backend
+
       - name: Build backend app
+        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npx nx build backend
 
       - name: Test backend app
+        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npx nx test backend
 
       - name: Deploy backend
+        if: steps.backend-changes.outputs.changed == 'apps/backend'
         uses: appleboy/ssh-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
