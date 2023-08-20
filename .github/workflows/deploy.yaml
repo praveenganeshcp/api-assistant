@@ -9,7 +9,7 @@ jobs:
   frontend-app:
     name: Lint, Build, Test, and Deploy frontend App
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && needs.nestjs-app.result != 'failure' }}
+    needs: backend-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
