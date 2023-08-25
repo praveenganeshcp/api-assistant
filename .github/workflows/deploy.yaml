@@ -19,28 +19,19 @@ jobs:
         with:
           node-version: 14
 
-      - name: Check for changes
-        id: react-changes
-        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "apps/frontend")
-        
       - name: Install dependencies
-        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npm install --frozen-lockfile
 
       - name: Lint
-        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npx nx lint frontend
 
       - name: Build
-        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npx nx build frontend
 
       - name: Test
-        if: steps.react-changes.outputs.changed == 'apps/frontend'
         run: npx nx test frontend
         
       - name: Deploy
-        if: steps.react-changes.outputs.changed == 'apps/frontend'
         uses: appleboy/ssh-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
@@ -66,28 +57,19 @@ jobs:
         with:
           node-version: 14
 
-      - name: Check for changes
-        id: backend-changes
-        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "apps/backend")
-
       - name: Install dependencies
-        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npm install --frozen-lockfile
 
       - name: Lint
-        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npx nx lint backend
 
       - name: Build backend app
-        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npx nx build backend
 
       - name: Test backend app
-        if: steps.backend-changes.outputs.changed == 'apps/backend'
         run: npx nx test backend
 
       - name: Deploy backend
-        if: steps.backend-changes.outputs.changed == 'apps/backend'
         uses: appleboy/ssh-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
