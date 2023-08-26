@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from "react-router-dom";
 import { DashboardRoutes } from "../modules/dashboard/dashboard.routes";
 import { LandingPageRoutes } from "../modules/landing-page/landing-page.routes";
@@ -20,7 +21,7 @@ export function AppRoutes() {
 
     useEffect(() => {
         dispatch(loadUserProfile());
-    })
+    }, [])
 
     if(isLoading)
         return (
