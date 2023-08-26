@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "apps/frontend/src/constants";
+import { APP_CONFIG } from "../../../../constants";
 import "./AccountsShellBanner.scss";
 
 

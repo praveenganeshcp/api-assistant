@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./AccountNotVerified.scss"
-import { APP_CONFIG } from "apps/frontend/src/constants";
+import { APP_CONFIG } from "../../../../constants";
 
 export function AccountNotVerified() {
     return (

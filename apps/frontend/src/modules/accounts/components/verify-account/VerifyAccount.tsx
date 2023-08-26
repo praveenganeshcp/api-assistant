@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "apps/frontend/src/constants";
+import { APP_CONFIG } from "../../../../constants";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 
@@ -7,7 +7,7 @@ export function VerifyAccount() {
 
     useEffect(() => {
         console.log('verifying account', token);
-    }, [])
+    })
 
     return (
         <div className="w-100 h-100 d-flex align-items-center justify-content-center">

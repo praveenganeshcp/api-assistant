@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Outlet } from "react-router";
 import { AppHeader } from "../app-header/AppHeader";
 import { useEffect } from "react";

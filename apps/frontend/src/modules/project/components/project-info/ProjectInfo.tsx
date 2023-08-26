@@ -14,7 +14,7 @@ import "./ProjectInfo.scss";
 
 interface ProjectInfoProp {
     id: number,
-    icon: any;
+    icon: JSX.Element;
     value: string;
 }
 

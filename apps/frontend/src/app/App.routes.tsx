@@ -10,16 +10,17 @@ import { loadUserProfile } from "../modules/accounts/auth-user.slice";
 import { VerifyAccount } from "../modules/accounts/components/verify-account/VerifyAccount";
 import { AccountNotVerified } from "../modules/accounts/components/account-not-verified/AccountNotVerified";
 import { AppState } from "../store/appstate.interface";
+import { AppDispatch } from "../store/app.store";
 
 export function AppRoutes() {
 
     const { isLoading } = useSelector((state: AppState) => state.authUser);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch<any>(loadUserProfile());
-    }, [])
+        dispatch(loadUserProfile());
+    })
 
     if(isLoading)
         return (

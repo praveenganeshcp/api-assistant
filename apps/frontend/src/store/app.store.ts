@@ -7,3 +7,5 @@ export const appStore = configureStore<AppState>({
         authUser: authUserReducer
     }
 })
+
+export type AppDispatch = typeof appStore.dispatch

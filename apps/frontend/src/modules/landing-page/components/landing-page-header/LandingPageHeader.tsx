@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./LandingPageHeader.scss";
 import { useSelector } from "react-redux";
-import { AppState } from "apps/frontend/src/store/appstate.interface";
+import { AppState } from "../../../../store/appstate.interface";
 
 export function LandingPageHeader() {
 

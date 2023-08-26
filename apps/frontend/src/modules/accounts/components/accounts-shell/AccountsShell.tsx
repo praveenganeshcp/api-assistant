@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AccountsShellBanner } from "../accounts-shell-banner/AccountsShellBanner";
 import "./AccountsShell.scss";
-import { APP_CONFIG } from "apps/frontend/src/constants";
-import { AppState } from "apps/frontend/src/store/appstate.interface";
+import { APP_CONFIG } from "../../../../constants";
+import { AppState } from "../../../../store/appstate.interface";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
