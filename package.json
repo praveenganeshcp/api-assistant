@@ -79,6 +79,7 @@
     "vitest": "^0.31.0"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.47.0",
     "@nestjs/common": "^9.1.1",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^9.1.1",
