@@ -4,9 +4,8 @@ import { dbConfig } from "../../config/db.config";
 import { ConfigType } from "@nestjs/config";
 
 export async function createDbConnection(
-    databaseConfig: any
+    databaseConfig: ConfigType<typeof dbConfig>
 ): Promise<Db> {
-    databaseConfig = process.env;
     const logger = new Logger(createDbConnection.name);
     logger.log(databaseConfig)
     try {

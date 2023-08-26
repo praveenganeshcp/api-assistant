@@ -1,5 +1,4 @@
 import { 
-    ValidationArguments, 
     ValidatorConstraint, 
     ValidatorConstraintInterface 
 } from "class-validator";
@@ -14,11 +13,11 @@ export class IsEmailIDUnique implements ValidatorConstraintInterface {
         private readonly accountsService: AccountsService
     ) {}
 
-    public validate(email: string, validationArguments?: ValidationArguments) {
+    public validate(email: string) {
         return this.accountsService.isEmailIdUnique(email)
     }
 
-    public defaultMessage(validationArguments?: ValidationArguments): string {
+    public defaultMessage(): string {
         return "Email id must be unique";
     }
 }

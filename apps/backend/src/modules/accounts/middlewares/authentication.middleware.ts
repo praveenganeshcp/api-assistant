@@ -15,7 +15,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
         private accountsService: AccountsService
     ) {}
 
-    async use(req: Request, res: Response, next: (error?: any) => void) {
+    async use(req: Request, res: Response, next: (error?: unknown) => void) {
         try {
             const jwt: string = req.cookies.token || "";
             req['authUser'] = await this.fetchUserDetails(jwt);
