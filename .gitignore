@@ -5,9 +5,6 @@ dist
 tmp
 /out-tsc
 
-.env
-apps/frontend/.env.development
-apps/frontend/.env.production
 # dependencies
 node_modules
 

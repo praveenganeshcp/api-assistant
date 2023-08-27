@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@api-assistant/utils": ["libs/utils/src/index.ts"],
-      "@praveenkumarcp/reacteasy": ["libs/react-ui-kit/src/index.ts"]
+      "@api-assistant/utils": ["libs/utils/src/index.ts"]
     },
     "strict": true
   },
