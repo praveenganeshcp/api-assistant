@@ -8,8 +8,7 @@
           "build",
           "lint",
           "test",
-          "e2e",
-          "build-storybook"
+          "e2e"
         ]
       }
     }
@@ -31,9 +30,6 @@
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore"
       ]
-    },
-    "build-storybook": {
-      "inputs": ["default", "^production", "!{projectRoot}/.storybook/**/*"]
     }
   },
   "namedInputs": {
@@ -44,28 +40,11 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-      "!{projectRoot}/.storybook/**/*"
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
     ],
     "sharedGlobals": []
   },
   "generators": {
-    "@nx/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "bundler": "vite",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint",
-        "unitTestRunner": "jest"
-      }
-    },
     "@nx/angular:application": {
       "style": "scss",
       "linter": "eslint",

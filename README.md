@@ -1,6 +1,6 @@
 # API Assistant (MVP)
 
-API Assistant is a powerful tool developed using React and NestJS, housed within an Nx workspace, designed to simplify and streamline the process of managing the application data from frontend at ease. 
+API Assistant is a powerful tool developed using Angular and NestJS, housed within an Nx workspace, designed to simplify and streamline the process of managing the application data from frontend at ease. 
 
 This project serves as a Minimum Viable Product (MVP), showcasing the core functionality and features of API Assistant.
 
