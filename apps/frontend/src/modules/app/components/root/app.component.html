@@ -1,0 +1,9 @@
+<div class="w-100 h-100">
+    <ng-container *ngIf="isUserProfileLoading$ | async; else appRouteOutlet">
+        <api-assistant-profile-loader></api-assistant-profile-loader>
+    </ng-container>
+    <ng-template #appRouteOutlet>
+        <router-outlet></router-outlet>
+    </ng-template>
+</div>
+
