@@ -1,0 +1,31 @@
+<main class="landing-page">
+    <header class="landing-page__header">
+        <ng-container *ngIf="!authenticatedUser$; else loginLinks">
+            <a routerLink="/app/projects">Go to app</a>
+        </ng-container>
+        <ng-template #loginLinks>
+            <a routerLink="/accounts/signup">Signup</a>
+            <a routerLink="/accounts/login">Login</a>
+        </ng-template>
+    </header>
+    <div class="landing-page__banner">
+        <h1>API Assistant</h1>
+        <h4>Declarative Backend for trivial apps</h4>
+    </div>
+    <div class="landing-page__features">
+        <h1>Features</h1>
+        <ng-container *ngFor="let featureCard of LANDING_PAGE_FEATURES; trackBy: trackFeatureCard">
+            <div class="landing-page__feature-card">
+                <h6>{{ featureCard.title }}</h6>
+                <span style="font-weight: 300;">{{ featureCard.description }}</span>
+            </div>
+        </ng-container>
+    </div>
+    <footer class="landing_page__footer">
+        <span>
+            Want to build application with API Assistant? 
+            <a routerLink="/accounts/signup">Signup here</a>
+        </span>
+
+    </footer>
+</main>
