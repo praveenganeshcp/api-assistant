@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { loginAccount } from '../../store/accounts.actions';
-import { isAccountsAPIInProgressSelector } from '../../store/accounts.selectors';
-import { AppState } from '../../../app/store/appstate';
 import { RouterModule } from "@angular/router";
 import {
   SwButtonComponent,
