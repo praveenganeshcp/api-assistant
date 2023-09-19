@@ -3,7 +3,7 @@ import { Request } from "express";
 
 export const AuthUser = createParamDecorator(
     (data: unknown, context: ExecutionContext) => {
-        const httpRequest: Request = context.switchToHttp().getRequest();
+        const httpRequest: any = context.switchToHttp().getRequest();
         return httpRequest['authUser'];
     }
 )
