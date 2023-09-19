@@ -14,3 +14,5 @@ export const ACCOUNTS_STATE: AccountsState = {
     error: "",
     isAccountsAPIInProgress: false
 }
+
+export const ACCOUNTS_STATE_SELECTOR_KEY = 'accounts';

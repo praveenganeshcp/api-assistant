@@ -3,14 +3,10 @@ import { Route } from '@angular/router';
 export const appRoutes: Route[] = [
     {
         path: "accounts",
-        loadChildren: () => import("../accounts/accounts.module").then(m => m.AccountsModule),
-    },
-    {
-        path: "app",
-        loadChildren: () => import("../app-shell/app-shell.module").then(m => m.AppShellModule),
+        loadChildren: () => import("../accounts/accounts.routes").then(r => r.accountRoutes)
     },
     {
         path: "",
-        loadChildren: () => import("../landing-page/landing-page.module").then(m => m.LandingPageModule),
+        loadComponent: () => import("../landing-page/components/landing-page/landing-page.component").then(m => m.LandingPageComponent),
     },
 ];

@@ -1,6 +1,6 @@
 <main class="landing-page">
     <header class="landing-page__header">
-        <ng-container *ngIf="!authenticatedUser$; else loginLinks">
+        <ng-container *ngIf="false; else loginLinks">
             <a routerLink="/app/projects">Go to app</a>
         </ng-container>
         <ng-template #loginLinks>

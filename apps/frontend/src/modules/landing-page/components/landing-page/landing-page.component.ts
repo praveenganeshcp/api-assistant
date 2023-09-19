@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { authUserSelector } from "../../../accounts/store/accounts.selectors";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 interface LandingPageFeatureCard {
     id: number;
@@ -11,15 +11,19 @@ interface LandingPageFeatureCard {
 @Component({
     selector: "api-assistant-landing-page",
     templateUrl: "./landing-page.component.html",
-    styleUrls: ["./landing-page.component.scss"]
+    styleUrls: ["./landing-page.component.scss"],
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        RouterModule
+    ]
 })
 export class LandingPageComponent {
 
     constructor(
-        private store: Store
     ) {}
 
-    public authenticatedUser$ = this.store.select(authUserSelector);
     
     public LANDING_PAGE_FEATURES: LandingPageFeatureCard[] = [
         {

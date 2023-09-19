@@ -1,6 +1,6 @@
 import { createSelector, createFeatureSelector } from "@ngrx/store";
 import { AccountsState } from "./accounts.state";
-import { ACCOUNTS_STATE_SELECTOR_KEY } from "../accounts.module";
+import { ACCOUNTS_STATE_SELECTOR_KEY } from "./accounts.state";
 
 export const accountsSelector = createFeatureSelector<AccountsState>(ACCOUNTS_STATE_SELECTOR_KEY);
 

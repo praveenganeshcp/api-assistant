@@ -4,20 +4,28 @@ import { Store } from '@ngrx/store';
 import { loginAccount } from '../../store/accounts.actions';
 import { isAccountsAPIInProgressSelector } from '../../store/accounts.selectors';
 import { AppState } from '../../../app/store/appstate';
+import { RouterModule } from "@angular/router";
+import {
+  SwButtonComponent,
+  SwInputComponent
+} from "ngx-simple-widgets"
 
 @Component({
   selector: 'api-assistant-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [
+    RouterModule,
+    SwButtonComponent,
+    SwInputComponent
+  ]
 })
 export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>
   ) {}
-
-  public isAccountsAPIInProgress$ = this.store.select(state => state.accounts.isAccountsAPIInProgress)
 
   public loginForm: FormGroup = this.createLoginForm();
 
@@ -30,6 +38,5 @@ export class LoginComponent {
 
 
   public handleLogin() {
-    this.store.dispatch(loginAccount(this.loginForm.value))
   }
 }

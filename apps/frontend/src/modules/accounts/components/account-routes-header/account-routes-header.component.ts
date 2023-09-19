@@ -9,6 +9,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         API Assistant
       </a>
     </h1>
-  `
+  `,
+  standalone: true
 })
 export class AccountRoutesHeaderComponent {}

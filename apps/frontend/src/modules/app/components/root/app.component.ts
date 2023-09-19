@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { of, startWith, delay } from "rxjs";
 import { CommonModule } from '@angular/common';
 import { loadUserProfile } from '../../../accounts/store/accounts.actions';
 import { isAuthUserLoadingSelector } from '../../../accounts/store/accounts.selectors';
@@ -20,14 +20,14 @@ import { ProfileLoaderComponent } from '../profile-loader/profile-loader.compone
 })
 export class AppComponent {
 
-  constructor(
-    private store: Store<AppState>
-  ) {}
+  constructor() {}
 
-  public isUserProfileLoading$ = this.store.select(isAuthUserLoadingSelector);
+  public isUserProfileLoading$ = of(false).pipe(
+    startWith(true),
+    delay(2000)
+  );
 
   ngOnInit() {
-    this.store.dispatch(loadUserProfile())
   }
 }
 

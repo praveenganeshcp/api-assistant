@@ -8,7 +8,6 @@ import {
 import { HttpClientModule } from "@angular/common/http";
 import { appRoutes } from './app.routes';
 import { StoreModule, provideStore } from '@ngrx/store';
-import { AccountsModule } from '../accounts/accounts.module';
 import { EffectsModule } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
@@ -16,10 +15,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     importProvidersFrom([
       BrowserAnimationsModule,
-      AccountsModule,
-      StoreModule.forRoot({}),
-      EffectsModule.forRoot(),
-      StoreDevtoolsModule.instrument(),
+      // StoreModule.forRoot({}),
+      // EffectsModule.forRoot(),
+      // StoreDevtoolsModule.instrument(),
       HttpClientModule
     ]),
   ],
