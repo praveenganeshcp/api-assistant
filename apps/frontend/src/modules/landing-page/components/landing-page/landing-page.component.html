@@ -16,8 +16,8 @@
         <h1>Features</h1>
         <ng-container *ngFor="let featureCard of LANDING_PAGE_FEATURES; trackBy: trackFeatureCard">
             <div class="landing-page__feature-card">
-                <h6>{{ featureCard.title }}</h6>
-                <span style="font-weight: 300;">{{ featureCard.description }}</span>
+                <h3>{{ featureCard.title }}</h3>
+                <span>{{ featureCard.description }}</span>
             </div>
         </ng-container>
     </div>
