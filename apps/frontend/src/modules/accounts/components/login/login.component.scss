@@ -13,9 +13,14 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 
-		> div, input, button {
+		> div, button, input {
 			margin: 3% 0;
 			width: 80%
+		}
+
+		h2 {
+			text-align: center;
+			margin: 4%;
 		}
 
 		button {
