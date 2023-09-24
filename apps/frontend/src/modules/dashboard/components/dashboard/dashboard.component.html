@@ -1,42 +1,28 @@
 <div class="dashboard">
     <header class="dashboard__header">
-        <h3>Projects</h3>
-        <button size="sm" sw-primary-button>Create new</button>
+        <h1>Projects</h1>
+        <button sw-primary-button (click)="openCreateProjectModal()" >Create</button>
     </header>
-    <ng-container *ngIf="(isProjectsLoading$ | async) === false; else projectLoader">
-        <ng-container *ngIf="projects$ | async as projects">
-            <ng-container *ngIf="projects.length; else noProjectsFound">
-                <section class="dashboard__projects">
-                     <div class="dashboard__project" *ngFor="let project of projects">
-                        <h4>{{ project.name }}</h4>
-                        <td>{{ project.name }}</td>
-                        <div class="dashboard__project-actions">
-                            <div class="dashboard-project-action-item">
-<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>                                <span>{{ project.createOps }}</span>
-                            </div>
-                            <div class="dashboard-project-action-item">
-                                <mat-icon>person</mat-icon>
-                                <span>{{ project.readOps }}</span>
-                            </div>
-                            <div class="dashboard-project-action-item">
-                                <mat-icon>person</mat-icon>
-                                <span>{{ project.updateOps }}</span>
-                            </div>
-                            <div class="dashboard-project-action-item">
-                                <mat-icon>person</mat-icon>
-                                <span>{{ project.deleteOps }}</span>
-                            </div>
-                        </div>
-                        <td>{{ project.storageSize }}</td>
-                    </div>
-                </section>
-            </ng-container>     
-            <ng-template #noProjectsFound>
-                <h2>No projects</h2>
-            </ng-template>       
-        </ng-container>
+    <ng-container *ngIf="(isLoading$ | async); else projectsData">
+        <div class="dashboard__loader">
+            <sw-loader size="lg"></sw-loader>
+        </div>
     </ng-container>
-    <ng-template #projectLoader>
-        <h3>Loading...</h3>
+    <ng-template #projectsData>
+        <ng-container *ngIf="projects$ | async as projects">
+            <ng-container *ngIf="projects.length > 0; else emptyProjects">
+                <div class="dashboard__projects">
+                    <ng-container *ngFor="let project of projects; trackBy: trackProject">
+                        <api-assistant-dashboard-project-card [project]="project">
+                        </api-assistant-dashboard-project-card>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-template #emptyProjects>
+                <div class="dashboard__empty_template">
+                    <span>No projects found</span>
+                </div>
+            </ng-template>
+        </ng-container>
     </ng-template>
 </div>

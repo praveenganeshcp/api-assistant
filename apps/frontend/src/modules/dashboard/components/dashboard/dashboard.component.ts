@@ -1,30 +1,101 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { loadProjects } from '../../store/dashboard.actions';
-import { isProjectsLoadingSelector, projectsSelector } from '../../store/dashboard.selector';
-import { CreateProjectComponent } from "../create-project/create-project.component"
-import { SwDialogService } from "ngx-simple-widgets";
+import { 
+  SwButtonComponent,
+  SwDialogModule,
+  SwDialogService,
+  SwLoaderComponent
+} from "ngx-simple-widgets";
+import { Observable, of } from "rxjs";
+import { CommonModule } from "@angular/common";
+import { DashboardProjectCardComponent } from "../dashboard-project-card/dashboard-project-card.component";
+import { Project } from "../../store/dashboard.state";
+import { CreateProjectComponent } from "../create-project/create-project.component";
+
 
 @Component({
   selector: 'api-assistant-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    SwButtonComponent,
+    DashboardProjectCardComponent,
+    SwDialogModule,
+    SwLoaderComponent
+  ]
 })
 export class DashboardComponent implements OnInit {
+
+  isLoading$: Observable<boolean> = of(false);
+
+  projects$: Observable<Project[]> = of([
+    {
+      id: 101,
+      name: 'API Assistant',
+      createOps: 10,
+      readOps: 22,
+      updateOps: 33,
+      deleteOps: 22,
+      storageSize: 22,
+      aggregate: 33
+    },
+    {
+      id: 102,
+      name: 'API Assistant',
+      createOps: 10,
+      readOps: 22,
+      updateOps: 33,
+      deleteOps: 22,
+      storageSize: 22,
+      aggregate: 33
+    },
+    {
+      id: 103,
+      name: 'API Assistant',
+      createOps: 10,
+      readOps: 22,
+      updateOps: 33,
+      deleteOps: 22,
+      storageSize: 22,
+      aggregate: 33
+    },
+    {
+      id: 104,
+      name: 'API Assistant',
+      createOps: 10,
+      readOps: 22,
+      updateOps: 33,
+      deleteOps: 22,
+      storageSize: 22,
+      aggregate: 33
+    },
+    {
+      id: 105,
+      name: 'API Assistant',
+      createOps: 10,
+      readOps: 22,
+      updateOps: 33,
+      deleteOps: 22,
+      storageSize: 22,
+      aggregate: 33
+    }
+  ])
+
   constructor(
-    private store: Store,
-    private dialogService: SwDialogService
+    private swDialogService: SwDialogService
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadProjects())
   }
+
+  public trackProject(_: number, project: Project) {
+    return project.id;
+  } 
 
   public openCreateProjectModal() {
-    this.dialogService.open(CreateProjectComponent)
+    const ref = this.swDialogService.open(CreateProjectComponent)
+    ref.afterClosed$.subscribe(console.log)
   }
 
-  isProjectsLoading$ = this.store.select(isProjectsLoadingSelector);
-
-  projects$ = this.store.select(projectsSelector);
 }

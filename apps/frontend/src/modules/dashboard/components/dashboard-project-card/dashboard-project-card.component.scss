@@ -1,0 +1,45 @@
+.dashboard-project-card {
+	border: 1px solid darkblue;
+	padding: 1rem;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-evenly;
+
+	h2 {
+		font-weight: lighter;
+	}
+
+	button[sw-bordered-icon-button] {
+		margin-top: 1rem;
+		align-self: flex-end;
+	}
+
+	.dashboard-project-card__stats {
+	  display: grid;
+	  flex-grow: 1;
+	  width: 100%;
+	  grid-template-columns: 33% 33% 33%;
+	  margin-top: 1rem;
+	}
+
+	.dashboard-project-card__stat_data {
+	  padding: 0.5rem;
+	  margin: 0.75rem;
+
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-evenly;
+
+	  sw-icon {
+	  	padding-top: 4px;
+	  	margin: 0.5rem;
+	  	margin-left: 0;
+	  }
+
+	  p {
+	  	font-size: 12px;
+	  }
+	}
+}

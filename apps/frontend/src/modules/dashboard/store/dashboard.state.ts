@@ -5,6 +5,7 @@ export interface Project {
     readOps: number;
     updateOps: number;
     deleteOps: number;
+    aggregate: number;
     storageSize: number;
 }
 
