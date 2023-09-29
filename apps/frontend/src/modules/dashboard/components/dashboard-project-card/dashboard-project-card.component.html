@@ -1,64 +1,41 @@
 <div class="dashboard-project-card">
-	<h2>{{ project.name  }}</h2>
+	<h3>{{ project.name  }}</h3>
 
 	<div class="dashboard-project-card__stats">
 
 	  <!-- create actions -->
 	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="upload"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Create</p>
-	  	</div>
+	    <b>{{ project.createOps }}</b>
+		<span>Operations</span>
 	  </div>
 
 	  <!-- read actions -->
 	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="download"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Read</p>
-	  	</div>
+	  	<b>{{ project.createOps }}</b>
+		<span>Storage</span>
 	  </div>
 
 	  <!-- edit actions -->
 	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="edit"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Edit</p>
-	  	</div>
+	  	<b>{{ project.createOps }}</b>
+		<span>Users</span>
 	  </div>
 
 	  <!-- delete actions -->
 	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="delete"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Delete</p>
-	  	</div>
+	  	<b>Jul 12, 2001</b>
+		<span>Created on</span>
 	  </div>
 
-	  <!-- aggregate actions -->
-	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="join_inner"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Join</p>
-	  	</div>
-	  </div>
-
-	  <!-- files -->
-	  <div class="dashboard-project-card__stat_data">
-	  	<sw-icon size="lg" name="upload_file"></sw-icon>
-	  	<div>
-		  	<b>{{ project.createOps }}</b>
-		  	<p>Files</p>
-	  	</div>
-	  </div>
 	</div>
 
-	<button sw-bordered-icon-button size="sm">
-	  	<sw-icon name="arrow_forward"></sw-icon>
-	</button>
+	<div class="dashboard-project-card__footer">
+		<span><b>Status:</b> Active</span>
+		<a [routerLink]="'/app/projects/'+project.id">
+			<button sw-icon-button size="sm">
+			  	<sw-icon name="arrow_forward_ios"></sw-icon>
+			</button>
+		</a>
+	</div>
+	
 </div>

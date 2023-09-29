@@ -8,6 +8,10 @@ export default [
             {
                 path: "projects",
                 loadComponent: () => import("../dashboard/components/dashboard/dashboard.component").then(m => m.DashboardComponent)
+            },
+            {
+                path: "projects/:projectId",
+                loadComponent: () => import("../project-details/components/project-details-shell/project-details-shell.component").then(m => m.ProjectDetailsShellComponent),
             }
         ]
     }

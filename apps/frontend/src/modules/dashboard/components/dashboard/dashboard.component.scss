@@ -45,7 +45,8 @@
 		padding: 1rem;
 
 		api-assistant-dashboard-project-card {
-			margin: 5% 0;
+			margin-bottom: 2rem;
+			width: 100%;
 		}
 	}
 
@@ -59,10 +60,9 @@
 
 		.dashboard__projects {
 
-			justify-content: flex-start;
-
 			api-assistant-dashboard-project-card {
-				margin: 3%;
+				width: 45%;
+				margin: 2%;
 			}
 		}
 	}
@@ -80,7 +80,8 @@
 			justify-content: flex-start;
 
 			api-assistant-dashboard-project-card {
-				margin: 2% 3%;
+				margin: 2%;
+				width: 27%;
 			}
 		}
 	}
