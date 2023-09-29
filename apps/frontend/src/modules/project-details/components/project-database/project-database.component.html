@@ -1,0 +1,28 @@
+<div class="project-database">
+	<div class="project-database__input">
+		<div class="project-database__select">
+			<select class="project-database__select-collection">
+				<option>Select Collection</option>
+				<option>Collection 1</option>
+				<option>Collection 1</option>
+				<option>Collection 1</option>
+			</select>
+
+			<select class="project-database__select-collection">
+				<option>Select Action</option>
+				<option>Collection 1</option>
+				<option>Collection 1</option>
+				<option>Collection 1</option>
+			</select>
+		</div>
+		<div class="project-database__query">
+			<input placeholder="Mongo Query statement" type="text" sw-input/>
+			<button sw-icon-button>
+				<sw-icon name='send'></sw-icon>
+			</button>
+		</div>
+	</div>
+	<div class="project-database__results">
+		<pre>{{ data | json }}</pre>
+	</div>
+</div>
