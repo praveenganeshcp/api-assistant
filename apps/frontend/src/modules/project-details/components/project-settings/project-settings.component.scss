@@ -1,0 +1,66 @@
+.project-settings-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-direction: column;
+
+	.project-setting {
+		width: 90%;
+		height: 33%;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		padding: 5% 2%;
+		border-bottom: 1px solid black;
+
+		&:last-child {
+			border-width: 0;
+		}
+
+
+		sw-icon {
+			flex-basis: 20%;
+		}
+
+		.project-setting__control {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-evenly;
+			flex-direction: column;
+
+			span {
+				font-size: 14px;
+			}
+
+			.project-setting__icon-button {
+				display: inline;
+				margin-left: 4%;
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.project-settings-container {
+		.project-setting {
+			padding: 5% 2%;
+			width: 50%;
+		}
+	}
+
+
+}
+
+@media only screen and (min-width: 1200px) {
+	.project-settings-container {
+		.project-setting {
+			padding: 2%;
+			width: 30%;
+		}
+	}
+
+}
