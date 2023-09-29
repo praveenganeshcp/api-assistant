@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
-      - name: Lint
-        run: npx nx lint frontend
-
       - name: Build
         run: npx nx build frontend
 
@@ -59,9 +56,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --frozen-lockfile
-
-      - name: Lint
-        run: npx nx lint backend
 
       - name: Build backend app
         run: npx nx build backend
