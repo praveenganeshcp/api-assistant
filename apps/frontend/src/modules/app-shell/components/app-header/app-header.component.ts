@@ -6,7 +6,6 @@ import { RouterModule } from "@angular/router";
   selector: 'api-assistant-app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     RouterModule

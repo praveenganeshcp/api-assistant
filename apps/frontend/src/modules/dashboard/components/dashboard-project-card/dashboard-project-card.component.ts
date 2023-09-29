@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from "@angular/router";
 import {
   Project
 } from "../../store/dashboard.state";
@@ -13,6 +14,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     SwIconComponent,
     SwButtonComponent
   ],
