@@ -7,6 +7,9 @@ import { AuthUser } from "@api-assistant/utils";
 import { LoginDTO } from "../dto/login.dto";
 import { LoginUseCase } from "../usecases/login.usecase";
 import { VerifyAccountUsecase } from "../usecases/verify-account.usecase";
+import { SendResetPasswordLinkUsecase } from "../usecases/send-reset-password-link.usecase";
+import { ResetPasswordDTO } from "../dto/reset-password.dto";
+import { ResetPasswordUsecase } from "../usecases/reset-password.usecase";
 
 @Controller('accounts')
 export class AccountsController {
@@ -14,7 +17,9 @@ export class AccountsController {
     constructor(
         private readonly createAccountUsecase: CreateAccountUsecase,
         private readonly loginUsecase: LoginUseCase,
-        private verifyAccountUsecase: VerifyAccountUsecase
+        private verifyAccountUsecase: VerifyAccountUsecase,
+        private sendResetPasswordLinkUsecase: SendResetPasswordLinkUsecase,
+        private resetPasswordUsecase: ResetPasswordUsecase
     ) {}
 
     @Post('signup')
@@ -64,5 +69,22 @@ export class AccountsController {
         response
             .cookie('token', token)
             .json(user)
+    }
+
+    @Post('reset-password-link')
+    public async sendResetPasswordLink(
+        @Body('emailId') emailId: string
+    ) {
+       await this.sendResetPasswordLinkUsecase.execute(emailId);
+    }
+
+    @Post('reset-password')
+    public async resetPassword(
+        @Body() resetPasswordDTO: ResetPasswordDTO
+    ) {
+        await this.resetPasswordUsecase.execute({
+            resetPasswordKey: resetPasswordDTO.resetPasswordKey,
+            password: resetPasswordDTO.password
+        })
     }
 }

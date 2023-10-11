@@ -23,3 +23,15 @@ export class InvalidVerificationKeyException extends UnauthorizedException {
         super("Invalid key or account already verified")
     }
 }
+
+export class EmailIdNotRegisteredException extends UnauthorizedException {
+    constructor() {
+        super("EmailID not registered in the system")
+    }
+}
+
+export class InvalidResetPasswordKeyException extends UnauthorizedException {
+    constructor() {
+        super("Invalid password reset link")
+    }
+}

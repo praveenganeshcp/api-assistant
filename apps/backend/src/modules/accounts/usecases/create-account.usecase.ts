@@ -10,6 +10,10 @@ import { EmailNotificationService } from "../../notification/services/email/emai
 import { appConfig } from "../../../config/app.config";
 import { ConfigType } from "@nestjs/config";
 import { createHash } from "crypto";
+import { createPasswordResetKey } from "../utils";
+import { UserDetailsMapper } from "../mappers/user-details.mapper";
+
+const userDetailsMapper = new UserDetailsMapper();
 
 @Injectable()
 export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: UserDetails, token: string}> {
@@ -30,14 +34,7 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: Us
         )
         this.sendAccountVerificationLink(newUserAccount);
         return {
-            user: {
-                emailId: newUserAccount.emailId,
-                username: newUserAccount.username,
-                lastLoggedInOn: newUserAccount.lastLoggedInOn,
-                isActive: newUserAccount.isActive,
-                isVerified: newUserAccount.isVerified,
-                createdOn: newUserAccount.createdOn
-            },
+            user: userDetailsMapper.from(newUserAccount),
             token: this.jwtService.signToken(newUserAccount._id.toString())
         }
     }
@@ -51,7 +48,8 @@ export class CreateAccountUsecase implements Usecase<CreateAccountDTO, {user: Us
             isVerified: false,
             createdOn: new Date(),
             lastLoggedInOn: null,
-            accountVerificationId: this.createAccountVerificationId(data.emailId)
+            accountVerificationId: this.createAccountVerificationId(data.emailId),
+            passwordResetKey: createPasswordResetKey(data.emailId)
         }
     }
 

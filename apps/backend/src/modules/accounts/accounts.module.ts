@@ -10,6 +10,8 @@ import { PasswordManagerService } from "./services/password-manager.service";
 import { LoginUseCase } from "./usecases/login.usecase";
 import { NotificationsModule } from "../notification/notification.module";
 import { VerifyAccountUsecase } from "./usecases/verify-account.usecase";
+import { SendResetPasswordLinkUsecase } from "./usecases/send-reset-password-link.usecase";
+import { ResetPasswordUsecase } from "./usecases/reset-password.usecase";
 
 @Module({
     imports: [NotificationsModule],
@@ -24,7 +26,9 @@ import { VerifyAccountUsecase } from "./usecases/verify-account.usecase";
         JWTService,
         PasswordManagerService,
         LoginUseCase,
-        VerifyAccountUsecase
+        VerifyAccountUsecase,
+        SendResetPasswordLinkUsecase,
+        ResetPasswordUsecase
     ]
 })
 export class AccountsModule implements NestModule {
