@@ -17,10 +17,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+        run: npm install
 
       - name: Build
         run: npx nx build frontend
@@ -52,10 +52,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+        run: npm install
 
       - name: Build backend app
         run: npx nx build backend
