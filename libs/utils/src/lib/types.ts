@@ -11,3 +11,8 @@ export interface Usecase<I, O> {
 export function valueIsNotEmptyString<T>(data: string): data is string {
     return valueIsDefined(data) && typeof data === "string" && data.length > 0;
 }
+
+export interface Mapper<I, O> {
+    from(input: I): O;
+    to(input: O): I;
+}

@@ -4,6 +4,9 @@ import { Injectable } from "@nestjs/common";
 import { AccountsRepository } from "../repository/accounts.repository";
 import { InvalidVerificationKeyException } from "../exceptions/accounts.exceptions";
 import { JWTService } from "../services/jwt.service";
+import { UserDetailsMapper } from "../mappers/user-details.mapper";
+
+const userDetailsMapper = new UserDetailsMapper();
 
 @Injectable()
 export class VerifyAccountUsecase 
@@ -29,14 +32,7 @@ export class VerifyAccountUsecase
             {$set: {isVerified: true, lastLoggedInOn: new Date()}}
         );
         return {
-            user: {
-                emailId: userAccount.emailId,
-                username: userAccount.username,
-                lastLoggedInOn: new Date(),
-                isActive: userAccount.isActive,
-                isVerified: true,
-                createdOn: userAccount.createdOn
-            },
+            user: userDetailsMapper.from(userAccount),
             token: this.jwtService.signToken(userAccount._id.toString())
         }
     }

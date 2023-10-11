@@ -11,6 +11,7 @@ export interface User {
     lastLoggedInOn: CanBeNull<Date>;
     isVerified: boolean;
     accountVerificationId: string;
+    passwordResetKey: string;
 }
 
-export type UserDetails = Omit<User, "password" | "_id" | "accountVerificationId">;
+export type UserDetails = Omit<User, "password" | "_id" | "accountVerificationId" | "passwordResetKey">;

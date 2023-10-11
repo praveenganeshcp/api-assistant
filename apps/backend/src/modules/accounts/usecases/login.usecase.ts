@@ -7,6 +7,9 @@ import { JWTService } from "../services/jwt.service";
 import { InvalidEmailIdPasswordException } from "../exceptions/accounts.exceptions";
 import { AccountsRepository } from "../repository/accounts.repository";
 import { Usecase, CanBeNull, valueIsDefined } from "@api-assistant/utils";
+import { UserDetailsMapper } from "../mappers/user-details.mapper";
+
+const userDetailsMapper = new UserDetailsMapper();
 
 
 @Injectable()
@@ -38,14 +41,7 @@ export class LoginUseCase implements Usecase<LoginDTO, {user: UserDetails, token
         )
         return {
             token: this.jwtService.signToken(userAccount._id.toString()),
-            user: {
-                emailId: userAccount.emailId,
-                username: userAccount.username,
-                lastLoggedInOn: userAccount.lastLoggedInOn,
-                isActive: userAccount.isActive,
-                isVerified: userAccount.isVerified,
-                createdOn: userAccount.createdOn
-            }
+            user: userDetailsMapper.from(userAccount)
         }
     }
 }

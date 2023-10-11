@@ -6,6 +6,9 @@ import { UserDetails } from "../entities/user.entity";
 import { InvalidAuthTokenException } from "../exceptions/accounts.exceptions";
 import { valueIsNotEmptyString, valueIsDefined } from "@api-assistant/utils";
 import { JsonWebTokenError } from "jsonwebtoken";
+import { UserDetailsMapper } from "../mappers/user-details.mapper";
+
+const userDetailsMapper = new UserDetailsMapper();
 
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
@@ -41,13 +44,6 @@ export class AuthenticationMiddleware implements NestMiddleware {
         if(!valueIsDefined(user)) {
             throw new InvalidAuthTokenException();
         }
-        return {
-            username: user.username,
-            emailId: user.emailId,
-            lastLoggedInOn: user.lastLoggedInOn,
-            isActive: user.isActive,
-            isVerified: user.isVerified,
-            createdOn: user.createdOn
-        }
+        return userDetailsMapper.from(user);
     }
 }
