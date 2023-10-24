@@ -1,3 +1,5 @@
 export enum DB_COLLECTIONS {
-    USERS = "users"
+  USERS = 'users',
+  PROJECTS = 'projects',
+  PROJECT_METADATA = 'project_metadata',
 }
