@@ -1,30 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { of, startWith, delay } from "rxjs";
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ProfileLoaderComponent } from '../profile-loader/profile-loader.component';
+import { loadProfile } from '../../../accounts/store/actions';
+import { isProfileLoadingSelector } from '../../../accounts/store/selectors';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
 
 @Component({
   standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    ProfileLoaderComponent
-  ],
+  imports: [RouterModule, CommonModule, ProfileLoaderComponent],
   selector: 'api-assistant-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private store: Store<AppState>) {}
 
-  constructor() {}
-
-  public isUserProfileLoading$ = of(false).pipe(
-    startWith(true),
-    delay(2000)
+  public isUserProfileLoading$: Observable<boolean> = this.store.select(
+    isProfileLoadingSelector
   );
 
   ngOnInit() {
+    this.store.dispatch(loadProfile());
   }
 }
-

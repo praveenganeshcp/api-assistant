@@ -1,161 +1,163 @@
 .landing-page {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .landing-page__header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    background-color: darkblue;
-    color: white;
-    padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: darkblue;
+  color: white;
+  padding: 0 5%;
 
-    a {
-        margin: 1rem;
-        color: white;
-    }
+  a,
+  button {
+    margin: 1rem;
+    color: white;
+  }
 }
 
 .landing-page__banner {
-    height: 60%;
-    background-color: darkblue;
-    color: white;
-    padding: 5%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+  height: 60%;
+  background-color: darkblue;
+  color: white;
+  padding: 5%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 
-    h1 {
-        font-size: 3rem;
-    }
+  h1 {
+    font-size: 3rem;
+  }
 
-    h4 {
-        font-size: 1.5rem;
-        font-weight: 300;
-    }
+  h4 {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
 }
 
 .landing-page__features {
-    padding: 0 5%;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-    align-items: center;
+  padding: 0 5%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
 
-    h1 {
-        padding: 5% 0;
-        font-weight: 300;
-    }
+  h1 {
+    padding: 5% 0;
+    font-weight: 300;
+  }
 }
 
 .landing-page__feature-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 5% 3%;
-    width: 100%;
-    height: 15%;
-    border-bottom: 1px solid darkblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 5% 3%;
+  width: 100%;
+  height: 15%;
+  border-bottom: 1px solid darkblue;
 
-    span {
-        font-weight: lighter;
-        margin-top: 2%;
-    }
+  span {
+    font-weight: lighter;
+    margin-top: 2%;
+  }
 }
 
 .landing_page__footer {
-    text-align: center;
-    padding: 10% 0;
+  text-align: center;
+  padding: 10% 0;
 }
 
 @media only screen and (min-width: 768px) {
-    
-    .landing-page__header {
-        padding: 2%;
+  .landing-page__header {
+    padding: 2%;
 
-        a {
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
-        }
+    a {
+      font-size: 1.5rem;
+      margin-right: 1.5rem;
+    }
+  }
+
+  .landing-page__banner {
+    h1 {
+      font-size: 5rem;
     }
 
-    .landing-page__banner {
-        h1 {
-            font-size: 5rem;
-        }
-
-        h4 {
-            font-size: 2rem;
-        }
+    h4 {
+      font-size: 2rem;
     }
+  }
 
-    .landing-page__features {
-        h1 {
-            font-size: 2rem;
-        }
+  .landing-page__features {
+    h1 {
+      font-size: 2rem;
     }
+  }
 
-    .landing-page__feature-card {
-        width: 70%;
-        font-size: 1rem;
-        padding: 3%;
-        
-        h6 {
-            font-size: 1rem;
-        }
-    }
+  .landing-page__feature-card {
+    width: 70%;
+    font-size: 1rem;
+    padding: 3%;
 
-    .landing_page__footer {
-        padding: 5% 0;
-        font-size: 1rem;
+    h6 {
+      font-size: 1rem;
     }
+  }
+
+  .landing_page__footer {
+    padding: 5% 0;
+    font-size: 1rem;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-    .landing-page__header {
-
-        a {
-            font-size: 1.5rem;
-            margin: 0;
-            margin-right: 4rem;
-        }
+  .landing-page__header {
+    a {
+      font-size: 1.5rem;
+      margin: 0;
     }
 
-    .landing-page__banner {
-        height: 65%;
+    a,
+    button {
+      margin-right: 4rem;
+    }
+  }
 
-        h1 {
-            font-size: 5rem;
-        }
+  .landing-page__banner {
+    height: 65%;
 
-        h4 {
-            font-size: 3rem;
-        }
+    h1 {
+      font-size: 5rem;
     }
 
-    .landing-page__features {
-        h1 {
-            font-size: 3rem;
-        }
+    h4 {
+      font-size: 3rem;
     }
+  }
 
-
-    .landing-page__feature-card {
-        width: 70%;
-        padding: 3%;
-        font-size: 1.5rem;
-
-        h6 {
-            font-size: 2rem;
-        }
+  .landing-page__features {
+    h1 {
+      font-size: 3rem;
     }
+  }
 
-    .landing_page__footer {
-        padding: 5% 0;
-        font-size: 2rem;
+  .landing-page__feature-card {
+    width: 70%;
+    padding: 3%;
+    font-size: 1.5rem;
+
+    h6 {
+      font-size: 2rem;
     }
-} 
+  }
+
+  .landing_page__footer {
+    padding: 5% 0;
+    font-size: 2rem;
+  }
+}

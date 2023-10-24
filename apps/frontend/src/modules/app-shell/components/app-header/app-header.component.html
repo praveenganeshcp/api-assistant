@@ -1,9 +1,28 @@
-<main class="app-shell">
-    <header class="app-shell__header">
-        <a routerLink="/">API Assistant</a>
-        <a routerLink="/profile">Profile</a>
-    </header>
-    <section class="app-shell__routes">
-        <router-outlet></router-outlet>
-    </section>
+<main
+  class="app-shell"
+  *ngIf="isAccountVerified$ | async; else accountNotVerified"
+>
+  <header class="app-shell__header">
+    <a routerLink="/">API Assistant</a>
+    <div class="app-shell__user-options">
+      <a routerLink="/profile">Profile</a>
+      <button (click)="handleLogout()" sw-icon-button size="sm">
+        <sw-icon name="logout"></sw-icon>
+      </button>
+    </div>
+  </header>
+  <section class="app-shell__routes">
+    <router-outlet></router-outlet>
+  </section>
 </main>
+<ng-template #accountNotVerified>
+  <div class="account-not-verified">
+    <a routerLink="/">API Assistant</a>
+    <h1>
+      Verify your account by clicking on link sent to your registered email.
+    </h1>
+    <h3>
+      Login <a routerLink="/accounts/login">here</a> once account is verified
+    </h3>
+  </div>
+</ng-template>
