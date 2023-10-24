@@ -29,19 +29,23 @@ const defaultAccountState: AccountState = {
   },
   createAccount: {
     inProgress: false,
+    error: '',
   },
   login: {
     inProgress: false,
+    error: '',
   },
   logout: {
     inProgress: false,
   },
   verifyAccount: {
     inProgress: false,
+    error: '',
   },
   resetPasswordLink: {
     isSent: false,
     inProgress: false,
+    error: '',
   },
 };
 
@@ -76,6 +80,7 @@ export const accountsReducer = createReducer(
     ...state,
     createAccount: {
       inProgress: true,
+      error: '',
     },
   })),
   on(createAccountSuccess, (state, { data }) => ({
@@ -86,17 +91,20 @@ export const accountsReducer = createReducer(
     },
     createAccount: {
       inProgress: false,
+      error: '',
     },
   })),
-  on(createAccountError, (state) => ({
+  on(createAccountError, (state, { error }) => ({
     ...state,
     createAccount: {
       inProgress: false,
+      error,
     },
   })),
   on(loginAccount, (state) => ({
     ...state,
     login: {
+      error: '',
       inProgress: true,
     },
   })),
@@ -108,12 +116,14 @@ export const accountsReducer = createReducer(
     },
     login: {
       inProgress: false,
+      error: '',
     },
   })),
-  on(loginError, (state) => ({
+  on(loginError, (state, { error }) => ({
     ...state,
     login: {
       inProgress: false,
+      error,
     },
   })),
   on(logoutAccount, (state) => ({
@@ -141,6 +151,7 @@ export const accountsReducer = createReducer(
   on(verifyAccount, (state) => ({
     ...state,
     verifyAccount: {
+      error: '',
       inProgress: true,
     },
   })),
@@ -151,20 +162,23 @@ export const accountsReducer = createReducer(
       data,
     },
     verifyAccount: {
+      error: '',
       inProgress: false,
     },
   })),
-  on(verifyAccountError, (state) => ({
+  on(verifyAccountError, (state, { error }) => ({
     ...state,
     verifyAccount: {
       inProgress: false,
+      error,
     },
   })),
 
   on(sendPasswordResetLink, (state) => ({
     ...state,
     resetPasswordLink: {
-      ...state.resetPasswordLink,
+      isSent: false,
+      error: '',
       inProgress: true,
     },
   })),
@@ -173,13 +187,15 @@ export const accountsReducer = createReducer(
     resetPasswordLink: {
       inProgress: false,
       isSent: true,
+      error: '',
     },
   })),
-  on(sendPasswordResetLinkError, (state) => ({
+  on(sendPasswordResetLinkError, (state, { error }) => ({
     ...state,
     resetPasswordLink: {
-      ...state.resetPasswordLink,
+      isSent: false,
       inProgress: false,
+      error,
     },
   }))
 );

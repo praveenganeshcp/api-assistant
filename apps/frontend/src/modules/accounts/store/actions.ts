@@ -25,7 +25,8 @@ export const createAccountSuccess = createAction(
 );
 
 export const createAccountError = createAction(
-  '[Account] Create Account error'
+  '[Account] Create Account error',
+  props<{ error: string }>()
 );
 
 export const loginAccount = createAction(
@@ -38,7 +39,10 @@ export const loginSuccess = createAction(
   props<{ data: UserProfile }>()
 );
 
-export const loginError = createAction('[Account] Login Error');
+export const loginError = createAction(
+  '[Account] Login Error',
+  props<{ error: string }>()
+);
 
 export const logoutAccount = createAction('[Account] Logout Account');
 
@@ -57,7 +61,8 @@ export const verifyAccountSuccess = createAction(
 );
 
 export const verifyAccountError = createAction(
-  '[Account] Verify account error'
+  '[Account] Verify account error',
+  props<{ error: string }>()
 );
 
 export const sendPasswordResetLink = createAction(
@@ -70,5 +75,6 @@ export const sendPasswordResetLinkSuccess = createAction(
 );
 
 export const sendPasswordResetLinkError = createAction(
-  '[Account] Send Password reset error'
+  '[Account] Send Password reset error',
+  props<{ error: string }>()
 );

@@ -1,22 +1,22 @@
 export interface Project {
-    id: number;
-    name: string;
-    createOps: number;
-    readOps: number;
-    updateOps: number;
-    deleteOps: number;
-    aggregate: number;
-    storageSize: number;
+  id: string;
+  name: string;
+  totalOperations: number;
+  storageSize: number;
+  activeUsers: number;
+  createdOn: Date;
+  status: boolean;
 }
 
 export interface DashboardState {
+  projects: {
     isLoading: boolean;
     data: Project[];
     error: string;
-}
-
-export const DASHBOARD_STATE: DashboardState = {
-    isLoading: false,
-    data: [],
-    error: ''
+  };
+  createProject: {
+    inProgress: boolean;
+    error: string;
+    isCreated: boolean;
+  };
 }
