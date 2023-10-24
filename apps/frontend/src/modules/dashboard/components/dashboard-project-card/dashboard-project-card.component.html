@@ -1,41 +1,38 @@
 <div class="dashboard-project-card">
-	<h3>{{ project.name  }}</h3>
+  <h3>{{ project.name }}</h3>
 
-	<div class="dashboard-project-card__stats">
+  <div class="dashboard-project-card__stats">
+    <!-- create actions -->
+    <div class="dashboard-project-card__stat_data">
+      <b>{{ project.totalOperations }}</b>
+      <span>Operations</span>
+    </div>
 
-	  <!-- create actions -->
-	  <div class="dashboard-project-card__stat_data">
-	    <b>{{ project.createOps }}</b>
-		<span>Operations</span>
-	  </div>
+    <!-- read actions -->
+    <div class="dashboard-project-card__stat_data">
+      <b>{{ project.storageSize }}</b>
+      <span>Storage</span>
+    </div>
 
-	  <!-- read actions -->
-	  <div class="dashboard-project-card__stat_data">
-	  	<b>{{ project.createOps }}</b>
-		<span>Storage</span>
-	  </div>
+    <!-- edit actions -->
+    <div class="dashboard-project-card__stat_data">
+      <b>{{ project.activeUsers }}</b>
+      <span>Users</span>
+    </div>
 
-	  <!-- edit actions -->
-	  <div class="dashboard-project-card__stat_data">
-	  	<b>{{ project.createOps }}</b>
-		<span>Users</span>
-	  </div>
+    <!-- delete actions -->
+    <div class="dashboard-project-card__stat_data">
+      <b>{{ project.createdOn | date : 'MMM d, YYY' }}</b>
+      <span>Created on</span>
+    </div>
+  </div>
 
-	  <!-- delete actions -->
-	  <div class="dashboard-project-card__stat_data">
-	  	<b>Jul 12, 2001</b>
-		<span>Created on</span>
-	  </div>
-
-	</div>
-
-	<div class="dashboard-project-card__footer">
-		<span><b>Status:</b> Active</span>
-		<a [routerLink]="'/app/projects/'+project.id">
-			<button sw-icon-button size="sm">
-			  	<sw-icon name="arrow_forward_ios"></sw-icon>
-			</button>
-		</a>
-	</div>
-	
+  <div class="dashboard-project-card__footer">
+    <span><b>Status:</b> {{ project.status ? 'Active' : 'Inactive' }}</span>
+    <a [routerLink]="'/app/projects/' + project.id">
+      <button sw-icon-button size="sm">
+        <sw-icon name="arrow_forward_ios"></sw-icon>
+      </button>
+    </a>
+  </div>
 </div>

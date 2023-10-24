@@ -9,18 +9,22 @@ export interface AccountState {
   };
   createAccount: {
     inProgress: boolean;
+    error: string;
   };
   login: {
     inProgress: boolean;
+    error: string;
   };
   logout: {
     inProgress: boolean;
   };
   verifyAccount: {
     inProgress: boolean;
+    error: string;
   };
   resetPasswordLink: {
     isSent: boolean;
     inProgress: boolean;
+    error: string;
   };
 }

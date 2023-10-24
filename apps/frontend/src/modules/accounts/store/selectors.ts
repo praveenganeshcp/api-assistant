@@ -18,9 +18,34 @@ export const loggedInUserSelector = createSelector(
   (profileState) => profileState.data
 );
 
+export const isProfileVerifiedSelector = createSelector(
+  loggedInUserSelector,
+  (loggedInUser) => loggedInUser?.isVerified
+);
+
 export const isUserLoggingInSelector = createSelector(
   accountsSelector,
   (accountsState) => accountsState.login.inProgress
+);
+
+export const loginErrorMessageSelector = createSelector(
+  accountsSelector,
+  (accountsState) => accountsState.login.error
+);
+
+export const createAccountErrorMessageSelector = createSelector(
+  accountsSelector,
+  (accountsState) => accountsState.createAccount.error
+);
+
+export const sendResetPasswordLinkErrorMessageSelector = createSelector(
+  accountsSelector,
+  (accountsState) => accountsState.resetPasswordLink.error
+);
+
+export const verifyAccountErrorMessageSelector = createSelector(
+  accountsSelector,
+  (accountsState) => accountsState.verifyAccount.error
 );
 
 export const isUserLoggingOutSelector = createSelector(

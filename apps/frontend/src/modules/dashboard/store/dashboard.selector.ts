@@ -1,19 +1,45 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { DashboardState } from "./dashboard.state";
+import { createSelector } from '@ngrx/store';
+import { AppState } from '../../app/app.state';
+import { DashboardState } from './dashboard.state';
 
-export const dashboardSelector = createFeatureSelector<DashboardState>("dashboard");
+const dashboardSelector = (state: AppState) => state.dashboard;
+
+export const dashboardProjectsSelector = createSelector(
+  dashboardSelector,
+  (state) => state.projects
+);
+
+export const createProjectSelector = createSelector(
+  dashboardSelector,
+  (state) => state.createProject
+);
 
 export const isProjectsLoadingSelector = createSelector(
-    dashboardSelector,
-    (state) => state.isLoading
-)
+  dashboardProjectsSelector,
+  (projects) => projects.isLoading
+);
 
 export const projectsSelector = createSelector(
-    dashboardSelector,
-    (state) => state.data
-)
+  dashboardProjectsSelector,
+  (projects) => projects.data
+);
 
 export const projectLoadError = createSelector(
-    dashboardSelector,
-    (state) => state.error
-)
+  dashboardProjectsSelector,
+  (projects) => projects.error
+);
+
+export const isCreateProjectInProgress = createSelector(
+  createProjectSelector,
+  (createProject) => createProject.inProgress
+);
+
+export const isCreateProjectSuccess = createSelector(
+  createProjectSelector,
+  (createProject) => createProject.isCreated
+);
+
+export const createProjectError = createSelector(
+  createProjectSelector,
+  (createProject) => createProject.error
+);

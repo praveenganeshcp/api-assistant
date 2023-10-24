@@ -1,23 +1,70 @@
-import { Observable, delay, of } from "rxjs";
-import { Project } from "../store/dashboard.state";
-import { Injectable } from "@angular/core";
+import { Observable, map } from 'rxjs';
+import { Project } from '../store/dashboard.state';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.dev';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-    providedIn: "root"
+  providedIn: 'root',
 })
 export class ProjectRepository {
-    public loadProjects(): Observable<Project[]> {
-        const projects: Project[] = [
-            {
-                id: 101,
-                name: "API Assistant",
-                createOps: 10,
-                readOps: 22,
-                updateOps: 33,
-                deleteOps: 22,
-                storageSize: 33
-            }
-        ]
-        return of(projects).pipe(delay(2000))
-    }
+  constructor(private http: HttpClient) {}
+
+  public get apiUrl(): string {
+    return environment.apiUrl;
+  }
+
+  public loadProjects(): Observable<Project[]> {
+    return this.http
+      .get<any[]>(`${this.apiUrl}api/v6/projects`, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((projects) =>
+          projects.map((project) => {
+            const count = project.metadata.count;
+            return {
+              id: project._id,
+              name: project.name,
+              totalOperations: Object.keys(count).reduce(
+                (acc, key) => count[key] + acc,
+                0
+              ),
+              storageSize: project.metadata.storage,
+              activeUsers: project.metadata.users,
+              createdOn: new Date(project.createdOn),
+              status: true,
+            };
+          })
+        )
+      );
+  }
+
+  public createProject(name: string): Observable<Project> {
+    return this.http
+      .post<any>(
+        `${this.apiUrl}api/v6/projects`,
+        { name },
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        map((project) => {
+          const count = project.metadata.count;
+          return {
+            id: project._id,
+            name: project.name,
+            totalOperations: Object.keys(count).reduce(
+              (acc, key) => count[key] + acc,
+              0
+            ),
+            storageSize: project.metadata.storage,
+            activeUsers: project.metadata.users,
+            createdOn: new Date(project.createdOn),
+            status: true,
+          };
+        })
+      );
+  }
 }
