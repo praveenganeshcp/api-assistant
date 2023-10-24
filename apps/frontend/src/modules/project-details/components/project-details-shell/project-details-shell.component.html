@@ -1,7 +1,7 @@
 <main class="project-details">
   <sw-tab-view
     [activeTabIndex]="activeTabIndex"
-    [showTabsInBottom]="!(isDesktopScreen$ | async)"
+    [showTabsInBottom]="(isDesktopScreen$ | async) === false"
     (tabClick)="onTabChange($event)"
     [style.--sw-tab-view-title-height]="'10%'"
     [style.--sw-tab-view-content-height]="'90%'"
@@ -13,8 +13,7 @@
         </div>
       </sw-tab-title>
       <sw-tab-content>
-        <api-assistant-project-home>
-        </api-assistant-project-home>
+        <api-assistant-project-home> </api-assistant-project-home>
       </sw-tab-content>
     </sw-tab>
     <sw-tab>
@@ -24,8 +23,7 @@
         </div>
       </sw-tab-title>
       <sw-tab-content>
-        <api-assistant-project-files>
-        </api-assistant-project-files>
+        <api-assistant-project-files> </api-assistant-project-files>
       </sw-tab-content>
     </sw-tab>
     <sw-tab>
@@ -35,8 +33,7 @@
         </div>
       </sw-tab-title>
       <sw-tab-content>
-        <api-assistant-project-database>
-        </api-assistant-project-database>
+        <api-assistant-project-database> </api-assistant-project-database>
       </sw-tab-content>
     </sw-tab>
     <sw-tab>
@@ -46,8 +43,7 @@
         </div>
       </sw-tab-title>
       <sw-tab-content>
-        <api-assistant-project-logs>
-        </api-assistant-project-logs>
+        <api-assistant-project-logs> </api-assistant-project-logs>
       </sw-tab-content>
     </sw-tab>
     <sw-tab>
@@ -57,8 +53,7 @@
         </div>
       </sw-tab-title>
       <sw-tab-content>
-        <api-assistant-project-settings>
-        </api-assistant-project-settings>
+        <api-assistant-project-settings> </api-assistant-project-settings>
       </sw-tab-content>
     </sw-tab>
   </sw-tab-view>

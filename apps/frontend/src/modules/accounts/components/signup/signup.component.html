@@ -1,10 +1,48 @@
 <div class="signup">
-	<form class="signup__form">
-		<h2>Signup</h2>
-		<input sw-input type="email" placeholder="Email ID" />
-		<input sw-input type="text" placeholder="Username" />
-		<input sw-input type="password" placeholder="Password" />
-		<button sw-primary-button>Create account</button>
-	</form>
-	<span>Already have an account? <a routerLink="/accounts/login">Login here</a></span>
+  <api-assistant-alert-banner
+    type="error"
+    [text]="createAccountError$ | async"
+  ></api-assistant-alert-banner>
+  <form
+    [formGroup]="signupForm"
+    (ngSubmit)="handleSignup()"
+    class="signup__form"
+  >
+    <h2>Signup</h2>
+    <api-assistant-form-control [control]="usernameControl">
+      <input
+        sw-input
+        formControlName="username"
+        type="text"
+        placeholder="Username"
+      />
+    </api-assistant-form-control>
+    <api-assistant-form-control [control]="emailIdControl">
+      <input
+        sw-input
+        formControlName="emailId"
+        type="email"
+        placeholder="Email ID"
+      />
+    </api-assistant-form-control>
+    <api-assistant-form-control [control]="passwordControl">
+      <input
+        sw-input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+      />
+    </api-assistant-form-control>
+    <button
+      [showLoader]="isSignupInProgress$ | async"
+      [disabled]="signupForm.invalid"
+      sw-primary-button
+    >
+      Create account
+    </button>
+  </form>
+  <span
+    >Already have an account?
+    <a routerLink="/accounts/login">Login here</a></span
+  >
 </div>

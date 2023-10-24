@@ -1,19 +1,19 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   SwTabViewComponent,
   SwTabComponent,
   SwTabTitleComponent,
   SwTabContentComponent,
-  SwIconComponent
-} from "ngx-simple-widgets";
-import { RouterModule, Router, ActivatedRoute } from "@angular/router";
-import { ProjectHomeComponent } from "../project-home/project-home.component"
-import { ProjectLogsComponent } from "../project-logs/project-logs.component"
-import { ProjectDatabaseComponent } from "../project-database/project-database.component"
-import { ProjectSettingsComponent } from "../project-settings/project-settings.component"
-import { ProjectFilesComponent } from "../project-files/project-files.component"
-import { BreakPointObserver } from "../../../app/services/breakpointobserver.service";
+  SwIconComponent,
+} from 'ngx-simple-widgets';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { ProjectHomeComponent } from '../project-home/project-home.component';
+import { ProjectLogsComponent } from '../project-logs/project-logs.component';
+import { ProjectDatabaseComponent } from '../project-database/project-database.component';
+import { ProjectSettingsComponent } from '../project-settings/project-settings.component';
+import { ProjectFilesComponent } from '../project-files/project-files.component';
+import { BreakPointObserver } from '../../../app/services/breakpointobserver.service';
 
 @Component({
   selector: 'api-assistant-project-details-shell',
@@ -30,13 +30,12 @@ import { BreakPointObserver } from "../../../app/services/breakpointobserver.ser
     ProjectLogsComponent,
     ProjectDatabaseComponent,
     ProjectSettingsComponent,
-    ProjectFilesComponent
+    ProjectFilesComponent,
   ],
   templateUrl: './project-details-shell.component.html',
   styleUrls: ['./project-details-shell.component.scss'],
 })
 export class ProjectDetailsShellComponent {
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver
@@ -53,5 +52,4 @@ export class ProjectDetailsShellComponent {
   onTabChange(index: number) {
     this.activeTabIndex = index;
   }
-
 }

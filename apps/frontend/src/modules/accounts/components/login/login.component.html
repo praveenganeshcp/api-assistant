@@ -1,12 +1,36 @@
 <div class="login">
-    <form class="login__form">
-        <h2>Login</h2>
-        <input sw-input type="email" placeholder="Email ID" />
-        <div class="login__forgot-password">
-            <input sw-input type="password" placeholder="Password" />
-            <a routerLink="/accounts/forgot-password">Forgot password?</a>
-        </div>
-        <button sw-primary-button>Login</button>
-    </form>
-    <span>New to API Assistant? <a routerLink="/accounts/signup">Signup here</a></span>
+  <api-assistant-alert-banner
+    type="error"
+    [text]="loginErrorMessage$ | async"
+  ></api-assistant-alert-banner>
+  <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login__form">
+    <h2>Login</h2>
+    <api-assistant-form-control [control]="emailIdControl">
+      <input
+        autocomplete="off"
+        formControlName="emailId"
+        sw-input
+        type="email"
+        placeholder="Email ID"
+      />
+    </api-assistant-form-control>
+    <div class="login__forgot-password">
+      <api-assistant-form-control [control]="passwordControl">
+        <input
+          formControlName="password"
+          sw-input
+          type="password"
+          placeholder="Password"
+        />
+      </api-assistant-form-control>
+      <a routerLink="/accounts/forgot-password">Forgot password?</a>
+    </div>
+    <button [showLoader]="isLoginInProgress$ | async" sw-primary-button>
+      Login
+    </button>
+  </form>
+  <span
+    >New to API Assistant?
+    <a routerLink="/accounts/signup">Signup here</a></span
+  >
 </div>

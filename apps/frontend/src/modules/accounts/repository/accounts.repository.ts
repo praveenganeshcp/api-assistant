@@ -1,32 +1,81 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable, delay, of } from "rxjs";
-import { AuthUser } from "../accounts.types";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { UserProfile } from '../accounts.types';
+import { environment } from '../../../environments/environment.dev';
 
 @Injectable({
-    providedIn: "root"
+  providedIn: 'root',
 })
 export class AccountsRepository {
-    constructor(
-        private http: HttpClient
-    ) {}
+  constructor(private http: HttpClient) {}
 
-    private get baseURL(): string {
-        return "http://localhost:3000/";
-    }
+  private get baseURL(): string {
+    return environment.apiUrl;
+  }
 
-    public fetchUserProfile(): Observable<AuthUser> {
-        return this.http.get<AuthUser>(`${this.baseURL}api/v6/accounts/profile`, {withCredentials: true}).pipe(
-        )
-    }
+  public fetchUserProfile(): Observable<UserProfile> {
+    return this.http
+      .get<UserProfile>(`${this.baseURL}api/v6/accounts/profile`, {
+        withCredentials: true,
+      })
+      .pipe();
+  }
 
-    public login(emailId: string, password: string) {
-        return this.http.post<AuthUser>(`${this.baseURL}api/v6/accounts/login`, {emailId, password}, {
-            withCredentials: true
-        })
-    }
+  public signup(emailId: string, password: string, username: string) {
+    return this.http.post<UserProfile>(
+      `${this.baseURL}api/v6/accounts/signup`,
+      { emailId, password, username },
+      {
+        withCredentials: true,
+      }
+    );
+  }
 
-    public logout() {
-        return this.http.post<void>(`${this.baseURL}api/v6/accounts/logout`, {}, {withCredentials: true})
-    }
+  public login(emailId: string, password: string) {
+    return this.http.post<UserProfile>(
+      `${this.baseURL}api/v6/accounts/login`,
+      { emailId, password },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  public checkIfEmailIdRegistered(emailId: string) {
+    return this.http
+      .post<{ isEmailIdRegistered: boolean }>(
+        `${this.baseURL}api/v6/accounts/is-emailid-registered`,
+        { emailId },
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(map((response) => response.isEmailIdRegistered));
+  }
+
+  public logout() {
+    return this.http.post<void>(
+      `${this.baseURL}api/v6/accounts/logout`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  public verifyAccount(verificationKey: string): Observable<UserProfile> {
+    return this.http.patch<UserProfile>(
+      `${this.baseURL}api/v6/accounts/verify-account`,
+      { verificationKey },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  public sendPasswordResetLink(emailId: string) {
+    return this.http.post(
+      `${this.baseURL}api/v6/accounts/reset-password-link`,
+      { emailId }
+    );
+  }
 }
