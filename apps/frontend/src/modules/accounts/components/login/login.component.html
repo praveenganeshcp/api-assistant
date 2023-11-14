@@ -5,27 +5,28 @@
   ></api-assistant-alert-banner>
   <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login__form">
     <h2>Login</h2>
-    <api-assistant-form-control [control]="emailIdControl">
+    <sw-form-control [control]="emailIdControl" label="Email ID">
       <input
-        autocomplete="off"
         formControlName="emailId"
         sw-input
         type="email"
-        placeholder="Email ID"
       />
-    </api-assistant-form-control>
+    </sw-form-control>
     <div class="login__forgot-password">
-      <api-assistant-form-control [control]="passwordControl">
+      <sw-form-control [control]="passwordControl" label="Password">
         <input
           formControlName="password"
           sw-input
           type="password"
-          placeholder="Password"
         />
-      </api-assistant-form-control>
+      </sw-form-control>
       <a routerLink="/accounts/forgot-password">Forgot password?</a>
     </div>
-    <button [showLoader]="isLoginInProgress$ | async" sw-primary-button>
+    <button
+      [disabled]="loginForm.invalid"
+      [showLoader]="isLoginInProgress$ | async"
+      sw-primary-button
+    >
       Login
     </button>
   </form>

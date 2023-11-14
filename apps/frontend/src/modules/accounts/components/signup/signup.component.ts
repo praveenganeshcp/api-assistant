@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
-import { FormControlComponent } from '../form-control/form-control.component';
+import { SwButtonComponent, SwInputComponent, SwFormControlComponent } from 'ngx-simple-widgets';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 
 import {
@@ -33,7 +32,7 @@ import { AppState } from '../../../app/app.state';
     RouterModule,
     SwButtonComponent,
     SwInputComponent,
-    FormControlComponent,
+    SwFormControlComponent,
     AlertBannerComponent,
   ],
 })
