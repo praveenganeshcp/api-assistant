@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 import { strongPasswordValidator } from '../../utils';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
-import { SwFormControlComponent } from "ngx-simple-widgets";
+import { SwFormControlComponent } from 'ngx-simple-widgets';
 
 @Component({
   selector: 'api-assistant-login',
@@ -33,7 +33,7 @@ import { SwFormControlComponent } from "ngx-simple-widgets";
     SwInputComponent,
     ReactiveFormsModule,
     AlertBannerComponent,
-    SwFormControlComponent
+    SwFormControlComponent,
   ],
 })
 export class LoginComponent {

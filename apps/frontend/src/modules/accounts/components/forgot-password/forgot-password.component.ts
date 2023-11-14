@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SwButtonComponent, SwInputComponent, SwFormControlComponent } from 'ngx-simple-widgets';
+import {
+  SwButtonComponent,
+  SwInputComponent,
+  SwFormControlComponent,
+} from 'ngx-simple-widgets';
 import { RouterModule } from '@angular/router';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 

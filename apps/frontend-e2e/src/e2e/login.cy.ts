@@ -10,7 +10,7 @@ describe('login page', () => {
 
   function getPasswordField() {
     return cy.get('input[type="password"]');
-  }  
+  }
 
   it('should show login button in disabled in initial state', () => {
     cy.get('button[sw-primary-button').should('have.attr', 'disabled');
