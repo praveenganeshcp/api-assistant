@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Injectable} from '@angular/core';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { profileSelector } from '../store/selectors';
 import { AppState } from '../../app/app.state';
@@ -14,24 +14,22 @@ export class AccountsGuard implements CanActivate {
     private swToastService: SwToastService
   ) {}
 
-  canActivate(): Observable<boolean> {
+  canActivate(): Observable<boolean | UrlTree> {
     return this.store.select(profileSelector).pipe(
-      tap((profile) => {
-        if (profile.isLoading) {
-          this.router.navigate(['']);
+      map((profile) => {
+        if(profile.isLoading) {
+          return this.router.createUrlTree([''], {
+            queryParams: { next: location.pathname }
+          });
         }
-      }),
-      map(
-        (profileState) => !profileState.isLoading && profileState.data === null
-      ),
-      tap((isUserNotLoggedIn) => {
-        if (!isUserNotLoggedIn) {
+        else if(profile.data !== null && profile.data?.isVerified) {
           this.swToastService.error({
             title: 'Already logged in',
             message: '',
           });
-          this.router.navigate([]);
+          return false;
         }
+        return true;
       })
     );
   }

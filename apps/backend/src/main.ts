@@ -8,7 +8,6 @@ import { CustomValidationPipe } from './modules/app/custom-validation.pipe';
 import { useContainer } from 'class-validator';
 import { appConfig } from './config/app.config';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 
 async function bootstrap() {
   // bootstrap app module
@@ -22,11 +21,12 @@ async function bootstrap() {
   // cookie parser middleware
   app.use(
     cookieParser(),
-    cors({
-      origin: [applicationConfig.FE_HOST_ADDRESS],
-      credentials: true,
-    })
   );
+
+  app.enableCors({
+    origin: [applicationConfig.FE_HOST_ADDRESS],
+    credentials: true
+  })
 
   // set global prefix
   const globalPrefix = 'api/v6';

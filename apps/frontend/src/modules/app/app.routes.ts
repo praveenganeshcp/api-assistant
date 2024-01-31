@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { AuthenticatedGuard } from './app.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -9,6 +10,7 @@ export const appRoutes: Route[] = [
   {
     path: 'app',
     loadChildren: () => import('../app-shell/app-shell.routes'),
+    canActivate: [AuthenticatedGuard]
   },
   {
     path: '',

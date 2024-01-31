@@ -6,10 +6,10 @@ export const accountRoutes: Route[] = [
   {
     path: '',
     component: AccountsShellComponent,
-    canActivate: [AccountsGuard],
     children: [
       {
         path: 'signup',
+        canActivate: [AccountsGuard],
         loadComponent: () =>
           import('./components/signup/signup.component').then(
             (c) => c.SignupComponent
@@ -17,6 +17,7 @@ export const accountRoutes: Route[] = [
       },
       {
         path: 'login',
+        canActivate: [AccountsGuard],
         loadComponent: () =>
           import('./components/login/login.component').then(
             (c) => c.LoginComponent
@@ -24,6 +25,7 @@ export const accountRoutes: Route[] = [
       },
       {
         path: 'forgot-password',
+        canActivate: [AccountsGuard],
         loadComponent: () =>
           import('./components/forgot-password/forgot-password.component').then(
             (c) => c.ForgotPasswordComponent
