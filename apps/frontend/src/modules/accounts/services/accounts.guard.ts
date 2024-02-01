@@ -18,7 +18,7 @@ export class AccountsGuard implements CanActivate {
     return this.store.select(profileSelector).pipe(
       map((profile) => {
         if(profile.isLoading) {
-          return this.router.createUrlTree([''], {
+          return this.router.createUrlTree(['load'], {
             queryParams: { next: location.pathname }
           });
         }

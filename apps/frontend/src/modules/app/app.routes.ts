@@ -13,6 +13,10 @@ export const appRoutes: Route[] = [
     canActivate: [AuthenticatedGuard]
   },
   {
+    path: 'load',
+    loadComponent: () => import("./components/profile-loader/profile-loader.component").then(c => c.ProfileLoaderComponent)
+  },
+  {
     path: '',
     loadComponent: () =>
       import(

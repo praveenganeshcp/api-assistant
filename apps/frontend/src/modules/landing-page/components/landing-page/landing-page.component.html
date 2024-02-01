@@ -36,9 +36,15 @@
     </ng-container>
   </div>
   <footer class="landing_page__footer">
-    <span>
-      Want to build application with API Assistant?
-      <a routerLink="/accounts/signup">Signup here</a>
+    <span *ngIf="(loggedInUser$ | async); else nudgeCreateApp">
+        Start building applications rapidly with
+      <a routerLink="/app/projects">API Assistant</a>
     </span>
+    <ng-template #nudgeCreateApp>
+      <span>
+        Want to build application with API Assistant?
+        <a routerLink="/accounts/signup">Signup here</a>
+      </span>
+    </ng-template>
   </footer>
 </main>
