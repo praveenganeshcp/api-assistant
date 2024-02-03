@@ -1,19 +1,23 @@
 <div class="login">
-  <api-assistant-alert-banner
-    type="error"
-    [text]="loginErrorMessage$ | async"
-  ></api-assistant-alert-banner>
+  <!-- Login form  -->
   <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login__form">
     <h2>Login</h2>
+
+    <!-- Email Id form control -->
     <sw-form-control [control]="emailIdControl" label="Email ID">
       <input formControlName="emailId" sw-input type="email" />
     </sw-form-control>
+    <!-- End of email id form control -->
+
+    <!-- Password form control -->
     <div class="login__forgot-password">
       <sw-form-control [control]="passwordControl" label="Password">
         <input formControlName="password" sw-input type="password" />
       </sw-form-control>
       <a routerLink="/accounts/forgot-password">Forgot password?</a>
     </div>
+    <!-- end of password form control -->
+
     <button
       [disabled]="loginForm.invalid"
       [showLoader]="isLoginInProgress$ | async"

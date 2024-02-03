@@ -15,14 +15,9 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { sendPasswordResetLink } from '../../store/actions';
-import {
-  sendPasswordResetLinkInProgress,
-  isResetPasswordLinkSent,
-  sendResetPasswordLinkErrorMessageSelector,
-} from '../../store/selectors';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { sendPasswordResetLinkAction } from '../../store/actions';
+import { sendPasswordResetLinkInProgressSelector } from '../../store/selectors';
+import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 
 @Component({
@@ -41,9 +36,14 @@ import { AppState } from '../../../app/app.state';
   ],
 })
 export class ForgotPasswordComponent {
-  constructor(private store: Store<AppState>) {}
+  /**
+   * Whether send password reset link in progress
+   */
+  public resetPasswordLinkInProgress$: Observable<boolean> = this.store.select(
+    sendPasswordResetLinkInProgressSelector
+  );
 
-  resetPasswordLinkForm = new FormGroup({
+  public resetPasswordLinkForm = new FormGroup({
     emailId: new FormControl('', [Validators.required, Validators.email]),
   });
 
@@ -51,24 +51,13 @@ export class ForgotPasswordComponent {
     return this.resetPasswordLinkForm.get('emailId');
   }
 
+  constructor(private store: Store<AppState>) {}
+
   public handleSendPasswordResetLink() {
     this.store.dispatch(
-      sendPasswordResetLink({
+      sendPasswordResetLinkAction({
         emailId: this.resetPasswordLinkForm.value.emailId as string,
       })
     );
   }
-
-  resetPasswordLinkInProgress$: Observable<boolean> = this.store.select(
-    sendPasswordResetLinkInProgress
-  );
-
-  alertMessage$: Observable<string> = combineLatest([
-    this.store.select(isResetPasswordLinkSent),
-    this.store.select(sendResetPasswordLinkErrorMessageSelector),
-  ]).pipe(
-    map(([isLinkSent, errorMessage]) => {
-      return isLinkSent ? 'Password reset link sent' : errorMessage || '';
-    })
-  );
 }

@@ -4,130 +4,144 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {
-  loadProfile,
-  profileLoaded,
-  errorInLoadingProfile,
-  createAccount,
-  createAccountSuccess,
-  createAccountError,
-  loginAccount,
-  loginSuccess,
-  loginError,
-  logoutAccount,
-  logoutSuccess,
-  logoutError,
-  verifyAccount,
-  verifyAccountSuccess,
-  verifyAccountError,
-  sendPasswordResetLink,
-  sendPasswordResetLinkError,
-  sendPasswordResetLinkSuccess,
+  createAccountAction,
+  createAccountErrorAction,
+  createAccountSuccessAction,
+  errorInLoadingProfileAction,
+  loadProfileAction,
+  loginAccountAction,
+  loginErrorAction,
+  loginSuccessAction,
+  logoutAccountAction,
+  logoutErrorAction,
+  logoutSuccessAction,
+  profileLoadedAction,
+  sendPasswordResetLinkAction,
+  sendPasswordResetLinkErrorAction,
+  sendPasswordResetLinkSuccessAction,
+  verifyAccountAction,
+  verifyAccountErrorAction,
+  verifyAccountSuccessAction,
 } from './actions';
 import { AccountsService } from '../services/accounts.service';
-import { Router } from '@angular/router';
+import { UserProfile } from '../accounts.types';
 
+/**
+ * Handles user account action side effects
+ */
 @Injectable()
 export class AccountsEffects {
   constructor(
     private actions$: Actions,
-    private accountsService: AccountsService,
-    private router: Router
+    private accountsService: AccountsService
   ) {}
 
+  /**
+   * Loads user profile when action is dispatched
+   */
   loadProfile$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadProfile), // Your action to trigger the effect
+      ofType(loadProfileAction),
       mergeMap(() => {
         return this.accountsService.fetchUserProfile().pipe(
-          map((data) => profileLoaded({ data })),
+          map((userProfile: UserProfile) =>
+            profileLoadedAction({ userProfile })
+          ),
           catchError(() =>
-            of(errorInLoadingProfile({ error: 'Error in fetching profile' }))
+            of(
+              errorInLoadingProfileAction({
+                error: 'Error in fetching profile',
+              })
+            )
           )
         );
       })
     )
   );
 
+  /**
+   * Handles user login action
+   */
   loginAccount$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginAccount), // Your action to trigger the effect
-      mergeMap(({ payload }) => {
-        return this.accountsService
-          .loginAccount(payload.emailId, payload.password)
-          .pipe(
-            map((data) => loginSuccess({ data })),
-            tap(() => {
-              this.router.navigate(['app', 'projects']);
-            }),
-            catchError(({ error }) => of(loginError({ error: error.message })))
-          );
+      ofType(loginAccountAction),
+      mergeMap(({ emailId, password }) => {
+        return this.accountsService.loginAccount(emailId, password).pipe(
+          map((userProfile: UserProfile) =>
+            loginSuccessAction({ userProfile })
+          ),
+          catchError(({ error }) =>
+            of(loginErrorAction({ error: error.message }))
+          )
+        );
       })
     )
   );
 
-  logoutAccount = createEffect(() =>
+  /**
+   * Handles user logout action
+   */
+  logoutAccount$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(logoutAccount), // Your action to trigger the effect
+      ofType(logoutAccountAction),
       mergeMap(() => {
         return this.accountsService.logoutAccount().pipe(
-          map(() => logoutSuccess()),
-          tap(() => {
-            this.router.navigate(['accounts', 'login']);
-          }),
-          catchError(() => of(logoutError()))
+          map(() => logoutSuccessAction()),
+          catchError(() => of(logoutErrorAction()))
         );
       })
     )
   );
 
-  verifyAccount = createEffect(() =>
+  /**
+   * verifies user account
+   */
+  verifyAccount$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(verifyAccount), // Your action to trigger the effect
+      ofType(verifyAccountAction),
       mergeMap(({ key }) => {
         return this.accountsService.verifyAccount(key).pipe(
-          map((data) => {
-            console.log(data);
-            return verifyAccountSuccess({ data });
-          }),
-          tap(() => {
-            this.router.navigate(['app', 'projects']);
-          }),
+          map((userProfile) => verifyAccountSuccessAction({ userProfile })),
           catchError(({ error }) =>
-            of(verifyAccountError({ error: error.message }))
+            of(verifyAccountErrorAction({ error: error.message }))
           )
         );
       })
     )
   );
 
+  /**
+   * Send password reset link
+   */
   sendPasswordResetLink$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(sendPasswordResetLink), // Your action to trigger the effect
+      ofType(sendPasswordResetLinkAction),
       mergeMap(({ emailId }) => {
         return this.accountsService.sendPasswordResetLink(emailId).pipe(
-          map(() => sendPasswordResetLinkSuccess()),
+          map(() => sendPasswordResetLinkSuccessAction()),
           catchError(({ error }) =>
-            of(sendPasswordResetLinkError({ error: error.message }))
+            of(sendPasswordResetLinkErrorAction({ error: error.message }))
           )
         );
       })
     )
   );
 
+  /**
+   * Create user account
+   */
   createAccount$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(createAccount), // Your action to trigger the effect
-      mergeMap(({ payload }) => {
-        const { emailId, password, username } = payload;
+      ofType(createAccountAction),
+      mergeMap(({ emailId, password, username }) => {
         return this.accountsService
           .createAccount(emailId, password, username)
           .pipe(
-            map((data) => createAccountSuccess({ data })),
-            tap(() => {
-              this.router.navigate(['app', 'projects']);
-            }),
+            map((userProfile: UserProfile) =>
+              createAccountSuccessAction({ userProfile })
+            ),
             catchError(({ error }) =>
-              of(createAccountError({ error: error.message }))
+              of(createAccountErrorAction({ error: error.message }))
             )
           );
       })

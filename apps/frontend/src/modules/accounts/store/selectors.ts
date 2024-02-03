@@ -5,7 +5,7 @@ export const accountsSelector = (state: AppState) => state.accounts;
 
 // ############ Start User profile selectors ############### //
 
-const profileStateSelector = createSelector(
+export const profileStateSelector = createSelector(
   accountsSelector,
   (accountsState) => accountsState.profile
 );

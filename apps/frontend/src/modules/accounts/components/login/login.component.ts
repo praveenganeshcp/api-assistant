@@ -2,18 +2,14 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
-import { loginAccount } from '../../store/actions';
-import {
-  isUserLoggingInSelector,
-  loginErrorMessageSelector,
-} from '../../store/selectors';
+import { loginAccountAction } from '../../store/actions';
+import { isUserSigninInProgressSelector } from '../../store/selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
@@ -37,14 +33,21 @@ import { SwFormControlComponent } from 'ngx-simple-widgets';
   ],
 })
 export class LoginComponent {
+  public loginForm = this.createLoginForm();
+
+  /**
+   * Is user login action in progress
+   */
+  public isLoginInProgress$: Observable<boolean> = this.store.select(
+    isUserSigninInProgressSelector
+  );
+
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>
   ) {}
 
-  public loginForm: FormGroup = this.createLoginForm();
-
-  private createLoginForm(): FormGroup {
+  private createLoginForm() {
     return this.formBuilder.group({
       emailId: this.formBuilder.control('', [
         Validators.required,
@@ -65,15 +68,11 @@ export class LoginComponent {
     return this.loginForm.get('password') as FormControl;
   }
 
-  public isLoginInProgress$: Observable<boolean> = this.store.select(
-    isUserLoggingInSelector
-  );
-
-  public loginErrorMessage$: Observable<string> = this.store.select(
-    loginErrorMessageSelector
-  );
-
   public handleLogin() {
-    this.store.dispatch(loginAccount({ payload: this.loginForm.value }));
+    const { emailId, password } = this.loginForm.value as {
+      emailId: string;
+      password: string;
+    };
+    this.store.dispatch(loginAccountAction({ emailId, password }));
   }
 }

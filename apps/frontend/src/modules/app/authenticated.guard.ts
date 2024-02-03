@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { profileStateSelector } from '../store/selectors';
-import { AppState } from '../../app/app.state';
-import { Observable, map, tap, filter } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { SwToastService } from 'ngx-simple-widgets';
+import { AppState } from './app.state';
+import { profileStateSelector } from '../accounts/store/selectors';
 
 /**
- * Guard to protect logged in users to enter into
- * pages that requires users to be unauthenticated.
+ * prevents unauthenticated user access to app
  */
 @Injectable({ providedIn: 'root' })
-export class AccountsGuard implements CanActivate {
+export class AuthenticatedGuard implements CanActivate {
   constructor(
     private store: Store<AppState>,
     private router: Router,
@@ -21,16 +20,16 @@ export class AccountsGuard implements CanActivate {
   canActivate(): Observable<boolean | UrlTree> {
     return this.store.select(profileStateSelector).pipe(
       map((profile) => {
-        // If user profile is loading, navigate to load page by setting callback url in next param
+        // If user profile is loading, navigate to loading screen with callback url
         if (profile.isLoading) {
           return this.router.createUrlTree(['load'], {
             queryParams: { next: location.pathname },
           });
         }
-        // Show error message if already loggedin and do not allow to enter into route
-        else if (profile.data !== null && profile.data?.isVerified) {
+        // if user is not authenticated, do not allow access
+        else if (profile.data === null) {
           this.swToastService.error({
-            title: 'Already logged in',
+            title: 'Session expired',
             message: '',
           });
           return false;

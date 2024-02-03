@@ -5,7 +5,7 @@ import {
   isUserLoggingOutSelector,
   isUserLoggedInSelector,
 } from '../../../accounts/store/selectors';
-import { logoutAccount } from '../../../accounts/store/actions';
+import { logoutAccountAction } from '../../../accounts/store/actions';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
@@ -81,6 +81,6 @@ export class LandingPageComponent {
    * Logout account
    */
   public logoutAccount() {
-    this.store.dispatch(logoutAccount());
+    this.store.dispatch(logoutAccountAction());
   }
 }

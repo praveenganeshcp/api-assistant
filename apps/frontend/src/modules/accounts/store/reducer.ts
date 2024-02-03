@@ -1,24 +1,24 @@
 import { createReducer, on } from '@ngrx/store';
 import { AccountState } from './state';
 import {
-  loadProfile,
-  profileLoaded,
-  errorInLoadingProfile,
-  createAccount,
-  createAccountSuccess,
-  createAccountError,
-  loginAccount,
-  loginSuccess,
-  loginError,
-  logoutAccount,
-  logoutSuccess,
-  logoutError,
-  verifyAccount,
-  verifyAccountSuccess,
-  verifyAccountError,
-  sendPasswordResetLink,
-  sendPasswordResetLinkSuccess,
-  sendPasswordResetLinkError,
+  createAccountAction,
+  createAccountErrorAction,
+  createAccountSuccessAction,
+  errorInLoadingProfileAction,
+  loadProfileAction,
+  loginAccountAction,
+  loginErrorAction,
+  loginSuccessAction,
+  logoutAccountAction,
+  logoutErrorAction,
+  logoutSuccessAction,
+  profileLoadedAction,
+  sendPasswordResetLinkAction,
+  sendPasswordResetLinkErrorAction,
+  sendPasswordResetLinkSuccessAction,
+  verifyAccountAction,
+  verifyAccountErrorAction,
+  verifyAccountSuccessAction,
 } from './actions';
 
 const defaultAccountState: AccountState = {
@@ -43,7 +43,6 @@ const defaultAccountState: AccountState = {
     error: '',
   },
   resetPasswordLink: {
-    isSent: false,
     inProgress: false,
     error: '',
   },
@@ -51,23 +50,23 @@ const defaultAccountState: AccountState = {
 
 export const accountsReducer = createReducer(
   defaultAccountState,
-  on(loadProfile, (state) => ({
+  on(loadProfileAction, (state) => ({
     ...state,
     profile: {
       ...state.profile,
       isLoading: true,
     },
   })),
-  on(profileLoaded, (state, { data }) => ({
+  on(profileLoadedAction, (state, { userProfile }) => ({
     ...state,
     profile: {
       ...state.profile,
       isLoading: false,
-      data,
+      data: userProfile,
       error: '',
     },
   })),
-  on(errorInLoadingProfile, (state, { error }) => ({
+  on(errorInLoadingProfileAction, (state, { error }) => ({
     ...state,
     profile: {
       ...state.profile,
@@ -76,63 +75,63 @@ export const accountsReducer = createReducer(
       error,
     },
   })),
-  on(createAccount, (state) => ({
+  on(createAccountAction, (state) => ({
     ...state,
     createAccount: {
       inProgress: true,
       error: '',
     },
   })),
-  on(createAccountSuccess, (state, { data }) => ({
+  on(createAccountSuccessAction, (state, { userProfile }) => ({
     ...state,
     profile: {
       ...state.profile,
-      data,
+      data: userProfile,
     },
     createAccount: {
       inProgress: false,
       error: '',
     },
   })),
-  on(createAccountError, (state, { error }) => ({
+  on(createAccountErrorAction, (state, { error }) => ({
     ...state,
     createAccount: {
       inProgress: false,
       error,
     },
   })),
-  on(loginAccount, (state) => ({
+  on(loginAccountAction, (state) => ({
     ...state,
     login: {
       error: '',
       inProgress: true,
     },
   })),
-  on(loginSuccess, (state, { data }) => ({
+  on(loginSuccessAction, (state, { userProfile }) => ({
     ...state,
     profile: {
       ...state.profile,
-      data,
+      data: userProfile,
     },
     login: {
       inProgress: false,
       error: '',
     },
   })),
-  on(loginError, (state, { error }) => ({
+  on(loginErrorAction, (state, { error }) => ({
     ...state,
     login: {
       inProgress: false,
       error,
     },
   })),
-  on(logoutAccount, (state) => ({
+  on(logoutAccountAction, (state) => ({
     ...state,
     logout: {
       inProgress: true,
     },
   })),
-  on(logoutSuccess, (state) => ({
+  on(logoutSuccessAction, (state) => ({
     ...state,
     profile: {
       ...state.profile,
@@ -142,31 +141,31 @@ export const accountsReducer = createReducer(
       inProgress: false,
     },
   })),
-  on(logoutError, (state) => ({
+  on(logoutErrorAction, (state) => ({
     ...state,
     logout: {
       inProgress: false,
     },
   })),
-  on(verifyAccount, (state) => ({
+  on(verifyAccountAction, (state) => ({
     ...state,
     verifyAccount: {
       error: '',
       inProgress: true,
     },
   })),
-  on(verifyAccountSuccess, (state, { data }) => ({
+  on(verifyAccountSuccessAction, (state, { userProfile }) => ({
     ...state,
     profile: {
       ...state.profile,
-      data,
+      data: userProfile,
     },
     verifyAccount: {
       error: '',
       inProgress: false,
     },
   })),
-  on(verifyAccountError, (state, { error }) => ({
+  on(verifyAccountErrorAction, (state, { error }) => ({
     ...state,
     verifyAccount: {
       inProgress: false,
@@ -174,26 +173,23 @@ export const accountsReducer = createReducer(
     },
   })),
 
-  on(sendPasswordResetLink, (state) => ({
+  on(sendPasswordResetLinkAction, (state) => ({
     ...state,
     resetPasswordLink: {
-      isSent: false,
       error: '',
       inProgress: true,
     },
   })),
-  on(sendPasswordResetLinkSuccess, (state) => ({
+  on(sendPasswordResetLinkSuccessAction, (state) => ({
     ...state,
     resetPasswordLink: {
       inProgress: false,
-      isSent: true,
       error: '',
     },
   })),
-  on(sendPasswordResetLinkError, (state, { error }) => ({
+  on(sendPasswordResetLinkErrorAction, (state, { error }) => ({
     ...state,
     resetPasswordLink: {
-      isSent: false,
       inProgress: false,
       error,
     },

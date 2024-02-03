@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {  RouterModule } from '@angular/router';
-import { Observable, filter, take } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ProfileLoaderComponent } from '../profile-loader/profile-loader.component';
-import { loadProfile } from '../../../accounts/store/actions';
+import { loadProfileAction } from '../../../accounts/store/actions';
 import { isProfileLoadingSelector } from '../../../accounts/store/selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
@@ -16,15 +16,13 @@ import { AppState } from '../../app.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private store: Store<AppState>,
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   public isUserProfileLoading$: Observable<boolean> = this.store.select(
     isProfileLoadingSelector
   );
 
   ngOnInit() {
-    this.store.dispatch(loadProfile());
+    this.store.dispatch(loadProfileAction());
   }
 }
