@@ -2,14 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
-  loggedInUserSelector,
   isUserLoggingOutSelector,
+  isUserLoggedInSelector,
 } from '../../../accounts/store/selectors';
 import { logoutAccount } from '../../../accounts/store/actions';
-import { UserProfile } from '../../../accounts/accounts.types';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CanBeNull } from '@api-assistant/utils';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
 
@@ -30,14 +28,15 @@ interface LandingPageFeatureCard {
 export class LandingPageComponent {
   constructor(private store: Store<AppState>) {}
 
-  loggedInUser$: Observable<CanBeNull<UserProfile>> =
-    this.store.select(loggedInUserSelector);
+  public readonly isUserLoggedIn$: Observable<boolean> = this.store.select(
+    isUserLoggedInSelector
+  );
 
-  isUserloggingOut$: Observable<boolean> = this.store.select(
+  public readonly isUserloggingOut$: Observable<boolean> = this.store.select(
     isUserLoggingOutSelector
   );
 
-  public LANDING_PAGE_FEATURES: LandingPageFeatureCard[] = [
+  public readonly landingPageFeatures: LandingPageFeatureCard[] = [
     {
       id: 1,
       title: 'Queries on Frontend',

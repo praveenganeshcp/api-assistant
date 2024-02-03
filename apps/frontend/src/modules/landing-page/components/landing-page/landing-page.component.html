@@ -1,8 +1,6 @@
 <main class="landing-page">
   <header class="landing-page__header">
-    <ng-container
-      *ngIf="loggedInUser$ | async as loggedInUser; else loginLinks"
-    >
+    <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
       <a routerLink="/app/projects">Go to app</a>
       <button
         [showLoader]="isUserloggingOut$ | async"
@@ -24,20 +22,17 @@
   <div class="landing-page__features">
     <h1>Features</h1>
     <ng-container
-      *ngFor="
-        let featureCard of LANDING_PAGE_FEATURES;
-        trackBy: trackFeatureCard
-      "
+      *ngFor="let feature of landingPageFeatures; trackBy: trackFeatureCard"
     >
       <div class="landing-page__feature-card">
-        <h3>{{ featureCard.title }}</h3>
-        <span>{{ featureCard.description }}</span>
+        <h3>{{ feature.title }}</h3>
+        <span>{{ feature.description }}</span>
       </div>
     </ng-container>
   </div>
   <footer class="landing_page__footer">
-    <span *ngIf="(loggedInUser$ | async); else nudgeCreateApp">
-        Start building applications rapidly with
+    <span *ngIf="isUserLoggedIn$ | async; else nudgeCreateApp">
+      Start building applications rapidly with
       <a routerLink="/app/projects">API Assistant</a>
     </span>
     <ng-template #nudgeCreateApp>

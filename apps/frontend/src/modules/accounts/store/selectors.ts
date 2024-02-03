@@ -3,72 +3,116 @@ import { AppState } from '../../app/app.state';
 
 export const accountsSelector = (state: AppState) => state.accounts;
 
-export const profileSelector = createSelector(
+// ############ Start User profile selectors ############### //
+
+const profileStateSelector = createSelector(
   accountsSelector,
   (accountsState) => accountsState.profile
 );
 
 export const isProfileLoadingSelector = createSelector(
-  profileSelector,
+  profileStateSelector,
   (profileState) => profileState.isLoading
 );
 
-export const loggedInUserSelector = createSelector(
-  profileSelector,
+export const userProfileSelector = createSelector(
+  profileStateSelector,
   (profileState) => profileState.data
 );
 
-export const isProfileVerifiedSelector = createSelector(
-  loggedInUserSelector,
-  (loggedInUser) => loggedInUser?.isVerified
+export const isUserProfileVerifiedSelector = createSelector(
+  userProfileSelector,
+  (userProfile) => userProfile?.isVerified
 );
 
-export const isUserLoggingInSelector = createSelector(
+export const isUserLoggedInSelector = createSelector(
+  profileStateSelector,
+  (profileState) => !profileState.isLoading && profileState.data !== null
+);
+
+// ############ End of user profile selectors ############### //
+
+// ############ Start of login slice selectors ############### //
+
+const loginStateSelector = createSelector(
   accountsSelector,
-  (accountsState) => accountsState.login.inProgress
+  (accountsSelector) => accountsSelector.login
+);
+
+export const isUserSigninInProgressSelector = createSelector(
+  loginStateSelector,
+  (loginState) => loginState.inProgress
 );
 
 export const loginErrorMessageSelector = createSelector(
+  loginStateSelector,
+  (loginState) => loginState.error
+);
+
+// ############ End of login slice selectors ############### //
+
+// ############ Start of create account slice selectors ############### //
+
+const createAccountStateSelector = createSelector(
   accountsSelector,
-  (accountsState) => accountsState.login.error
+  (accountsState) => accountsState.createAccount
 );
 
 export const createAccountErrorMessageSelector = createSelector(
+  createAccountStateSelector,
+  (createAccountState) => createAccountState.error
+);
+
+export const isSignupInProgressSelector = createSelector(
+  createAccountStateSelector,
+  (createAccountState) => createAccountState.inProgress
+);
+
+// ############ End of create account slice selectors ############### //
+
+// ############ Start of password reset slice selectors ############### //
+
+const passwordResetStateSelector = createSelector(
   accountsSelector,
-  (accountsState) => accountsState.createAccount.error
+  (accountsState) => accountsState.resetPasswordLink
 );
 
 export const sendResetPasswordLinkErrorMessageSelector = createSelector(
+  passwordResetStateSelector,
+  (passwordResetState) => passwordResetState.error
+);
+
+export const sendPasswordResetLinkInProgressSelector = createSelector(
+  passwordResetStateSelector,
+  (passwordResetState) => passwordResetState.inProgress
+);
+
+// ############ End of password reset slice selectors ############### //
+
+// ############ Start of verify account selectors ############### //
+
+const accountVerificationStateSelector = createSelector(
   accountsSelector,
-  (accountsState) => accountsState.resetPasswordLink.error
+  (accountsState) => accountsState.verifyAccount
 );
 
 export const verifyAccountErrorMessageSelector = createSelector(
-  accountsSelector,
-  (accountsState) => accountsState.verifyAccount.error
+  accountVerificationStateSelector,
+  (accountVerificationState) => accountVerificationState.error
 );
+
+export const isAccountBeingVerifiedSelector = createSelector(
+  accountVerificationStateSelector,
+  (accountVerificationState) => accountVerificationState.inProgress
+);
+
+// ############ End of verify account selectors ############### //
+
+// ############ Start of logout account selectors ############### //
 
 export const isUserLoggingOutSelector = createSelector(
   accountsSelector,
   (accountsState) => accountsState.logout.inProgress
 );
 
-export const isAccountBeingVerified = createSelector(
-  accountsSelector,
-  (accountsState) => accountsState.verifyAccount.inProgress
-);
-
-export const sendPasswordResetLinkInProgress = createSelector(
-  accountsSelector,
-  (accountsState) => accountsState.resetPasswordLink.inProgress
-);
-
-export const isSignupInProgress = createSelector(
-  accountsSelector,
-  (accountsState) => accountsState.createAccount.inProgress
-);
-
-export const isResetPasswordLinkSent = createSelector(
-  accountsSelector,
-  (accountsState) => accountsState.resetPasswordLink.isSent
-);
+// ############ End of logout account selectors ############### //
