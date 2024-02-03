@@ -1,5 +1,7 @@
 <main class="landing-page">
+  <!-- landing page header -->
   <header class="landing-page__header">
+    <!-- Provide link to app and logout if user is logged in -->
     <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
       <a routerLink="/app/projects">Go to app</a>
       <button
@@ -10,17 +12,27 @@
         Logout
       </button>
     </ng-container>
+
+    <!-- provide link to signup and signin if user is not logged in-->
     <ng-template #loginLinks>
       <a routerLink="/accounts/signup">Signup</a>
       <a routerLink="/accounts/login">Login</a>
     </ng-template>
   </header>
+  <!-- End of header -->
+
+  <!-- Banner content -->
   <div class="landing-page__banner">
     <h1>API Assistant</h1>
     <h4>Declarative Backend for trivial apps</h4>
   </div>
+  <!-- End of banner content -->
+
+  <!-- Features card  -->
   <div class="landing-page__features">
     <h1>Features</h1>
+
+    <!-- List of feature cards -->
     <ng-container
       *ngFor="let feature of landingPageFeatures; trackBy: trackFeatureCard"
     >
@@ -30,11 +42,17 @@
       </div>
     </ng-container>
   </div>
+  <!-- End of features card -->
+
+  <!-- Landing page footer -->
   <footer class="landing_page__footer">
+    <!-- Nudge users to create application if loggedin -->
     <span *ngIf="isUserLoggedIn$ | async; else nudgeCreateApp">
       Start building applications rapidly with
       <a routerLink="/app/projects">API Assistant</a>
     </span>
+
+    <!-- Nudge users to signup if not loggedin -->
     <ng-template #nudgeCreateApp>
       <span>
         Want to build application with API Assistant?
@@ -42,4 +60,5 @@
       </span>
     </ng-template>
   </footer>
+  <!-- end of footer -->
 </main>

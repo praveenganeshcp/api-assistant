@@ -26,16 +26,23 @@ interface LandingPageFeatureCard {
   imports: [CommonModule, RouterModule, SwButtonComponent],
 })
 export class LandingPageComponent {
-  constructor(private store: Store<AppState>) {}
-
+  /**
+   * Whether user is loggedin
+   */
   public readonly isUserLoggedIn$: Observable<boolean> = this.store.select(
     isUserLoggedInSelector
   );
 
+  /**
+   * Is user logout is in progress
+   */
   public readonly isUserloggingOut$: Observable<boolean> = this.store.select(
     isUserLoggingOutSelector
   );
 
+  /**
+   * List of feature to be presented in card view
+   */
   public readonly landingPageFeatures: LandingPageFeatureCard[] = [
     {
       id: 1,
@@ -61,10 +68,18 @@ export class LandingPageComponent {
     },
   ];
 
+  constructor(private store: Store<AppState>) {}
+
+  /**
+   * trackBy for features card
+   */
   public trackFeatureCard(_: number, card: LandingPageFeatureCard): number {
     return card.id;
   }
 
+  /**
+   * Logout account
+   */
   public logoutAccount() {
     this.store.dispatch(logoutAccount());
   }
