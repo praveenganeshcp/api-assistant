@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
+import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
 
 interface LandingPageFeatureCard {
   id: number;
@@ -26,6 +27,17 @@ interface LandingPageFeatureCard {
   imports: [CommonModule, RouterModule, SwButtonComponent],
 })
 export class LandingPageComponent {
+
+  /**
+   * App name
+   */
+  public readonly appName: string = this.appInfoService.appName;
+
+  /**
+   * App caption
+   */
+  public readonly appCaption: string = this.appInfoService.appCaption;
+
   /**
    * Whether user is loggedin
    */
@@ -68,7 +80,10 @@ export class LandingPageComponent {
     },
   ];
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private readonly store: Store<AppState>,
+    private readonly appInfoService: AppInfoService
+  ) {}
 
   /**
    * trackBy for features card

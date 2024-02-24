@@ -21,6 +21,7 @@ describe('LandingPageComponent', () => {
 
   it('should render app name and caption in banner', () => {
     const fixture = TestBed.createComponent(LandingPageComponent);
+    fixture.detectChanges();
     const banner = fixture.nativeElement.querySelector(
       '.landing-page .landing-page__banner'
     );
@@ -33,7 +34,7 @@ describe('LandingPageComponent', () => {
   it('should render links to dashboard and logout in the header if user is authenticated', () => {
     TestBed.overrideProvider(Store, {
       useValue: {
-        select: () => of({}),
+        select: () => of(true),
       },
     });
     const fixture = TestBed.createComponent(LandingPageComponent);
@@ -46,7 +47,7 @@ describe('LandingPageComponent', () => {
   it('should render links to signup and signin in the header if user is not authenticated', () => {
     TestBed.overrideProvider(Store, {
       useValue: {
-        select: () => of(null),
+        select: () => of(false),
       },
     });
     const fixture = TestBed.createComponent(LandingPageComponent);
