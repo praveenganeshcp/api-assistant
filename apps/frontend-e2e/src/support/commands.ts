@@ -8,23 +8,34 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+import { LoginPageObject } from "../page-objects/accounts/login.page-object";
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
-declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    login(email: string, password: string): void;
-    getByTestId<T extends HTMLElement>(
-      testId: string
-    ): Cypress.Chainable<JQuery<T>>;
-    getElement<T extends HTMLElement>(
-      selector: string
-    ): Cypress.Chainable<JQuery<T>>;
+declare global {
+  namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Chainable<Subject> {
+      login(): void;
+      getByTestId<T extends HTMLElement>(
+        testId: string
+      ): Cypress.Chainable<JQuery<T>>;
+      getElement<T extends HTMLElement>(
+        selector: string
+      ): Cypress.Chainable<JQuery<T>>;
+    }
   }
 }
+
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
+Cypress.Commands.add('login', () => {
+  cy.intercept("POST", "/api/v6/accounts/login").as('loginAPI')
+  const loginPageObject = new LoginPageObject();
+  loginPageObject.visit();
+  loginPageObject.typeEmailId(Cypress.env('emailId'));
+  loginPageObject.typePassword(Cypress.env('password'));
+  loginPageObject.submitLogin();
+  cy.wait('@loginAPI');
 });
 
 Cypress.Commands.add('getByTestId', (testId: string) => {

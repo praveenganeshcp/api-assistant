@@ -21,6 +21,14 @@ export class LandingPageObject implements PageObject {
     return cy.getByTestId('login-link');
   }
 
+  public getDashboardLinkInHeader() {
+    return cy.getByTestId("go-to-app-link");
+  }
+
+  public getLogoutButtonInHeader() {
+    return cy.get('.landing-page__header button[sw-primary-button]')
+  }
+
   public getSignupLinkInHeader() {
     return cy.getByTestId('signup-link');
   }
