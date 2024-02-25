@@ -28,16 +28,17 @@ export class ProfileLoaderComponent implements OnInit {
         take(1)
       )
       .subscribe((profileState) => {
-        const nextUrl = this.activatedRoute.snapshot.queryParamMap.get('next') ?? "/app/projects";
-        if(!!profileState.data) {
+        const nextUrl =
+          this.activatedRoute.snapshot.queryParamMap.get('next') ??
+          '/app/projects';
+        if (!!profileState.data) {
           this.router.navigate([nextUrl]);
-        }
-        else {
+        } else {
           this.router.navigate(['accounts', 'login'], {
             queryParams: {
-              next: nextUrl
-            }
-          })
+              next: nextUrl,
+            },
+          });
         }
       });
   }

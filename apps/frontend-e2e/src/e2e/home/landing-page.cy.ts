@@ -48,6 +48,8 @@ describe('landing page', () => {
   it('should show link to app and logout button in the header if user is authenticated', () => {
     cy.login();
 
+    cy.visit('/');
+
     landingPage
       .getDashboardLinkInHeader()
       .should('have.attr', 'href', '/app/projects')
@@ -58,6 +60,9 @@ describe('landing page', () => {
 
   it('should show nudge in the footer to create application if user is authenticated', () => {
     cy.login();
+
+    cy.visit('/');
+
     landingPage
       .getFooterText()
       .should(
