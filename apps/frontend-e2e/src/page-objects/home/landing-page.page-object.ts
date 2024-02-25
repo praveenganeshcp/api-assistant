@@ -6,7 +6,7 @@ export class LandingPageObject implements PageObject {
   }
 
   private getBanner() {
-    return cy.getElement('.landing-page__banner');
+    return cy.getVisibleElement('.landing-page__banner');
   }
 
   public getAppNameInBanner() {
@@ -18,30 +18,30 @@ export class LandingPageObject implements PageObject {
   }
 
   public getLoginLinkInHeader() {
-    return cy.getByTestId('login-link');
+    return cy.getVisibleElementByTestId('login-link');
   }
 
   public getDashboardLinkInHeader() {
-    return cy.getByTestId("go-to-app-link");
+    return cy.getVisibleElementByTestId("go-to-app-link");
   }
 
   public getLogoutButtonInHeader() {
-    return cy.get('.landing-page__header button[sw-primary-button]')
+    return cy.getVisibleElement('.landing-page__header button[sw-primary-button]')
   }
 
   public getSignupLinkInHeader() {
-    return cy.getByTestId('signup-link');
+    return cy.getVisibleElementByTestId('signup-link');
   }
 
   public getFooterText() {
-    return cy.getElement('.landing_page__footer span');
+    return cy.getVisibleElement('.landing_page__footer span');
   }
 
   public getFooterNudgeLink() {
-    return cy.getElement('.landing_page__footer a');
+    return cy.getVisibleElement('.landing_page__footer a');
   }
 
   public getFeatureCards() {
-    return cy.get('.landing-page__feature-card');
+    return cy.getVisibleElement('.landing-page__feature-card');
   }
 }

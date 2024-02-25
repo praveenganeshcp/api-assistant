@@ -23,17 +23,15 @@ export class AccountsGuard implements CanActivate {
       map((profile) => {
         // If user profile is loading, navigate to load page by setting callback url in next param
         if (profile.isLoading) {
-          return this.router.createUrlTree(['load'], {
-            queryParams: { next: location.pathname },
-          });
+          return this.router.createUrlTree(['load']);
         }
         // Show error message if already loggedin and do not allow to enter into route
         else if (profile.data !== null && profile.data?.isVerified) {
-          this.swToastService.error({
+          this.swToastService.warn({
             title: 'Already logged in',
             message: '',
           });
-          return false;
+          return this.router.createUrlTree(['app', 'projects']);
         }
         return true;
       })

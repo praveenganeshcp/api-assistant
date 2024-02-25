@@ -1,23 +1,26 @@
-<div class="login">
+<div class="login-page">
+
   <!-- Login form  -->
-  <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login__form">
+  <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login-form">
+
     <h2>Login</h2>
 
     <!-- Email Id form control -->
     <sw-form-control [control]="emailIdControl" label="Email ID">
-      <input formControlName="emailId" sw-input type="email" />
+      <input autocomplete="false" formControlName="emailId" sw-input type="email" />
     </sw-form-control>
     <!-- End of email id form control -->
 
     <!-- Password form control -->
-    <div class="login__forgot-password">
-      <sw-form-control [control]="passwordControl" label="Password">
-        <input formControlName="password" sw-input type="password" />
+    <div class="login-form__password-field">
+      <sw-form-control [errorMessagesMap]="errorMessagesMap" [control]="passwordControl" label="Password">
+        <input autocomplete="false" formControlName="password" sw-input type="password" />
       </sw-form-control>
       <a routerLink="/accounts/forgot-password">Forgot password?</a>
     </div>
     <!-- end of password form control -->
 
+    <!-- login button -->
     <button
       [disabled]="loginForm.invalid"
       [showLoader]="isLoginInProgress$ | async"
@@ -25,9 +28,14 @@
     >
       Login
     </button>
+
+    <div class="login-form__api-error">{{ loginErrorMessage$ | async }}</div>
+
+    <!-- Signup link -->
+    <span data-testid="signup-nudge">
+      New to API Assistant?
+      <a routerLink="/accounts/signup">Signup here</a>
+    </span>
   </form>
-  <span
-    >New to API Assistant?
-    <a routerLink="/accounts/signup">Signup here</a></span
-  >
+ 
 </div>

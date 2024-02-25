@@ -9,8 +9,8 @@ export const strongPasswordValidator = (formControl: AbstractControl) => {
   // Get password input value
   const password: string = formControl.value;
 
-  // Assert if min 8 chars are present
-  const isMin8Chars: boolean = password.length > 8;
+  // Assert if min 9 chars are present
+  const isMin9Chars: boolean = password.length > 9;
   let hasOneUpperCase = false;
   let hasOneLowerCase = false;
   let hasOneNumber = false;
@@ -26,7 +26,7 @@ export const strongPasswordValidator = (formControl: AbstractControl) => {
       hasOneNumber = true;
     }
   });
-  return isMin8Chars && hasOneUpperCase && hasOneLowerCase && hasOneNumber
+  return isMin9Chars && hasOneUpperCase && hasOneLowerCase && hasOneNumber
     ? null
     : { strongPassword: true };
 };

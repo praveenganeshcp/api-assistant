@@ -1,4 +1,3 @@
-// my-feature.effects.ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
@@ -25,6 +24,7 @@ import {
 } from './actions';
 import { AccountsService } from '../services/accounts.service';
 import { UserProfile } from '../accounts.types';
+import { Router } from '@angular/router';
 
 /**
  * Handles user account action side effects
@@ -33,7 +33,8 @@ import { UserProfile } from '../accounts.types';
 export class AccountsEffects {
   constructor(
     private actions$: Actions,
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private router: Router
   ) {}
 
   /**
@@ -65,11 +66,13 @@ export class AccountsEffects {
   loginAccount$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginAccountAction),
-      mergeMap(({ emailId, password }) => {
+      mergeMap(({ emailId, password, callbackUrl }) => {
+        console.log('ddd', callbackUrl)
         return this.accountsService.loginAccount(emailId, password).pipe(
-          map((userProfile: UserProfile) =>
-            loginSuccessAction({ userProfile })
-          ),
+          map((userProfile: UserProfile) => {
+            this.router.navigateByUrl(callbackUrl);
+            return loginSuccessAction({ userProfile });
+          }),
           catchError(({ error }) =>
             of(loginErrorAction({ error: error.message }))
           )

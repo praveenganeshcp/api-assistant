@@ -6,10 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
 import { loginAccountAction } from '../../store/actions';
-import { isUserSigninInProgressSelector } from '../../store/selectors';
+import { isUserSigninInProgressSelector, loginErrorMessageSelector } from '../../store/selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
@@ -42,9 +42,22 @@ export class LoginComponent {
     isUserSigninInProgressSelector
   );
 
+  private get loginSuccessCallbackUrl(): string {
+    return this.route.snapshot.queryParamMap.get('next') ?? "/app/projects";
+  }
+
+  public readonly errorMessagesMap: Record<string, string> = {
+    'strongPassword': "Password must contain 1 uppercase, 1 lowercase, 1 number and minimum 9 characters"
+  }
+
+  public readonly loginErrorMessage$: Observable<string> = this.store.select(
+    loginErrorMessageSelector
+  )
+
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute
   ) {}
 
   private createLoginForm() {
@@ -73,6 +86,6 @@ export class LoginComponent {
       emailId: string;
       password: string;
     };
-    this.store.dispatch(loginAccountAction({ emailId, password }));
+    this.store.dispatch(loginAccountAction({ emailId, password, callbackUrl: this.loginSuccessCallbackUrl }));
   }
 }

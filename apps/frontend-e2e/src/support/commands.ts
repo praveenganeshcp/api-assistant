@@ -15,13 +15,35 @@ declare global {
   namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
+      // Command to login
       login(): void;
-      getByTestId<T extends HTMLElement>(
+
+      // Returns visible element using test-id if present in DOM.
+      getVisibleElementByTestId<T extends HTMLElement>(
         testId: string
       ): Cypress.Chainable<JQuery<T>>;
+
+      // Returns visible element using selector if present in DOM.
+      getVisibleElement<T extends HTMLElement>(
+        selector: string
+      ): Cypress.Chainable<JQuery<T>>;
+
+      // Returns element using test-id if present in DOM.
+      getElementByTestId<T extends HTMLElement>(
+        testId: string
+      ): Cypress.Chainable<JQuery<T>>;
+
+      // Returns element using selector if present in DOM.
       getElement<T extends HTMLElement>(
         selector: string
       ): Cypress.Chainable<JQuery<T>>;
+
+      setMobileResolution(): void;
+
+      setTabletResolution(): void;
+
+      setDesktopResolution(): void;
+
     }
   }
 }
@@ -38,13 +60,34 @@ Cypress.Commands.add('login', () => {
   cy.wait('@loginAPI');
 });
 
-Cypress.Commands.add('getByTestId', (testId: string) => {
+Cypress.Commands.add('getVisibleElementByTestId', (testId: string) => {
   return cy.get(`[data-testid="${testId}"]`).should('be.visible');
 });
 
-Cypress.Commands.add('getElement', (selector: string) => {
+Cypress.Commands.add('getVisibleElement', (selector: string) => {
   return cy.get(selector).should('be.visible');
 });
+
+Cypress.Commands.add('getElementByTestId', (testId: string) => {
+  return cy.get(`[data-testid="${testId}"]`);
+});
+
+Cypress.Commands.add('getElement', (selector: string) => {
+  return cy.get(selector);
+});
+
+Cypress.Commands.add('setDesktopResolution', () => {
+  cy.viewport('macbook-13')
+})
+
+Cypress.Commands.add('setMobileResolution', () => {
+  cy.viewport('samsung-s10')
+})
+
+Cypress.Commands.add('setTabletResolution', () => {
+  cy.viewport('ipad-2')
+})
+
 
 //
 // -- This is a child command --

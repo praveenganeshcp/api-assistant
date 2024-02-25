@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { profileStateSelector } from '../../../accounts/store/selectors';
 import { AppState } from '../../app.state';
+import { valueIsDefined } from '@api-assistant/utils';
 
 @Component({
   selector: 'api-assistant-profile-loader',
@@ -27,10 +28,17 @@ export class ProfileLoaderComponent implements OnInit {
         filter((profile) => !profile.isLoading),
         take(1)
       )
-      .subscribe((_) => {
-        const nextUrl = this.activatedRoute.snapshot.queryParamMap.get('next');
-        if (nextUrl !== null) {
+      .subscribe((profileState) => {
+        const nextUrl = this.activatedRoute.snapshot.queryParamMap.get('next') ?? "/app/projects";
+        if(!!profileState.data) {
           this.router.navigate([nextUrl]);
+        }
+        else {
+          this.router.navigate(['accounts', 'login'], {
+            queryParams: {
+              next: nextUrl
+            }
+          })
         }
       });
   }

@@ -32,7 +32,7 @@ export class AuthenticatedGuard implements CanActivate {
             title: 'Session expired',
             message: '',
           });
-          return false;
+          return this.router.createUrlTree(['accounts', 'login']);
         }
         return true;
       })
