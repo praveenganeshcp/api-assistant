@@ -22,11 +22,13 @@ export class LandingPageObject implements PageObject {
   }
 
   public getDashboardLinkInHeader() {
-    return cy.getVisibleElementByTestId("go-to-app-link");
+    return cy.getVisibleElementByTestId('go-to-app-link');
   }
 
   public getLogoutButtonInHeader() {
-    return cy.getVisibleElement('.landing-page__header button[sw-primary-button]')
+    return cy.getVisibleElement(
+      '.landing-page__header button[sw-primary-button]'
+    );
   }
 
   public getSignupLinkInHeader() {

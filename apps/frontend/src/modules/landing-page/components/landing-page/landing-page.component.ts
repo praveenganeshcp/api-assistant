@@ -27,7 +27,6 @@ interface LandingPageFeatureCard {
   imports: [CommonModule, RouterModule, SwButtonComponent],
 })
 export class LandingPageComponent {
-
   /**
    * App name
    */

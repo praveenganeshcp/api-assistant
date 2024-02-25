@@ -8,7 +8,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-import { LoginPageObject } from "../page-objects/accounts/login.page-object";
+import { LoginPageObject } from '../page-objects/accounts/login.page-object';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare global {
@@ -43,7 +43,6 @@ declare global {
       setTabletResolution(): void;
 
       setDesktopResolution(): void;
-
     }
   }
 }
@@ -51,7 +50,7 @@ declare global {
 //
 // -- This is a parent command --
 Cypress.Commands.add('login', () => {
-  cy.intercept("POST", "/api/v6/accounts/login").as('loginAPI')
+  cy.intercept('POST', '/api/v6/accounts/login').as('loginAPI');
   const loginPageObject = new LoginPageObject();
   loginPageObject.visit();
   loginPageObject.typeEmailId(Cypress.env('emailId'));
@@ -77,17 +76,16 @@ Cypress.Commands.add('getElement', (selector: string) => {
 });
 
 Cypress.Commands.add('setDesktopResolution', () => {
-  cy.viewport('macbook-13')
-})
+  cy.viewport('macbook-13');
+});
 
 Cypress.Commands.add('setMobileResolution', () => {
-  cy.viewport('samsung-s10')
-})
+  cy.viewport('samsung-s10');
+});
 
 Cypress.Commands.add('setTabletResolution', () => {
-  cy.viewport('ipad-2')
-})
-
+  cy.viewport('ipad-2');
+});
 
 //
 // -- This is a child command --

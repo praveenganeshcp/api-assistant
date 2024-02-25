@@ -67,7 +67,6 @@ export class AccountsEffects {
     this.actions$.pipe(
       ofType(loginAccountAction),
       mergeMap(({ emailId, password, callbackUrl }) => {
-        console.log('ddd', callbackUrl)
         return this.accountsService.loginAccount(emailId, password).pipe(
           map((userProfile: UserProfile) => {
             this.router.navigateByUrl(callbackUrl);

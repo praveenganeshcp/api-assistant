@@ -45,16 +45,16 @@ describe('landing page', () => {
       .should('have.attr', 'href', accountFixture.signupUrl);
   });
 
-  it("should show link to app and logout button in the header if user is authenticated", () => {
+  it('should show link to app and logout button in the header if user is authenticated', () => {
     cy.login();
 
-    landingPage.getDashboardLinkInHeader()
+    landingPage
+      .getDashboardLinkInHeader()
       .should('have.attr', 'href', '/app/projects')
       .should('have.text', 'Go to app');
 
-    landingPage.getLogoutButtonInHeader()
-      .should('contain.text', 'Logout')
-  })
+    landingPage.getLogoutButtonInHeader().should('contain.text', 'Logout');
+  });
 
   it('should show nudge in the footer to create application if user is authenticated', () => {
     cy.login();
@@ -69,6 +69,4 @@ describe('landing page', () => {
       .should('have.text', 'API Assistant')
       .should('have.attr', 'href', '/app/projects');
   });
-
-  
 });

@@ -1,4 +1,4 @@
 export const accountFixture = {
-    signupUrl: '/accounts/signup',
-    loginUrl: '/accounts/login',
-}
+  signupUrl: '/accounts/signup',
+  loginUrl: '/accounts/login',
+};

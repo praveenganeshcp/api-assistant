@@ -71,7 +71,7 @@ export const createAccountErrorAction = createUserAccountActionWithProps(
 
 export const loginAccountAction = createUserAccountActionWithProps(
   'Login Account',
-  props<{ emailId: string; password: string, callbackUrl: string }>()
+  props<{ emailId: string; password: string; callbackUrl: string }>()
 );
 
 export const loginSuccessAction = createUserAccountActionWithProps(

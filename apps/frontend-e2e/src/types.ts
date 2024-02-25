@@ -1,3 +1,3 @@
 export interface PageObject {
-  visit():  void;
+  visit(): void;
 }

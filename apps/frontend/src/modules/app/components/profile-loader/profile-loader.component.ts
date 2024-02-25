@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { profileStateSelector } from '../../../accounts/store/selectors';
 import { AppState } from '../../app.state';
-import { valueIsDefined } from '@api-assistant/utils';
 
 @Component({
   selector: 'api-assistant-profile-loader',
