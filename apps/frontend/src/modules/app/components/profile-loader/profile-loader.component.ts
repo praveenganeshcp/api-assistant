@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
-import { profileSelector } from '../../../accounts/store/selectors';
+import { profileStateSelector } from '../../../accounts/store/selectors';
 import { AppState } from '../../app.state';
 
 @Component({
@@ -14,23 +14,32 @@ import { AppState } from '../../app.state';
   styleUrls: ['./profile-loader.component.scss'],
 })
 export class ProfileLoaderComponent implements OnInit {
-
   constructor(
     private store: Store<AppState>,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.store.select(profileSelector).pipe(
-      filter(profile => !profile.isLoading),
-      take(1),
-    ).subscribe(_ => {
-      const nextUrl = this.activatedRoute.snapshot.queryParamMap.get('next')
-      if(nextUrl !== null) {
-        this.router.navigate([nextUrl])
-      }
-    })
+    this.store
+      .select(profileStateSelector)
+      .pipe(
+        filter((profile) => !profile.isLoading),
+        take(1)
+      )
+      .subscribe((profileState) => {
+        const nextUrl =
+          this.activatedRoute.snapshot.queryParamMap.get('next') ??
+          '/app/projects';
+        if (!!profileState.data) {
+          this.router.navigate([nextUrl]);
+        } else {
+          this.router.navigate(['accounts', 'login'], {
+            queryParams: {
+              next: nextUrl,
+            },
+          });
+        }
+      });
   }
 }

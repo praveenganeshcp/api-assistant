@@ -23,7 +23,6 @@ export interface AccountState {
     error: string;
   };
   resetPasswordLink: {
-    isSent: boolean;
     inProgress: boolean;
     error: string;
   };

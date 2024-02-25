@@ -2,16 +2,15 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
-import { loginAccount } from '../../store/actions';
+import { loginAccountAction } from '../../store/actions';
 import {
-  isUserLoggingInSelector,
+  isUserSigninInProgressSelector,
   loginErrorMessageSelector,
 } from '../../store/selectors';
 import { Store } from '@ngrx/store';
@@ -37,14 +36,35 @@ import { SwFormControlComponent } from 'ngx-simple-widgets';
   ],
 })
 export class LoginComponent {
+  public loginForm = this.createLoginForm();
+
+  /**
+   * Is user login action in progress
+   */
+  public isLoginInProgress$: Observable<boolean> = this.store.select(
+    isUserSigninInProgressSelector
+  );
+
+  private get loginSuccessCallbackUrl(): string {
+    return this.route.snapshot.queryParamMap.get('next') ?? '/app/projects';
+  }
+
+  public readonly errorMessagesMap: Record<string, string> = {
+    strongPassword:
+      'Password must contain 1 uppercase, 1 lowercase, 1 number and minimum 9 characters',
+  };
+
+  public readonly loginErrorMessage$: Observable<string> = this.store.select(
+    loginErrorMessageSelector
+  );
+
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute
   ) {}
 
-  public loginForm: FormGroup = this.createLoginForm();
-
-  private createLoginForm(): FormGroup {
+  private createLoginForm() {
     return this.formBuilder.group({
       emailId: this.formBuilder.control('', [
         Validators.required,
@@ -65,15 +85,17 @@ export class LoginComponent {
     return this.loginForm.get('password') as FormControl;
   }
 
-  public isLoginInProgress$: Observable<boolean> = this.store.select(
-    isUserLoggingInSelector
-  );
-
-  public loginErrorMessage$: Observable<string> = this.store.select(
-    loginErrorMessageSelector
-  );
-
   public handleLogin() {
-    this.store.dispatch(loginAccount({ payload: this.loginForm.value }));
+    const { emailId, password } = this.loginForm.value as {
+      emailId: string;
+      password: string;
+    };
+    this.store.dispatch(
+      loginAccountAction({
+        emailId,
+        password,
+        callbackUrl: this.loginSuccessCallbackUrl,
+      })
+    );
   }
 }

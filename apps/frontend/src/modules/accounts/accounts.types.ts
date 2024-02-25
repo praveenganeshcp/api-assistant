@@ -1,3 +1,6 @@
+/**
+ * User profile domain model
+ */
 export interface UserProfile {
   username: string;
   emailId: string;

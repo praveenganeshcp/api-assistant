@@ -20,7 +20,7 @@ export class InvalidAuthTokenException extends UnauthorizedException {
 
 export class InvalidEmailIdPasswordException extends UnauthorizedException {
   constructor() {
-    super('EmailID and password does not match');
+    super('EmailID or password is incorrect');
   }
 }
 
