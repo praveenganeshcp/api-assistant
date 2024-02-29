@@ -5,10 +5,9 @@ import { ProjectMetadataRepository } from './repositories/project-metadata.repos
 import { CreateProjectUsecase } from './usecases/create-project.usecase';
 import { FetchProjectsByUserIdUsecase } from './usecases/fetch-projects-by-userid.usecase';
 import { FetchProjectByIdUsecase } from './usecases/fetch-project-by-id.usecase';
-import {
-  AccountsBeModule,
-  AuthenticationMiddleware,
-} from '@api-assistant/auth-be';
+import { AccountsModule } from "../accounts/accounts.module";
+import { AuthenticationMiddleware } from '../accounts/middlewares/authentication.middleware';
+
 
 @Module({
   controllers: [ProjectsController],
@@ -19,7 +18,7 @@ import {
     FetchProjectsByUserIdUsecase,
     FetchProjectByIdUsecase,
   ],
-  imports: [AccountsBeModule],
+  imports: [AccountsModule],
   exports: [ProjectMetadataRepository],
 })
 export class ProjectModule implements NestModule {

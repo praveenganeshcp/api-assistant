@@ -1,5 +1,5 @@
 import { User, UserDetails } from '../entities/user.entity';
-import { Mapper } from '@api-assistant/utils';
+import { Mapper } from '@api-assistant/commons';
 
 export class UserDetailsMapper implements Mapper<User, UserDetails> {
   from(user: User): UserDetails {

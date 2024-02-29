@@ -6,7 +6,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JWTService } from '../services/jwt.service';
 import { InvalidEmailIdPasswordException } from '../exceptions/accounts.exceptions';
 import { AccountsRepository } from '../repository/accounts.repository';
-import { Usecase, CanBeNull, valueIsDefined } from '@api-assistant/utils';
+import { Usecase, CanBeNull, valueIsDefined } from '@api-assistant/commons';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
 
 const userDetailsMapper = new UserDetailsMapper();

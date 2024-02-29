@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { AccountsRepository } from "../repository/accounts.repository";
 import { User } from "../entities/user.entity";
 import { ObjectId } from "mongodb";
-import { CanBeNull, valueIsDefined } from "@api-assistant/utils";
+import { CanBeNull, valueIsDefined } from "@api-assistant/commons";
 
 @Injectable()
 export class AccountsService {
