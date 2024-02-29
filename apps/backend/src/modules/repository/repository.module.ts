@@ -1,6 +1,6 @@
 import { Global, Module } from "@nestjs/common";
 import { createDbConnection } from "./db-connection";
-import { dbConfig } from "../../config/db.config";
+import { dbConfig } from "@api-assistant/configuration-be";
 
 export const MONGO_DB_CONNECTION = "MONGO_DB_CONNECTION"
 

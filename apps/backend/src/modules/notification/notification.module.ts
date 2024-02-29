@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { createEmailTransport } from "./factories/email-transport.factory";
 import { EMAIL_TRANSPORT, EmailNotificationService } from "./services/email/email-notification.service";
-import { emailconfig } from "../../config/email.config";
+import { emailconfig } from "@api-assistant/configuration-be";
 
 @Module({
     providers: [

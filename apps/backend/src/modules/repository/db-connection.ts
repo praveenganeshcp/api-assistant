@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { Db, MongoClient } from "mongodb";
-import { dbConfig } from "../../config/db.config";
 import { ConfigType } from "@nestjs/config";
+import { dbConfig } from "@api-assistant/configuration-be";
 
 export async function createDbConnection(
     databaseConfig: ConfigType<typeof dbConfig>
