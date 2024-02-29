@@ -6,26 +6,22 @@
   flex-direction: column;
   justify-content: space-evenly;
 
-  api-assistant-alert-banner {
-    width: 80%;
-  }
-
   .signup__form {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: space-evenly;
+    row-gap: 35px;
 
-    > sw-form-control,
+    sw-form-control,
     button {
-      margin: 4% 0;
       width: 80%;
     }
 
-    h2 {
-      margin: 4%;
-      text-align: center;
+    .signup-form__api-error {
+      height: 20px;
+      font-size: 14px;
+      color: red;
     }
   }
 }

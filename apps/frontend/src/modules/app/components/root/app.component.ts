@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {  RouterModule } from '@angular/router';
-import { Observable, filter, take } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProfileLoaderComponent } from '../profile-loader/profile-loader.component';
-import { loadProfile } from '../../../accounts/store/actions';
-import { isProfileLoadingSelector } from '../../../accounts/store/selectors';
+import { loadProfileAction } from '@api-assistant/auth-fe';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 
@@ -16,15 +14,9 @@ import { AppState } from '../../app.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private store: Store<AppState>,
-  ) {}
-
-  public isUserProfileLoading$: Observable<boolean> = this.store.select(
-    isProfileLoadingSelector
-  );
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(loadProfile());
+    this.store.dispatch(loadProfileAction());
   }
 }

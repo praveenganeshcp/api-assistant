@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { AccountsShellComponent } from './components/accounts-shell/accounts-shell.component';
-import { AccountsGuard } from './services/accounts.guard';
+import { AccountsGuard } from '@api-assistant/auth-fe';
 
 export const accountRoutes: Route[] = [
   {

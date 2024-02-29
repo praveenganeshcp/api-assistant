@@ -2,16 +2,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
-  loggedInUserSelector,
   isUserLoggingOutSelector,
-} from '../../../accounts/store/selectors';
-import { logoutAccount } from '../../../accounts/store/actions';
-import { UserProfile } from '../../../accounts/accounts.types';
+  isUserLoggedInSelector,
+} from '@api-assistant/auth-fe';
+import { logoutAccountAction } from '@api-assistant/auth-fe';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CanBeNull } from '@api-assistant/commons';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
+import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
 
 interface LandingPageFeatureCard {
   id: number;
@@ -28,16 +27,34 @@ interface LandingPageFeatureCard {
   imports: [CommonModule, RouterModule, SwButtonComponent],
 })
 export class LandingPageComponent {
-  constructor(private store: Store<AppState>) {}
+  /**
+   * App name
+   */
+  public readonly appName: string = this.appInfoService.appName;
 
-  loggedInUser$: Observable<CanBeNull<UserProfile>> =
-    this.store.select(loggedInUserSelector);
+  /**
+   * App caption
+   */
+  public readonly appCaption: string = this.appInfoService.appCaption;
 
-  isUserloggingOut$: Observable<boolean> = this.store.select(
+  /**
+   * Whether user is loggedin
+   */
+  public readonly isUserLoggedIn$: Observable<boolean> = this.store.select(
+    isUserLoggedInSelector
+  );
+
+  /**
+   * Is user logout is in progress
+   */
+  public readonly isUserloggingOut$: Observable<boolean> = this.store.select(
     isUserLoggingOutSelector
   );
 
-  public LANDING_PAGE_FEATURES: LandingPageFeatureCard[] = [
+  /**
+   * List of feature to be presented in card view
+   */
+  public readonly landingPageFeatures: LandingPageFeatureCard[] = [
     {
       id: 1,
       title: 'Queries on Frontend',
@@ -62,11 +79,22 @@ export class LandingPageComponent {
     },
   ];
 
+  constructor(
+    private readonly store: Store<AppState>,
+    private readonly appInfoService: AppInfoService
+  ) {}
+
+  /**
+   * trackBy for features card
+   */
   public trackFeatureCard(_: number, card: LandingPageFeatureCard): number {
     return card.id;
   }
 
+  /**
+   * Logout account
+   */
   public logoutAccount() {
-    this.store.dispatch(logoutAccount());
+    this.store.dispatch(logoutAccountAction());
   }
 }
