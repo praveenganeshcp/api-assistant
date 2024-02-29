@@ -13,10 +13,10 @@ import { JWTService } from './services/jwt.service';
 import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
 import { PasswordManagerService } from './services/password-manager.service';
 import { LoginUseCase } from './usecases/login.usecase';
-import { NotificationsModule } from '../notification/notification.module';
 import { VerifyAccountUsecase } from './usecases/verify-account.usecase';
 import { SendResetPasswordLinkUsecase } from './usecases/send-reset-password-link.usecase';
 import { ResetPasswordUsecase } from './usecases/reset-password.usecase';
+import { NotificationsModule } from '@api-assistant/notifications-be';
 
 @Module({
   imports: [NotificationsModule],

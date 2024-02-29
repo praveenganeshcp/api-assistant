@@ -6,12 +6,12 @@ import { User, UserDetails } from '../entities/user.entity';
 import { OptionalId } from 'mongodb';
 import { JWTService } from '../services/jwt.service';
 import { PasswordManagerService } from '../services/password-manager.service';
-import { EmailNotificationService } from '../../notification/services/email/email-notification.service';
 import { ConfigType } from '@nestjs/config';
 import { createHash } from 'crypto';
 import { createPasswordResetKey } from '../utils';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
 import { appConfig } from '@api-assistant/configuration-be';
+import { EmailNotificationService } from '@api-assistant/notifications-be';
 
 const userDetailsMapper = new UserDetailsMapper();
 
