@@ -6,8 +6,8 @@ import { AppModule } from './modules/app/app.module';
 import { HttpExceptionFilter } from './modules/app/http-exception.filter';
 import { CustomValidationPipe } from './modules/app/custom-validation.pipe';
 import { useContainer } from 'class-validator';
-import { appConfig } from './config/app.config';
 import cookieParser from 'cookie-parser';
+import { appConfig } from '@api-assistant/configuration-be';
 
 async function bootstrap() {
   // bootstrap app module
@@ -19,14 +19,12 @@ async function bootstrap() {
   );
 
   // cookie parser middleware
-  app.use(
-    cookieParser(),
-  );
+  app.use(cookieParser());
 
   app.enableCors({
     origin: [applicationConfig.FE_HOST_ADDRESS],
-    credentials: true
-  })
+    credentials: true,
+  });
 
   // set global prefix
   const globalPrefix = 'api/v6';
