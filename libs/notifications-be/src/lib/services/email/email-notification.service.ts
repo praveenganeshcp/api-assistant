@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { Transporter } from 'nodemailer';
+import SMTPTransport = require('nodemailer/lib/smtp-transport');
 
 export const EMAIL_TRANSPORT = 'EMAIL_TRANSPORT';
 
