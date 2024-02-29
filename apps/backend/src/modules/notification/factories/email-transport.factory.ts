@@ -1,6 +1,6 @@
+import { emailconfig } from "@api-assistant/configuration-be";
 import { Logger } from "@nestjs/common";
 import { ConfigType } from "@nestjs/config";
-import { emailconfig } from "../../../config/email.config";
 import { createTransport } from "nodemailer";
 
 export function createEmailTransport(emailConfiguration: ConfigType<typeof emailconfig>) {

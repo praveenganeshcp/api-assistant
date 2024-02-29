@@ -7,11 +7,11 @@ import { OptionalId } from 'mongodb';
 import { JWTService } from '../services/jwt.service';
 import { PasswordManagerService } from '../services/password-manager.service';
 import { EmailNotificationService } from '../../notification/services/email/email-notification.service';
-import { appConfig } from '../../../config/app.config';
 import { ConfigType } from '@nestjs/config';
 import { createHash } from 'crypto';
 import { createPasswordResetKey } from '../utils';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
+import { appConfig } from '@api-assistant/configuration-be';
 
 const userDetailsMapper = new UserDetailsMapper();
 
