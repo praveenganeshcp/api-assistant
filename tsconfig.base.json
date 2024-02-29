@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@api-assistant/commons": ["libs/commons/src/index.ts"],
+      "@api-assistant/configuration-be": ["libs/configuration-be/src/index.ts"],
     },
     "strict": true
   },
