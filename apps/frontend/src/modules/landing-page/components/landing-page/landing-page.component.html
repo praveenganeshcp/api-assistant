@@ -1,50 +1,65 @@
 <main class="landing-page">
+  <!-- landing page header -->
   <header class="landing-page__header">
-    <ng-container
-      *ngIf="loggedInUser$ | async as loggedInUser; else loginLinks"
-    >
-      <a routerLink="/app/projects">Go to app</a>
+    <!-- Provide link to app and logout if user is logged in -->
+    <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
+      <a data-testid="go-to-app-link" routerLink="/app/projects">Go to app</a>
       <button
         [showLoader]="isUserloggingOut$ | async"
         sw-primary-button
         (click)="logoutAccount()"
+        data-testid="logout-btn"
       >
         Logout
       </button>
     </ng-container>
+
+    <!-- provide link to signup and signin if user is not logged in-->
     <ng-template #loginLinks>
-      <a routerLink="/accounts/signup">Signup</a>
-      <a routerLink="/accounts/login">Login</a>
+      <a data-testid="signup-link" routerLink="/accounts/signup">Signup</a>
+      <a data-testid="login-link" routerLink="/accounts/login">Login</a>
     </ng-template>
   </header>
+  <!-- End of header -->
+
+  <!-- Banner content -->
   <div class="landing-page__banner">
-    <h1>API Assistant</h1>
-    <h4>Declarative Backend for trivial apps</h4>
+    <h1>{{ appName }}</h1>
+    <h4>{{ appCaption }}</h4>
   </div>
+  <!-- End of banner content -->
+
+  <!-- Features card  -->
   <div class="landing-page__features">
     <h1>Features</h1>
+
+    <!-- List of feature cards -->
     <ng-container
-      *ngFor="
-        let featureCard of LANDING_PAGE_FEATURES;
-        trackBy: trackFeatureCard
-      "
+      *ngFor="let feature of landingPageFeatures; trackBy: trackFeatureCard"
     >
       <div class="landing-page__feature-card">
-        <h3>{{ featureCard.title }}</h3>
-        <span>{{ featureCard.description }}</span>
+        <h3>{{ feature.title }}</h3>
+        <span>{{ feature.description }}</span>
       </div>
     </ng-container>
   </div>
+  <!-- End of features card -->
+
+  <!-- Landing page footer -->
   <footer class="landing_page__footer">
-    <span *ngIf="(loggedInUser$ | async); else nudgeCreateApp">
-        Start building applications rapidly with
-      <a routerLink="/app/projects">API Assistant</a>
+    <!-- Nudge users to create application if loggedin -->
+    <span *ngIf="isUserLoggedIn$ | async; else nudgeCreateAccount">
+      Start building applications rapidly with
+      <a routerLink="/app/projects">{{ appName }}</a>
     </span>
-    <ng-template #nudgeCreateApp>
+
+    <!-- Nudge users to signup if not loggedin -->
+    <ng-template #nudgeCreateAccount>
       <span>
-        Want to build application with API Assistant?
+        Want to build application with {{ appName }}?
         <a routerLink="/accounts/signup">Signup here</a>
       </span>
     </ng-template>
   </footer>
+  <!-- end of footer -->
 </main>

@@ -1,25 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
-import { loginAccount } from '../../store/actions';
 import {
-  isUserLoggingInSelector,
+  loginAccountAction,
+  resetLoginStateAction,
+} from '@api-assistant/auth-fe';
+import {
+  isUserSigninInProgressSelector,
   loginErrorMessageSelector,
-} from '../../store/selectors';
+} from '@api-assistant/auth-fe';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
-import { strongPasswordValidator } from '../../utils';
+import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
+import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
 
 @Component({
   selector: 'api-assistant-login',
@@ -36,15 +39,39 @@ import { SwFormControlComponent } from 'ngx-simple-widgets';
     SwFormControlComponent,
   ],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
+  public loginForm = this.createLoginForm();
+
+  /**
+   * Is user login action in progress
+   */
+  public isLoginInProgress$: Observable<boolean> = this.store.select(
+    isUserSigninInProgressSelector
+  );
+
+  private get loginSuccessCallbackUrl(): string {
+    return this.route.snapshot.queryParamMap.get('next') ?? '/app/projects';
+  }
+
+  public readonly errorMessagesMap: Record<string, string> = {
+    strongPassword:
+      'Password must contain 1 uppercase, 1 lowercase, 1 number and minimum 9 characters',
+  };
+
+  public readonly loginErrorMessage$: Observable<string> = this.store.select(
+    loginErrorMessageSelector
+  );
+
+  public readonly appName: string = this.appInfoService.appName;
+
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private appInfoService: AppInfoService
   ) {}
 
-  public loginForm: FormGroup = this.createLoginForm();
-
-  private createLoginForm(): FormGroup {
+  private createLoginForm() {
     return this.formBuilder.group({
       emailId: this.formBuilder.control('', [
         Validators.required,
@@ -65,15 +92,21 @@ export class LoginComponent {
     return this.loginForm.get('password') as FormControl;
   }
 
-  public isLoginInProgress$: Observable<boolean> = this.store.select(
-    isUserLoggingInSelector
-  );
-
-  public loginErrorMessage$: Observable<string> = this.store.select(
-    loginErrorMessageSelector
-  );
-
   public handleLogin() {
-    this.store.dispatch(loginAccount({ payload: this.loginForm.value }));
+    const { emailId, password } = this.loginForm.value as {
+      emailId: string;
+      password: string;
+    };
+    this.store.dispatch(
+      loginAccountAction({
+        emailId,
+        password,
+        callbackUrl: this.loginSuccessCallbackUrl,
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(resetLoginStateAction());
   }
 }

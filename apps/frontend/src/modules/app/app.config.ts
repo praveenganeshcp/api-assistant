@@ -9,9 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { appRoutes } from './app.routes';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { accountsReducer } from '../accounts/store/reducer';
+import { accountsReducer } from '@api-assistant/auth-fe';
 import { dashboardReducers } from '../dashboard/store/dashboard.reducers';
-import { AccountsEffects } from '../accounts/store/effects';
+import { AccountsEffects } from '@api-assistant/auth-fe';
 import { SwToastModule } from 'ngx-simple-widgets';
 import { DashboardEffects } from '../dashboard/store/dashboard.effects';
 

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AccountsService } from './accounts.service';
 import { map } from 'rxjs';
 import { AbstractControl } from '@angular/forms';
+import { AccountsService } from '../services/accounts.service';
 
+/**
+ * Validates if email in form control is already registered in the system
+ */
 @Injectable({
   providedIn: 'root',
 })

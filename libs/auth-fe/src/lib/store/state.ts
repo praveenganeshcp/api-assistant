@@ -1,5 +1,5 @@
 import { CanBeNull } from '@api-assistant/commons';
-import { UserProfile } from '../accounts.types';
+import { UserProfile } from '../models/accounts.types';
 
 export interface AccountState {
   profile: {
@@ -23,8 +23,8 @@ export interface AccountState {
     error: string;
   };
   resetPasswordLink: {
-    isSent: boolean;
     inProgress: boolean;
     error: string;
+    isSent: boolean;
   };
 }

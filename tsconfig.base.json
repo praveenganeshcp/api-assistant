@@ -15,11 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@api-assistant/auth-be": ["libs/auth-be/src/index.ts"],
+      "@api-assistant/auth-fe": ["libs/auth-fe/src/index.ts"],
       "@api-assistant/commons": ["libs/commons/src/index.ts"],
       "@api-assistant/configuration-be": ["libs/configuration-be/src/index.ts"],
       "@api-assistant/notifications-be": ["libs/notifications-be/src/index.ts"],
-      "@api-assistant/repository": ["libs/repository/src/index.ts"],
-      "@api-assistant/auth-be": ["libs/auth-be/src/index.ts"]
+      "@api-assistant/repository": ["libs/repository/src/index.ts"]
     },
     "strict": true
   },

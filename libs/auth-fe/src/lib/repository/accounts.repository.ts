@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { UserProfile } from '../accounts.types';
-import { environment } from '../../../environments/environment.dev';
+import { UserProfile } from '../models/accounts.types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ export class AccountsRepository {
   constructor(private http: HttpClient) {}
 
   private get baseURL(): string {
-    return environment.apiUrl;
+    return 'http://localhost:3000/';
   }
 
   public fetchUserProfile(): Observable<UserProfile> {

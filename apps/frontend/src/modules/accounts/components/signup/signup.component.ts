@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -14,13 +14,16 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { DuplicateEmailIdValidatorService } from '../../services/duplicate-emailid.validator';
-import { strongPasswordValidator } from '../../utils';
-import { createAccount } from '../../store/actions';
+import { DuplicateEmailIdValidatorService } from '@api-assistant/auth-fe';
+import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import {
-  isSignupInProgress,
+  createAccountAction,
+  resetCreateAccountStateAction,
+} from '@api-assistant/auth-fe';
+import {
   createAccountErrorMessageSelector,
-} from '../../store/selectors';
+  isSignupInProgressSelector,
+} from '@api-assistant/auth-fe';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
@@ -40,44 +43,20 @@ import { AppState } from '../../../app/app.state';
     AlertBannerComponent,
   ],
 })
-export class SignupComponent {
-  constructor(
-    private formBuilder: FormBuilder,
-    private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
-    private store: Store<AppState>
-  ) {}
+export class SignupComponent implements OnDestroy {
+  public signupForm = this.buildSignupFormGroup();
 
-  public signupForm = this.formBuilder.group({
-    username: this.formBuilder.control('', [
-      Validators.required,
-      Validators.min(3),
-      Validators.max(20),
-    ]),
-    password: this.formBuilder.control('', [
-      Validators.required,
-      strongPasswordValidator,
-    ]),
-    emailId: this.formBuilder.control(
-      '',
-      [Validators.required, Validators.email],
-      [
-        this.duplicateEmailIdValidator.validate.bind(
-          this.duplicateEmailIdValidator
-        ),
-      ]
-    ),
-  });
+  public isSignupInProgress$: Observable<boolean> = this.store.select(
+    isSignupInProgressSelector
+  );
+
+  public signupErrorMessage$: Observable<string> = this.store.select(
+    createAccountErrorMessageSelector
+  );
 
   public get usernameControl() {
     return this.signupForm.get('username') as FormControl;
   }
-
-  public isSignupInProgress$: Observable<boolean> =
-    this.store.select(isSignupInProgress);
-
-  public createAccountError$: Observable<string> = this.store.select(
-    createAccountErrorMessageSelector
-  );
 
   public get passwordControl() {
     return this.signupForm.get('password') as FormControl;
@@ -87,14 +66,45 @@ export class SignupComponent {
     return this.signupForm.get('emailId') as FormControl;
   }
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
+    private store: Store<AppState>
+  ) {}
+
+  private buildSignupFormGroup() {
+    return this.formBuilder.group({
+      username: this.formBuilder.control('', [
+        Validators.required,
+        Validators.min(3),
+        Validators.max(20),
+      ]),
+      password: this.formBuilder.control('', [
+        Validators.required,
+        strongPasswordValidator,
+      ]),
+      emailId: this.formBuilder.control(
+        '',
+        [Validators.required, Validators.email],
+        [
+          this.duplicateEmailIdValidator.validate.bind(
+            this.duplicateEmailIdValidator
+          ),
+        ]
+      ),
+    });
+  }
+
   public handleSignup() {
     const { emailId, password, username } = this.signupForm.value as {
       emailId: string;
       password: string;
       username: string;
     };
-    this.store.dispatch(
-      createAccount({ payload: { emailId, password, username } })
-    );
+    this.store.dispatch(createAccountAction({ emailId, password, username }));
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(resetCreateAccountStateAction());
   }
 }

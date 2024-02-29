@@ -1,23 +1,26 @@
 <div class="signup">
-  <api-assistant-alert-banner
-    type="error"
-    [text]="createAccountError$ | async"
-  ></api-assistant-alert-banner>
   <form
     [formGroup]="signupForm"
     (ngSubmit)="handleSignup()"
     class="signup__form"
   >
     <h2>Signup</h2>
+    <!-- User name form control -->
     <sw-form-control [control]="usernameControl" label="Username">
       <input sw-input formControlName="username" type="text" />
     </sw-form-control>
+
+    <!-- Email id form control -->
     <sw-form-control [control]="emailIdControl" label="Email ID">
       <input sw-input formControlName="emailId" type="email" />
     </sw-form-control>
+
+    <!-- Password form control -->
     <sw-form-control [control]="passwordControl" label="Password">
       <input sw-input formControlName="password" type="password" />
     </sw-form-control>
+
+    <!-- Create account button -->
     <button
       [showLoader]="isSignupInProgress$ | async"
       [disabled]="signupForm.invalid"
@@ -25,9 +28,12 @@
     >
       Create account
     </button>
+
+    <div class="signup-form__api-error">{{ signupErrorMessage$ | async }}</div>
+
+    <span
+      >Already have an account?
+      <a routerLink="/accounts/login">Login here</a></span
+    >
   </form>
-  <span
-    >Already have an account?
-    <a routerLink="/accounts/login">Login here</a></span
-  >
 </div>

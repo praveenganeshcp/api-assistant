@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   SwButtonComponent,
@@ -15,14 +15,16 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { sendPasswordResetLink } from '../../store/actions';
 import {
-  sendPasswordResetLinkInProgress,
-  isResetPasswordLinkSent,
+  resetForgotPasswordState,
+  sendPasswordResetLinkAction,
+} from '@api-assistant/auth-fe';
+import {
+  isPasswordResetLinkSentSelector,
+  sendPasswordResetLinkInProgressSelector,
   sendResetPasswordLinkErrorMessageSelector,
-} from '../../store/selectors';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+} from '@api-assistant/auth-fe';
+import { Observable } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 
 @Component({
@@ -40,10 +42,23 @@ import { AppState } from '../../../app/app.state';
     AlertBannerComponent,
   ],
 })
-export class ForgotPasswordComponent {
-  constructor(private store: Store<AppState>) {}
+export class ForgotPasswordComponent implements OnDestroy {
+  /**
+   * Whether send password reset link in progress
+   */
+  public resetPasswordLinkInProgress$: Observable<boolean> = this.store.select(
+    sendPasswordResetLinkInProgressSelector
+  );
 
-  resetPasswordLinkForm = new FormGroup({
+  public isPasswordResetLinkSent$: Observable<boolean> = this.store.select(
+    isPasswordResetLinkSentSelector
+  );
+
+  public passwordResetErrorMessage$: Observable<string> = this.store.select(
+    sendResetPasswordLinkErrorMessageSelector
+  );
+
+  public resetPasswordLinkForm = new FormGroup({
     emailId: new FormControl('', [Validators.required, Validators.email]),
   });
 
@@ -51,24 +66,17 @@ export class ForgotPasswordComponent {
     return this.resetPasswordLinkForm.get('emailId');
   }
 
+  constructor(private store: Store<AppState>) {}
+
   public handleSendPasswordResetLink() {
     this.store.dispatch(
-      sendPasswordResetLink({
+      sendPasswordResetLinkAction({
         emailId: this.resetPasswordLinkForm.value.emailId as string,
       })
     );
   }
 
-  resetPasswordLinkInProgress$: Observable<boolean> = this.store.select(
-    sendPasswordResetLinkInProgress
-  );
-
-  alertMessage$: Observable<string> = combineLatest([
-    this.store.select(isResetPasswordLinkSent),
-    this.store.select(sendResetPasswordLinkErrorMessageSelector),
-  ]).pipe(
-    map(([isLinkSent, errorMessage]) => {
-      return isLinkSent ? 'Password reset link sent' : errorMessage || '';
-    })
-  );
+  ngOnDestroy(): void {
+    this.store.dispatch(resetForgotPasswordState());
+  }
 }

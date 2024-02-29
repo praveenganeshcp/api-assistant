@@ -1,17 +1,17 @@
 <main class="accounts-shell">
-    <div class="accounts-shell__banner">
-        <div>
-            <h1>
-                <a routerLink="/">API Assistant</a>
-            </h1>
-            <h6>Declarative Backend for trivial apps</h6>
-        </div>
+  <div class="accounts-shell__banner">
+    <div>
+      <h1>
+        <a routerLink="/">{{ appName }}</a>
+      </h1>
+      <h6>{{ appCaption }}</h6>
     </div>
-    <div class="accounts-shell__router">
-        <api-assistant-account-routes-header class="account-routes-header">
-        </api-assistant-account-routes-header>
-        <div class="router-outlet__content">
-            <router-outlet></router-outlet>
-        </div>
+  </div>
+  <div class="accounts-shell__router">
+    <api-assistant-account-routes-header class="account-routes-header">
+    </api-assistant-account-routes-header>
+    <div class="router-outlet__content">
+      <router-outlet></router-outlet>
     </div>
+  </div>
 </main>
