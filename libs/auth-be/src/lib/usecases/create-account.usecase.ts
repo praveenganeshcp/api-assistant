@@ -1,23 +1,22 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { AccountsRepository } from '../repository/accounts.repository';
 import { Usecase } from '@api-assistant/commons';
-import { CreateAccountDTO } from '../dto/create-account.dto';
 import { User, UserDetails } from '../entities/user.entity';
 import { OptionalId } from 'mongodb';
-import { JWTService } from '../services/jwt.service';
-import { PasswordManagerService } from '../services/password-manager.service';
 import { ConfigType } from '@nestjs/config';
 import { createHash } from 'crypto';
-import { createPasswordResetKey } from '../utils';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
 import { appConfig } from '@api-assistant/configuration-be';
 import { EmailNotificationService } from '@api-assistant/notifications-be';
+import { JWTService } from '../services/jwt.service';
+import { PasswordManagerService } from '../services/password-manager.service';
+import { createPasswordResetKey } from '../utils';
 
 const userDetailsMapper = new UserDetailsMapper();
 
 @Injectable()
 export class CreateAccountUsecase
-  implements Usecase<CreateAccountDTO, { user: UserDetails; token: string }>
+  implements Usecase<any, { user: UserDetails; token: string }>
 {
   @Inject(appConfig.KEY)
   private appConfiguration!: ConfigType<typeof appConfig>;
@@ -32,7 +31,7 @@ export class CreateAccountUsecase
   ) {}
 
   public async execute(
-    data: CreateAccountDTO
+    data: any
   ): Promise<{ user: UserDetails; token: string }> {
     this.logger.log(`Creating new account in db for user ${data.username}`);
     const newUserAccount: User = await this.accountsRepository.save(
@@ -47,9 +46,7 @@ export class CreateAccountUsecase
     };
   }
 
-  private async createUserAccountData(
-    data: CreateAccountDTO
-  ): Promise<OptionalId<User>> {
+  private async createUserAccountData(data: any): Promise<OptionalId<User>> {
     return {
       username: data.username,
       password: await this.passwordManagerService.hash(data.password),

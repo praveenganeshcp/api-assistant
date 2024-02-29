@@ -1,19 +1,18 @@
-import { LoginDTO } from '../dto/login.dto';
 import { User, UserDetails } from '../entities/user.entity';
-import { AccountsService } from '../services/accounts.service';
-import { PasswordManagerService } from '../services/password-manager.service';
 import { Injectable, Logger } from '@nestjs/common';
-import { JWTService } from '../services/jwt.service';
 import { InvalidEmailIdPasswordException } from '../exceptions/accounts.exceptions';
 import { AccountsRepository } from '../repository/accounts.repository';
 import { Usecase, CanBeNull, valueIsDefined } from '@api-assistant/commons';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
+import { AccountsService } from '../services/accounts.service';
+import { JWTService } from '../services/jwt.service';
+import { PasswordManagerService } from '../services/password-manager.service';
 
 const userDetailsMapper = new UserDetailsMapper();
 
 @Injectable()
 export class LoginUseCase
-  implements Usecase<LoginDTO, { user: UserDetails; token: string }>
+  implements Usecase<any, { user: UserDetails; token: string }>
 {
   private logger = new Logger(LoginUseCase.name);
 
@@ -24,9 +23,7 @@ export class LoginUseCase
     private readonly accountsRepository: AccountsRepository
   ) {}
 
-  async execute(
-    loginDTO: LoginDTO
-  ): Promise<{ user: UserDetails; token: string }> {
+  async execute(loginDTO: any): Promise<{ user: UserDetails; token: string }> {
     this.logger.log(`Logging in user`);
     const userAccount: CanBeNull<User> =
       await this.accountsService.findUserByEmailID(loginDTO.emailId);

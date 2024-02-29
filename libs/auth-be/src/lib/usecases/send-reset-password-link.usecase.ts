@@ -1,10 +1,10 @@
 import { Usecase, valueIsDefined } from '@api-assistant/commons';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { AccountsService } from '../services/accounts.service';
 import { EmailIdNotRegisteredException } from '../exceptions/accounts.exceptions';
 import { ConfigType } from '@nestjs/config';
 import { appConfig } from '@api-assistant/configuration-be';
 import { EmailNotificationService } from '@api-assistant/notifications-be';
+import { AccountsService } from '../services/accounts.service';
 
 @Injectable()
 export class SendResetPasswordLinkUsecase implements Usecase<string, void> {

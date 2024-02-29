@@ -3,8 +3,8 @@ import { User, UserDetails } from '../entities/user.entity';
 import { Injectable, Logger } from '@nestjs/common';
 import { AccountsRepository } from '../repository/accounts.repository';
 import { InvalidVerificationKeyException } from '../exceptions/accounts.exceptions';
-import { JWTService } from '../services/jwt.service';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
+import { JWTService } from '../services/jwt.service';
 
 const userDetailsMapper = new UserDetailsMapper();
 

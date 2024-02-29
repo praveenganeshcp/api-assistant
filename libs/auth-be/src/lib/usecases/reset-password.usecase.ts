@@ -4,9 +4,9 @@ import {
   InvalidResetPasswordKeyException,
   IncorrectOldPasswordException,
 } from '../exceptions/accounts.exceptions';
+import { Injectable, Logger } from '@nestjs/common';
 import { PasswordManagerService } from '../services/password-manager.service';
 import { createPasswordResetKey } from '../utils';
-import { Injectable, Logger } from '@nestjs/common';
 
 interface ResetPasswordUsecaseInput {
   resetPasswordKey: string;

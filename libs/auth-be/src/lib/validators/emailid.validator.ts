@@ -18,6 +18,6 @@ export class IsEmailIDUnique implements ValidatorConstraintInterface {
   }
 
   public defaultMessage(): string {
-    return 'Email id must be unique';
+    return 'Email ID already registered';
   }
 }

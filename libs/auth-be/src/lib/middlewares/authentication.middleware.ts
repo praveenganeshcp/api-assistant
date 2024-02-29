@@ -19,7 +19,8 @@ export class AuthenticationMiddleware implements NestMiddleware {
     private accountsService: AccountsService
   ) {}
 
-  async use(req: Request, res: Response, next: (error?: unknown) => void) {
+  // TODO: use express req type
+  async use(req: any, res: Response, next: (error?: unknown) => void) {
     this.logger.log('Running auth middleware');
     try {
       const jwt: string = req.cookies.token || '';
