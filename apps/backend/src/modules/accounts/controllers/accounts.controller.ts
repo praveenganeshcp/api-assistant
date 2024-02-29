@@ -11,7 +11,7 @@ import { CreateAccountDTO } from '../dto/create-account.dto';
 import { CreateAccountUsecase } from '../usecases/create-account.usecase';
 import { Response } from 'express';
 import { UserDetails } from '../entities/user.entity';
-import { AuthUser } from '@api-assistant/utils';
+import { AuthUser } from '@api-assistant/commons';
 import { LoginDTO } from '../dto/login.dto';
 import { LoginUseCase } from '../usecases/login.usecase';
 import { VerifyAccountUsecase } from '../usecases/verify-account.usecase';

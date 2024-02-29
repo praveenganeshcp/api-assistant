@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { CoreEngineProjectId } from '@api-assistant/utils';
+import { CoreEngineProjectId } from '@api-assistant/commons';
 import { CoreEngineCRUDUsecase } from '../usecases/core-engine-crud.usecase';
 import { CoreEngineCRUDDto } from '../core-engine-dto';
 import { CoreEngineFetchCollectionsUsecase } from '../usecases/core-engine-fetch-collections.usecase';

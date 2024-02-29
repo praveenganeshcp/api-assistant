@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@api-assistant/utils": ["libs/utils/src/index.ts"]
+      "@api-assistant/commons": ["libs/commons/src/index.ts"],
     },
     "strict": true
   },

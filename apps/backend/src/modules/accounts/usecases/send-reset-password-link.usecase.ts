@@ -1,4 +1,4 @@
-import { Usecase, valueIsDefined } from '@api-assistant/utils';
+import { Usecase, valueIsDefined } from '@api-assistant/commons';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { AccountsService } from '../services/accounts.service';
 import { EmailNotificationService } from '../../notification/services/email/email-notification.service';

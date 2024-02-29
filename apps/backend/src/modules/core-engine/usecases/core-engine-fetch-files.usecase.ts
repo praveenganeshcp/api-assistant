@@ -1,4 +1,4 @@
-import { Usecase } from '@api-assistant/utils';
+import { Usecase } from '@api-assistant/commons';
 import { existsSync, statSync } from 'fs';
 import { InvalidFilePathException } from '../core-engine.exceptions';
 import { readdir } from 'fs/promises';

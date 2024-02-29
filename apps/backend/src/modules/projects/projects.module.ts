@@ -3,10 +3,11 @@ import { ProjectsController } from './controllers/projects.controller';
 import { ProjectRepository } from './repositories/project.repository';
 import { ProjectMetadataRepository } from './repositories/project-metadata.repository';
 import { CreateProjectUsecase } from './usecases/create-project.usecase';
-import { AuthenticationMiddleware } from '../accounts/middlewares/authentication.middleware';
 import { FetchProjectsByUserIdUsecase } from './usecases/fetch-projects-by-userid.usecase';
 import { FetchProjectByIdUsecase } from './usecases/fetch-project-by-id.usecase';
-import { AccountsModule } from '../accounts/accounts.module';
+import { AccountsModule } from "../accounts/accounts.module";
+import { AuthenticationMiddleware } from '../accounts/middlewares/authentication.middleware';
+
 
 @Module({
   controllers: [ProjectsController],

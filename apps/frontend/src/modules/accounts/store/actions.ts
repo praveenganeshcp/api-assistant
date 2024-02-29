@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { UserProfile } from '../accounts.types';
-import { CanBeNull } from '@api-assistant/utils';
+import { CanBeNull } from '@api-assistant/commons';
 
 export const loadProfile = createAction('[Account] Load Profile');
 

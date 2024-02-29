@@ -10,7 +10,7 @@ import {
 import { DB_COLLECTIONS } from './db-collections';
 import { Inject, Logger } from '@nestjs/common';
 import { MONGO_DB_CONNECTION } from './repository.module';
-import { CanBeNull } from '@api-assistant/utils';
+import { CanBeNull } from '@api-assistant/commons';
 import { Document as MongoDocument } from 'mongodb';
 
 export class AbstractRepository<T extends MongoDocument> {

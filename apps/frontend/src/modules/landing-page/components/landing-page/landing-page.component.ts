@@ -9,7 +9,7 @@ import { logoutAccount } from '../../../accounts/store/actions';
 import { UserProfile } from '../../../accounts/accounts.types';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CanBeNull } from '@api-assistant/utils';
+import { CanBeNull } from '@api-assistant/commons';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
 

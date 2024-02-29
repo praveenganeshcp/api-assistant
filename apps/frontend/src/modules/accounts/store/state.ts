@@ -1,4 +1,4 @@
-import { CanBeNull } from '@api-assistant/utils';
+import { CanBeNull } from '@api-assistant/commons';
 import { UserProfile } from '../accounts.types';
 
 export interface AccountState {
