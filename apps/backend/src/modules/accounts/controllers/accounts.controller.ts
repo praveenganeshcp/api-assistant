@@ -7,18 +7,25 @@ import {
   Res,
   Logger,
 } from '@nestjs/common';
-import { CreateAccountDTO } from '../dto/create-account.dto';
-import { CreateAccountUsecase } from '../usecases/create-account.usecase';
 import { Response } from 'express';
-import { UserDetails } from '../entities/user.entity';
 import { AuthUser } from '@api-assistant/commons';
-import { LoginDTO } from '../dto/login.dto';
-import { LoginUseCase } from '../usecases/login.usecase';
-import { VerifyAccountUsecase } from '../usecases/verify-account.usecase';
-import { SendResetPasswordLinkUsecase } from '../usecases/send-reset-password-link.usecase';
-import { ResetPasswordDTO } from '../dto/reset-password.dto';
-import { ResetPasswordUsecase } from '../usecases/reset-password.usecase';
-import { AccountsService } from '../services/accounts.service';
+import {
+  CreateAccountUsecase,
+  LoginUseCase,
+  VerifyAccountUsecase,
+  SendResetPasswordLinkUsecase,
+  ResetPasswordUsecase,
+  AccountsService,
+  UserDetails,
+} from '@api-assistant/auth-be';
+import {
+  CreateAccountDTO,
+  LoginDTO,
+  VerifyAccountDTO,
+  ResetPasswordLinkDTO,
+  ResetPasswordDTO,
+  EmailIdCheckerDTO,
+} from '../dto/accounts.dto';
 
 @Controller('accounts')
 export class AccountsController {
@@ -76,8 +83,9 @@ export class AccountsController {
   @Patch('verify-account')
   public async verifyAccount(
     @Res({ passthrough: true }) response: Response,
-    @Body('verificationKey') verificationKey: string
+    @Body() verifyAccountDTO: VerifyAccountDTO
   ) {
+    const { verificationKey } = verifyAccountDTO;
     this.logger.log(`verifying account with key ${verificationKey}`);
     const { token, user } = await this.verifyAccountUsecase.execute(
       verificationKey
@@ -87,9 +95,13 @@ export class AccountsController {
   }
 
   @Post('reset-password-link')
-  public async sendResetPasswordLink(@Body('emailId') emailId: string) {
+  public async sendResetPasswordLink(
+    @Body() resetPasswordLinkDTO: ResetPasswordLinkDTO
+  ) {
     this.logger.log(`Sending password reset link`);
-    await this.sendResetPasswordLinkUsecase.execute(emailId);
+    await this.sendResetPasswordLinkUsecase.execute(
+      resetPasswordLinkDTO.emailId
+    );
     this.logger.log('Password reset link sent');
   }
 
@@ -110,10 +122,14 @@ export class AccountsController {
 
   @Post('is-emailid-registered')
   public async checkIfEmailRegistered(
-    @Body('emailId') emailId: string
+    @Body() emailIdCheckerDTO: EmailIdCheckerDTO
   ): Promise<{ isEmailIdRegistered: boolean }> {
-    this.logger.log(`Check if emaild ${emailId} is registered`);
-    const existingUser = await this.accountsService.findUserByEmailID(emailId);
+    this.logger.log(
+      `Check if emaild ${emailIdCheckerDTO.emailId} is registered`
+    );
+    const existingUser = await this.accountsService.findUserByEmailID(
+      emailIdCheckerDTO.emailId
+    );
     return { isEmailIdRegistered: existingUser !== null };
   }
 }
