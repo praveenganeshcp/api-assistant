@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Usecase, valueIsDefined } from '@api-assistant/utils';
+import { Usecase, valueIsDefined } from '@api-assistant/commons';
 import { Collection, Db, MongoClient, MongoServerError } from 'mongodb';
 import {
   ALLOWED_DB_OPERATIONS,

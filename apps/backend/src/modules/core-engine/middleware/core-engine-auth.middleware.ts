@@ -4,7 +4,7 @@ import {
   CanBeNull,
   valueIsNotEmptyString,
   valueIsDefined,
-} from '@api-assistant/utils';
+} from '@api-assistant/commons';
 import { ProjectMetadataRepository } from '../../projects/repositories/project-metadata.repository';
 
 @Injectable()
