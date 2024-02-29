@@ -45,3 +45,7 @@ Thumbs.db
 /core-engine-uploads
 
 /.nx
+
+# Cypress configs
+
+/apps/frontend-e2e/cypress.env.json
