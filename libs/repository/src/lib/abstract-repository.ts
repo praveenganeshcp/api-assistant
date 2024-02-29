@@ -10,13 +10,13 @@ import {
 import { Inject, Logger } from '@nestjs/common';
 import { CanBeNull } from '@api-assistant/commons';
 import { Document as MongoDocument } from 'mongodb';
-import { MONGO_DB_CONNECTION } from './datastore.module';
+import { MONGO_DB_CONNECTION } from './repository.module';
 
-export class AbstractRepository<T extends MongoDocument> {
+export class Repository<T extends MongoDocument> {
   @Inject(MONGO_DB_CONNECTION)
   private dbConnection!: Db;
 
-  private logger = new Logger(AbstractRepository.name);
+  private logger = new Logger(Repository.name);
 
   private collection!: Collection<T>;
 

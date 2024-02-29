@@ -15,4 +15,4 @@ export const MONGO_DB_CONNECTION = 'MONGO_DB_CONNECTION';
   ],
   exports: [MONGO_DB_CONNECTION],
 })
-export class DatastoreModule {}
+export class RepositoryModule {}

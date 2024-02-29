@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Project } from '../entities/project.entity';
-import { AbstractRepository } from '@api-assistant/repository';
+import { Repository } from '@api-assistant/repository';
 
 @Injectable()
-export class ProjectRepository extends AbstractRepository<Project> {
+export class ProjectRepository extends Repository<Project> {
   constructor() {
     super('projects');
   }
