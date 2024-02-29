@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { AbstractRepository } from "../../repository/abstract-repository";
-import { DB_COLLECTIONS } from "../../repository/db-collections";
 import { User } from "../entities/user.entity";
+import { Repository } from "@api-assistant/repository";
 
 @Injectable()
-export class AccountsRepository extends AbstractRepository<User> {
+export class AccountsRepository extends Repository<User> {
     constructor() {
-        super(DB_COLLECTIONS.USERS)
+        super("users")
     }
 }

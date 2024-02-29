@@ -7,21 +7,20 @@ import {
   OptionalUnlessRequiredId,
   UpdateFilter,
 } from 'mongodb';
-import { DB_COLLECTIONS } from './db-collections';
 import { Inject, Logger } from '@nestjs/common';
-import { MONGO_DB_CONNECTION } from './repository.module';
 import { CanBeNull } from '@api-assistant/commons';
 import { Document as MongoDocument } from 'mongodb';
+import { MONGO_DB_CONNECTION } from './repository.module';
 
-export class AbstractRepository<T extends MongoDocument> {
+export class Repository<T extends MongoDocument> {
   @Inject(MONGO_DB_CONNECTION)
   private dbConnection!: Db;
 
-  private logger = new Logger(AbstractRepository.name);
+  private logger = new Logger(Repository.name);
 
   private collection!: Collection<T>;
 
-  constructor(private readonly collectionName: DB_COLLECTIONS) {
+  constructor(private readonly collectionName: string) {
     setTimeout(() => {
       this.collection = this.dbConnection.collection(collectionName);
     }, 0);
