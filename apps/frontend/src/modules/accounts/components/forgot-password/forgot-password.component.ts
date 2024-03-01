@@ -4,6 +4,7 @@ import {
   SwButtonComponent,
   SwInputComponent,
   SwFormControlComponent,
+  SwToastService,
 } from 'ngx-simple-widgets';
 import { RouterModule } from '@angular/router';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
@@ -18,14 +19,12 @@ import { Store } from '@ngrx/store';
 import {
   resetForgotPasswordState,
   sendPasswordResetLinkAction,
+  sendPasswordResetLinkErrorAction,
+  sendPasswordResetLinkSuccessAction,
 } from '@api-assistant/auth-fe';
-import {
-  isPasswordResetLinkSentSelector,
-  sendPasswordResetLinkInProgressSelector,
-  sendResetPasswordLinkErrorMessageSelector,
-} from '@api-assistant/auth-fe';
-import { Observable } from 'rxjs';
+import { take } from 'rxjs';
 import { AppState } from '../../../app/app.state';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'api-assistant-forgot-password',
@@ -43,20 +42,8 @@ import { AppState } from '../../../app/app.state';
   ],
 })
 export class ForgotPasswordComponent implements OnDestroy {
-  /**
-   * Whether send password reset link in progress
-   */
-  public resetPasswordLinkInProgress$: Observable<boolean> = this.store.select(
-    sendPasswordResetLinkInProgressSelector
-  );
-
-  public isPasswordResetLinkSent$: Observable<boolean> = this.store.select(
-    isPasswordResetLinkSentSelector
-  );
-
-  public passwordResetErrorMessage$: Observable<string> = this.store.select(
-    sendResetPasswordLinkErrorMessageSelector
-  );
+ 
+  public loading: boolean = false;
 
   public resetPasswordLinkForm = new FormGroup({
     emailId: new FormControl('', [Validators.required, Validators.email]),
@@ -66,14 +53,42 @@ export class ForgotPasswordComponent implements OnDestroy {
     return this.resetPasswordLinkForm.get('emailId');
   }
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private actions: Actions,
+    private toastService: SwToastService
+  ) {}
 
   public handleSendPasswordResetLink() {
+    this.loading = true;
+
     this.store.dispatch(
       sendPasswordResetLinkAction({
         emailId: this.resetPasswordLinkForm.value.emailId as string,
       })
     );
+
+    this.actions.pipe(
+      ofType(sendPasswordResetLinkSuccessAction),
+      take(1)
+    ).subscribe(_ => {
+      this.toastService.success({ 
+        title: "Reset password",
+        message: "Password reset link sent to your email" 
+      })
+      this.loading = false;
+    })
+
+    this.actions.pipe(
+      ofType(sendPasswordResetLinkErrorAction),
+      take(1)
+    ).subscribe(({ error }) => {
+      this.toastService.error({ 
+        title: "Reset password",
+        message: error
+      })
+      this.loading = false;
+    })
   }
 
   ngOnDestroy(): void {

@@ -6,25 +6,9 @@ export interface AccountState {
     data: CanBeNull<UserProfile>;
     isLoading: boolean;
     error: string;
-  };
-  createAccount: {
-    inProgress: boolean;
-    error: string;
-  };
-  login: {
-    inProgress: boolean;
-    error: string;
-  };
-  logout: {
-    inProgress: boolean;
-  };
-  verifyAccount: {
-    inProgress: boolean;
-    error: string;
-  };
-  resetPasswordLink: {
-    inProgress: boolean;
-    error: string;
-    isSent: boolean;
-  };
+  }
 }
+
+export const ACCOUNTS_STATE_SLICE_NAME = "accounts";
+
+export type GlobalState = {[ACCOUNTS_STATE_SLICE_NAME]: AccountState}

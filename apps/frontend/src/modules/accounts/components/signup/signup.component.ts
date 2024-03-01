@@ -14,19 +14,16 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { DuplicateEmailIdValidatorService } from '@api-assistant/auth-fe';
+import { DuplicateEmailIdValidatorService, createAccountErrorAction, createAccountSuccessAction } from '@api-assistant/auth-fe';
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import {
   createAccountAction,
   resetCreateAccountStateAction,
 } from '@api-assistant/auth-fe';
-import {
-  createAccountErrorMessageSelector,
-  isSignupInProgressSelector,
-} from '@api-assistant/auth-fe';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { take } from 'rxjs';
 import { AppState } from '../../../app/app.state';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'api-assistant-signup',
@@ -46,14 +43,6 @@ import { AppState } from '../../../app/app.state';
 export class SignupComponent implements OnDestroy {
   public signupForm = this.buildSignupFormGroup();
 
-  public isSignupInProgress$: Observable<boolean> = this.store.select(
-    isSignupInProgressSelector
-  );
-
-  public signupErrorMessage$: Observable<string> = this.store.select(
-    createAccountErrorMessageSelector
-  );
-
   public get usernameControl() {
     return this.signupForm.get('username') as FormControl;
   }
@@ -66,18 +55,28 @@ export class SignupComponent implements OnDestroy {
     return this.signupForm.get('emailId') as FormControl;
   }
 
+  public signupLoading: boolean = false;
+
+  public signupErrorMessage: string = ""
+
+  public readonly usernameErrorMessages: Record<string, string> = {
+    maxLength: "Username cannot be more than 20 characters",
+    minLength: "Username must contain atleast 3 characters"
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private actions: Actions
   ) {}
 
   private buildSignupFormGroup() {
     return this.formBuilder.group({
       username: this.formBuilder.control('', [
         Validators.required,
-        Validators.min(3),
-        Validators.max(20),
+        Validators.minLength(3),
+        Validators.maxLength(20),
       ]),
       password: this.formBuilder.control('', [
         Validators.required,
@@ -101,7 +100,26 @@ export class SignupComponent implements OnDestroy {
       password: string;
       username: string;
     };
+    this.signupLoading = true;
     this.store.dispatch(createAccountAction({ emailId, password, username }));
+
+    this.actions.pipe(
+      ofType(createAccountSuccessAction),
+      take(1)
+    ).subscribe(_ => {
+      this.signupErrorMessage = "";
+      this.signupLoading = false;
+    })
+
+    this.actions.pipe(
+      ofType(createAccountErrorAction),
+      take(1)
+    ).subscribe(({ error }) => {
+      this.signupErrorMessage = error;
+      this.signupLoading = false;
+    })
+
+    
   }
 
   ngOnDestroy(): void {

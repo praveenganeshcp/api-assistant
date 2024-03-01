@@ -5,7 +5,6 @@
     <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
       <a data-testid="go-to-app-link" routerLink="/app/projects">Go to app</a>
       <button
-        [showLoader]="isUserloggingOut$ | async"
         sw-primary-button
         (click)="logoutAccount()"
         data-testid="logout-btn"

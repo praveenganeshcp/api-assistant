@@ -3,9 +3,7 @@ import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { verifyAccountAction } from '@api-assistant/auth-fe';
-import { isAccountBeingVerifiedSelector } from '@api-assistant/auth-fe';
 import { AppState } from '../../../app/app.state';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 
@@ -25,7 +23,7 @@ import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
   ],
   template: `
     <div class="verify-account">
-      <h2 *ngIf="isAccountBeingVerified$ | async">
+      <h2>
         Verifying account. Please wait...
       </h2>
     </div>
@@ -39,9 +37,6 @@ import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
   ],
 })
 export class VerifyAccountComponent implements OnInit {
-  public isAccountBeingVerified$: Observable<boolean> = this.store.select(
-    isAccountBeingVerifiedSelector
-  );
 
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 

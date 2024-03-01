@@ -1,7 +1,7 @@
-import { AccountState } from '@api-assistant/auth-fe';
+import { AccountState, ACCOUNTS_STATE_SLICE_NAME } from '@api-assistant/auth-fe';
 import { DashboardState } from '../dashboard/store/dashboard.state';
 
 export interface AppState {
-  accounts: AccountState;
+  [ACCOUNTS_STATE_SLICE_NAME]: AccountState;
   dashboard: DashboardState;
 }
