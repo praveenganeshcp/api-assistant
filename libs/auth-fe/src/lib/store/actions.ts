@@ -66,17 +66,13 @@ export const createAccountErrorAction = createUserAccountActionWithProps(
   props<{ error: string }>()
 );
 
-export const resetCreateAccountStateAction = createUserAccountAction(
-  'Reset Create account state'
-);
-
 // ############ End create account actions ############### //
 
 // ############ Start login account actions ############### //
 
 export const loginAccountAction = createUserAccountActionWithProps(
   'Login Account',
-  props<{ emailId: string; password: string; callbackUrl: string }>()
+  props<{ emailId: string; password: string }>()
 );
 
 export const loginSuccessAction = createUserAccountActionWithProps(
@@ -89,8 +85,6 @@ export const loginErrorAction = createUserAccountActionWithProps(
   props<{ error: string }>()
 );
 
-export const resetLoginStateAction =
-  createUserAccountAction('Reset login state');
 
 // ############ End login account actions ############### //
 
@@ -132,10 +126,6 @@ export const sendPasswordResetLinkAction = createUserAccountActionWithProps(
 
 export const sendPasswordResetLinkSuccessAction = createUserAccountAction(
   'Send Password reset link success'
-);
-
-export const resetForgotPasswordState = createUserAccountAction(
-  'Reset forgot password state'
 );
 
 export const sendPasswordResetLinkErrorAction =

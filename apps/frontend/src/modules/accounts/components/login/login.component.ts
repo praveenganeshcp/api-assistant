@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,23 +6,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
 import {
   loginAccountAction,
-  resetLoginStateAction,
+  loginErrorAction,
+  loginSuccessAction,
 } from '@api-assistant/auth-fe';
-import {
-  isUserSigninInProgressSelector,
-  loginErrorMessageSelector,
-} from '@api-assistant/auth-fe';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from '../../../app/app.state';
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
 import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
+import { BehaviorSubject } from 'rxjs';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
 
 @Component({
   selector: 'api-assistant-login',
@@ -39,15 +35,8 @@ import { AppInfoService } from '../../../commons/app-info-service/app-info.servi
     SwFormControlComponent,
   ],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
   public loginForm = this.createLoginForm();
-
-  /**
-   * Is user login action in progress
-   */
-  public isLoginInProgress$: Observable<boolean> = this.store.select(
-    isUserSigninInProgressSelector
-  );
 
   private get loginSuccessCallbackUrl(): string {
     return this.route.snapshot.queryParamMap.get('next') ?? '/app/projects';
@@ -58,17 +47,18 @@ export class LoginComponent implements OnDestroy {
       'Password must contain 1 uppercase, 1 lowercase, 1 number and minimum 9 characters',
   };
 
-  public readonly loginErrorMessage$: Observable<string> = this.store.select(
-    loginErrorMessageSelector
-  );
-
   public readonly appName: string = this.appInfoService.appName;
+
+  public loading$ = new BehaviorSubject(false);
+
+  public loginErrorMessage: string = "";
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
+    private storeWrapper: StoreWrapper,
     private route: ActivatedRoute,
-    private appInfoService: AppInfoService
+    private appInfoService: AppInfoService,
+    private router: Router
   ) {}
 
   private createLoginForm() {
@@ -93,20 +83,28 @@ export class LoginComponent implements OnDestroy {
   }
 
   public handleLogin() {
+    this.loginErrorMessage = "";
     const { emailId, password } = this.loginForm.value as {
       emailId: string;
       password: string;
     };
-    this.store.dispatch(
+    this.storeWrapper.dispatchAsyncAction(
       loginAccountAction({
         emailId,
-        password,
-        callbackUrl: this.loginSuccessCallbackUrl,
-      })
-    );
+        password
+      }),
+      loginSuccessAction,
+      loginErrorAction,
+      this.loading$
+    ).subscribe({
+      next: () => {
+        this.router.navigate([this.loginSuccessCallbackUrl]);
+      },
+      error: (err: ReturnType<typeof loginErrorAction>) => {
+        this.loginErrorMessage = err.error;
+      }
+    })
+   
   }
 
-  ngOnDestroy(): void {
-    this.store.dispatch(resetLoginStateAction());
-  }
 }

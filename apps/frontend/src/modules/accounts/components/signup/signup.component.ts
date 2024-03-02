@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   SwButtonComponent,
   SwInputComponent,
@@ -14,19 +14,13 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { DuplicateEmailIdValidatorService } from '@api-assistant/auth-fe';
+import { DuplicateEmailIdValidatorService, createAccountErrorAction, createAccountSuccessAction } from '@api-assistant/auth-fe';
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import {
   createAccountAction,
-  resetCreateAccountStateAction,
 } from '@api-assistant/auth-fe';
-import {
-  createAccountErrorMessageSelector,
-  isSignupInProgressSelector,
-} from '@api-assistant/auth-fe';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from '../../../app/app.state';
+import { BehaviorSubject, take } from 'rxjs';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
 
 @Component({
   selector: 'api-assistant-signup',
@@ -43,16 +37,8 @@ import { AppState } from '../../../app/app.state';
     AlertBannerComponent,
   ],
 })
-export class SignupComponent implements OnDestroy {
+export class SignupComponent {
   public signupForm = this.buildSignupFormGroup();
-
-  public isSignupInProgress$: Observable<boolean> = this.store.select(
-    isSignupInProgressSelector
-  );
-
-  public signupErrorMessage$: Observable<string> = this.store.select(
-    createAccountErrorMessageSelector
-  );
 
   public get usernameControl() {
     return this.signupForm.get('username') as FormControl;
@@ -66,18 +52,29 @@ export class SignupComponent implements OnDestroy {
     return this.signupForm.get('emailId') as FormControl;
   }
 
+  public loading$ = new BehaviorSubject(false);
+
+  public signupErrorMessage: string = ""
+
+  public readonly usernameErrorMessages: Record<string, string> = {
+    maxLength: "Username cannot be more than 20 characters",
+    minLength: "Username must contain atleast 3 characters"
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
-    private store: Store<AppState>
-  ) {}
+    private storeWrapper: StoreWrapper,
+    private router: Router
+  ) {
+  }
 
   private buildSignupFormGroup() {
     return this.formBuilder.group({
       username: this.formBuilder.control('', [
         Validators.required,
-        Validators.min(3),
-        Validators.max(20),
+        Validators.minLength(3),
+        Validators.maxLength(20),
       ]),
       password: this.formBuilder.control('', [
         Validators.required,
@@ -96,15 +93,25 @@ export class SignupComponent implements OnDestroy {
   }
 
   public handleSignup() {
+    this.signupErrorMessage = "";
     const { emailId, password, username } = this.signupForm.value as {
       emailId: string;
       password: string;
       username: string;
     };
-    this.store.dispatch(createAccountAction({ emailId, password, username }));
-  }
+    this.storeWrapper.dispatchAsyncAction(
+      createAccountAction({ emailId, password, username }),
+      createAccountSuccessAction,
+      createAccountErrorAction,
+      this.loading$
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['app', 'projects']);
+      },
+      error: (err: ReturnType<typeof createAccountErrorAction>) => {
+        this.signupErrorMessage = err.error;
+      }
+    })
 
-  ngOnDestroy(): void {
-    this.store.dispatch(resetCreateAccountStateAction());
   }
 }

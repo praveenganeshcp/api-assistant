@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { SwToastService } from 'ngx-simple-widgets';
 import { profileStateSelector } from '../store/selectors';
+import { GlobalState } from '../store/state';
 
 /**
  * Guard to protect logged in users to enter into
@@ -12,7 +13,7 @@ import { profileStateSelector } from '../store/selectors';
 @Injectable({ providedIn: 'root' })
 export class AccountsGuard implements CanActivate {
   constructor(
-    private store: Store<unknown>,
+    private store: Store<GlobalState>,
     private router: Router,
     private swToastService: SwToastService
   ) {}

@@ -35,13 +35,13 @@
     <!-- login button -->
     <button
       [disabled]="loginForm.invalid"
-      [showLoader]="isLoginInProgress$ | async"
+      [showLoader]="loading$ | async"
       sw-primary-button
     >
       Login
     </button>
 
-    <div class="login-form__api-error">{{ loginErrorMessage$ | async }}</div>
+    <div class="login-form__api-error">{{ loginErrorMessage }}</div>
 
     <!-- Signup link -->
     <span data-testid="signup-nudge">

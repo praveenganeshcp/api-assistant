@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
-  isUserLoggingOutSelector,
   isUserLoggedInSelector,
 } from '@api-assistant/auth-fe';
 import { logoutAccountAction } from '@api-assistant/auth-fe';
@@ -42,13 +41,6 @@ export class LandingPageComponent {
    */
   public readonly isUserLoggedIn$: Observable<boolean> = this.store.select(
     isUserLoggedInSelector
-  );
-
-  /**
-   * Is user logout is in progress
-   */
-  public readonly isUserloggingOut$: Observable<boolean> = this.store.select(
-    isUserLoggingOutSelector
   );
 
   /**

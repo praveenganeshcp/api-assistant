@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map, catchError, tap } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {
   createAccountAction,
@@ -22,7 +22,6 @@ import {
   verifyAccountErrorAction,
   verifyAccountSuccessAction,
 } from './actions';
-import { Router } from '@angular/router';
 import { AccountsService } from '../services/accounts.service';
 import { UserProfile } from '../models/accounts.types';
 
@@ -34,7 +33,6 @@ export class AccountsEffects {
   constructor(
     private actions$: Actions,
     private accountsService: AccountsService,
-    private router: Router
   ) {}
 
   /**
@@ -66,10 +64,9 @@ export class AccountsEffects {
   loginAccount$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginAccountAction),
-      mergeMap(({ emailId, password, callbackUrl }) => {
+      mergeMap(({ emailId, password }) => {
         return this.accountsService.loginAccount(emailId, password).pipe(
           map((userProfile: UserProfile) => {
-            this.router.navigateByUrl(callbackUrl);
             return loginSuccessAction({ userProfile });
           }),
           catchError(({ error }) =>
@@ -90,9 +87,6 @@ export class AccountsEffects {
         return this.accountsService.logoutAccount().pipe(
           map(() => logoutSuccessAction()),
           catchError(() => of(logoutErrorAction())),
-          tap((_) => {
-            this.router.navigate(['']);
-          })
         );
       })
     )

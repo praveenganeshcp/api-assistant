@@ -6,7 +6,7 @@
   >
     <h2>Signup</h2>
     <!-- User name form control -->
-    <sw-form-control [control]="usernameControl" label="Username">
+    <sw-form-control [errorMessagesMap]="usernameErrorMessages" [control]="usernameControl" label="Username">
       <input sw-input formControlName="username" type="text" />
     </sw-form-control>
 
@@ -22,14 +22,14 @@
 
     <!-- Create account button -->
     <button
-      [showLoader]="isSignupInProgress$ | async"
+      [showLoader]="loading$ | async"
       [disabled]="signupForm.invalid"
       sw-primary-button
     >
       Create account
     </button>
 
-    <div class="signup-form__api-error">{{ signupErrorMessage$ | async }}</div>
+    <div class="signup-form__api-error">{{ signupErrorMessage }}</div>
 
     <span
       >Already have an account?
