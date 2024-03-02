@@ -11,8 +11,10 @@ interface SendEmailPayload {
   cta?: {
     label: string;
     link: string;
+    copy: string
   };
   text: string;
+  title: string;
 }
 
 @Injectable()
@@ -26,34 +28,60 @@ export class EmailNotificationService {
     message: Omit<SendEmailPayload, 'toEmailId' | 'subject'>
   ): string {
     return `
-            <div style="width: 60vw; height: 70vh; border: 1px solid royalblue; border-radius: 4px;">
-                <div style="box-styling: border-box;padding-left: 5%; height: 15%; display: flex; align-items: center; width: 95%; background-color: royalblue; color: white;">
-                    <h1>API Assistant (TEST EMAIL)</h1>
-                </div>  
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Password Reset</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="margin: 20px auto; background-color: #fff; border-radius: 8px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+      <tr>
+        <td align="center" bgcolor="#f9f9f9" style="padding: 10px 0 10px 0;">
+          <h1>API Assistant</h1>
+        </td>
+      </tr>
+        <tr>
+          <td style="padding: 40px;">
+            <h2 style="color: #333;">${message.title}</h2>
+            <p style="color: #555;">Dear ${message.username},</p>
+            <p style="color: #555;">${message.text}</p>
+            ${this.getCTAMessage(message.cta)}
+            <p style="color: #555;">Best Regards,<br>Your Team at API Assistant</p>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#f9f9f9" style="padding: 20px; text-align: center;">
+            <p style="color: #777; font-size: 12px;">
+              You received this email because you signed up for our service. If you did not request this, please ignore this email.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+    
+      
+  `;
+  }
 
-                <div style="padding-left: 5%; height: 50%; width: 100%;">
-                    <h2 style="margin-top: 30px;">Hello ${
-                      message.username
-                    },</h2>
-                    <h3 style="margin-top: 30px;">${message.text}</h3>
-                    ${
-                      message.cta
-                        ? `<h4 style="margin-top: 70px;">
-                            <a style="padding:1%; border-radius: 5px; font-size: 1.2rem; background-color: royalblue; color:white;" href="${message.cta.link}">
-                                ${message.cta.label}
-                            </a>
-                        </h4>`
-                        : ''
-                    }
-                </div>
-
-                <div style="padding-left: 5%; height: 35%; width: 100%;">
-                    <h3>Best regards,</h3>
-                    <h3 style="font-weight: lighter;">API Assistant team</h3>
-                    <h4>(This is testing email, Ignore if you received by mistake)</h4>
-                </div>
-            </div>
-        `;
+  private getCTAMessage(cta: SendEmailPayload['cta']): string {
+    if(!cta) {
+      return ''
+    }
+    return `
+    <p style="color: #555;">${cta.copy}</p>
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center" style="border-radius: 4px; background-color: #007bff;">
+          <a href="${cta.link}" target="_blank" style="display: inline-block; padding: 12px 24px; color: #fff; text-decoration: none; border-radius: 4px;">
+            ${cta.label}
+          </a>
+        </td>
+      </tr>
+    </table>
+    `
   }
 
   public async notify(
@@ -69,6 +97,7 @@ export class EmailNotificationService {
         text: payload.text,
         username: payload.username,
         cta: payload.cta,
+        title: payload.title
       }),
     });
     this.logger.log(`Email sent with code ${sendEmailResponse.response}`);

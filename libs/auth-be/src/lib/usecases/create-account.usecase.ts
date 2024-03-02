@@ -72,10 +72,13 @@ export class CreateAccountUsecase
       subject: 'Welcome to API Assistant',
       cta: {
         label: 'Verify Account',
+        copy: "Click the button below to verify your account",
         link: `${this.appConfiguration.FE_HOST_ADDRESS}/accounts/verify-account/${newUserAccount.accountVerificationId}`,
       },
-      text: 'Your account has been successfully created. Click on the below link to verify your email id.',
+      text: "At API Assistant, you'll find everything you need to simplify your application building process. We're here to provide top-notch support every step of the way.",
       username: newUserAccount.username,
+      title: "Welcome &#128075;"
     });
+
   }
 }

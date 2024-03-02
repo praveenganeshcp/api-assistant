@@ -28,11 +28,13 @@ export class SendResetPasswordLinkUsecase implements Usecase<string, void> {
       toEmailId: userAccount.emailId,
       subject: 'Reset password',
       cta: {
-        label: 'Click here to reset password',
+        label: 'Reset password',
+        copy: 'Click the button below to reset your password:',
         link: `${this.appConfiguration.FE_HOST_ADDRESS}/accounts/reset-password/${userAccount.passwordResetKey}`,
       },
-      text: '',
+      text: 'You are receiving this email because we received a request to reset your password for your account.',
       username: userAccount.username,
+      title: "Reset password"
     });
   }
 }
