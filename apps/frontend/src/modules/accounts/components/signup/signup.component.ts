@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   SwButtonComponent,
   SwInputComponent,
@@ -18,12 +18,9 @@ import { DuplicateEmailIdValidatorService, createAccountErrorAction, createAccou
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import {
   createAccountAction,
-  resetCreateAccountStateAction,
 } from '@api-assistant/auth-fe';
-import { Store } from '@ngrx/store';
-import { take } from 'rxjs';
-import { AppState } from '../../../app/app.state';
-import { Actions, ofType } from '@ngrx/effects';
+import { BehaviorSubject, take } from 'rxjs';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
 
 @Component({
   selector: 'api-assistant-signup',
@@ -40,7 +37,7 @@ import { Actions, ofType } from '@ngrx/effects';
     AlertBannerComponent,
   ],
 })
-export class SignupComponent implements OnDestroy {
+export class SignupComponent {
   public signupForm = this.buildSignupFormGroup();
 
   public get usernameControl() {
@@ -55,7 +52,7 @@ export class SignupComponent implements OnDestroy {
     return this.signupForm.get('emailId') as FormControl;
   }
 
-  public signupLoading: boolean = false;
+  public loading$ = new BehaviorSubject(false);
 
   public signupErrorMessage: string = ""
 
@@ -67,9 +64,10 @@ export class SignupComponent implements OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
-    private store: Store<AppState>,
-    private actions: Actions
-  ) {}
+    private storeWrapper: StoreWrapper,
+    private router: Router
+  ) {
+  }
 
   private buildSignupFormGroup() {
     return this.formBuilder.group({
@@ -95,34 +93,25 @@ export class SignupComponent implements OnDestroy {
   }
 
   public handleSignup() {
+    this.signupErrorMessage = "";
     const { emailId, password, username } = this.signupForm.value as {
       emailId: string;
       password: string;
       username: string;
     };
-    this.signupLoading = true;
-    this.store.dispatch(createAccountAction({ emailId, password, username }));
-
-    this.actions.pipe(
-      ofType(createAccountSuccessAction),
-      take(1)
-    ).subscribe(_ => {
-      this.signupErrorMessage = "";
-      this.signupLoading = false;
+    this.storeWrapper.dispatchAsyncAction(
+      createAccountAction({ emailId, password, username }),
+      createAccountSuccessAction,
+      createAccountErrorAction,
+      this.loading$
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['app', 'projects']);
+      },
+      error: (err: ReturnType<typeof createAccountErrorAction>) => {
+        this.signupErrorMessage = err.error;
+      }
     })
 
-    this.actions.pipe(
-      ofType(createAccountErrorAction),
-      take(1)
-    ).subscribe(({ error }) => {
-      this.signupErrorMessage = error;
-      this.signupLoading = false;
-    })
-
-    
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(resetCreateAccountStateAction());
   }
 }

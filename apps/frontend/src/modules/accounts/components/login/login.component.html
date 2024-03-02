@@ -35,7 +35,7 @@
     <!-- login button -->
     <button
       [disabled]="loginForm.invalid"
-      [showLoader]="isLoginProgress"
+      [showLoader]="loading$ | async"
       sw-primary-button
     >
       Login

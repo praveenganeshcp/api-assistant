@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,16 +12,13 @@ import {
   loginAccountAction,
   loginErrorAction,
   loginSuccessAction,
-  resetLoginStateAction,
 } from '@api-assistant/auth-fe';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app/app.state';
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
 import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
-import { Actions, ofType } from '@ngrx/effects';
-import { take } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
 
 @Component({
   selector: 'api-assistant-login',
@@ -38,7 +35,7 @@ import { take } from 'rxjs';
     SwFormControlComponent,
   ],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
   public loginForm = this.createLoginForm();
 
   private get loginSuccessCallbackUrl(): string {
@@ -52,16 +49,15 @@ export class LoginComponent implements OnDestroy {
 
   public readonly appName: string = this.appInfoService.appName;
 
-  public isLoginProgress: boolean = false;
+  public loading$ = new BehaviorSubject(false);
 
   public loginErrorMessage: string = "";
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
+    private storeWrapper: StoreWrapper,
     private route: ActivatedRoute,
     private appInfoService: AppInfoService,
-    private actions: Actions,
     private router: Router
   ) {}
 
@@ -87,36 +83,28 @@ export class LoginComponent implements OnDestroy {
   }
 
   public handleLogin() {
+    this.loginErrorMessage = "";
     const { emailId, password } = this.loginForm.value as {
       emailId: string;
       password: string;
     };
-    this.isLoginProgress = true;
-    this.store.dispatch(
+    this.storeWrapper.dispatchAsyncAction(
       loginAccountAction({
         emailId,
         password
-      })
-    );
-    this.actions.pipe(
-      ofType(loginErrorAction),
-      take(1)
-    ).subscribe(({ error }) => {
-      this.loginErrorMessage = error;
-      this.isLoginProgress = false;
+      }),
+      loginSuccessAction,
+      loginErrorAction,
+      this.loading$
+    ).subscribe({
+      next: () => {
+        this.router.navigate([this.loginSuccessCallbackUrl]);
+      },
+      error: (err: ReturnType<typeof loginErrorAction>) => {
+        this.loginErrorMessage = err.error;
+      }
     })
-
-    this.actions.pipe(
-      ofType(loginSuccessAction),
-      take(1),
-    ).subscribe(s => {
-      this.router.navigate([this.loginSuccessCallbackUrl]);
-      this.loginErrorMessage = "";
-      this.isLoginProgress = false;
-    })
+   
   }
 
-  ngOnDestroy(): void {
-    this.store.dispatch(resetLoginStateAction());
-  }
 }

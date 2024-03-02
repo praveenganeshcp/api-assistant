@@ -1,11 +1,13 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
+import { SwButtonComponent, SwInputComponent, SwToastService } from 'ngx-simple-widgets';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { verifyAccountAction } from '@api-assistant/auth-fe';
+import { verifyAccountAction, verifyAccountErrorAction, verifyAccountSuccessAction } from '@api-assistant/auth-fe';
 import { AppState } from '../../../app/app.state';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'api-assistant-verify-account',
@@ -23,7 +25,7 @@ import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
   ],
   template: `
     <div class="verify-account">
-      <h2>
+      <h2 *ngIf="loading$ | async">
         Verifying account. Please wait...
       </h2>
     </div>
@@ -38,10 +40,33 @@ import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 })
 export class VerifyAccountComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
+  public loading$ = new BehaviorSubject(false);
+
+  constructor(
+    private route: ActivatedRoute,
+    private storeWrapper: StoreWrapper,
+    private router: Router,
+    private toastService: SwToastService
+  ) {}
 
   ngOnInit() {
     const verificationKey: string = this.route.snapshot.params['secret'];
-    this.store.dispatch(verifyAccountAction({ key: verificationKey }));
+    this.storeWrapper.dispatchAsyncAction(
+      verifyAccountAction({ key: verificationKey }),
+      verifyAccountSuccessAction,
+      verifyAccountErrorAction,
+      this.loading$
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['app', 'projects']);
+      },
+      error: (err: ReturnType<typeof verifyAccountErrorAction>) => {
+        this.toastService.warn({
+          title: "Account verification",
+          message: err.error
+        });
+        this.router.navigate(['accounts', 'login']);
+      }
+    })
   }
 }

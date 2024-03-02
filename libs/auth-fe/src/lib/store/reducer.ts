@@ -5,6 +5,7 @@ import {
   errorInLoadingProfileAction,
   loadProfileAction,
   loginSuccessAction,
+  logoutSuccessAction,
   profileLoadedAction,
   verifyAccountSuccessAction,
 } from './actions';
@@ -63,6 +64,13 @@ export const accountsReducer = createReducer(
     profile: {
       ...state.profile,
       data: userProfile,
+    }
+  })),
+  on(logoutSuccessAction, (state) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      data: null,
     }
   })),
 );

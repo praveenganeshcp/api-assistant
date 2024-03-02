@@ -22,7 +22,7 @@
 
     <!-- Create account button -->
     <button
-      [showLoader]="signupLoading"
+      [showLoader]="loading$ | async"
       [disabled]="signupForm.invalid"
       sw-primary-button
     >
