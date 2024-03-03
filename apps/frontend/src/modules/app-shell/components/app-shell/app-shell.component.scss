@@ -40,4 +40,14 @@
   > a:first-child {
     font-size: 3rem;
   }
+
+  .account-not-verified__copy {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h3 {
+      margin-top: 1rem;
+    }
+  }
 }
