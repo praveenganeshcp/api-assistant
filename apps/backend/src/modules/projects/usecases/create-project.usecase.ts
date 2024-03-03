@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Usecase } from '@api-assistant/commons';
+import { Usecase } from '@api-assistant/commons-be';
 import { Project } from '../entities/project.entity';
 import { ProjectRepository } from '../repositories/project.repository';
 import { ProjectMetadataRepository } from '../repositories/project-metadata.repository';

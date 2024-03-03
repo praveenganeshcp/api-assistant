@@ -1,4 +1,4 @@
-import { Usecase, valueIsDefined } from '@api-assistant/commons';
+import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EmailIdNotRegisteredException } from '../exceptions/accounts.exceptions';
 import { ConfigType } from '@nestjs/config';

@@ -4,7 +4,7 @@ import { JWTService } from '../services/jwt.service';
 import { AccountsService } from '../services/accounts.service';
 import { UserDetails } from '../entities/user.entity';
 import { InvalidAuthTokenException } from '../exceptions/accounts.exceptions';
-import { valueIsNotEmptyString, valueIsDefined } from '@api-assistant/commons';
+import { valueIsNotEmptyString, valueIsDefined } from '@api-assistant/commons-be';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
 

@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { AccountsRepository } from '../repository/accounts.repository';
-import { Usecase } from '@api-assistant/commons';
+import { Usecase } from '@api-assistant/commons-be';
 import { User, UserDetails } from '../entities/user.entity';
 import { OptionalId } from 'mongodb';
 import { ConfigType } from '@nestjs/config';

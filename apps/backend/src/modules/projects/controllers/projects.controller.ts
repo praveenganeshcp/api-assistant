@@ -1,6 +1,6 @@
 import { Controller, Post, Param, Get, Body } from '@nestjs/common';
 import { CreateProjectDTO } from '../projects.dto';
-import { AuthUser, ObjectIdPipe } from '@api-assistant/commons';
+import { AuthUser, ObjectIdPipe } from '@api-assistant/commons-be';
 import { CreateProjectUsecase } from '../usecases/create-project.usecase';
 import { FetchProjectsByUserIdUsecase } from '../usecases/fetch-projects-by-userid.usecase';
 import { FetchProjectByIdUsecase } from '../usecases/fetch-project-by-id.usecase';

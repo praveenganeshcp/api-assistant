@@ -8,7 +8,6 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthUser } from '@api-assistant/commons';
 import {
   CreateAccountUsecase,
   LoginUseCase,
@@ -26,6 +25,7 @@ import {
   ResetPasswordDTO,
   EmailIdCheckerDTO,
 } from '../dto/accounts.dto';
+import { AuthUser } from '@api-assistant/commons-be';
 
 @Controller('accounts')
 export class AccountsController {

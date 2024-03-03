@@ -8,7 +8,7 @@ import {
   UpdateFilter,
 } from 'mongodb';
 import { Inject, Logger } from '@nestjs/common';
-import { CanBeNull } from '@api-assistant/commons';
+import { CanBeNull } from '@api-assistant/commons-be';
 import { Document as MongoDocument } from 'mongodb';
 import { MONGO_DB_CONNECTION } from './repository.module';
 

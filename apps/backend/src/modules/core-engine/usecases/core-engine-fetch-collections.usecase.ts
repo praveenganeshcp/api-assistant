@@ -1,4 +1,4 @@
-import { Usecase } from '@api-assistant/commons';
+import { Usecase } from '@api-assistant/commons-be';
 import { Injectable, Logger } from '@nestjs/common';
 import { crudDbConnectionFactory } from '../utils';
 
