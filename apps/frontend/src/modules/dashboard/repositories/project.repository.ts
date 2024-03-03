@@ -1,17 +1,20 @@
 import { Observable, map } from 'rxjs';
 import { Project } from '../store/dashboard.state';
-import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.dev';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_BASE_URL } from '@api-assistant/commons-fe';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectRepository {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(API_BASE_URL) private apiBaseURL: string
+  ) {}
 
   public get apiUrl(): string {
-    return environment.apiUrl;
+    return this.apiBaseURL;
   }
 
   public loadProjects(): Observable<Project[]> {

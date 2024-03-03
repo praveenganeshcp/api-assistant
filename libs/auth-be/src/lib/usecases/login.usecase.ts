@@ -2,7 +2,7 @@ import { User, UserDetails } from '../entities/user.entity';
 import { Injectable, Logger } from '@nestjs/common';
 import { InvalidEmailIdPasswordException } from '../exceptions/accounts.exceptions';
 import { AccountsRepository } from '../repository/accounts.repository';
-import { Usecase, CanBeNull, valueIsDefined } from '@api-assistant/commons';
+import { Usecase, CanBeNull, valueIsDefined } from '@api-assistant/commons-be';
 import { UserDetailsMapper } from '../mappers/user-details.mapper';
 import { AccountsService } from '../services/accounts.service';
 import { JWTService } from '../services/jwt.service';

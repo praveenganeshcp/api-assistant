@@ -4,8 +4,8 @@ import {
   createAction,
   props,
 } from '@ngrx/store';
-import { CanBeNull } from '@api-assistant/commons';
 import { UserProfile } from '../models/accounts.types';
+import { CanBeNull } from 'ngx-simple-widgets';
 
 /**
  * Prefix to be included in user account action names

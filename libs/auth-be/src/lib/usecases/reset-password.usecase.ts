@@ -1,4 +1,4 @@
-import { Usecase, valueIsDefined } from '@api-assistant/commons';
+import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
 import { AccountsRepository } from '../repository/accounts.repository';
 import {
   InvalidResetPasswordKeyException,

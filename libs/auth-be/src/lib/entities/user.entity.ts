@@ -1,4 +1,4 @@
-import { CanBeNull } from '@api-assistant/commons';
+import { CanBeNull } from '@api-assistant/commons-be';
 import { ObjectId } from 'mongodb';
 
 export interface User {

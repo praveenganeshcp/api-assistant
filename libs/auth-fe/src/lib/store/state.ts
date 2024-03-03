@@ -1,4 +1,4 @@
-import { CanBeNull } from '@api-assistant/commons';
+import { CanBeNull } from 'ngx-simple-widgets';
 import { UserProfile } from '../models/accounts.types';
 
 export interface AccountState {

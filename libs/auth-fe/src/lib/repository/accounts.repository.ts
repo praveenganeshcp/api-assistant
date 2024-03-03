@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { UserProfile } from '../models/accounts.types';
+import { API_BASE_URL } from '@api-assistant/commons-fe';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsRepository {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient, 
+    @Inject(API_BASE_URL) private APIBaseURL: string
+  ) {}
 
   private get baseURL(): string {
-    return 'http://localhost:3000/';
+    return this.APIBaseURL;
   }
 
   public fetchUserProfile(): Observable<UserProfile> {

@@ -1,5 +1,5 @@
 import { appConfig } from '@api-assistant/configuration-be';
-import { CanBeNull } from '@api-assistant/commons';
+import { CanBeNull } from '@api-assistant/commons-be';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { verify, sign, JwtPayload, SignOptions } from 'jsonwebtoken';

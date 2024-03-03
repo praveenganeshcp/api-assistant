@@ -14,9 +14,15 @@ import { dashboardReducers } from '../dashboard/store/dashboard.reducers';
 import { AccountsEffects } from '@api-assistant/auth-fe';
 import { SwToastModule } from 'ngx-simple-widgets';
 import { DashboardEffects } from '../dashboard/store/dashboard.effects';
+import { API_BASE_URL } from '@api-assistant/commons-fe';
+import { environment } from '../../environments/environment.dev';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: API_BASE_URL,
+      useValue: environment.apiUrl
+    },
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     importProvidersFrom([
       SwToastModule,
