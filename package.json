@@ -8,7 +8,9 @@
     "cypress:open": "cd apps/frontend-e2e && cypress open --config baseUrl=http://localhost:4200 port=4000",
     "prettier": "nx format:write",
     "build:affected": "nx affected --target=build",
-    "test:affected": "nx affected --target=test --passWithNoTests"
+    "test:affected": "nx affected --target=test --passWithNoTests",
+    "frontend:build": "nx build frontend --stats-json",
+    "frontend:analyze": "webpack-bundle-analyzer dist/apps/frontend/stats.json"
   },
   "private": true,
   "devDependencies": {
@@ -70,7 +72,8 @@
     "sass": "^1.55.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "webpack-bundle-analyzer": "^4.10.1"
   },
   "dependencies": {
     "@angular/animations": "~16.2.0",
