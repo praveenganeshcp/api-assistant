@@ -47,7 +47,7 @@ jobs:
               cd applications/api-assistant
               git pull origin main
 
-              npm ci
+              npm install
 
               npx nx build backend
               cp ./.env ./dist/apps/backend
