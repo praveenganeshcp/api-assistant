@@ -29,7 +29,7 @@ jobs:
           
       - name: Install dependencies if cache hit does not happen
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm install
 
       - name: Build affected apps/libs
         run: npm run build:affected
