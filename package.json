@@ -6,7 +6,9 @@
     "frontend:dev": "nx serve frontend",
     "backend:dev": "nx serve backend",
     "cypress:open": "cd apps/frontend-e2e && cypress open --config baseUrl=http://localhost:4200 port=4000",
-    "prettier": "nx format:write"
+    "prettier": "nx format:write",
+    "build:affected": "nx affected --target=build",
+    "test:affected": "nx affected --target=test"
   },
   "private": true,
   "devDependencies": {
