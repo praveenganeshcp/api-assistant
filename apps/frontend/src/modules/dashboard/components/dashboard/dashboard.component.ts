@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  CanBeNull,
   SwButtonComponent,
   SwDialogModule,
   SwDialogService,
   SwLoaderComponent,
 } from 'ngx-simple-widgets';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DashboardProjectCardComponent } from '../dashboard-project-card/dashboard-project-card.component';
 import { Project } from '../../store/dashboard.state';
 import { CreateProjectComponent } from '../create-project/create-project.component';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
 import {
   isProjectsLoadingSelector,
   projectsSelector,
-  projectLoadError,
 } from '../../store/dashboard.selector';
-import { loadProjects } from '../../store/dashboard.actions';
+import { loadProjectsAction } from '../../store/dashboard.actions';
 
 @Component({
   selector: 'api-assistant-dashboard',
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(loadProjects());
+    this.store.dispatch(loadProjectsAction());
   }
 
   public trackProject(_: number, project: Project) {
@@ -54,6 +54,11 @@ export class DashboardComponent implements OnInit {
 
   public openCreateProjectModal() {
     const ref = this.swDialogService.open(CreateProjectComponent);
-    ref.afterClosed$.subscribe(console.log);
+    ref.afterClosed$.subscribe((project) => {
+      project = project as CanBeNull<Project>;
+      if(!!project) {
+        this.store.dispatch(loadProjectsAction());
+      }
+    });
   }
 }

@@ -14,9 +14,4 @@ export interface DashboardState {
     data: Project[];
     error: string;
   };
-  createProject: {
-    inProgress: boolean;
-    error: string;
-    isCreated: boolean;
-  };
 }

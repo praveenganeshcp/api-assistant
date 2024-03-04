@@ -2,23 +2,26 @@
   <div class="create-project">
     <h3>New Project</h3>
     <div class="create-project__form">
-      <input
-        [formControl]="projectNameControl"
-        sw-input
-        type="text"
-        size="md"
-        placeholder="Project name"
-      />
+      <sw-form-control [control]="projectNameControl" label="Project name">
+          <input
+          [formControl]="projectNameControl"
+          sw-input
+          type="text"
+          size="md"
+          placeholder="Project name"
+        />
+      </sw-form-control>
+      
       <button
-        [showLoader]="isCreateProjectInProgress$ | async"
+        [showLoader]="loading$ | async"
         (click)="onCreateProject()"
         sw-primary-button
       >
         Create Project
       </button>
     </div>
-    <span *ngIf="projectCreationErrorMsg$ | async as projectCreationErrorMsg">
-      {{ projectCreationErrorMsg }}
+    <span>
+      {{ errorMessage }}
     </span>
   </div>
 </sw-dialog>

@@ -3,31 +3,31 @@ import { Project } from './dashboard.state';
 
 const DASHBOARD_ACTION_PREFIX = '[Dashboard]';
 
-export const loadProjects = createAction(
+export const loadProjectsAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Load Projects`
 );
 
-export const projectsLoaded = createAction(
+export const projectsLoadedAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Projects loaded`,
   props<{ data: Project[] }>()
 );
 
-export const errorInLoadingProjects = createAction(
+export const errorInLoadingProjectsAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Error in loading projects`,
   props<{ error: string }>()
 );
 
-export const createProject = createAction(
+export const createProjectAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Create project`,
   props<{ name: string }>()
 );
 
-export const errorInCreatingProject = createAction(
+export const errorInCreatingProjectAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Error in creating projects`,
   props<{ error: string }>()
 );
 
-export const projectCreated = createAction(
+export const projectCreatedAction = createAction(
   `${DASHBOARD_ACTION_PREFIX} Created project`,
   props<{ data: Project }>()
 );
