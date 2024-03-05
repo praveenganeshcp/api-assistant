@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { ReactiveFormsModule, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {
   SW_DIALOG_DATA,
   SwDialogRef,
@@ -12,10 +11,9 @@ import {
   SwFormControlComponent,
   CanBeNull,
 } from 'ngx-simple-widgets';
-import { Observable, map, combineLatest, tap, BehaviorSubject } from 'rxjs';
+import { Observable, map, combineLatest, BehaviorSubject } from 'rxjs';
 import { BreakPointObserver } from '../../../app/services/breakpointobserver.service';
 import { createProjectAction, errorInCreatingProjectAction, projectCreatedAction } from '../../store/dashboard.actions';
-import { AppState } from '../../../app/app.state';
 import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { Project } from '../../store/dashboard.state';
 
@@ -34,17 +32,29 @@ import { Project } from '../../store/dashboard.state';
   ],
 })
 export class CreateProjectComponent {
-  public projectNameControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
+
+  public createProjectForm = this.formBuilder.group({
+    name: this.formBuilder.control('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20)
+    ])
+  })
 
   public loading$ = new BehaviorSubject(false);
 
   public errorMessage = "";
+
+  public errorMessagesMap: Record<string, string> = {
+    minLength: "Minimum 3 characters is required"
+  }
 
   constructor(
     @Inject(SW_DIALOG_DATA) public data: unknown,
     private dialogRef: SwDialogRef<CanBeNull<Project>>,
     private breakpointObserver: BreakPointObserver,
     private storeWrapper: StoreWrapper,
+    private formBuilder: FormBuilder
   ) {}
 
   public dialogSize$: Observable<SwAllowedSizes> = combineLatest([
@@ -59,10 +69,18 @@ export class CreateProjectComponent {
     })
   );
 
+  public get projectNameFormControl(): FormControl {
+    return this.createProjectForm.controls['name'];
+  }
+
   public onCreateProject() {
+    this.createProjectForm.markAllAsTouched();
+    if(this.createProjectForm.invalid) {
+      return
+    }
     this.errorMessage = "";
     this.storeWrapper.dispatchAsyncAction(
-      createProjectAction({ name: this.projectNameControl.value as string }),
+      createProjectAction({ name: this.projectNameFormControl.value }),
       projectCreatedAction,
       errorInCreatingProjectAction,
       this.loading$

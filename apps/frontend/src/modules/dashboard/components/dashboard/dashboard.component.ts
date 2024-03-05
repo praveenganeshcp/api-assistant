@@ -18,6 +18,7 @@ import {
   projectsSelector,
 } from '../../store/dashboard.selector';
 import { loadProjectsAction } from '../../store/dashboard.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'api-assistant-dashboard',
@@ -41,7 +42,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private swDialogService: SwDialogService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -55,9 +57,8 @@ export class DashboardComponent implements OnInit {
   public openCreateProjectModal() {
     const ref = this.swDialogService.open(CreateProjectComponent);
     ref.afterClosed$.subscribe((project) => {
-      project = project as CanBeNull<Project>;
       if(!!project) {
-        this.store.dispatch(loadProjectsAction());
+        this.router.navigate(['app', 'projects', (project as CanBeNull<Project>)?.id])
       }
     });
   }

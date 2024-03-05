@@ -1,4 +1,4 @@
-.project-card {
+.project {
 	background-color: #f8f9fa;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -9,8 +9,8 @@
 	  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
   
-	.project-details {
-	  .project-name {
+	.project__details {
+	  .project__details-name {
 		font-size: 20px;
 		margin-bottom: 10px;
 		color: #333;
@@ -23,25 +23,25 @@
 		margin: 10px 0;
 	  }
   
-	  .stats-container {
-		.stat {
+	  .project__details-stats {
+		.project__details-stat {
 		  display: flex;
 		  justify-content: space-between;
 		  margin-bottom: 5px;
   
-		  .label {
+		  .project__details-stat-label {
 			color: #666;
 			font-weight: bold;
 		  }
   
-		  .value {
+		  .project__details-stat-value {
 			color: #333;
 		  }
 		}
 	  }
 	}
   
-	.detail-link {
+	.project__link {
 	  display: block;
 	  text-align: center;
 	  text-decoration: none;

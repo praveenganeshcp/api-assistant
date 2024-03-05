@@ -1,13 +1,14 @@
 <sw-dialog [size]="dialogSize$ | async">
   <div class="create-project">
     <h3>New Project</h3>
-    <div class="create-project__form">
-      <sw-form-control [control]="projectNameControl" label="Project name">
-          <input
-          [formControl]="projectNameControl"
+    <form [formGroup]="createProjectForm" (ngSubmit)="onCreateProject()" class="create-project__form">
+      <sw-form-control [errorMessagesMap]="errorMessagesMap" [control]="projectNameFormControl" label="Project name">
+        <input
+          formControlName="name"
           sw-input
           type="text"
           size="md"
+          autofocus
           placeholder="Project name"
         />
       </sw-form-control>
@@ -19,8 +20,8 @@
       >
         Create Project
       </button>
-    </div>
-    <span>
+    </form>
+    <span class="error-msg">
       {{ errorMessage }}
     </span>
   </div>
