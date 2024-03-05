@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { ReactiveFormsModule, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {
   SW_DIALOG_DATA,
   SwDialogRef,
@@ -9,16 +8,14 @@ import {
   SwButtonComponent,
   SwInputComponent,
   SwAllowedSizes,
+  SwFormControlComponent,
+  CanBeNull,
 } from 'ngx-simple-widgets';
-import { Observable, map, combineLatest, tap } from 'rxjs';
+import { Observable, map, combineLatest, BehaviorSubject } from 'rxjs';
 import { BreakPointObserver } from '../../../app/services/breakpointobserver.service';
-import { createProject } from '../../store/dashboard.actions';
-import { AppState } from '../../../app/app.state';
-import {
-  isCreateProjectInProgress,
-  createProjectError,
-  isCreateProjectSuccess,
-} from '../../store/dashboard.selector';
+import { createProjectAction, errorInCreatingProjectAction, projectCreatedAction } from '../../store/dashboard.actions';
+import { StoreWrapper } from '../../../commons/StoreWrapper';
+import { Project } from '../../store/dashboard.state';
 
 @Component({
   selector: 'api-assistant-create-project',
@@ -31,16 +28,33 @@ import {
     SwButtonComponent,
     SwInputComponent,
     ReactiveFormsModule,
+    SwFormControlComponent
   ],
 })
 export class CreateProjectComponent {
-  public projectNameControl = new FormControl('');
+
+  public createProjectForm = this.formBuilder.group({
+    name: this.formBuilder.control('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20)
+    ])
+  })
+
+  public loading$ = new BehaviorSubject(false);
+
+  public errorMessage = "";
+
+  public errorMessagesMap: Record<string, string> = {
+    minLength: "Minimum 3 characters is required"
+  }
 
   constructor(
     @Inject(SW_DIALOG_DATA) public data: unknown,
-    private dialogRef: SwDialogRef<CreateProjectComponent>,
+    private dialogRef: SwDialogRef<CanBeNull<Project>>,
     private breakpointObserver: BreakPointObserver,
-    private store: Store<AppState>
+    private storeWrapper: StoreWrapper,
+    private formBuilder: FormBuilder
   ) {}
 
   public dialogSize$: Observable<SwAllowedSizes> = combineLatest([
@@ -55,16 +69,32 @@ export class CreateProjectComponent {
     })
   );
 
-  public projectCreationErrorMsg$: Observable<string> =
-    this.store.select(createProjectError);
-
-  public isCreateProjectInProgress$: Observable<boolean> = this.store.select(
-    isCreateProjectInProgress
-  );
+  public get projectNameFormControl(): FormControl {
+    return this.createProjectForm.controls['name'];
+  }
 
   public onCreateProject() {
-    this.store.dispatch(
-      createProject({ name: this.projectNameControl.value as string })
-    );
+    this.createProjectForm.markAllAsTouched();
+    if(this.createProjectForm.invalid) {
+      return
+    }
+    this.errorMessage = "";
+    this.storeWrapper.dispatchAsyncAction(
+      createProjectAction({ name: this.projectNameFormControl.value }),
+      projectCreatedAction,
+      errorInCreatingProjectAction,
+      this.loading$
+    ).subscribe({
+      next: (response) => {
+        this.dialogRef.close(response.data)
+      },
+      error: (err: ReturnType<typeof errorInCreatingProjectAction>) => {
+        this.errorMessage = err.error;
+      }
+    })
+  }
+
+  public close() {
+    this.dialogRef.close(null);
   }
 }

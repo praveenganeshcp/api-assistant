@@ -1,38 +1,21 @@
-<div class="dashboard-project-card">
-  <h3>{{ project.name }}</h3>
-
-  <div class="dashboard-project-card__stats">
-    <!-- create actions -->
-    <div class="dashboard-project-card__stat_data">
-      <b>{{ project.totalOperations }}</b>
-      <span>Operations</span>
-    </div>
-
-    <!-- read actions -->
-    <div class="dashboard-project-card__stat_data">
-      <b>{{ project.storageSize }}</b>
-      <span>Storage</span>
-    </div>
-
-    <!-- edit actions -->
-    <div class="dashboard-project-card__stat_data">
-      <b>{{ project.activeUsers }}</b>
-      <span>Users</span>
-    </div>
-
-    <!-- delete actions -->
-    <div class="dashboard-project-card__stat_data">
-      <b>{{ project.createdOn | date : 'MMM d, YYY' }}</b>
-      <span>Created on</span>
+<div class="project">
+  <div class="project__details">
+    <h3 class="project__details-name">{{ project.name }}</h3>
+    <div class="divider"></div>
+    <div class="project__details-stats">
+      <div class="project__details-stat">
+        <span class="project__details-stat-label">Operations:</span>
+        <span class="project__details-stat-value">{{ project.totalOperations }}</span>
+      </div>
+      <div class="project__details-stat">
+        <span class="project__details-stat-label">Created Date:</span>
+        <span class="project__details-stat-value">{{ project.createdOn | date: 'MMM d, y' }}</span>
+      </div>
+      <div class="project__details-stat">
+        <span class="project__details-stat-label">Active Users:</span>
+        <span class="project__details-stat-value">{{ project.activeUsers }}</span>
+      </div>
     </div>
   </div>
-
-  <div class="dashboard-project-card__footer">
-    <span><b>Status:</b> {{ project.status ? 'Active' : 'Inactive' }}</span>
-    <a [routerLink]="'/app/projects/' + project.id">
-      <button sw-icon-button size="sm">
-        <sw-icon name="arrow_forward_ios"></sw-icon>
-      </button>
-    </a>
-  </div>
+  <a [routerLink]="['/app', 'projects', project.id]" class="project__link">View Details</a>
 </div>

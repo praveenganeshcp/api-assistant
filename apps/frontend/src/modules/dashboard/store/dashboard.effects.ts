@@ -1,11 +1,11 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
-  errorInLoadingProjects,
-  loadProjects,
-  projectsLoaded,
-  createProject,
-  errorInCreatingProject,
-  projectCreated,
+  errorInLoadingProjectsAction,
+  loadProjectsAction,
+  projectsLoadedAction,
+  createProjectAction,
+  errorInCreatingProjectAction,
+  projectCreatedAction,
 } from './dashboard.actions';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import { ProjectsService } from '../services/projects.service';
@@ -20,12 +20,12 @@ export class DashboardEffects {
 
   loadProjects$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadProjects),
+      ofType(loadProjectsAction),
       exhaustMap(() =>
         this.projectsService.loadProjects().pipe(
-          map((projects) => projectsLoaded({ data: projects })),
+          map((projects) => projectsLoadedAction({ data: projects })),
           catchError(() =>
-            of(errorInLoadingProjects({ error: 'Error in loading projects' }))
+            of(errorInLoadingProjectsAction({ error: 'Error in loading projects' }))
           )
         )
       )
@@ -34,12 +34,12 @@ export class DashboardEffects {
 
   createProject$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(createProject),
+      ofType(createProjectAction),
       exhaustMap(({ name }) =>
         this.projectsService.createProject(name).pipe(
-          map((project) => projectCreated({ data: project })),
+          map((project) => projectCreatedAction({ data: project })),
           catchError(() =>
-            of(errorInCreatingProject({ error: 'Error in creating project' }))
+            of(errorInCreatingProjectAction({ error: 'Error in creating project' }))
           )
         )
       )

@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import {
-  errorInLoadingProjects,
-  loadProjects,
-  projectsLoaded,
-  createProject,
-  errorInCreatingProject,
-  projectCreated,
+  errorInLoadingProjectsAction,
+  loadProjectsAction,
+  projectsLoadedAction,
+  createProjectAction,
+  errorInCreatingProjectAction,
+  projectCreatedAction,
 } from './dashboard.actions';
 import { DashboardState } from './dashboard.state';
 
@@ -14,24 +14,19 @@ const DASHBOARD_STATE: DashboardState = {
     data: [],
     error: '',
     isLoading: false,
-  },
-  createProject: {
-    inProgress: false,
-    error: '',
-    isCreated: false,
-  },
+  }
 };
 
 export const dashboardReducers = createReducer(
   DASHBOARD_STATE,
-  on(loadProjects, (state) => ({
+  on(loadProjectsAction, (state) => ({
     ...state,
     projects: {
       ...state.projects,
       isLoading: true,
     },
   })),
-  on(projectsLoaded, (state, { data }) => ({
+  on(projectsLoadedAction, (state, { data }) => ({
     ...state,
     projects: {
       isLoading: false,
@@ -39,38 +34,12 @@ export const dashboardReducers = createReducer(
       error: '',
     },
   })),
-  on(errorInLoadingProjects, (state, { error }) => ({
+  on(errorInLoadingProjectsAction, (state, { error }) => ({
     ...state,
     projects: {
       isLoading: false,
       data: [],
       error,
-    },
-  })),
-  on(createProject, (state) => ({
-    ...state,
-    createProject: {
-      ...state.createProject,
-      inProgress: true,
-    },
-  })),
-  on(errorInCreatingProject, (state, { error }) => ({
-    ...state,
-    createProject: {
-      isCreated: false,
-      error,
-      inProgress: false,
-    },
-  })),
-  on(projectCreated, (state, { data }) => ({
-    projects: {
-      ...state.projects,
-      data: [data, ...state.projects.data],
-    },
-    createProject: {
-      isCreated: true,
-      error: '',
-      inProgress: false,
     },
   }))
 );

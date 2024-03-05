@@ -1,24 +1,28 @@
 <sw-dialog [size]="dialogSize$ | async">
   <div class="create-project">
     <h3>New Project</h3>
-    <div class="create-project__form">
-      <input
-        [formControl]="projectNameControl"
-        sw-input
-        type="text"
-        size="md"
-        placeholder="Project name"
-      />
+    <form [formGroup]="createProjectForm" (ngSubmit)="onCreateProject()" class="create-project__form">
+      <sw-form-control [errorMessagesMap]="errorMessagesMap" [control]="projectNameFormControl" label="Project name">
+        <input
+          formControlName="name"
+          sw-input
+          type="text"
+          size="md"
+          autofocus
+          placeholder="Project name"
+        />
+      </sw-form-control>
+      
       <button
-        [showLoader]="isCreateProjectInProgress$ | async"
+        [showLoader]="loading$ | async"
         (click)="onCreateProject()"
         sw-primary-button
       >
         Create Project
       </button>
-    </div>
-    <span *ngIf="projectCreationErrorMsg$ | async as projectCreationErrorMsg">
-      {{ projectCreationErrorMsg }}
+    </form>
+    <span class="error-msg">
+      {{ errorMessage }}
     </span>
   </div>
 </sw-dialog>
