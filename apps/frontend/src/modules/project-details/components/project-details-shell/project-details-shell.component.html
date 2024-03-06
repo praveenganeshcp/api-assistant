@@ -1,60 +1,71 @@
 <main class="project-details">
-  <sw-tab-view
-    [activeTabIndex]="activeTabIndex"
-    [showTabsInBottom]="(isDesktopScreen$ | async) === false"
-    (tabClick)="onTabChange($event)"
-    [style.--sw-tab-view-title-height]="'10%'"
-    [style.--sw-tab-view-content-height]="'90%'"
-  >
-    <sw-tab>
-      <sw-tab-title>
-        <div class="project-details__tab-title">
-          <sw-icon name="home"></sw-icon>
-        </div>
-      </sw-tab-title>
-      <sw-tab-content>
-        <api-assistant-project-home> </api-assistant-project-home>
-      </sw-tab-content>
-    </sw-tab>
-    <sw-tab>
-      <sw-tab-title>
-        <div class="project-details__tab-title">
-          <sw-icon name="folder"></sw-icon>
-        </div>
-      </sw-tab-title>
-      <sw-tab-content>
-        <api-assistant-project-files> </api-assistant-project-files>
-      </sw-tab-content>
-    </sw-tab>
-    <sw-tab>
-      <sw-tab-title>
-        <div class="project-details__tab-title">
-          <sw-icon name="storage"></sw-icon>
-        </div>
-      </sw-tab-title>
-      <sw-tab-content>
-        <api-assistant-project-database> </api-assistant-project-database>
-      </sw-tab-content>
-    </sw-tab>
-    <sw-tab>
-      <sw-tab-title>
-        <div class="project-details__tab-title">
-          <sw-icon name="receipt_long"></sw-icon>
-        </div>
-      </sw-tab-title>
-      <sw-tab-content>
-        <api-assistant-project-logs> </api-assistant-project-logs>
-      </sw-tab-content>
-    </sw-tab>
-    <sw-tab>
-      <sw-tab-title>
-        <div class="project-details__tab-title">
-          <sw-icon name="settings"></sw-icon>
-        </div>
-      </sw-tab-title>
-      <sw-tab-content>
-        <api-assistant-project-settings> </api-assistant-project-settings>
-      </sw-tab-content>
-    </sw-tab>
-  </sw-tab-view>
+  <div class="project-details__loader" *ngIf="loading$ | async; else projectsDataView">
+    <sw-loader size="lg"></sw-loader>
+  </div>
+  <ng-template #projectsDataView>
+    <sw-tab-view
+      *ngIf="!(loadingError$ | async); else errorMsg"
+      [activeTabIndex]="activeTabIndex"
+      [showTabsInBottom]="(isDesktopScreen$ | async) === false"
+      (tabClick)="onTabChange($event)"
+      [style.--sw-tab-view-title-height]="'10%'"
+      [style.--sw-tab-view-content-height]="'90%'"
+    >
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon name="home"></sw-icon>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-home> </api-assistant-project-home>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon name="folder"></sw-icon>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-files> </api-assistant-project-files>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon name="storage"></sw-icon>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-database> </api-assistant-project-database>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon name="receipt_long"></sw-icon>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-logs> </api-assistant-project-logs>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon name="settings"></sw-icon>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-settings> </api-assistant-project-settings>
+        </sw-tab-content>
+      </sw-tab>
+    </sw-tab-view>
+    <ng-template #errorMsg>
+      <div class="project-details__error-msg">
+        {{ loadingError$ | async }}
+      </div>
+    </ng-template>
+  </ng-template>
 </main>
