@@ -13,6 +13,23 @@
 		flex-direction: column;
 		align-items: center;
 	}
+
+	.project-details__loader, .project-details__error-msg {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		width: 100%;
+		height: 100%;
+
+		sw-loader {
+			--sw-loader-height: 40px;
+			--sw-loader-width: 40px;
+		}
+
+		&.project-details__error-msg  {
+			color: red;
+		}
+	}
 }
 
 @media only screen and (min-width: 1200px) {
