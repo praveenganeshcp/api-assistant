@@ -15,12 +15,12 @@ import { SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
   selector: 'api-assistant-project-experiment',
   standalone: true,
   imports: [
-    FormsModule, 
+    FormsModule,
     NgJsonEditorModule,
     NgIf,
     AsyncPipe,
     SwInputComponent,
-    SwButtonComponent
+    SwButtonComponent,
   ],
   styleUrls: ['./project-experiment.component.scss'],
   templateUrl: './project-experiment.component.html',
@@ -52,7 +52,7 @@ export class ProjectExperimentComponent {
     this.editorOptions.mode = 'code';
     this.editorOptions.indentation = 2;
 
-    this.responseEditorOptions.mode = "tree";
+    this.responseEditorOptions.mode = 'tree';
     this.responseEditorOptions.indentation = 4;
     this.responseEditorOptions.sortObjectKeys = false;
   }
@@ -66,7 +66,7 @@ export class ProjectExperimentComponent {
   }
 
   sendRequest() {
-    this.response = {}
+    this.response = {};
     this.apiKeyDetails$
       .pipe(
         filter((details) => details !== null),
@@ -81,6 +81,6 @@ export class ProjectExperimentComponent {
   }
 
   get showResponseWindow(): boolean {
-    return Object.keys(this.response).length > 0
+    return Object.keys(this.response).length > 0;
   }
 }
