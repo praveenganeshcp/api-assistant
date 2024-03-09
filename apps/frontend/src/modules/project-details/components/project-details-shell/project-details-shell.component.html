@@ -3,6 +3,11 @@
     <sw-loader size="lg"></sw-loader>
   </div>
   <ng-template #projectsDataView>
+
+    <header>
+      <h1>{{ projectName$ | async }}</h1>
+    </header>
+
     <sw-tab-view
       *ngIf="!(loadingError$ | async); else errorMsg"
       [activeTabIndex]="activeTabIndex"

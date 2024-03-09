@@ -11,3 +11,10 @@ html, body {
     box-sizing: border-box;
     font-family: Nunito;
 }
+
+
+sw-tab-view {
+    .sw-tab-view__content {
+        overflow: auto;
+    }
+}
