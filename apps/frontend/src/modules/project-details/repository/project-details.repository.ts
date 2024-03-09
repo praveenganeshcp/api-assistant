@@ -25,4 +25,13 @@ export class ProjectDetailsRepository {
             map(response => response.projectDetail)
         )
     }
+
+    performCRUD(input: any, apiKey: string) {
+        console.log(input)
+        return this.http.post<any>(`${this.baseUrl}/core-engine/crud`, input, {
+            headers: {
+                'api-assist-auth': apiKey
+            }
+        });
+    }
 }

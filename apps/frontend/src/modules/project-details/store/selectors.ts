@@ -47,3 +47,16 @@ export const projectOverviewSelector = createSelector(
         
     }
 )
+
+export const projectAPIKeyDetailsSelector = createSelector(
+    projectDataSlice,
+    (projectData) => {
+        if(projectData == null) {
+            return null;
+        }
+        return {
+            key: projectData.metadata.apiKey,
+            lastGeneratedOn: projectData.metadata.apiKeyLastGeneratedOn
+        }
+    }
+)

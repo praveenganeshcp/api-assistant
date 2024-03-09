@@ -18,3 +18,19 @@ sw-tab-view {
         overflow: auto;
     }
 }
+
+/* Add application styles & imports to this file! */
+@import '~jsoneditor/dist/jsoneditor.min.css';
+
+// You can't upload images to stackblitz
+div.jsoneditor-menu > button {
+  background-image: url('https://jsoneditoronline.org/img/jsoneditor-icons.svg');
+}
+
+.ace_editor * {
+  font-family: "dejavu sans mono", "droid sans mono", consolas, monaco, "lucida console", "courier new", courier, monospace, sans-serif;
+}
+
+.ace-jsoneditor, textarea.jsoneditor-text{
+  min-height: 300px;
+}

@@ -1,0 +1,106 @@
+/* postman-like.component.scss */
+
+.postman-like-container {
+    max-width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    padding: 2rem 1rem;
+  }
+  
+  .left-panel {
+    width: 50%;
+    padding-right: 20px; /* Add some spacing between the panels */
+
+    .request-section {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    
+        input[type="text"] {
+            width: calc(100% - 160px); /* Adjust input width to accommodate select and button */
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        select {
+            width: 100px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        button {
+            padding: 7px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+
+    /* postman-like.component.scss */
+
+    .postman-like-container {
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: Arial, sans-serif;
+    }
+    
+    .additional-headers {
+        margin-bottom: 20px;
+    }
+    
+    .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        justify-content: space-between;
+    }
+    
+    .header label {
+        margin-right: 10px;
+        font-size: 14px;
+        flex-basis: 100px;
+    }
+    
+    .header input[type="text"] {
+        flex: 1;
+        padding: 7px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+  
+
+    .input-json-section textarea {
+        width: 100%;
+        height: 200px; /* Adjust height for textarea */
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+      
+  }
+  
+  .right-panel {
+    flex: 1;
+    height: 100%;
+    
+    .response-section h3 {
+        margin-bottom: 10px;
+    }
+    
+    .response-data {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 100%;
+        padding: 1rem;
+        overflow: hidden;
+    }
+  }
+
