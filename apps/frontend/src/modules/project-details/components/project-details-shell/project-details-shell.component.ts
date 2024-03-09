@@ -19,7 +19,8 @@ import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { loadProjectDetailsAction } from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
-import { projectDetailsErrorSelector, projectDetailsLoadingSelector } from '../../store/selectors';
+import { projectDetailsErrorSelector, projectDetailsLoadingSelector, projectOverviewSelector } from '../../store/selectors';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'api-assistant-project-details-shell',
@@ -47,6 +48,10 @@ export class ProjectDetailsShellComponent {
   public readonly loading$ = this.store.select(projectDetailsLoadingSelector)
 
   public readonly loadingError$ = this.store.select(projectDetailsErrorSelector);
+
+  public readonly projectName$: Observable<string> = this.store.select(projectOverviewSelector).pipe(
+    map((projectData) => projectData?.name ?? "")
+  )
 
   constructor(
     private activatedRoute: ActivatedRoute,

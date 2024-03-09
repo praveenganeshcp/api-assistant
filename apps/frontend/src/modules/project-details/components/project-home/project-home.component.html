@@ -1,55 +1,38 @@
-<div class="project-overview-container" *ngIf="projectOverview$ | async as projectOverview">
-	<h2>{{ projectOverview.name }} - Project Overview</h2>
+<div class="project-home">
+	<h3>Database operations</h3>
+	<div class="project-home__db-actions-container">
+		<div class="project-home__db-actions-chart">
+			<canvas *ngIf="lineChartData$ | async as chartData" baseChart
+				[type]="'bar'"
+				[data]="chartData"
+				[options]="lineChartOptions"
+			>
+			</canvas>
+		</div>
+	</div>
 	<hr>
-  
-	<div class="overview-sections">
-	  <div class="action-section">
-		<h3>Actions</h3>
-		<div class="action-cards">
-		  <div class="action-card">
-			<span>Create</span>
-			<p>{{ projectOverview.dbStats.createAction }} actions</p>
-		  </div>
-		  <div class="action-card">
-			<span>Read</span>
-			<p>{{ projectOverview.dbStats.readAction }} actions</p>
-		  </div>
-		  <div class="action-card">
-			<span>Update</span>
-			<p>{{ projectOverview.dbStats.updateAction }} actions</p>
-		  </div>
-		  <div class="action-card">
-			<span>Delete</span>
-			<p>{{ projectOverview.dbStats.deleteAction }} actions</p>
-		  </div>
-		  <div class="action-card">
-			<span>Aggregate</span>
-			<p>{{ projectOverview.dbStats.aggregate }} actions</p>
-		  </div>
-		  <div class="action-card">
-			<span>Total Actions</span>
-			<p>{{ projectOverview.dbStats.totalActions }} actions</p>
-		  </div>
+	<div class="project-home__sections">
+		<div class="project-home__section">
+			<h3>Project Overview</h3>
+			<div class="project-home__section-cards">
+				<div class="project-home__section-card">
+					<span>Accounts</span>
+					<p>10 users</p>
+				</div>
+				<div class="project-home__section-card">
+					<span>Storage</span>
+					<p>10 GB</p>
+				</div>
+				<div class="project-home__section-card">
+					<span>File uploads</span>
+					<p>10 files</p>
+				</div>
+				<div class="project-home__section-card">
+					<span>Database</span>
+					<p>10 buckets</p>
+				</div>
+			</div>
 		</div>
-	  </div>
-  
-	  <div class="info-section">
-		<h3>Project Information</h3>
-		<div class="info-cards">
-		  <div class="info-card">
-			<span>Active Users:</span> {{ projectOverview.totalUsers }} users
-		  </div>
-		  <div class="info-card">
-			<span>Total Tables:</span> {{ projectOverview.dbStats.totalCollections }} tables
-		  </div>
-		  <div class="info-card">
-			<span>Total Files:</span> {{ projectOverview.noOfFiles }} files
-		  </div>
-		  <div class="info-card">
-			<span>Total Storage Occupied:</span> {{ projectOverview.storage }} GB
-		  </div>
-		</div>
-	  </div>
 	</div>
   </div>
   
