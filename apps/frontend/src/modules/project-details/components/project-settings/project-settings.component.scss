@@ -4,10 +4,12 @@
 	.project-settings__container {
 	  display: flex;
 	  flex-wrap: wrap;
+	  align-items: center;
+	  flex-direction: column;
 	  gap: 20px;
 
 	  .project-settings__card {
-		width: 100%;
+		width: 90%;
 		background-color: #f9f9f9;
 		border-radius: 8px;
 		padding: 20px;
@@ -35,6 +37,7 @@
 	.project-settings {
 		padding: 20px;
 		.project-settings__container {
+			flex-direction: row;
 			.project-settings__card {
 				width: calc(50% - 10px);
 			}
