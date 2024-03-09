@@ -1,31 +1,24 @@
-<!-- project-settings.component.html -->
-
-<div class="project-settings-container">
-	<h2>Project Settings</h2>
-	<hr>
-  
-	<div class="settings-sections">
-	  <div class="setting-card">
+<div class="project-settings">
+	<div class="project-settings__container">
+	  <div class="project-settings__card">
 		<h3>Delete Project</h3>
 		<p>This project will be deleted permanently.</p>
-		<button class="delete-button">Delete</button>
+		<button sw-danger-button>Delete</button>
 	  </div>
   
-	  <div class="setting-card">
+	  <div class="project-settings__card">
 		<h3>Generate API Key</h3>
-		<p>Show current key: *************</p>
 		<p>Last generated: January 1, 2024</p>
-		<button class="regenerate-button">Regenerate</button>
-		<button class="copy-button">Copy Key</button>
+		<div class="api-key-section-buttons">
+			<button sw-bordered-button class="regenerate-button">Regenerate</button>
+			<button sw-text-button class="copy-button">Copy Key</button>
+		</div>
 	  </div>
   
-	  <div class="setting-card">
+	  <div class="project-settings__card">
 		<h3>Disable Project</h3>
 		<p>Toggle active/inactive state</p>
-		<label class="switch">
-		  <input type="checkbox">
-		  <span class="slider"></span>
-		</label>
+		<sw-switch></sw-switch>
 	  </div>
 	</div>
   </div>
