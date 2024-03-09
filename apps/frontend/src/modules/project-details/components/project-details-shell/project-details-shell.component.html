@@ -1,9 +1,11 @@
 <main class="project-details">
-  <div class="project-details__loader" *ngIf="loading$ | async; else projectsDataView">
+  <div
+    class="project-details__loader"
+    *ngIf="loading$ | async; else projectsDataView"
+  >
     <sw-loader size="lg"></sw-loader>
   </div>
   <ng-template #projectsDataView>
-
     <header>
       <h1>{{ projectName$ | async }}</h1>
     </header>
@@ -19,7 +21,7 @@
       <sw-tab>
         <sw-tab-title>
           <div class="project-details__tab-title">
-            <sw-icon size="lg"  name="home"></sw-icon>
+            <sw-icon size="lg" name="home"></sw-icon>
             <span>Home</span>
           </div>
         </sw-tab-title>
@@ -35,7 +37,7 @@
           </div>
         </sw-tab-title>
         <sw-tab-content>
-          <api-assistant-project-logs> </api-assistant-project-logs>
+          <api-assistant-project-experiment> </api-assistant-project-experiment>
         </sw-tab-content>
       </sw-tab>
       <sw-tab>
@@ -59,7 +61,7 @@
         <sw-tab-content>
           <api-assistant-project-files> </api-assistant-project-files>
         </sw-tab-content>
-      </sw-tab>    
+      </sw-tab>
       <sw-tab>
         <sw-tab-title>
           <div class="project-details__tab-title">

@@ -10,7 +10,6 @@ import {
 } from 'ngx-simple-widgets';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ProjectHomeComponent } from '../project-home/project-home.component';
-import { ProjectLogsComponent } from '../project-logs/project-logs.component';
 import { ProjectDatabaseComponent } from '../project-database/project-database.component';
 import { ProjectSettingsComponent } from '../project-settings/project-settings.component';
 import { ProjectFilesComponent } from '../project-files/project-files.component';
@@ -21,6 +20,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
 import { projectDetailsErrorSelector, projectDetailsLoadingSelector, projectOverviewSelector } from '../../store/selectors';
 import { Observable, map } from 'rxjs';
+import { ProjectExperimentComponent } from '../project-experiment/project-experiment.component';
 
 @Component({
   selector: 'api-assistant-project-details-shell',
@@ -34,7 +34,7 @@ import { Observable, map } from 'rxjs';
     SwIconComponent,
     RouterModule,
     ProjectHomeComponent,
-    ProjectLogsComponent,
+    ProjectExperimentComponent,
     ProjectDatabaseComponent,
     ProjectSettingsComponent,
     ProjectFilesComponent,
