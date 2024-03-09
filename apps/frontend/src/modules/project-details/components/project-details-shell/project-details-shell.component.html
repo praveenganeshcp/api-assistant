@@ -1,9 +1,11 @@
 <main class="project-details">
-  <div class="project-details__loader" *ngIf="loading$ | async; else projectsDataView">
+  <div
+    class="project-details__loader"
+    *ngIf="loading$ | async; else projectsDataView"
+  >
     <sw-loader size="lg"></sw-loader>
   </div>
   <ng-template #projectsDataView>
-
     <header>
       <h1>{{ projectName$ | async }}</h1>
     </header>
@@ -19,12 +21,34 @@
       <sw-tab>
         <sw-tab-title>
           <div class="project-details__tab-title">
-            <sw-icon size="lg"  name="home"></sw-icon>
+            <sw-icon size="lg" name="home"></sw-icon>
             <span>Home</span>
           </div>
         </sw-tab-title>
         <sw-tab-content>
           <api-assistant-project-home> </api-assistant-project-home>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon size="lg" name="experiment"></sw-icon>
+            <span>Experiment</span>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-experiment> </api-assistant-project-experiment>
+        </sw-tab-content>
+      </sw-tab>
+      <sw-tab>
+        <sw-tab-title>
+          <div class="project-details__tab-title">
+            <sw-icon size="lg" name="database"></sw-icon>
+            <span>Database</span>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <api-assistant-project-database> </api-assistant-project-database>
         </sw-tab-content>
       </sw-tab>
       <sw-tab>
@@ -36,28 +60,6 @@
         </sw-tab-title>
         <sw-tab-content>
           <api-assistant-project-files> </api-assistant-project-files>
-        </sw-tab-content>
-      </sw-tab>
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="storage"></sw-icon>
-            <span>Database</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-project-database> </api-assistant-project-database>
-        </sw-tab-content>
-      </sw-tab>
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="receipt_long"></sw-icon>
-            <span>Logs</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-project-logs> </api-assistant-project-logs>
         </sw-tab-content>
       </sw-tab>
       <sw-tab>
