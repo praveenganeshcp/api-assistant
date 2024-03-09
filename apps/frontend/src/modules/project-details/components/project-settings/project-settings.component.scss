@@ -1,66 +1,57 @@
-.project-settings-container {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	flex-direction: column;
+/* project-settings.component.scss */
 
-	.project-setting {
+.project-settings {
+	.project-settings__container {
+	  display: flex;
+	  flex-wrap: wrap;
+	  align-items: center;
+	  flex-direction: column;
+	  gap: 20px;
+
+	  .project-settings__card {
 		width: 90%;
-		height: 33%;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-		padding: 5% 2%;
-		border-bottom: 1px solid black;
+		background-color: #f9f9f9;
+		border-radius: 8px;
+		padding: 20px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-		&:last-child {
-			border-width: 0;
+		h3 {
+		  font-size: 20px;
+		  margin-bottom: 20px;
+		}
+  
+		p {
+		  margin-bottom: 10px;
 		}
 
-
-		sw-icon {
-			flex-basis: 20%;
-		}
-
-		.project-setting__control {
-			height: 100%;
-			width: 100%;
+		.api-key-section-buttons {
 			display: flex;
-			align-items: flex-start;
-			justify-content: space-evenly;
-			flex-direction: column;
-
-			span {
-				font-size: 14px;
+			align-items: center;
+			column-gap: 20px;
+		}
+	  }
+	}
+  }
+  
+  @media only screen and (min-width: 768px) {
+	.project-settings {
+		padding: 20px;
+		.project-settings__container {
+			flex-direction: row;
+			.project-settings__card {
+				width: calc(50% - 10px);
 			}
-
-			.project-setting__icon-button {
-				display: inline;
-				margin-left: 4%;
+		}
+	}
+  }
+  
+  @media only screen and (min-width: 1200px) {
+	.project-settings {
+		padding: 20px;
+		.project-settings__container {
+			.project-settings__card {
+				width: calc(50% - 10px);
 			}
 		}
 	}
-}
-
-@media only screen and (min-width: 768px) {
-	.project-settings-container {
-		.project-setting {
-			padding: 5% 2%;
-			width: 50%;
-		}
-	}
-
-
-}
-
-@media only screen and (min-width: 1200px) {
-	.project-settings-container {
-		.project-setting {
-			padding: 2%;
-			width: 30%;
-		}
-	}
-
-}
+  }
