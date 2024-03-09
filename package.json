@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "frontend:dev": "nx serve frontend",
+    "frontend:dev": "nx serve frontend --host 0.0.0.0",
     "backend:dev": "nx serve backend",
     "cypress:open": "cd apps/frontend-e2e && cypress open --config baseUrl=http://localhost:4200 port=4000",
     "prettier": "nx format:write",

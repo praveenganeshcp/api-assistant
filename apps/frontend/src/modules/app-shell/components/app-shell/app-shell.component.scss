@@ -2,22 +2,20 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
 
   .app-shell__navigation {
-    height: 100%;
-    width: 5%;
+    height: 10%;
+    width: 100%;
     background-color: darkblue;
     color: white;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 2% 0;
-    border-bottom: 1px solid darkblue;
+    padding: 0 5%;
 
     a, button {
       cursor: pointer;
-      font-size: 1rem;
       color: white;
 
       &:hover, &:active {
@@ -29,14 +27,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-direction: column;
-      row-gap: 20px;
+      column-gap: 20px;
     }
   }
 
   .app-shell__routes {
-    height: 100%;
-    width: 95%;
+    height: 90%;
+    width: 100%;
     overflow: auto;
   }
 }
@@ -60,6 +57,42 @@
 
     h3 {
       margin-top: 1rem;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .app-shell {
+
+    .app-shell__navigation {
+      height: 7%;
+    }
+
+    .app-shell__routes {
+      height: 93%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+	.app-shell {
+    flex-direction: row;
+
+    .app-shell__navigation {
+      height: 100%;
+      width: 5%;
+      flex-direction: column;
+      padding: 2% 0;
+
+      .app-shell__user-options {
+        flex-direction: column;
+        row-gap: 20px;
+      }
+    }
+
+    .app-shell__routes {
+      height: 100%;
+      width: 95%;
     }
   }
 }
