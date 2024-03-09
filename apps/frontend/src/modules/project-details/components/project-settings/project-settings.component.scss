@@ -1,66 +1,122 @@
+/* project-settings.component.scss */
+
 .project-settings-container {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	flex-direction: column;
-
-	.project-setting {
-		width: 90%;
-		height: 33%;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-		padding: 5% 2%;
-		border-bottom: 1px solid black;
-
-		&:last-child {
-			border-width: 0;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+  
+	h2 {
+	  margin-bottom: 20px;
+	  font-size: 24px;
+	}
+  
+	hr {
+	  border: none;
+	  border-top: 1px solid #ccc;
+	  margin: 20px 0;
+	}
+  
+	.settings-sections {
+	  display: flex;
+	  flex-wrap: wrap;
+	  justify-content: space-between;
+  
+	  .setting-card {
+		width: calc(50% - 10px);
+		background-color: #f9f9f9;
+		border-radius: 8px;
+		padding: 20px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		margin-bottom: 20px;
+  
+		h3 {
+		  font-size: 20px;
+		  margin-bottom: 10px;
 		}
-
-
-		sw-icon {
-			flex-basis: 20%;
+  
+		p {
+		  margin-bottom: 10px;
 		}
-
-		.project-setting__control {
-			height: 100%;
-			width: 100%;
-			display: flex;
-			align-items: flex-start;
-			justify-content: space-evenly;
-			flex-direction: column;
-
-			span {
-				font-size: 14px;
+  
+		button {
+		  background-color: #007bff;
+		  color: #fff;
+		  border: none;
+		  border-radius: 5px;
+		  padding: 8px 16px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+  
+		  &:hover {
+			background-color: #0056b3;
+		  }
+		}
+  
+		.delete-button {
+		  background-color: #dc3545;
+		}
+  
+		.regenerate-button,
+		.copy-button {
+		  margin-right: 10px;
+		}
+  
+		.switch {
+		  position: relative;
+		  display: inline-block;
+		  width: 60px;
+		  height: 34px;
+  
+		  input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+  
+			&:checked + .slider {
+			  background-color: #007bff;
 			}
-
-			.project-setting__icon-button {
-				display: inline;
-				margin-left: 4%;
+  
+			&:focus + .slider {
+			  box-shadow: 0 0 1px #007bff;
 			}
+  
+			&:checked + .slider:before {
+			  transform: translateX(26px);
+			}
+		  }
+  
+		  .slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			border-radius: 34px;
+			transition: 0.4s;
+  
+			&:before {
+			  position: absolute;
+			  content: "";
+			  height: 26px;
+			  width: 26px;
+			  left: 4px;
+			  bottom: 4px;
+			  background-color: white;
+			  border-radius: 50%;
+			  transition: 0.4s;
+			}
+		  }
+  
+		  .slider.round {
+			border-radius: 34px;
+  
+			&:before {
+			  border-radius: 50%;
+			}
+		  }
 		}
+	  }
 	}
-}
-
-@media only screen and (min-width: 768px) {
-	.project-settings-container {
-		.project-setting {
-			padding: 5% 2%;
-			width: 50%;
-		}
-	}
-
-
-}
-
-@media only screen and (min-width: 1200px) {
-	.project-settings-container {
-		.project-setting {
-			padding: 2%;
-			width: 30%;
-		}
-	}
-
-}
+  }
+  
