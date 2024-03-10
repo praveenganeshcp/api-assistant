@@ -29,8 +29,15 @@ export class ProjectDetailsRepository {
   }
 
   performCRUD(input: any, apiKey: string) {
-    console.log(input);
     return this.http.post<any>(`${this.baseUrl}/core-engine/crud`, input, {
+      headers: {
+        'api-assist-auth': apiKey,
+      },
+    });
+  }
+
+  fetchCollections(apiKey: string) {
+    return this.http.get<any>(`${this.baseUrl}/core-engine/collections`, {
       headers: {
         'api-assist-auth': apiKey,
       },

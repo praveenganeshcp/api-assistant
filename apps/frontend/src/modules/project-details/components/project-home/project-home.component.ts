@@ -50,11 +50,11 @@ export class ProjectHomeComponent {
 				datasets: [
 				  {
 					data: [
-						10 || dbStats.createAction,
-						20 ?? dbStats.readAction,
-						30 ?? dbStats.updateAction,
-						15 ?? dbStats.deleteAction,
-						20 ?? dbStats.aggregate
+						dbStats.createAction,
+						dbStats.readAction,
+						dbStats.updateAction,
+						dbStats.deleteAction,
+						dbStats.aggregate
 					],
 					label: 'Actions',
 					backgroundColor: 'rgba(255,0,0,0.3)'
