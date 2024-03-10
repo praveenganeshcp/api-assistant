@@ -1,28 +1,23 @@
-<div class="project-database">
-	<div class="project-database__input">
-		<div class="project-database__select">
-			<select class="project-database__select-collection">
-				<option>Select Collection</option>
-				<option>Collection 1</option>
-				<option>Collection 1</option>
-				<option>Collection 1</option>
-			</select>
-
-			<select class="project-database__select-collection">
-				<option>Select Action</option>
-				<option>Collection 1</option>
-				<option>Collection 1</option>
-				<option>Collection 1</option>
-			</select>
-		</div>
-		<div class="project-database__query">
-			<input placeholder="Mongo Query statement" type="text" sw-input/>
-			<button sw-icon-button>
-				<sw-icon name='send'></sw-icon>
-			</button>
-		</div>
+<div class="container">
+	<form [formGroup]="queryForm" class="left-section">
+	  <div class="input-row">
+		<select formControlName="collectionName">
+			<option value="" selected>Select collection</option>
+		  	<option *ngFor="let collectionName of collections" [value]="collectionName">{{ collectionName }}</option>
+		</select>
+		<select formControlName="action">
+			<option value="" selected>Select action</option>
+		  	<option *ngFor="let action of actions" [value]="action.name">{{ action.label }}</option>
+		</select>
+	  </div>
+	  <div class="input-row">
+		<json-editor (change)="handleQueryChange($event)" [options]="editorOptions">
+		</json-editor>
+	  </div>
+	  <button sw-primary-button (click)="executeQuery()">Execute</button>
+	</form>
+	<div class="right-section">
+		<json-editor [data]="dbResults" [options]="resultEditorOptions"></json-editor>
 	</div>
-	<div class="project-database__results">
-		<pre>{{ data | json }}</pre>
-	</div>
-</div>
+  </div>
+  

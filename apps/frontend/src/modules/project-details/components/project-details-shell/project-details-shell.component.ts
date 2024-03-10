@@ -77,7 +77,7 @@ export class ProjectDetailsShellComponent {
     return this.activatedRoute.snapshot.params['projectId'];
   }
 
-  activeTabIndex = 0;
+  activeTabIndex = 2;
 
   public isDesktopScreen$ = this.breakpointObserver.isDesktopScreen$;
 

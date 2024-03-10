@@ -35,3 +35,11 @@ div.jsoneditor-menu > button {
 textarea.jsoneditor-text {
   min-height: 300px;
 }
+
+.project-database {
+  .ace-jsoneditor,
+  textarea.jsoneditor-text {
+    min-height: 50px;
+    height: auto;
+  }
+}
