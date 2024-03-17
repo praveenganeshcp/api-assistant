@@ -36,6 +36,14 @@ export class ProjectDetailsRepository {
     });
   }
 
+  uploadFile(formData: FormData, apiKey: string) {
+    return this.http.post(`${this.baseUrl}/core-engine/files`, formData, {
+      headers: {
+        'api-assist-auth': apiKey,
+      },
+    })
+  }
+
   fetchCollections(apiKey: string) {
     return this.http.get<any>(`${this.baseUrl}/core-engine/collections`, {
       headers: {
