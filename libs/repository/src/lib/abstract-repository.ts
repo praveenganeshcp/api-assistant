@@ -69,4 +69,11 @@ export class Repository<T extends MongoDocument> {
     this.logger.log(`updating record in ${this.collectionName}`);
     return this.collection.updateOne(filter, updateFilter);
   }
+
+  public async deleteOne(
+    filter: Filter<T>,
+  ) {
+    this.logger.log(`deleting record in ${this.collectionName}`);
+    return this.collection.deleteOne(filter)
+  }
 }
