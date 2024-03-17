@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { ProjectDetails } from '../store/state';
+import { FileObject, ProjectDetails } from '../store/state';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
 
@@ -42,5 +42,16 @@ export class ProjectDetailsRepository {
         'api-assist-auth': apiKey,
       },
     });
+  }
+
+  fetchExplorerObjects(apiKey: string, path: string) {
+    return this.http.get<FileObject[]>(`${this.baseUrl}/core-engine/files`, {
+      headers: {
+        'api-assist-auth': apiKey,
+      },
+      params: {
+        'path': path
+      }
+    })
   }
 }

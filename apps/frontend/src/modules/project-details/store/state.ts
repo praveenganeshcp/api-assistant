@@ -31,4 +31,16 @@ interface ProjectMetadata {
     isLoading: boolean;
     error: string
   }
+
+  export interface FileObject {
+    isFile: boolean;
+    name: string;
+    path: string;
+  }
   
+  export interface FileExplorerState {
+    isLoading: boolean;
+    currentPath: string;
+    objects: FileObject[];
+    error: string
+  }

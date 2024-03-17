@@ -18,6 +18,11 @@ sw-tab-view {
   }
 }
 
+sw-icon {
+  display: flex;
+  align-items: center;
+}
+
 /* Add application styles & imports to this file! */
 @import '~jsoneditor/dist/jsoneditor.min.css';
 

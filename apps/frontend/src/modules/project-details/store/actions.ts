@@ -1,5 +1,5 @@
 import { ActionCreatorProps, NotAllowedCheck, createAction, props } from "@ngrx/store";
-import { ProjectDetails } from "./state";
+import { FileObject, ProjectDetails } from "./state";
 
 /**
  * Prefix to be included in user account action names
@@ -32,4 +32,19 @@ export const projectDetailsLoadedAction = createProjectDetailsActionWithProps(
 export const errorInLoadingProjectDetailsAction = createProjectDetailsActionWithProps(
     'Error occured', 
     props<{ error: string }>()
+)
+
+export const goInsideFolderAction = createProjectDetailsActionWithProps(
+  'Go inside folder',
+  props<{ folderPath: string }>()
+)
+
+export const explorerObjectsLoadedAction = createProjectDetailsActionWithProps(
+  'Explorer objects loaded', 
+  props<{objects: FileObject[]}>()
+)
+
+export const errorInLoadingExplorerObjectsAction = createProjectDetailsActionWithProps(
+  'Error in loading explorer objects',
+  props<{ error: string }>()
 )
