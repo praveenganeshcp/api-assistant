@@ -5,7 +5,7 @@ import {
   valueIsNotEmptyString,
   valueIsDefined,
 } from '@api-assistant/commons-be';
-import { ProjectMetadataRepository } from '../../projects/repositories/project-metadata.repository';
+import { ProjectMetadataRepository } from '@api-assistant/projects-be';
 
 @Injectable()
 export class CoreEngineAuthenticationMiddleware implements NestMiddleware {
