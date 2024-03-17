@@ -20,7 +20,7 @@ import {
   createAccountAction,
 } from '@api-assistant/auth-fe';
 import { BehaviorSubject, take } from 'rxjs';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-signup',
@@ -64,7 +64,7 @@ export class SignupComponent {
   constructor(
     private formBuilder: FormBuilder,
     private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
-    private storeWrapper: StoreWrapper,
+    private actionsDispatcher: StoreActionDispatcher,
     private router: Router
   ) {
   }
@@ -99,7 +99,7 @@ export class SignupComponent {
       password: string;
       username: string;
     };
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionsDispatcher.dispatchAsyncAction(
       createAccountAction({ emailId, password, username }),
       createAccountSuccessAction,
       createAccountErrorAction,

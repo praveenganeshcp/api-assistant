@@ -1,4 +1,7 @@
 import { Route } from '@angular/router';
+import { DashboardEffects, dashboardFeature } from '@api-assistant/dashboard-fe';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
 
 export default [
   {
@@ -11,9 +14,13 @@ export default [
       {
         path: 'projects',
         loadComponent: () =>
-          import('../dashboard/components/dashboard/dashboard.component').then(
+          import('@api-assistant/dashboard-fe').then(
             (m) => m.DashboardComponent
           ),
+        providers: [
+          provideState(dashboardFeature),
+          provideEffects(DashboardEffects)
+        ]
       },
       {
         path: 'projects/:projectId',

@@ -9,16 +9,12 @@ import {
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DashboardProjectCardComponent } from '../dashboard-project-card/dashboard-project-card.component';
-import { Project } from '../../store/dashboard.state';
+import { GlobalState, Project } from '../../store/dashboard.state';
 import { CreateProjectComponent } from '../create-project/create-project.component';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app/app.state';
-import {
-  isProjectsLoadingSelector,
-  projectsSelector,
-} from '../../store/dashboard.selector';
 import { loadProjectsAction } from '../../store/dashboard.actions';
 import { Router } from '@angular/router';
+import { selectData, selectIsLoading } from '../../store/dashboard.reducers';
 
 @Component({
   selector: 'api-assistant-dashboard',
@@ -31,18 +27,18 @@ import { Router } from '@angular/router';
     DashboardProjectCardComponent,
     SwDialogModule,
     SwLoaderComponent,
-  ],
+  ]
 })
 export class DashboardComponent implements OnInit {
   isLoading$: Observable<boolean> = this.store.select(
-    isProjectsLoadingSelector
+    selectIsLoading
   );
 
-  projects$: Observable<Project[]> = this.store.select(projectsSelector);
+  projects$: Observable<Project[]> = this.store.select(selectData);
 
   constructor(
     private swDialogService: SwDialogService,
-    private store: Store<AppState>,
+    private store: Store<GlobalState>,
     private router: Router
   ) {}
 

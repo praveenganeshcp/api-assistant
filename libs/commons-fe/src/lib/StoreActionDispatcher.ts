@@ -6,7 +6,7 @@ import { Observable, Subject, map, merge, tap } from "rxjs";
 @Injectable({
     providedIn: "root"
 })
-export class StoreWrapper {
+export class StoreActionDispatcher {
     constructor(
         private store: Store,
         private actions: Actions

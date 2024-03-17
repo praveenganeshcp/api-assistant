@@ -2,12 +2,10 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { SwButtonComponent, SwInputComponent, SwToastService } from 'ngx-simple-widgets';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { verifyAccountAction, verifyAccountErrorAction, verifyAccountSuccessAction } from '@api-assistant/auth-fe';
-import { AppState } from '../../../app/app.state';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { BehaviorSubject } from 'rxjs';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-verify-account',
@@ -44,14 +42,14 @@ export class VerifyAccountComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private storeWrapper: StoreWrapper,
+    private actionsDispatcher: StoreActionDispatcher,
     private router: Router,
     private toastService: SwToastService
   ) {}
 
   ngOnInit() {
     const verificationKey: string = this.route.snapshot.params['secret'];
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionsDispatcher.dispatchAsyncAction(
       verifyAccountAction({ key: verificationKey }),
       verifyAccountSuccessAction,
       verifyAccountErrorAction,
