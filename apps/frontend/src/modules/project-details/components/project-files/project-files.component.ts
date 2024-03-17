@@ -1,16 +1,32 @@
 import { Component } from "@angular/core";
-import { SwIconComponent } from "ngx-simple-widgets";
+import { Store } from "@ngrx/store";
+import { SwButtonComponent, SwIconComponent, SwLoaderComponent } from "ngx-simple-widgets";
+import { goInsideFolderAction } from "../../store/actions";
+import { AppState } from "../../../app/app.state";
+import { currentExplorerPathSelector, explorerObjectsErrorSelector, explorerObjectsListSelector, explorerObjectsLoadingSelector } from "../../store/selectors";
+import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { FileObject } from "../../store/state";
+import { Observable, map } from "rxjs";
+
+interface BreadCrumb {
+	path: string;
+	name: string;
+}
 
 @Component({
 	selector: 'api-assistant-project-files',
 	standalone: true,
 	templateUrl: "./project-files.component.html",
 	styleUrls: ["./project-files.component.scss"],
-	imports: [ SwIconComponent ]
+	imports: [ 
+		SwIconComponent,
+		NgIf,
+		NgFor,
+		AsyncPipe,
+		SwButtonComponent,
+		SwLoaderComponent
+	],
 })
-<<<<<<< Updated upstream
-export class ProjectFilesComponent {}
-=======
 export class ProjectFilesComponent {
 	constructor(
 		private store: Store<AppState>
@@ -53,4 +69,3 @@ export class ProjectFilesComponent {
 		this.store.dispatch(goInsideFolderAction({ folderPath: object.path }))
 	}
 }
->>>>>>> Stashed changes

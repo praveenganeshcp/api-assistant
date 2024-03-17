@@ -1,10 +1,17 @@
 import { createReducer, on } from "@ngrx/store";
-import { ProjectDetailsState } from "./state";
-import { errorInLoadingProjectDetailsAction, loadProjectDetailsAction, projectDetailsLoadedAction } from "./actions";
+import { FileExplorerState, ProjectDetailsState } from "./state";
+import { errorInLoadingExplorerObjectsAction, errorInLoadingProjectDetailsAction, explorerObjectsLoadedAction, goInsideFolderAction, loadProjectDetailsAction, projectDetailsLoadedAction } from "./actions";
 
 const PROJECT_DETAILS_DEFAULT_STATE: ProjectDetailsState = {
     isLoading: false,
     data: null,
+    error: ''
+}
+
+const FILE_EXPLORER_DEFAULT_STATE: FileExplorerState = {
+    isLoading: false,
+    currentPath: '',
+    objects: [],
     error: ''
 }
 
@@ -23,6 +30,28 @@ export const projectDetailsReducer = createReducer(
     on(errorInLoadingProjectDetailsAction, (state, { error }) => ({
         isLoading: false,
         data: null,
+        error
+    }))
+)
+
+export const fileExplorerReducer = createReducer(
+    FILE_EXPLORER_DEFAULT_STATE,
+    on(goInsideFolderAction, (state, { folderPath }) => ({
+        ...state,
+        isLoading: true,
+        currentPath: folderPath,
+        objects: []
+    })),
+    on(explorerObjectsLoadedAction, (state, { objects }) => ({
+        ...state,
+        isLoading: false,
+        objects,
+        error: ''
+    })),
+    on(errorInLoadingExplorerObjectsAction, (state, { error }) => ({
+        ...state,
+        isLoading: false,
+        objects: [],
         error
     }))
 )

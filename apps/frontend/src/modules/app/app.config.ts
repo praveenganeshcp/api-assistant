@@ -16,8 +16,8 @@ import { SwToastModule } from 'ngx-simple-widgets';
 import { DashboardEffects } from '../dashboard/store/dashboard.effects';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
 import { environment } from '../../environments/environment.dev';
-import { projectDetailsReducer } from '../project-details/store/reducers';
-import { ProjectDetailsEffects } from '../project-details/store/effects';
+import { projectDetailsReducer, fileExplorerReducer } from '../project-details/store/reducers';
+import { ProjectDetailsEffects, FileExplorerEffects } from '../project-details/store/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,9 +32,10 @@ export const appConfig: ApplicationConfig = {
       StoreModule.forRoot({
         accounts: accountsReducer,
         dashboard: dashboardReducers,
-        projectDetails: projectDetailsReducer
+        projectDetails: projectDetailsReducer,
+        fileExplorer: fileExplorerReducer
       }),
-      EffectsModule.forRoot([AccountsEffects, DashboardEffects, ProjectDetailsEffects]),
+      EffectsModule.forRoot([AccountsEffects, DashboardEffects, ProjectDetailsEffects, FileExplorerEffects]),
       StoreDevtoolsModule.instrument(),
       HttpClientModule,
     ]),
