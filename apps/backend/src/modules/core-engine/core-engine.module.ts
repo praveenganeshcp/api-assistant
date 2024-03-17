@@ -1,14 +1,14 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { CoreEngineController } from './controllers/core-engine.controller';
 import { CoreEngineAuthenticationMiddleware } from './middleware/core-engine-auth.middleware';
-import { ProjectModule } from '../projects/projects.module';
 import { CoreEngineCRUDUsecase } from './usecases/core-engine-crud.usecase';
 import { CoreEngineFetchCollectionsUsecase } from './usecases/core-engine-fetch-collections.usecase';
 import { CoreEngineFetchFilesUsecase } from './usecases/core-engine-fetch-files.usecase';
+import { ProjectsBeModule } from '@api-assistant/projects-be';
 
 @Module({
   controllers: [CoreEngineController],
-  imports: [ProjectModule],
+  imports: [ProjectsBeModule],
   providers: [
     CoreEngineCRUDUsecase,
     CoreEngineFetchCollectionsUsecase,

@@ -23,6 +23,7 @@
       "@api-assistant/dashboard-fe": ["libs/dashboard-fe/src/index.ts"],
       "@api-assistant/notifications-be": ["libs/notifications-be/src/index.ts"],
       "@api-assistant/project-core-fe": ["libs/project-core-fe/src/index.ts"],
+      "@api-assistant/projects-be": ["libs/projects-be/src/index.ts"],
       "@api-assistant/repository": ["libs/repository/src/index.ts"]
     },
     "strict": true

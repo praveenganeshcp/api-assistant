@@ -1,12 +1,9 @@
 import { Controller, Post, Param, Get, Body, Delete } from '@nestjs/common';
 import { CreateProjectDTO } from '../projects.dto';
 import { AuthUser, ObjectIdPipe } from '@api-assistant/commons-be';
-import { CreateProjectUsecase } from '../usecases/create-project.usecase';
-import { FetchProjectsByUserIdUsecase } from '../usecases/fetch-projects-by-userid.usecase';
-import { FetchProjectByIdUsecase } from '../usecases/fetch-project-by-id.usecase';
 import { ObjectId } from 'mongodb';
 import { UserDetails } from '@api-assistant/auth-be';
-import { DeleteProjectUsecase } from '../usecases/delete-project.usecase';
+import { CreateProjectUsecase, DeleteProjectUsecase, FetchProjectByIdUsecase, FetchProjectsByUserIdUsecase } from '@api-assistant/projects-be';
 
 @Controller('projects')
 export class ProjectsController {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProjectMetadata } from '../entities/project-metadata.entity';
 import { Repository } from '@api-assistant/repository';
+import { ProjectMetadata } from '../entities/project-metadata.entity';
 
 @Injectable()
 export class ProjectMetadataRepository extends Repository<ProjectMetadata> {

@@ -18,7 +18,7 @@ import {
   CoreEngineUpdateActionPayloadMissingException,
 } from '../core-engine.exceptions';
 import { crudDbConnectionFactory } from '../utils';
-import { ProjectMetadataRepository } from '../../projects/repositories/project-metadata.repository';
+import { ProjectMetadataRepository } from '@api-assistant/projects-be';
 
 interface CoreEngineCRUDUsecaseInput {
   response: CoreEngineCRUDResponse;

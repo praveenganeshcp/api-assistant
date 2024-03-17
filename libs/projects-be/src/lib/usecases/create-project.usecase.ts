@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
-import { Project } from '../entities/project.entity';
 import { ProjectRepository } from '../repositories/project.repository';
 import { ProjectMetadataRepository } from '../repositories/project-metadata.repository';
 import { ObjectId } from 'mongodb';
-import {
-  ProjectMetadata,
-  ProjectWithMetadata,
-} from '../entities/project-metadata.entity';
+
 
 import { createHash } from 'crypto';
+import { Project } from '../entities/project.entity';
+import { ProjectMetadata, ProjectWithMetadata } from '../entities/project-metadata.entity';
 
 interface CreateProjectUsecaseInput {
   createdBy: ObjectId;
