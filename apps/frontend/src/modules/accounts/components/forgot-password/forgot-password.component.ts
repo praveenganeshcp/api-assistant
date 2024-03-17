@@ -23,7 +23,7 @@ import {
 } from '@api-assistant/auth-fe';
 import { BehaviorSubject, take } from 'rxjs';
 import { AppState } from '../../../app/app.state';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-forgot-password',
@@ -55,12 +55,12 @@ export class ForgotPasswordComponent {
   constructor(
     private store: Store<AppState>,
     private toastService: SwToastService,
-    private storeWrapper: StoreWrapper
+    private actionsDispatcher: StoreActionDispatcher
   ) {}
 
   public handleSendPasswordResetLink() {
 
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionsDispatcher.dispatchAsyncAction(
       sendPasswordResetLinkAction({emailId: this.resetPasswordLinkForm.value.emailId as string}),
       sendPasswordResetLinkSuccessAction,
       sendPasswordResetLinkErrorAction,

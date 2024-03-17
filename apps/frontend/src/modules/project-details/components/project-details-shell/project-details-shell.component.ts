@@ -13,8 +13,6 @@ import { ProjectHomeComponent } from '../project-home/project-home.component';
 import { ProjectDatabaseComponent } from '../project-database/project-database.component';
 import { ProjectSettingsComponent } from '../project-settings/project-settings.component';
 import { ProjectFilesComponent } from '../project-files/project-files.component';
-import { BreakPointObserver } from '../../../app/services/breakpointobserver.service';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { loadProjectDetailsAction } from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
@@ -25,6 +23,7 @@ import {
 } from '../../store/selectors';
 import { Observable, map } from 'rxjs';
 import { ProjectExperimentComponent } from '../project-experiment/project-experiment.component';
+import { BreakPointObserver, StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-project-details-shell',
@@ -61,12 +60,12 @@ export class ProjectDetailsShellComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
-    private storeWrapper: StoreWrapper,
+    private actionsDispatcher: StoreActionDispatcher,
     private store: Store<AppState>
   ) {}
 
   ngOnInit() {
-    this.storeWrapper.dispatchAction(
+    this.actionsDispatcher.dispatchAction(
       loadProjectDetailsAction({
         projectId: this.projectId,
       })

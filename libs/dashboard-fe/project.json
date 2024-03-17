@@ -1,0 +1,51 @@
+{
+  "name": "dashboard-fe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/dashboard-fe/src",
+  "prefix": "api-assistant",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/dashboard-fe/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/dashboard-fe/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/dashboard-fe/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/dashboard-fe/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/dashboard-fe/**/*.ts",
+          "libs/dashboard-fe/**/*.html",
+          "libs/dashboard-fe/package.json"
+        ]
+      }
+    }
+  }
+}

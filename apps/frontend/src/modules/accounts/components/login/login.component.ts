@@ -18,7 +18,7 @@ import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
 import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
 import { BehaviorSubject } from 'rxjs';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-login',
@@ -55,7 +55,7 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private storeWrapper: StoreWrapper,
+    private actionsDispatcher: StoreActionDispatcher,
     private route: ActivatedRoute,
     private appInfoService: AppInfoService,
     private router: Router
@@ -88,7 +88,7 @@ export class LoginComponent {
       emailId: string;
       password: string;
     };
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionsDispatcher.dispatchAsyncAction(
       loginAccountAction({
         emailId,
         password

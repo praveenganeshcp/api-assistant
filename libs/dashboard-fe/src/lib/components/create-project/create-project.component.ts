@@ -12,10 +12,9 @@ import {
   CanBeNull,
 } from 'ngx-simple-widgets';
 import { Observable, map, combineLatest, BehaviorSubject } from 'rxjs';
-import { BreakPointObserver } from '../../../app/services/breakpointobserver.service';
 import { createProjectAction, errorInCreatingProjectAction, projectCreatedAction } from '../../store/dashboard.actions';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { Project } from '../../store/dashboard.state';
+import { BreakPointObserver, StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-create-project',
@@ -53,7 +52,7 @@ export class CreateProjectComponent {
     @Inject(SW_DIALOG_DATA) public data: unknown,
     private dialogRef: SwDialogRef<CanBeNull<Project>>,
     private breakpointObserver: BreakPointObserver,
-    private storeWrapper: StoreWrapper,
+    private actionDispatcher: StoreActionDispatcher,
     private formBuilder: FormBuilder
   ) {}
 
@@ -79,7 +78,7 @@ export class CreateProjectComponent {
       return
     }
     this.errorMessage = "";
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionDispatcher.dispatchAsyncAction(
       createProjectAction({ name: this.projectNameFormControl.value }),
       projectCreatedAction,
       errorInCreatingProjectAction,

@@ -6,8 +6,8 @@ import { logoutAccountAction, logoutErrorAction, logoutSuccessAction } from '@ap
 import { isUserProfileVerifiedSelector } from '@api-assistant/auth-fe';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SwButtonComponent, SwIconComponent, SwToastService } from 'ngx-simple-widgets';
-import { StoreWrapper } from '../../../commons/StoreWrapper';
 import { AppState } from '../../../app/app.state';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-app-shell',
@@ -21,14 +21,14 @@ export class AppShellComponent {
   private loading$ = new BehaviorSubject(false);
 
   constructor(
-    private storeWrapper: StoreWrapper,
+    private actionsDispatcher: StoreActionDispatcher,
     private router: Router,
     private toastService: SwToastService,
     private store: Store<AppState>
   ) {}
 
   public handleLogout() {
-    this.storeWrapper.dispatchAsyncAction(
+    this.actionsDispatcher.dispatchAsyncAction(
       logoutAccountAction(),
       logoutSuccessAction,
       logoutErrorAction,

@@ -7,13 +7,11 @@ import {
 } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { appRoutes } from './app.routes';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, provideStore } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { accountsReducer } from '@api-assistant/auth-fe';
-import { dashboardReducers } from '../dashboard/store/dashboard.reducers';
 import { AccountsEffects } from '@api-assistant/auth-fe';
 import { SwToastModule } from 'ngx-simple-widgets';
-import { DashboardEffects } from '../dashboard/store/dashboard.effects';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
 import { environment } from '../../environments/environment.dev';
 import { projectDetailsReducer, fileExplorerReducer } from '../project-details/store/reducers';
@@ -25,17 +23,17 @@ export const appConfig: ApplicationConfig = {
       provide: API_BASE_URL,
       useValue: environment.apiUrl
     },
+    provideStore(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     importProvidersFrom([
       SwToastModule,
       BrowserAnimationsModule,
       StoreModule.forRoot({
         accounts: accountsReducer,
-        dashboard: dashboardReducers,
         projectDetails: projectDetailsReducer,
         fileExplorer: fileExplorerReducer
       }),
-      EffectsModule.forRoot([AccountsEffects, DashboardEffects, ProjectDetailsEffects, FileExplorerEffects]),
+      EffectsModule.forRoot([AccountsEffects, ProjectDetailsEffects, FileExplorerEffects]),
       StoreDevtoolsModule.instrument(),
       HttpClientModule,
     ]),

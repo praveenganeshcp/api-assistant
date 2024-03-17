@@ -9,9 +9,11 @@ export interface Project {
 }
 
 export interface DashboardState {
-  projects: {
-    isLoading: boolean;
-    data: Project[];
-    error: string;
-  };
+  isLoading: boolean;
+  data: Project[];
+  error: string;
 }
+
+export type GlobalState = {[DASHBOARD_SLICE_NAME]: DashboardState}
+
+export const DASHBOARD_SLICE_NAME = "dashboard";
