@@ -40,8 +40,7 @@ export class CoreEngineFetchFilesUsecase
       path
     );
     if (!existsSync(fullPath)) {
-      this.logger.error(`Invalid file path : ${fullPath}`);
-      throw new InvalidFilePathException();
+      return []
     }
     const objects = await readdir(fullPath);
     return objects.map((objectName) => {
