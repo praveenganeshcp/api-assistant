@@ -1,6 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
-import { Collection, Db, MongoClient, MongoServerError, ObjectId } from 'mongodb';
+import {
+  Collection,
+  Db,
+  MongoClient,
+  MongoServerError,
+  ObjectId,
+} from 'mongodb';
 import {
   ALLOWED_DB_OPERATIONS,
   CoreEngineCRUDOperation,
@@ -32,9 +38,7 @@ export class CoreEngineCRUDUsecase
 {
   private logger = new Logger(CoreEngineCRUDUsecase.name);
 
-  constructor(
-    private projectMetadataRepo: ProjectMetadataRepository
-  ) {}
+  constructor(private projectMetadataRepo: ProjectMetadataRepository) {}
 
   async execute(
     input: CoreEngineCRUDUsecaseInput
@@ -82,26 +86,41 @@ export class CoreEngineCRUDUsecase
     this.logger.log(`connected to collection: ${operation.collectionName}`);
     switch (operation.action) {
       case ALLOWED_DB_OPERATIONS.findOne: {
-        await this.projectMetadataRepo.updateOne({projectId: new ObjectId(projectId)}, {$inc: {"count.readAction": 1}})
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.readAction': 1 } }
+        );
         return this.findOne(collection, operation.payload as ReadPayload);
       }
       case ALLOWED_DB_OPERATIONS.find: {
-        await this.projectMetadataRepo.updateOne({projectId: new ObjectId(projectId)}, {$inc: {"count.readAction": 1}})
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.readAction': 1 } }
+        );
         return this.find(collection, operation.payload as ReadPayload);
       }
       case ALLOWED_DB_OPERATIONS.insertOne: {
-        await this.projectMetadataRepo.updateOne({projectId: new ObjectId(projectId)}, {$inc: {"count.createAction": 1}})
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.createAction': 1 } }
+        );
         return this.insertOne(collection, operation.payload as CreatePayload);
       }
       case ALLOWED_DB_OPERATIONS.insertMany: {
-        await this.projectMetadataRepo.updateOne({projectId: new ObjectId(projectId)}, {$inc: {"count.createAction": 1}})
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.createAction': 1 } }
+        );
         return this.insertMany(
           collection,
           operation.payload as CreatePayload[]
         );
       }
       case ALLOWED_DB_OPERATIONS.updateOne: {
-        await this.projectMetadataRepo.updateOne({projectId: new ObjectId(projectId)}, {$inc: {"count.$.updateAction": 1}})
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.$.updateAction': 1 } }
+        );
         return this.updateOne(collection, operation.payload as UpdatePayload);
       }
       default: {

@@ -1,8 +1,10 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ProjectsController } from './controllers/projects.controller';
-import { AccountsBeModule, AuthenticationMiddleware } from '@api-assistant/auth-be';
+import {
+  AccountsBeModule,
+  AuthenticationMiddleware,
+} from '@api-assistant/auth-be';
 import { ProjectsBeModule } from '@api-assistant/projects-be';
-
 
 @Module({
   controllers: [ProjectsController],

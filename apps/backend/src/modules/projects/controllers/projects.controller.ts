@@ -3,7 +3,12 @@ import { CreateProjectDTO } from '../projects.dto';
 import { AuthUser, ObjectIdPipe } from '@api-assistant/commons-be';
 import { ObjectId } from 'mongodb';
 import { UserDetails } from '@api-assistant/auth-be';
-import { CreateProjectUsecase, DeleteProjectUsecase, FetchProjectByIdUsecase, FetchProjectsByUserIdUsecase } from '@api-assistant/projects-be';
+import {
+  CreateProjectUsecase,
+  DeleteProjectUsecase,
+  FetchProjectByIdUsecase,
+  FetchProjectsByUserIdUsecase,
+} from '@api-assistant/projects-be';
 
 @Controller('projects')
 export class ProjectsController {
@@ -50,7 +55,7 @@ export class ProjectsController {
   ) {
     return this.deleteProjectUsecase.execute({
       userId: user._id,
-      projectId
-    })
+      projectId,
+    });
   }
 }
