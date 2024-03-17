@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { SwButtonComponent, SwIconComponent, SwLoaderComponent } from "ngx-simple-widgets";
-import { goInsideFolderAction } from "../../store/actions";
-import { AppState } from "../../../app/app.state";
-import { currentExplorerPathSelector, explorerObjectsErrorSelector, explorerObjectsListSelector, explorerObjectsLoadingSelector } from "../../store/selectors";
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
-import { FileObject } from "../../store/state";
 import { Observable, map } from "rxjs";
+import { GlobalState } from "../../store/state";
+import { currentExplorerPathSelector, explorerObjectsErrorSelector, explorerObjectsListSelector, explorerObjectsLoadingSelector } from "../../store/selectors";
+import { goInsideFolderAction } from "../../store/actions";
+import { FileObject } from "../../types";
 
 interface BreadCrumb {
 	path: string;
@@ -29,7 +29,7 @@ interface BreadCrumb {
 })
 export class ProjectFilesComponent {
 	constructor(
-		private store: Store<AppState>
+		private store: Store<GlobalState>
 	) {}
 
 	explorerObjects$ = this.store.select(explorerObjectsListSelector)

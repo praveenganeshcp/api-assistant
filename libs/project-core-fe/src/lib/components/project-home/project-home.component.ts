@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { SwIconComponent } from "ngx-simple-widgets";
-import { AppState } from "../../../app/app.state";
-import { projectOverviewSelector } from "../../store/selectors";
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { Observable, map } from "rxjs";
-import { ChartConfiguration, ChartOptions, ChartType } from "chart.js";
+import { ChartConfiguration, ChartOptions } from "chart.js";
 import { NgChartsModule } from 'ng2-charts';
+import { projectOverviewSelector } from "../../store/selectors";
+import { GlobalState } from "../../store/state";
 
 @Component({
 	selector: 'api-assistant-project-home',
@@ -70,6 +70,6 @@ export class ProjectHomeComponent {
 
 
 	constructor(
-		private store: Store<AppState>
+		private store: Store<GlobalState>
 	) {}
 }

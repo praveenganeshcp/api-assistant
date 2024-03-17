@@ -1,15 +1,15 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'apps/frontend/src/environments/environment.dev';
-import { ProjectDetailsRepository } from '../../repository/project-details.repository';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { JsonEditorOptions } from 'ang-jsoneditor';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app/app.state';
-import { projectAPIKeyDetailsSelector } from '../../store/selectors';
 import { filter, switchMap, take } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { CanBeNull, SwButtonComponent, SwInputComponent } from 'ngx-simple-widgets';
+import { projectAPIKeyDetailsSelector } from '../../store/selectors';
+import { ProjectDetailsRepository } from '../../repository/project-details.repository';
+import { GlobalState } from '../../store/state';
 
 @Component({
   selector: 'api-assistant-project-experiment',
@@ -69,7 +69,7 @@ export class ProjectExperimentComponent {
 
   constructor(
     private repository: ProjectDetailsRepository,
-    private store: Store<AppState>,
+    private store: Store<GlobalState>,
     private cd: ChangeDetectorRef
   ) {
     this.editorOptions = new JsonEditorOptions();

@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { FileObject, ProjectDetails } from '../store/state';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
+import { FileObject, ProjectDetails } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,27 @@ export class ProjectDetailsRepository {
 
   fetchDetails(projectId: string): Observable<ProjectDetails> {
     return this.http
-      .get<{ projectDetail: ProjectDetails }>(
+      .get<any>(
         `${this.baseUrl}/projects/${projectId}`,
         {
           withCredentials: true,
         }
       )
-      .pipe(map((response) => response.projectDetail));
+      .pipe(
+        map((response) => {
+          const projectData = response.projectDetail;
+          return {
+            _id: projectData._id,
+            name: projectData.name,
+            count: projectData.metadata.count,
+            api: {
+              key: projectData.metadata.apiKey,
+              lastGeneratedOn: projectData.metadata.apiKeyLastGeneratedOn
+            }
+          }
+          return projectData
+        })
+      );
   }
 
   performCRUD(input: any, apiKey: string) {

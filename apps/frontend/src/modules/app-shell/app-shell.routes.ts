@@ -1,7 +1,9 @@
 import { Route } from '@angular/router';
 import { DashboardEffects, dashboardFeature } from '@api-assistant/dashboard-fe';
+import { ProjectDetailsEffects } from '@api-assistant/project-core-fe';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
+import { projectDetailsFeature } from 'libs/project-core-fe/src/lib/store/reducers';
 
 export default [
   {
@@ -26,8 +28,12 @@ export default [
         path: 'projects/:projectId',
         loadComponent: () =>
           import(
-            '../project-details/components/project-details-shell/project-details-shell.component'
+            '@api-assistant/project-core-fe'
           ).then((m) => m.ProjectDetailsShellComponent),
+        providers: [
+          provideState(projectDetailsFeature),
+          provideEffects(ProjectDetailsEffects)
+        ]
       },
     ],
   },
