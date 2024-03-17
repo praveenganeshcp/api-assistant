@@ -7,11 +7,11 @@ import {
 import { CommonModule } from "@angular/common";
 import { JsonEditorOptions, NgJsonEditorModule } from "ang-jsoneditor";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { ProjectDetailsRepository } from "../../repository/project-details.repository";
 import { Store } from "@ngrx/store";
-import { AppState } from "../../../app/app.state";
-import { projectAPIKeyDetailsSelector } from "../../store/selectors";
 import { switchMap, take } from "rxjs";
+import { projectAPIKeyDetailsSelector } from "../../store/selectors";
+import { ProjectDetailsRepository } from "../../repository/project-details.repository";
+import { GlobalState } from "../../store/state";
 
 @Component({
 	selector: 'api-assistant-project-database',
@@ -83,7 +83,7 @@ export class ProjectDatabaseComponent {
   constructor(
     private formBuilder: FormBuilder,
     private projectDetailsRepo: ProjectDetailsRepository,
-    private store: Store<AppState>
+    private store: Store<GlobalState>
   ) {
     this.editorOptions.mode = "code";
 

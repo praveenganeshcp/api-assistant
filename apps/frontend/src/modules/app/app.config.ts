@@ -14,8 +14,6 @@ import { AccountsEffects } from '@api-assistant/auth-fe';
 import { SwToastModule } from 'ngx-simple-widgets';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
 import { environment } from '../../environments/environment.dev';
-import { projectDetailsReducer, fileExplorerReducer } from '../project-details/store/reducers';
-import { ProjectDetailsEffects, FileExplorerEffects } from '../project-details/store/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,10 +28,8 @@ export const appConfig: ApplicationConfig = {
       BrowserAnimationsModule,
       StoreModule.forRoot({
         accounts: accountsReducer,
-        projectDetails: projectDetailsReducer,
-        fileExplorer: fileExplorerReducer
       }),
-      EffectsModule.forRoot([AccountsEffects, ProjectDetailsEffects, FileExplorerEffects]),
+      EffectsModule.forRoot([AccountsEffects]),
       StoreDevtoolsModule.instrument(),
       HttpClientModule,
     ]),

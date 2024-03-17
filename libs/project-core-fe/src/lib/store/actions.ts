@@ -1,5 +1,5 @@
 import { ActionCreatorProps, NotAllowedCheck, createAction, props } from "@ngrx/store";
-import { FileObject, ProjectDetails } from "./state";
+import { FileObject, ProjectDetails } from "../types";
 
 /**
  * Prefix to be included in user account action names

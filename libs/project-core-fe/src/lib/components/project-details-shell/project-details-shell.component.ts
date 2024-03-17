@@ -13,17 +13,13 @@ import { ProjectHomeComponent } from '../project-home/project-home.component';
 import { ProjectDatabaseComponent } from '../project-database/project-database.component';
 import { ProjectSettingsComponent } from '../project-settings/project-settings.component';
 import { ProjectFilesComponent } from '../project-files/project-files.component';
-import { loadProjectDetailsAction } from '../../store/actions';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app/app.state';
-import {
-  projectDetailsErrorSelector,
-  projectDetailsLoadingSelector,
-  projectOverviewSelector,
-} from '../../store/selectors';
 import { Observable, map } from 'rxjs';
 import { ProjectExperimentComponent } from '../project-experiment/project-experiment.component';
 import { BreakPointObserver, StoreActionDispatcher } from '@api-assistant/commons-fe';
+import { GlobalState } from '../../store/state';
+import { loadProjectDetailsAction } from '../../store/actions';
+import { projectDataErrorSelector, projectDataLoadingSelector, projectDataSelector } from '../../store/selectors';
 
 @Component({
   selector: 'api-assistant-project-details-shell',
@@ -47,21 +43,21 @@ import { BreakPointObserver, StoreActionDispatcher } from '@api-assistant/common
   styleUrls: ['./project-details-shell.component.scss'],
 })
 export class ProjectDetailsShellComponent {
-  public readonly loading$ = this.store.select(projectDetailsLoadingSelector);
+  public readonly loading$ = this.store.select(projectDataLoadingSelector);
 
   public readonly loadingError$ = this.store.select(
-    projectDetailsErrorSelector
-  );
+    projectDataErrorSelector
+  )
 
   public readonly projectName$: Observable<string> = this.store
-    .select(projectOverviewSelector)
-    .pipe(map((projectData) => projectData?.name ?? ''));
+    .select(projectDataSelector)
+    .pipe(map((projectData) => projectData.data?.name ?? ""));
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
     private actionsDispatcher: StoreActionDispatcher,
-    private store: Store<AppState>
+    private store: Store<GlobalState>
   ) {}
 
   ngOnInit() {
