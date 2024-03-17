@@ -1,6 +1,7 @@
 <div class="project-experiment" *ngIf="apiKeyDetails$ | async as apiKeyDetails">
   <div class="project-experiment__request">
     <div class="project-experiment__request-method-url-send">
+      Upload file <input type="checkbox" placeholder="Enable mode" [(ngModel)]="enableFileUploadMode" />
       <select disabled>
         <option selected value="POST">POST</option>
       </select>
@@ -26,7 +27,7 @@
           readonly
           size="sm"
           sw-input
-          value="application/json"
+          [value]="contentType"
         />
       </div>
       <div class="project-experiment__request-header">
@@ -44,9 +45,14 @@
     </div>
     <div class="project-experiment__request-body">
       <json-editor
+        *ngIf="!enableFileUploadMode; else fileSelector"
         [options]="editorOptions"
         (change)="handleChange($event)"
       ></json-editor>
+      <ng-template #fileSelector>
+        <input (change)="handleFileSelection($event)" type="file">
+        <input [(ngModel)]="filePath" type="text" />
+      </ng-template>
     </div>
   </div>
 
