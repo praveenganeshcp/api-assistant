@@ -1,4 +1,4 @@
-import { Controller, Post, Param, Get, Body } from '@nestjs/common';
+import { Controller, Post, Param, Get, Body, Delete } from '@nestjs/common';
 import { CreateProjectDTO } from '../projects.dto';
 import { AuthUser, ObjectIdPipe } from '@api-assistant/commons-be';
 import { CreateProjectUsecase } from '../usecases/create-project.usecase';
@@ -6,13 +6,15 @@ import { FetchProjectsByUserIdUsecase } from '../usecases/fetch-projects-by-user
 import { FetchProjectByIdUsecase } from '../usecases/fetch-project-by-id.usecase';
 import { ObjectId } from 'mongodb';
 import { UserDetails } from '@api-assistant/auth-be';
+import { DeleteProjectUsecase } from '../usecases/delete-project.usecase';
 
 @Controller('projects')
 export class ProjectsController {
   constructor(
     private createProjectUsecase: CreateProjectUsecase,
     private fetchProjectsByUserIdUsecase: FetchProjectsByUserIdUsecase,
-    private fetchProjectByIdUsecase: FetchProjectByIdUsecase
+    private fetchProjectByIdUsecase: FetchProjectByIdUsecase,
+    private deleteProjectUsecase: DeleteProjectUsecase
   ) {}
 
   @Post()
@@ -42,5 +44,16 @@ export class ProjectsController {
       projectId: projectId,
     });
     return { projectDetail: projectDetail ? projectDetail : null };
+  }
+
+  @Delete(':projectId')
+  async deleteProject(
+    @AuthUser() user: UserDetails,
+    @Param('projectId', ObjectIdPipe) projectId: ObjectId
+  ) {
+    return this.deleteProjectUsecase.execute({
+      userId: user._id,
+      projectId
+    })
   }
 }
