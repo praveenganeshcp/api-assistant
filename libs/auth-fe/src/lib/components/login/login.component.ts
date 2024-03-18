@@ -12,8 +12,8 @@ import {
   loginAccountAction,
   loginErrorAction,
   loginSuccessAction,
-} from '@api-assistant/auth-fe';
-import { strongPasswordValidator } from '@api-assistant/auth-fe';
+} from '../../store/actions';
+import { strongPasswordValidator } from '../../utils';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
 import { BehaviorSubject } from 'rxjs';

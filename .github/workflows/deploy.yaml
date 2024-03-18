@@ -26,32 +26,32 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          
+
       - name: Install dependencies if cache hit does not happen
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Build affected apps/libs
-        run: npm run build:affected
+      - name: Build frontend
+        run: npm run frontend:build
 
-      - name: Test affected apps/libs
-        run: npm run test:affected
-        
+      - name: Build backend
+        run: npm run backend:build
+
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USERNAME }}
-            key: ${{ secrets.SSH_PASS }}
-            script: |
-              cd applications/api-assistant
-              git pull origin main
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PASS }}
+          script: |
+            cd applications/api-assistant
+            git pull origin main
 
-              npm install
+            npm install
 
-              npx nx build backend
-              cp ./.env ./dist/apps/backend
-              pm2 restart 0
+            npm run backend:build
+            cp ./.env ./dist/apps/backend
+            pm2 restart 0
 
-              npx nx build frontend
-              sudo nginx -s reload
+            npm run frontend:build
+            sudo nginx -s reload

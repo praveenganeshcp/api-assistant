@@ -10,7 +10,7 @@ import {
   verifyAccountAction,
   verifyAccountErrorAction,
   verifyAccountSuccessAction,
-} from '@api-assistant/auth-fe';
+} from '../../store/actions';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { BehaviorSubject } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';

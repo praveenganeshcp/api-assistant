@@ -20,7 +20,7 @@ import {
   sendPasswordResetLinkAction,
   sendPasswordResetLinkErrorAction,
   sendPasswordResetLinkSuccessAction,
-} from '@api-assistant/auth-fe';
+} from '../../store/actions';
 import { BehaviorSubject, take } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 import { GlobalState } from '../../store/state';

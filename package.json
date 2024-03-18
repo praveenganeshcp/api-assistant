@@ -8,7 +8,9 @@
     "cypress:open": "cd apps/frontend-e2e && cypress open --config baseUrl=http://localhost:4200 port=4000",
     "prettier": "nx format:write",
     "build:affected": "nx affected --target=build",
-    "test:affected": "nx affected --target=test --passWithNoTests"
+    "test:affected": "nx affected --target=test --passWithNoTests",
+    "frontend:build": "nx build frontend --skip-nx-cache",
+    "backend:build": "nx build backend --skip-nx-cache"
   },
   "private": true,
   "devDependencies": {

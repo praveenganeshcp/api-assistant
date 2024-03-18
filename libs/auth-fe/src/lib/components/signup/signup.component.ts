@@ -15,14 +15,14 @@ import {
   FormControl,
 } from '@angular/forms';
 import {
-  DuplicateEmailIdValidatorService,
   createAccountErrorAction,
   createAccountSuccessAction,
-} from '@api-assistant/auth-fe';
-import { strongPasswordValidator } from '@api-assistant/auth-fe';
-import { createAccountAction } from '@api-assistant/auth-fe';
+} from '../../store/actions';
+import { strongPasswordValidator } from '../../utils';
+import { createAccountAction } from '../../store/actions';
 import { BehaviorSubject, take } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+import { DuplicateEmailIdValidatorService } from '../../validators/duplicate-emailid.validator';
 
 @Component({
   selector: 'api-assistant-signup',
