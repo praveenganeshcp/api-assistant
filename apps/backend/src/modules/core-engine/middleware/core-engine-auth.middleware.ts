@@ -13,7 +13,7 @@ export class CoreEngineAuthenticationMiddleware implements NestMiddleware {
 
   constructor(private projectsMetadataRepo: ProjectMetadataRepository) {}
 
-  async use(req: Request, res: Response, next: (error?: unknown) => void) {
+  async use(req: any, res: Response, next: (error?: unknown) => void) {
     this.logger.log('Running core engine auth middleware');
     const coreEngineApiKey = req.headers[
       'api-assist-auth'

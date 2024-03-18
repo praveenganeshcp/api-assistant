@@ -20,6 +20,7 @@
       "@api-assistant/commons-be": ["libs/commons-be/src/index.ts"],
       "@api-assistant/commons-fe": ["libs/commons-fe/src/index.ts"],
       "@api-assistant/configuration-be": ["libs/configuration-be/src/index.ts"],
+      "@api-assistant/crud-engine-be": ["libs/crud-engine-be/src/index.ts"],
       "@api-assistant/dashboard-fe": ["libs/dashboard-fe/src/index.ts"],
       "@api-assistant/notifications-be": ["libs/notifications-be/src/index.ts"],
       "@api-assistant/project-core-fe": ["libs/project-core-fe/src/index.ts"],

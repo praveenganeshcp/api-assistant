@@ -1,6 +1,5 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { existsSync, statSync } from 'fs';
-import { InvalidFilePathException } from '../core-engine.exceptions';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 import { Injectable, Logger } from '@nestjs/common';

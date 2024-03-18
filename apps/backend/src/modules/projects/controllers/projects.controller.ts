@@ -5,7 +5,6 @@ import { ObjectId } from 'mongodb';
 import { UserDetails } from '@api-assistant/auth-be';
 import {
   CreateProjectUsecase,
-  DeleteProjectUsecase,
   FetchProjectByIdUsecase,
   FetchProjectsByUserIdUsecase,
 } from '@api-assistant/projects-be';
@@ -16,7 +15,6 @@ export class ProjectsController {
     private createProjectUsecase: CreateProjectUsecase,
     private fetchProjectsByUserIdUsecase: FetchProjectsByUserIdUsecase,
     private fetchProjectByIdUsecase: FetchProjectByIdUsecase,
-    private deleteProjectUsecase: DeleteProjectUsecase
   ) {}
 
   @Post()
@@ -46,16 +44,5 @@ export class ProjectsController {
       projectId: projectId,
     });
     return { projectDetail: projectDetail ? projectDetail : null };
-  }
-
-  @Delete(':projectId')
-  async deleteProject(
-    @AuthUser() user: UserDetails,
-    @Param('projectId', ObjectIdPipe) projectId: ObjectId
-  ) {
-    return this.deleteProjectUsecase.execute({
-      userId: user._id,
-      projectId,
-    });
   }
 }
