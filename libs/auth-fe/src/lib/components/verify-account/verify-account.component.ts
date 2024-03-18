@@ -1,8 +1,16 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { SwButtonComponent, SwInputComponent, SwToastService } from 'ngx-simple-widgets';
+import {
+  SwButtonComponent,
+  SwInputComponent,
+  SwToastService,
+} from 'ngx-simple-widgets';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { verifyAccountAction, verifyAccountErrorAction, verifyAccountSuccessAction } from '@api-assistant/auth-fe';
+import {
+  verifyAccountAction,
+  verifyAccountErrorAction,
+  verifyAccountSuccessAction,
+} from '@api-assistant/auth-fe';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { BehaviorSubject } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
@@ -23,9 +31,7 @@ import { StoreActionDispatcher } from '@api-assistant/commons-fe';
   ],
   template: `
     <div class="verify-account">
-      <h2 *ngIf="loading$ | async">
-        Verifying account. Please wait...
-      </h2>
+      <h2 *ngIf="loading$ | async">Verifying account. Please wait...</h2>
     </div>
   `,
   standalone: true,
@@ -37,7 +43,6 @@ import { StoreActionDispatcher } from '@api-assistant/commons-fe';
   ],
 })
 export class VerifyAccountComponent implements OnInit {
-
   public loading$ = new BehaviorSubject(false);
 
   constructor(
@@ -49,22 +54,24 @@ export class VerifyAccountComponent implements OnInit {
 
   ngOnInit() {
     const verificationKey: string = this.route.snapshot.params['secret'];
-    this.actionsDispatcher.dispatchAsyncAction(
-      verifyAccountAction({ key: verificationKey }),
-      verifyAccountSuccessAction,
-      verifyAccountErrorAction,
-      this.loading$
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['app', 'projects']);
-      },
-      error: (err: ReturnType<typeof verifyAccountErrorAction>) => {
-        this.toastService.warn({
-          title: "Account verification",
-          message: err.error
-        });
-        this.router.navigate(['accounts', 'login']);
-      }
-    })
+    this.actionsDispatcher
+      .dispatchAsyncAction(
+        verifyAccountAction({ key: verificationKey }),
+        verifyAccountSuccessAction,
+        verifyAccountErrorAction,
+        this.loading$
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['app', 'projects']);
+        },
+        error: (err: ReturnType<typeof verifyAccountErrorAction>) => {
+          this.toastService.warn({
+            title: 'Account verification',
+            message: err.error,
+          });
+          this.router.navigate(['accounts', 'login']);
+        },
+      });
   }
 }

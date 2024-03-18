@@ -1,19 +1,15 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'api-assistant-account-routes-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>
-      <a routerLink="/">
-        API Assistant
-      </a>
+      <a routerLink="/"> API Assistant </a>
     </h1>
   `,
   standalone: true,
-  imports: [
-    RouterModule
-  ]
+  imports: [RouterModule],
 })
 export class AccountRoutesHeaderComponent {}

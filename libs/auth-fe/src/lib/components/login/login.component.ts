@@ -16,9 +16,11 @@ import {
 import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { SwFormControlComponent } from 'ngx-simple-widgets';
-import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
 import { BehaviorSubject } from 'rxjs';
-import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+import {
+  AppInfoService,
+  StoreActionDispatcher,
+} from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-login',
@@ -51,7 +53,7 @@ export class LoginComponent {
 
   public loading$ = new BehaviorSubject(false);
 
-  public loginErrorMessage: string = "";
+  public loginErrorMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,28 +85,28 @@ export class LoginComponent {
   }
 
   public handleLogin() {
-    this.loginErrorMessage = "";
+    this.loginErrorMessage = '';
     const { emailId, password } = this.loginForm.value as {
       emailId: string;
       password: string;
     };
-    this.actionsDispatcher.dispatchAsyncAction(
-      loginAccountAction({
-        emailId,
-        password
-      }),
-      loginSuccessAction,
-      loginErrorAction,
-      this.loading$
-    ).subscribe({
-      next: () => {
-        this.router.navigate([this.loginSuccessCallbackUrl]);
-      },
-      error: (err: ReturnType<typeof loginErrorAction>) => {
-        this.loginErrorMessage = err.error;
-      }
-    })
-   
+    this.actionsDispatcher
+      .dispatchAsyncAction(
+        loginAccountAction({
+          emailId,
+          password,
+        }),
+        loginSuccessAction,
+        loginErrorAction,
+        this.loading$
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate([this.loginSuccessCallbackUrl]);
+        },
+        error: (err: ReturnType<typeof loginErrorAction>) => {
+          this.loginErrorMessage = err.error;
+        },
+      });
   }
-
 }

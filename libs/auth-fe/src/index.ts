@@ -6,8 +6,10 @@ export * from './lib/store/actions';
 export * from './lib/store/effects';
 export * from './lib/store/reducer';
 export * from './lib/store/selectors';
-export {
-    ACCOUNTS_STATE_SLICE_NAME,
-    AccountState
-} from './lib/store/state';
+export { PROFILE_STATE_SLICE_NAME, ProfileState } from './lib/store/state';
 export * from './lib/validators/duplicate-emailid.validator';
+export { LoginComponent } from './lib/components/login/login.component';
+export { SignupComponent } from './lib/components/signup/signup.component';
+export { ForgotPasswordComponent } from './lib/components/forgot-password/forgot-password.component';
+export { AccountsShellComponent } from './lib/components/accounts-shell/accounts-shell.component';
+export { VerifyAccountComponent } from './lib/components/verify-account/verify-account.component';

@@ -22,8 +22,8 @@ import {
   sendPasswordResetLinkSuccessAction,
 } from '@api-assistant/auth-fe';
 import { BehaviorSubject, take } from 'rxjs';
-import { AppState } from '../../../app/app.state';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+import { GlobalState } from '../../store/state';
 
 @Component({
   selector: 'api-assistant-forgot-password',
@@ -41,7 +41,6 @@ import { StoreActionDispatcher } from '@api-assistant/commons-fe';
   ],
 })
 export class ForgotPasswordComponent {
- 
   public loading$ = new BehaviorSubject(false);
 
   public resetPasswordLinkForm = new FormGroup({
@@ -53,33 +52,37 @@ export class ForgotPasswordComponent {
   }
 
   constructor(
-    private store: Store<AppState>,
+    private store: Store<GlobalState>,
     private toastService: SwToastService,
     private actionsDispatcher: StoreActionDispatcher
   ) {}
 
   public handleSendPasswordResetLink() {
-
-    this.actionsDispatcher.dispatchAsyncAction(
-      sendPasswordResetLinkAction({emailId: this.resetPasswordLinkForm.value.emailId as string}),
-      sendPasswordResetLinkSuccessAction,
-      sendPasswordResetLinkErrorAction,
-      this.loading$
-    ).subscribe({
-      next: (_) => {
-        this.toastService.success({ 
-          title: "Reset password",
-          message: "Password reset link sent to your email" 
-        })
-        this.resetPasswordLinkForm.reset()
-      },
-      error: (exception: ReturnType<typeof sendPasswordResetLinkErrorAction>) => {
-        this.toastService.error({ 
-          title: "Reset password",
-          message: exception.error
-        })
-      },
-    })
+    this.actionsDispatcher
+      .dispatchAsyncAction(
+        sendPasswordResetLinkAction({
+          emailId: this.resetPasswordLinkForm.value.emailId as string,
+        }),
+        sendPasswordResetLinkSuccessAction,
+        sendPasswordResetLinkErrorAction,
+        this.loading$
+      )
+      .subscribe({
+        next: (_) => {
+          this.toastService.success({
+            title: 'Reset password',
+            message: 'Password reset link sent to your email',
+          });
+          this.resetPasswordLinkForm.reset();
+        },
+        error: (
+          exception: ReturnType<typeof sendPasswordResetLinkErrorAction>
+        ) => {
+          this.toastService.error({
+            title: 'Reset password',
+            message: exception.error,
+          });
+        },
+      });
   }
-
 }

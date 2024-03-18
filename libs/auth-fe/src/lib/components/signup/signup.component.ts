@@ -14,11 +14,13 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { DuplicateEmailIdValidatorService, createAccountErrorAction, createAccountSuccessAction } from '@api-assistant/auth-fe';
-import { strongPasswordValidator } from '@api-assistant/auth-fe';
 import {
-  createAccountAction,
+  DuplicateEmailIdValidatorService,
+  createAccountErrorAction,
+  createAccountSuccessAction,
 } from '@api-assistant/auth-fe';
+import { strongPasswordValidator } from '@api-assistant/auth-fe';
+import { createAccountAction } from '@api-assistant/auth-fe';
 import { BehaviorSubject, take } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
@@ -54,20 +56,19 @@ export class SignupComponent {
 
   public loading$ = new BehaviorSubject(false);
 
-  public signupErrorMessage: string = ""
+  public signupErrorMessage: string = '';
 
   public readonly usernameErrorMessages: Record<string, string> = {
-    maxLength: "Username cannot be more than 20 characters",
-    minLength: "Username must contain atleast 3 characters"
-  }
+    maxLength: 'Username cannot be more than 20 characters',
+    minLength: 'Username must contain atleast 3 characters',
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private duplicateEmailIdValidator: DuplicateEmailIdValidatorService,
     private actionsDispatcher: StoreActionDispatcher,
     private router: Router
-  ) {
-  }
+  ) {}
 
   private buildSignupFormGroup() {
     return this.formBuilder.group({
@@ -93,25 +94,26 @@ export class SignupComponent {
   }
 
   public handleSignup() {
-    this.signupErrorMessage = "";
+    this.signupErrorMessage = '';
     const { emailId, password, username } = this.signupForm.value as {
       emailId: string;
       password: string;
       username: string;
     };
-    this.actionsDispatcher.dispatchAsyncAction(
-      createAccountAction({ emailId, password, username }),
-      createAccountSuccessAction,
-      createAccountErrorAction,
-      this.loading$
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['app', 'projects']);
-      },
-      error: (err: ReturnType<typeof createAccountErrorAction>) => {
-        this.signupErrorMessage = err.error;
-      }
-    })
-
+    this.actionsDispatcher
+      .dispatchAsyncAction(
+        createAccountAction({ emailId, password, username }),
+        createAccountSuccessAction,
+        createAccountErrorAction,
+        this.loading$
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['app', 'projects']);
+        },
+        error: (err: ReturnType<typeof createAccountErrorAction>) => {
+          this.signupErrorMessage = err.error;
+        },
+      });
   }
 }

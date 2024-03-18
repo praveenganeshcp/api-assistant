@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { profileStateSelector } from '@api-assistant/auth-fe';
 import { AppState } from '../../app.state';
-import { AppInfoService } from '../../../commons/app-info-service/app-info.service';
+import { AppInfoService } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-profile-loader',
