@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { environment } from 'apps/frontend/src/environments/environment.dev';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { JsonEditorOptions } from 'ang-jsoneditor';
 import { Store } from '@ngrx/store';
@@ -10,6 +9,7 @@ import { CanBeNull, SwButtonComponent, SwInputComponent } from 'ngx-simple-widge
 import { projectAPIKeyDetailsSelector } from '../../store/selectors';
 import { ProjectDetailsRepository } from '../../repository/project-details.repository';
 import { GlobalState } from '../../store/state';
+import { API_BASE_URL } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-project-experiment',
@@ -26,14 +26,13 @@ import { GlobalState } from '../../store/state';
   templateUrl: './project-experiment.component.html',
 })
 export class ProjectExperimentComponent {
-  apiUrl: string = environment.apiUrl;
 
   public editorOptions = new JsonEditorOptions();
 
   public responseEditorOptions = new JsonEditorOptions();
 
   public get crudUrl() {
-    return `${this.apiUrl}api/v6/core-engine/${this.enableFileUploadMode ? "files" : "crud"}`;
+    return `${this.baseUrl}api/v6/core-engine/${this.enableFileUploadMode ? "files" : "crud"}`;
   }
 
   input: string = '';
@@ -70,7 +69,8 @@ export class ProjectExperimentComponent {
   constructor(
     private repository: ProjectDetailsRepository,
     private store: Store<GlobalState>,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(API_BASE_URL) private baseUrl: string
   ) {
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.mode = 'code';
