@@ -7,17 +7,15 @@ import {
   UploadedFiles,
   Logger,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CoreEngineProjectId } from '@api-assistant/commons-be';
-import { CoreEngineCRUDUsecase } from '../usecases/core-engine-crud.usecase';
-import { CoreEngineCRUDDto } from '../core-engine-dto';
-import { CoreEngineFetchCollectionsUsecase } from '../usecases/core-engine-fetch-collections.usecase';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { CoreEngineFetchFilesUsecase } from '../usecases/core-engine-fetch-files.usecase';
-import { CORE_ENGINE_UPLOAD_ROOT } from '../utils';
+import { CoreEngineCRUDUsecase, CoreEngineFetchCollectionsUsecase, CoreEngineFetchFilesUsecase, CoreEngineCRUDDto, CORE_ENGINE_UPLOAD_ROOT, DeleteProjectUsecase } from '@api-assistant/crud-engine-be';
+import { ObjectId } from 'mongodb';
 
 @Controller('core-engine')
 export class CoreEngineController {
@@ -26,7 +24,8 @@ export class CoreEngineController {
   constructor(
     private coreEngineCRUDUsecase: CoreEngineCRUDUsecase,
     private coreEngineFetchCollectionsUsecase: CoreEngineFetchCollectionsUsecase,
-    private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase
+    private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase,
+    private deleteProjectUsecase: DeleteProjectUsecase
   ) {}
 
   @Get('collections')
@@ -89,6 +88,15 @@ export class CoreEngineController {
     return this.coreEngineFetchFilesUsecase.execute({
       path,
       projectId,
+    });
+  }
+
+  @Delete('project')
+  async deleteProject(
+    @CoreEngineProjectId() projectId: string,
+  ) {
+    return this.deleteProjectUsecase.execute({
+      projectId: new ObjectId(projectId)
     });
   }
 }
