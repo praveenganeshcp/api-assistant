@@ -8,5 +8,15 @@
     row-gap: 30px;
     align-items: center;
     width: 100%;
+    padding-bottom: 3rem;
+  }
+
+  .landing-page__footer {
+    padding: 3rem;
+    width: 100%;
+    display: flex;
+    border-top: 1px solid lightgray;
+    align-items: center;
+    justify-content: space-evenly;
   }
 }

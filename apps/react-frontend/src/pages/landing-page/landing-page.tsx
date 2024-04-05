@@ -1,6 +1,7 @@
 import {
   LandingPageBanner,
   LandingPageFeatureCard,
+  LandingPageFooter,
   LandingPageHeader,
 } from '@api-assistant/landing-page-fe';
 import styles from './landing-page.module.scss';
@@ -41,6 +42,9 @@ export function LandingPage(props: LandingPageProps) {
           title="Ultra smooth UI"
           description="Manage your application's backend with simple and smooth UI"
         />
+      </div>
+      <div className={styles['landing-page__footer']}>
+        <LandingPageFooter isUserLoggedIn={false} />
       </div>
     </div>
   );
