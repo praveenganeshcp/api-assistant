@@ -1,7 +1,12 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.landing-page-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    width: 100%;
+    background-color: darkblue;
+    column-gap: 20px;
+
+    a {
+        color: white;
+    }
+}
