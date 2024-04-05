@@ -18,16 +18,20 @@ describe('LandingPageFooter', () => {
       <BrowserRouter>
         <LandingPageFooter isUserLoggedIn={false} />
       </BrowserRouter>
-    )
-    expect((await findByTestId('footer-signup-link')).textContent).toBe('Want to try API Assistant? Signup here')
-  })
+    );
+    expect((await findByTestId('footer-signup-link')).textContent).toBe(
+      'Want to try API Assistant? Signup here'
+    );
+  });
 
-  it('should render dashboard link if user logged in', async() => {
+  it('should render dashboard link if user logged in', async () => {
     const { findByTestId } = await render(
       <BrowserRouter>
         <LandingPageFooter isUserLoggedIn={true} />
       </BrowserRouter>
-    )
-    expect((await findByTestId('footer-dashboard-link')).textContent).toContain('Navigate to Dashboard and manage your applications at ease')
-  })
+    );
+    expect((await findByTestId('footer-dashboard-link')).textContent).toContain(
+      'Navigate to Dashboard and manage your applications at ease'
+    );
+  });
 });
