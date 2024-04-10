@@ -10,6 +10,8 @@
     }
 
     .login-form__password-control {
+        display: flex;
+        flex-direction: column;
         a {
             font-size: 14px;
             display: inline-block;
