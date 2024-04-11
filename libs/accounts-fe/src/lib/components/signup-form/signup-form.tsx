@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import styles from './signup-form.module.scss';
-import { Button, Input } from "antd"
  
 /* eslint-disable-next-line */
 export interface SignupFormProps {}
@@ -10,13 +9,13 @@ export function SignupForm(props: SignupFormProps) {
     <div className={styles['signup-form']}>
       <h2>Create Account</h2>
 
-      <Input size='large' placeholder='Username' />
+      <input placeholder='Username' />
 
-      <Input size='large' placeholder='Email ID' />
+      <input placeholder='Email ID' />
 
-      <Input size='large'  placeholder='Password' />
+      <input  placeholder='Password' />
 
-      <Button type='primary'>Signup</Button>
+      <button>Signup</button>
 
       <span>Already have an account? <Link to={'/accounts/login'}>Login</Link> here</span> 
   </div>
