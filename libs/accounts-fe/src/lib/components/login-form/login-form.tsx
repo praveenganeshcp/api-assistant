@@ -4,15 +4,20 @@ import { useForm } from "react-hook-form";
 
 /* eslint-disable-next-line */
 export interface LoginFormProps {
-  handleLogin: (credentials: {emailId: string, password: string}) => void
+  handleLogin: (credentials: LoginFormValue) => void
+}
+
+export interface LoginFormValue {
+  emailId: string;
+  password: string;
 }
 
 export function LoginForm(props: LoginFormProps) {
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm<LoginFormValue>({
     defaultValues: {
-      emailId: 'praveen@mail.com',
-      password: 'Pragaa@6cp'
+      emailId: '',
+      password: ''
     },
     mode: "onTouched"
   });

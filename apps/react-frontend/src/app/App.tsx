@@ -1,11 +1,11 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { loadProfile } from "../store/accounts.slice";
-import { AppDispatch, RootState } from "../store/reducer";
 import { ProfileContext } from "@api-assistant/accounts-fe";
+import { AppDispatch, RootState } from "../store/app.state";
+import { loadProfile } from "../pages/accounts/store/effects";
 
-export function App(props: any) {
+export function App() {
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -13,17 +13,9 @@ export function App(props: any) {
 
     const profile = useSelector<RootState>(state => state.profile.data)
 
-    const navigate = useNavigate()
-
     useEffect(() => {
         dispatch(loadProfile())
     }, [])
-
-    useEffect(() => {
-        if(profile === null && !loading) {
-            navigate("/accounts/login")
-        }   
-     }, [profile, loading])
 
     if(loading) {
         return <h1>Loading...</h1>

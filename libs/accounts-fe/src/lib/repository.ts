@@ -1,27 +1,19 @@
+import { httpGet, httpPost } from "@api-assistant/utils-fe";
+import { LoginBEPayload, UserProfileBE } from "./be-types";
+import { UserProfile } from "./domain";
+import { profileDomainMapper } from "./mappers/profile-domain.mapper";
 
-export async function login(emailId: string, password: string) {
-
-    const response = await fetch("http://localhost:3000/api/v6/accounts/login", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({emailId, password}),
-        credentials: "include"
-    })
-    const loginResponse = await response.json()
-    return loginResponse;
+export async function logout() {
+    const response = await httpPost<void, void>("/accounts/logout", undefined);
+    return response;
 }
 
-export async function fetchProfile() {
-  console.log(import.meta.env.VITE_TEST)
+export async function login(emailId: string, password: string): Promise<UserProfile> {
+    const response = await httpPost<LoginBEPayload, UserProfileBE>("/accounts/login", {emailId, password})
+    return profileDomainMapper(response.body)
+}
 
-    const response = await fetch("http://localhost:3000/api/v6/accounts/profile", {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: "include"
-    })
-    const loginResponse = await response.json()
-    return loginResponse;
+export async function fetchProfile(): Promise<UserProfile> {
+    const response = await httpGet<UserProfileBE>("/accounts/profile");
+    return profileDomainMapper(response.body);
 }
