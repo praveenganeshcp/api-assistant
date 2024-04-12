@@ -76,7 +76,7 @@ export class AccountsController {
 
   @Post('logout')
   public logout(@Res({ passthrough: true }) response: Response) {
-    response.cookie('token', '').status(200).json();
+    response.cookie('token', '').status(200).json({});
     this.logger.log('Logged out');
   }
 
