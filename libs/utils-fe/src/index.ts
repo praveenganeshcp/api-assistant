@@ -1,3 +1,1 @@
-export { httpGet, httpPost } from "./lib/http/fetch";
-
-export * from "./lib/types";
+export { httpGet, httpPost } from "./lib/http/fetch"
