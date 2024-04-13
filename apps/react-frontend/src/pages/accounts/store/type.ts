@@ -1,7 +1,7 @@
-import { UserProfile } from "@api-assistant/accounts-fe";
+import { SerializedUserProfile } from "@api-assistant/accounts-fe";
 
 export interface ProfileState {
     loading: boolean;
-    data: null | UserProfile,
+    data: null | SerializedUserProfile,
     error: string
 }
