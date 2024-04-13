@@ -32,7 +32,7 @@ jobs:
         run: npm install --force
 
       - name: Build frontend
-        run: npm run react-frontend:build
+        run: npm run frontend:build
 
       - name: Build backend
         run: npm run backend:build
@@ -53,5 +53,5 @@ jobs:
             cp ./.env ./dist/apps/backend
             pm2 restart 0
 
-            npm run react-frontend:build
+            npm run frontend:build
             sudo nginx -s reload
