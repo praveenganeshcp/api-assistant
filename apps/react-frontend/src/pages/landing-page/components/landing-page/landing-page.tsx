@@ -22,7 +22,9 @@ export interface LandingPageProps {}
 
 export function LandingPage(props: LandingPageProps) {
 
-  const { isAuthenticated } = useContext(ProfileContext);
+  const userProfile = useContext(ProfileContext);
+
+  const isLoggedIn = userProfile !== null;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -32,7 +34,7 @@ export function LandingPage(props: LandingPageProps) {
 
   return (
     <div className={styles['landing-page']}>
-      <LandingPageHeader handleLogout={handleLogout} isUserLoggedIn={isAuthenticated} />
+      <LandingPageHeader handleLogout={handleLogout} isUserLoggedIn={isLoggedIn} />
       <LandingPageBanner />
       <h1 style={{ textAlign: 'center', padding: '2rem' }}>Features</h1>
       <div className={styles['landing-page__feature_cards']}>
@@ -58,7 +60,7 @@ export function LandingPage(props: LandingPageProps) {
         />
       </div>
       <div className={styles['landing-page__footer']}>
-        <LandingPageFooter isUserLoggedIn={isAuthenticated} />
+        <LandingPageFooter isUserLoggedIn={isLoggedIn} />
       </div>
     </div>
   );
