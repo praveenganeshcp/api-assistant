@@ -15,9 +15,8 @@ export function addAccountsAsyncReducers(builder: ActionReducerMapBuilder<Profil
         state.data = action.payload
     })
     builder.addCase(loadProfile.rejected, (state, action) => {
-        console.log(action)
         state.loading = false;
-        state.error = action.error.message ?? "";
+        state.error = action.payload ?? "";
     })
     // End of profile
 
