@@ -22,7 +22,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: [applicationConfig.FE_HOST_ADDRESS, "http://65.2.191.107:4000"],
+    origin: [applicationConfig.FE_HOST_ADDRESS],
     credentials: true,
   });
 
