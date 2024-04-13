@@ -17,7 +17,7 @@ export function LandingPageFooter(props: LandingPageFooterProps) {
       ) : (
         <h4 data-testid="footer-signup-link">
           Want to try API Assistant?{' '}
-          <Link to={'/accounts/signup'}>Signup here</Link>
+          <Link to={'/app/dashboard'}>Signup here</Link>
         </h4>
       )}
     </footer>
