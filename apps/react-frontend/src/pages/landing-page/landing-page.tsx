@@ -11,30 +11,14 @@ import {
   MdOutlineDataObject,
   MdOutlineFavorite,
 } from 'react-icons/md';
-import { useContext } from 'react';
-import { ProfileContext } from '@api-assistant/accounts-fe';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'apps/react-frontend/src/store/app.state';
-import { logoutAccount } from '../../../accounts/store/effects';
 
 /* eslint-disable-next-line */
 export interface LandingPageProps {}
 
 export function LandingPage(props: LandingPageProps) {
-
-  const userProfile = useContext(ProfileContext);
-
-  const isLoggedIn = userProfile !== null;
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleLogout = () => {
-    dispatch(logoutAccount())
-  }
-
   return (
     <div className={styles['landing-page']}>
-      <LandingPageHeader handleLogout={handleLogout} isUserLoggedIn={isLoggedIn} />
+      <LandingPageHeader isUserLoggedIn={false} />
       <LandingPageBanner />
       <h1 style={{ textAlign: 'center', padding: '2rem' }}>Features</h1>
       <div className={styles['landing-page__feature_cards']}>
@@ -60,7 +44,7 @@ export function LandingPage(props: LandingPageProps) {
         />
       </div>
       <div className={styles['landing-page__footer']}>
-        <LandingPageFooter isUserLoggedIn={isLoggedIn} />
+        <LandingPageFooter isUserLoggedIn={false} />
       </div>
     </div>
   );
