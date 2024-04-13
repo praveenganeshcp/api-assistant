@@ -1,0 +1,16 @@
+.feature-card {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  padding: 0.75rem;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  width: 50%;
+
+  .feature-card__details {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+}
