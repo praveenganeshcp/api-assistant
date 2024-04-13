@@ -1,21 +1,19 @@
 import { fetchProfile, login, logout } from "@api-assistant/accounts-fe";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ProfileState } from "./type";
 
-export const loadProfile = createAsyncThunk<ProfileState['data'], void, { rejectValue: string }>(
+export const loadProfile = createAsyncThunk<any, void>(
     '[Accounts] Load profile',
-    async(_: void, thunkAPI) => {
+    async(_, thunkAPI) => {
         try {
             const userProfile = await fetchProfile();
-            const profileData:  ProfileState['data'] = {
+            return {
                 ...userProfile,
                 createdOn: userProfile.createdOn.toString(),
                 lastLoggedInOn: userProfile.lastLoggedInOn.toString()
-            } 
-            return profileData;
+            }
         }
-        catch(error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+        catch(err) {
+            return thunkAPI.rejectWithValue("Error in loading profile")
         }
     }
 )
@@ -27,8 +25,9 @@ export const logoutAccount = createAsyncThunk<any, void>(
             await logout();
             return null;
         }
-        catch(error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+        catch(error) {
+            console.log(error)
+            return thunkAPI.rejectWithValue("Error in signout")
         }
     }
 )
@@ -44,8 +43,8 @@ export const loginAccount = createAsyncThunk<any, {emailId: string, password: st
                 lastLoggedInOn: userProfile.lastLoggedInOn.toString()
             }
         }
-        catch(error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+        catch(error) {
+            return thunkAPI.rejectWithValue("Error in login")
         }
     }
 )
