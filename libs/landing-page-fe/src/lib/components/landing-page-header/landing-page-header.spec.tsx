@@ -19,7 +19,7 @@ describe('LandingPageHeader', () => {
     );
     const dashboardLinkElement = await findByTestId('header-dashboard-link');
     expect(dashboardLinkElement.getAttribute('href')).toBe('/app/dashboard');
-    expect(dashboardLinkElement.textContent).toBe('Dashboard');
+    expect(dashboardLinkElement.textContent).toBe('Go to Dashboard');
   });
 
   it('should render buttons to login and signup if user is not logged in', async () => {
