@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import LandingPageFe from './landing-page-fe';
+import LandingPage from './landing-page';
 
-describe('LandingPageFe', () => {
+describe('LandingPage', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<LandingPageFe />);
+    const { baseElement } = render(<LandingPage />);
     expect(baseElement).toBeTruthy();
   });
 });
