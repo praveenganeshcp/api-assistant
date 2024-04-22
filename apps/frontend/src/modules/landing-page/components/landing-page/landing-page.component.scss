@@ -161,3 +161,56 @@
     font-size: 2rem;
   }
 }
+
+
+/* Basic styling for the link */
+.attention-grabbing-link {
+  position: relative;
+  font-size: 20px;
+  color: #fff !important;
+  background-color: #007BFF;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  display: inline-block;
+  overflow: hidden; /* Ensures that anything outside the border-radius is hidden */
+  transition: color 0.3s;
+  z-index: 1;
+}
+
+/* Shining effect using a pseudo-element */
+.attention-grabbing-link::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(circle, transparent 50%, rgba(255, 255, 255, 0.5) 80%);
+  animation: shine 8s linear infinite;
+  z-index: 0;
+}
+
+/* Animation for the shining effect */
+@keyframes shine {
+  0% {
+      transform: rotate(0deg) translate(-30%, -30%);
+  }
+  100% {
+      transform: rotate(360deg) translate(-30%, -30%);
+  }
+}
+
+/* Hover effect to change text color and scale up slightly */
+.attention-grabbing-link:hover {
+  color: #007BFF !important;
+  background-color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Focus state for accessibility */
+.attention-grabbing-link:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+
