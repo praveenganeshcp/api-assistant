@@ -12,7 +12,7 @@ export async function crudDbConnectionFactory(projectId: string): Promise<{
 }> {
   const logger = new Logger(crudDbConnectionFactory.name);
   logger.log('Connecting to crud mongodb host...');
-  const mongoClient = new MongoClient('mongodb://3.6.87.110:27017');
+  const mongoClient = new MongoClient('mongodb://13.233.162.59:27017');
   const connection = await mongoClient.connect();
   logger.log('Connected to crud mongodb host');
 

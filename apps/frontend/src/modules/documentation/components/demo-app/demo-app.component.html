@@ -1,0 +1,33 @@
+<main>
+    <h1>Employee dashboard</h1>
+
+    <div class="search-and-add-employees">
+        <button (click)="openAddOrEditEmployee()" sw-primary-button>Add Employee</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Department</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of employees$ | async">
+              <td>{{ emp.name }}</td>
+              <td>{{ emp.city }}</td>
+              <td>{{ emp.department }}</td>
+              <td>
+                <button class="btn btn-primary" (click)="openEditEmployeeModal(emp)">Edit</button>
+                <button class="btn btn-danger" (click)="handleDelete(emp._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+
+</main>

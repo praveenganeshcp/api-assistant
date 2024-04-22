@@ -12,6 +12,7 @@ import {
   CoreEngineCRUDOperation,
   CoreEngineCRUDResponse,
   CreatePayload,
+  DeletePayload,
   ReadPayload,
   UpdatePayload,
 } from '../core-engine-dto';
@@ -71,6 +72,7 @@ export class CoreEngineCRUDUsecase
       this.logger.log(`Core engine db ${projectId} connection closed`);
       return this.replaceVariables(response, crudResponse);
     } catch (err) {
+      console.error(err);
       if (err instanceof MongoServerError)
         throw new CoreEngineProcessingException();
       else throw err;
@@ -85,6 +87,23 @@ export class CoreEngineCRUDUsecase
     const collection = db.collection(operation.collectionName);
     this.logger.log(`connected to collection: ${operation.collectionName}`);
     switch (operation.action) {
+
+      case ALLOWED_DB_OPERATIONS.deleteOne: {
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.deleteAction': 1 } }
+        );
+        return this.deleteOne(collection, operation.payload as DeletePayload);
+      }
+
+      case ALLOWED_DB_OPERATIONS.deleteMany: {
+        await this.projectMetadataRepo.updateOne(
+          { projectId: new ObjectId(projectId) },
+          { $inc: { 'count.deleteAction': 1 } }
+        );
+        return this.deleteMany(collection, operation.payload as DeletePayload);
+      }
+
       case ALLOWED_DB_OPERATIONS.findOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
@@ -119,7 +138,7 @@ export class CoreEngineCRUDUsecase
       case ALLOWED_DB_OPERATIONS.updateOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.$.updateAction': 1 } }
+          { $inc: { 'count.updateAction': 1 } }
         );
         return this.updateOne(collection, operation.payload as UpdatePayload);
       }
@@ -127,6 +146,22 @@ export class CoreEngineCRUDUsecase
         throw new CoreEngineUnSupportedActionException(operation.action);
       }
     }
+  }
+
+  private deleteOne(collection: Collection, payload: DeletePayload) {
+    this.logger.log('Performing delete one');
+    if (!payload.filter) {
+      throw new CoreEngineFindActionPayloadMissingException();
+    }
+    return collection.deleteOne(payload.filter);
+  }
+
+  private deleteMany(collection: Collection, payload: DeletePayload) {
+    this.logger.log('Performing delete many');
+    if (!payload.filter) {
+      throw new CoreEngineFindActionPayloadMissingException();
+    }
+    return collection.deleteMany(payload.filter);
   }
 
   private findOne(collection: Collection, payload: ReadPayload) {
@@ -147,7 +182,9 @@ export class CoreEngineCRUDUsecase
 
   private insertOne(collection: Collection, payload: CreatePayload) {
     this.logger.log('Performing insertOne');
-    return collection.insertOne(payload);
+    return collection.insertOne({
+      ...payload
+    });
   }
 
   private insertMany(collection: Collection, payload: CreatePayload[]) {
@@ -226,6 +263,18 @@ export class CoreEngineCRUDUsecase
         `Found value or variable ${value}` + JSON.stringify(nestedval)
       );
       return nestedval;
+    }
+
+    const objectIdPrefix = 'ObjectId(';
+    const objectIdSuffix = ')';
+    const objectIdPrefixLen = objectIdPrefix.length;
+    if (
+      typeof value === 'string' &&
+      value.startsWith(objectIdPrefix) &&
+      value.endsWith(objectIdSuffix)
+    ) {
+      const valueKey: string = value.slice(objectIdPrefixLen, value.length - 1);
+      return new ObjectId(valueKey)
     }
     return value;
   }

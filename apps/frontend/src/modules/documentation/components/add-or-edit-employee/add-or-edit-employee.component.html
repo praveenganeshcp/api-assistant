@@ -1,0 +1,21 @@
+<sw-dialog>
+    <form [formGroup]="employeeForm" (ngSubmit)="handleSaveEmployee()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input autocomplete="off" type="text" id="name" formControlName="name" class="form-control" name="name" required>
+        </div>
+      
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input autocomplete="off" type="text" id="city" formControlName="city" class="form-control" name="city" required>
+        </div>
+      
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <input autocomplete="off" type="text" id="department" formControlName="department" class="form-control" name="department" required>
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      
+</sw-dialog>

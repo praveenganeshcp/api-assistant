@@ -3,6 +3,14 @@ import { AuthenticatedGuard } from './authenticated.guard';
 
 export const appRoutes: Route[] = [
   {
+    path: 'demo',
+    loadComponent: () => import("../documentation/components/demo-app/demo-app.component").then(c => c.DemoAppComponent)
+  },
+  {
+    path: "how-it-works",
+    loadComponent: () => import("../documentation/components/how-it-works/how-it-works.component").then(c => c.HowItWorksComponent)
+  },
+  {
     path: 'accounts',
     loadChildren: () =>
       import('../accounts/accounts.routes').then((r) => r.accountRoutes),

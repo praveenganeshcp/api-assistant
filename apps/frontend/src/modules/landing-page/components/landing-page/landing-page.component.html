@@ -1,6 +1,8 @@
 <main class="landing-page">
   <!-- landing page header -->
   <header class="landing-page__header">
+    <a class="attention-grabbing-link" routerLink="/how-it-works">See How it works</a>
+
     <!-- Provide link to app and logout if user is logged in -->
     <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
       <a data-testid="go-to-app-link" routerLink="/app/projects">Go to app</a>

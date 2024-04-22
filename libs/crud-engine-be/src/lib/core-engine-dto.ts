@@ -17,6 +17,8 @@ export enum ALLOWED_DB_OPERATIONS {
   insertMany = 'insertMany',
   updateOne = 'updateOne',
   updateMany = 'updateMany',
+  deleteOne = 'deleteOne',
+  deleteMany = 'deleteMany'
 }
 
 export interface CreatePayload {
