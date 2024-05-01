@@ -7,8 +7,3 @@ export interface UserProfile {
     lastLoggedInOn: Date;
     createdOn: Date;   
 }
-
-export interface SerializedUserProfile extends Omit<UserProfile, "createdOn" | "lastLoggedInOn"> {
-    lastLoggedInOn: string;
-    createdOn: string;   
-}
