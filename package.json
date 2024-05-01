@@ -10,10 +10,7 @@
     "build:affected": "nx affected --target=build",
     "test:affected": "nx affected --target=test --passWithNoTests",
     "frontend:build": "nx build frontend --skip-nx-cache",
-    "backend:build": "nx build backend --skip-nx-cache",
-    "react-frontend:build": "nx build react-frontend --skip-nx-cache",
-    "backend:test": "nx test backend --skip-nx-cache",
-    "react-frontend:test": "nx test react-frontend --skip-nx-cache"
+    "backend:build": "nx build backend --skip-nx-cache"
   },
   "private": true,
   "devDependencies": {
