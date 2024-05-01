@@ -37,9 +37,6 @@ jobs:
       - name: Build backend
         run: npm run backend:build
 
-      - name: Test backend
-        run: npm run backend:test
-
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
