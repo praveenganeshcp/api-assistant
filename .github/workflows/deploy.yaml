@@ -29,7 +29,7 @@ jobs:
 
       - name: Install dependencies if cache hit does not happen
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm install --force
+        run: npm install
 
       - name: Build frontend
         run: npm run frontend:build
@@ -50,7 +50,7 @@ jobs:
             cd applications/api-assistant
             git pull origin main
 
-            npm install --force
+            npm install
 
             npm run backend:build
             cp ./.env ./dist/apps/backend
