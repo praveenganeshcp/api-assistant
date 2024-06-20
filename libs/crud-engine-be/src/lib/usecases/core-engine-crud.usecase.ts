@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
 import { Collection, Db, MongoServerError, ObjectId } from 'mongodb';
 import {
@@ -22,6 +22,8 @@ import {
   EndpointUpdateActionQuery,
 } from '@api-assistant/endpoints-be';
 import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint.usecase';
+import { dbConfig } from '@api-assistant/configuration-be';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class CoreEngineCRUDUsecase
@@ -31,7 +33,8 @@ export class CoreEngineCRUDUsecase
 
   constructor(
     private projectMetadataRepo: ProjectMetadataRepository,
-    private readonly getEndpointByURL: GetEndpointByURLUsecase
+    private readonly getEndpointByURL: GetEndpointByURLUsecase,
+    @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>
   ) {}
 
   async execute(endpointUrl: string): Promise<EndpointResponse> {
@@ -47,7 +50,8 @@ export class CoreEngineCRUDUsecase
 
       this.logger.log('Handling core engine CRUD');
       const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-        projectId
+        projectId,
+        this.databaseConfig.DB_URL
       );
 
       const crudResponse: any[] = [];

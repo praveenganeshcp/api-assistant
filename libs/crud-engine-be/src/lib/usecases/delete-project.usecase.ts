@@ -1,11 +1,13 @@
 import { Usecase } from '@api-assistant/commons-be';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { CORE_ENGINE_UPLOAD_ROOT, crudDbConnectionFactory } from '@api-assistant/crud-engine-be';
 import { join } from 'path';
 import { rm } from 'fs/promises';
 import { existsSync } from 'fs';
 import { ProjectMetadataRepository, ProjectRepository } from '@api-assistant/projects-be';
+import { ConfigType } from '@nestjs/config';
+import { dbConfig } from '@api-assistant/configuration-be';
 
 interface DeleteProjectUsecaseInput {
   projectId: ObjectId;
@@ -17,7 +19,8 @@ export class DeleteProjectUsecase
 {
   constructor(
     private projectsRepository: ProjectRepository,
-    private projectMetadataRepository: ProjectMetadataRepository
+    private projectMetadataRepository: ProjectMetadataRepository,
+    @Inject(dbConfig.KEY) private readonly databaseConfig: ConfigType<typeof dbConfig>
   ) {}
 
   async execute(data: DeleteProjectUsecaseInput): Promise<string> {
@@ -38,7 +41,7 @@ export class DeleteProjectUsecase
     if(existsSync(destinationPath))
         await rm(destinationPath, { recursive: true })
 
-    const { db, connection } = await crudDbConnectionFactory(data.projectId.toString());
+    const { db, connection } = await crudDbConnectionFactory(data.projectId.toString(), this.databaseConfig.DB_URL);
 
     await db.dropDatabase();
 

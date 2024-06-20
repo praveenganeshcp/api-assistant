@@ -6,7 +6,7 @@ const filesSeperator = '/';
 
 export const CORE_ENGINE_UPLOAD_ROOT = 'core-engine-uploads';
 
-export async function crudDbConnectionFactory(url: string, projectId: string): Promise<{
+export async function crudDbConnectionFactory(projectId: string, url: string): Promise<{
   db: Db;
   connection: MongoClient;
 }> {
