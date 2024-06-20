@@ -1,21 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
-import {
-  Collection,
-  Db,
-  MongoClient,
-  MongoServerError,
-  ObjectId,
-} from 'mongodb';
-import {
-  ALLOWED_DB_OPERATIONS,
-  CoreEngineCRUDOperation,
-  CoreEngineCRUDResponse,
-  CreatePayload,
-  DeletePayload,
-  ReadPayload,
-  UpdatePayload,
-} from '../core-engine-dto';
+import { Collection, Db, MongoServerError, ObjectId } from 'mongodb';
 import {
   CoreEngineFindActionPayloadMissingException,
   CoreEngineInsertManyActionInvalidDataException,
@@ -26,26 +11,39 @@ import {
 } from '../core-engine.exceptions';
 import { crudDbConnectionFactory } from '../utils';
 import { ProjectMetadataRepository } from '@api-assistant/projects-be';
-
-interface CoreEngineCRUDUsecaseInput {
-  response: CoreEngineCRUDResponse;
-  crud: CoreEngineCRUDOperation[];
-  projectId: string;
-}
+import {
+  ALLOWED_DB_OPERATIONS_IN_ENDPOINT,
+  EndpointActionDefinition,
+  EndpointActionQuery,
+  EndpointCreateActionQuery,
+  EndpointDeleteActionQuery,
+  EndpointReadActionQuery,
+  EndpointResponse,
+  EndpointUpdateActionQuery,
+} from '@api-assistant/endpoints-be';
+import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint.usecase';
 
 @Injectable()
 export class CoreEngineCRUDUsecase
-  implements Usecase<CoreEngineCRUDUsecaseInput, CoreEngineCRUDResponse>
+  implements Usecase<string, EndpointResponse>
 {
   private logger = new Logger(CoreEngineCRUDUsecase.name);
 
-  constructor(private projectMetadataRepo: ProjectMetadataRepository) {}
+  constructor(
+    private projectMetadataRepo: ProjectMetadataRepository,
+    private readonly getEndpointByURL: GetEndpointByURLUsecase
+  ) {}
 
-  async execute(
-    input: CoreEngineCRUDUsecaseInput
-  ): Promise<CoreEngineCRUDResponse> {
+  async execute(endpointUrl: string): Promise<EndpointResponse> {
     try {
-      const { crud, response, projectId } = input;
+      const endpoint = await this.getEndpointByURL.execute(endpointUrl);
+      if (!endpoint) {
+        throw new Error('Endpoint not found for the URL ' + endpoint);
+        return;
+      }
+      const { crud, response, projectId: projectObjectId } = endpoint;
+
+      const projectId = projectObjectId.toString();
 
       this.logger.log('Handling core engine CRUD');
       const { connection: mongoConnection, db } = await crudDbConnectionFactory(
@@ -81,66 +79,83 @@ export class CoreEngineCRUDUsecase
 
   private async performCRUD(
     projectId: string,
-    operation: CoreEngineCRUDOperation,
+    operation: EndpointActionDefinition,
     db: Db
   ): Promise<unknown> {
     const collection = db.collection(operation.collectionName);
     this.logger.log(`connected to collection: ${operation.collectionName}`);
     switch (operation.action) {
-
-      case ALLOWED_DB_OPERATIONS.deleteOne: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.deleteOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.deleteAction': 1 } }
         );
-        return this.deleteOne(collection, operation.payload as DeletePayload);
+        return this.deleteOne(
+          collection,
+          operation.payload as EndpointDeleteActionQuery
+        );
       }
 
-      case ALLOWED_DB_OPERATIONS.deleteMany: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.deleteMany: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.deleteAction': 1 } }
         );
-        return this.deleteMany(collection, operation.payload as DeletePayload);
+        return this.deleteMany(
+          collection,
+          operation.payload as EndpointDeleteActionQuery
+        );
       }
 
-      case ALLOWED_DB_OPERATIONS.findOne: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.findOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.readAction': 1 } }
         );
-        return this.findOne(collection, operation.payload as ReadPayload);
+        return this.findOne(
+          collection,
+          operation.payload as EndpointReadActionQuery
+        );
       }
-      case ALLOWED_DB_OPERATIONS.find: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.find: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.readAction': 1 } }
         );
-        return this.find(collection, operation.payload as ReadPayload);
+        return this.find(
+          collection,
+          operation.payload as EndpointReadActionQuery
+        );
       }
-      case ALLOWED_DB_OPERATIONS.insertOne: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.insertOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.createAction': 1 } }
         );
-        return this.insertOne(collection, operation.payload as CreatePayload);
+        return this.insertOne(
+          collection,
+          operation.payload as EndpointCreateActionQuery
+        );
       }
-      case ALLOWED_DB_OPERATIONS.insertMany: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.insertMany: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.createAction': 1 } }
         );
         return this.insertMany(
           collection,
-          operation.payload as CreatePayload[]
+          operation.payload as EndpointCreateActionQuery[]
         );
       }
-      case ALLOWED_DB_OPERATIONS.updateOne: {
+      case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.updateOne: {
         await this.projectMetadataRepo.updateOne(
           { projectId: new ObjectId(projectId) },
           { $inc: { 'count.updateAction': 1 } }
         );
-        return this.updateOne(collection, operation.payload as UpdatePayload);
+        return this.updateOne(
+          collection,
+          operation.payload as EndpointUpdateActionQuery
+        );
       }
       default: {
         throw new CoreEngineUnSupportedActionException(operation.action);
@@ -148,7 +163,10 @@ export class CoreEngineCRUDUsecase
     }
   }
 
-  private deleteOne(collection: Collection, payload: DeletePayload) {
+  private deleteOne(
+    collection: Collection,
+    payload: EndpointDeleteActionQuery
+  ) {
     this.logger.log('Performing delete one');
     if (!payload.filter) {
       throw new CoreEngineFindActionPayloadMissingException();
@@ -156,7 +174,10 @@ export class CoreEngineCRUDUsecase
     return collection.deleteOne(payload.filter);
   }
 
-  private deleteMany(collection: Collection, payload: DeletePayload) {
+  private deleteMany(
+    collection: Collection,
+    payload: EndpointDeleteActionQuery
+  ) {
     this.logger.log('Performing delete many');
     if (!payload.filter) {
       throw new CoreEngineFindActionPayloadMissingException();
@@ -164,7 +185,7 @@ export class CoreEngineCRUDUsecase
     return collection.deleteMany(payload.filter);
   }
 
-  private findOne(collection: Collection, payload: ReadPayload) {
+  private findOne(collection: Collection, payload: EndpointReadActionQuery) {
     this.logger.log('Performing findOne');
     if (!payload.filter || !payload.options) {
       throw new CoreEngineFindActionPayloadMissingException();
@@ -172,7 +193,7 @@ export class CoreEngineCRUDUsecase
     return collection.findOne(payload.filter, payload.options);
   }
 
-  private find(collection: Collection, payload: ReadPayload) {
+  private find(collection: Collection, payload: EndpointReadActionQuery) {
     this.logger.log('Performing find');
     if (!payload.filter || !payload.options) {
       throw new CoreEngineFindActionPayloadMissingException();
@@ -180,14 +201,20 @@ export class CoreEngineCRUDUsecase
     return collection.find(payload.filter, payload.options).toArray();
   }
 
-  private insertOne(collection: Collection, payload: CreatePayload) {
+  private insertOne(
+    collection: Collection,
+    payload: EndpointCreateActionQuery
+  ) {
     this.logger.log('Performing insertOne');
     return collection.insertOne({
-      ...payload
+      ...payload,
     });
   }
 
-  private insertMany(collection: Collection, payload: CreatePayload[]) {
+  private insertMany(
+    collection: Collection,
+    payload: EndpointCreateActionQuery[]
+  ) {
     if (!Array.isArray(payload)) {
       throw new CoreEngineInsertManyActionInvalidDataException();
     }
@@ -195,7 +222,10 @@ export class CoreEngineCRUDUsecase
     return collection.insertMany(payload);
   }
 
-  private updateOne(collection: Collection, payload: UpdatePayload) {
+  private updateOne(
+    collection: Collection,
+    payload: EndpointUpdateActionQuery
+  ) {
     this.logger.log('Performing updateOne');
     if (!payload.filter || !payload.patch) {
       throw new CoreEngineUpdateActionPayloadMissingException();
@@ -274,7 +304,7 @@ export class CoreEngineCRUDUsecase
       value.endsWith(objectIdSuffix)
     ) {
       const valueKey: string = value.slice(objectIdPrefixLen, value.length - 1);
-      return new ObjectId(valueKey)
+      return new ObjectId(valueKey);
     }
     return value;
   }

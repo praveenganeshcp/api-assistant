@@ -8,13 +8,20 @@ import {
   Logger,
   Query,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CoreEngineProjectId } from '@api-assistant/commons-be';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { CoreEngineCRUDUsecase, CoreEngineFetchCollectionsUsecase, CoreEngineFetchFilesUsecase, CoreEngineCRUDDto, CORE_ENGINE_UPLOAD_ROOT, DeleteProjectUsecase } from '@api-assistant/crud-engine-be';
+import {
+  CoreEngineCRUDUsecase,
+  CoreEngineFetchCollectionsUsecase,
+  CoreEngineFetchFilesUsecase,
+  CORE_ENGINE_UPLOAD_ROOT,
+  DeleteProjectUsecase,
+} from '@api-assistant/crud-engine-be';
 import { ObjectId } from 'mongodb';
 
 @Controller('core-engine')
@@ -33,15 +40,9 @@ export class CoreEngineController {
     return this.coreEngineFetchCollectionsUsecase.execute(projectId);
   }
 
-  @Post('crud')
-  performCrud(
-    @CoreEngineProjectId() projectId: string,
-    @Body() body: CoreEngineCRUDDto
-  ) {
-    return this.coreEngineCRUDUsecase.execute({
-      ...body,
-      projectId,
-    });
+  @Post('api/:path')
+  performCrud(@Param('path') endpointUrl: string) {
+    return this.coreEngineCRUDUsecase.execute(endpointUrl);
   }
 
   @Post('files')
@@ -92,11 +93,9 @@ export class CoreEngineController {
   }
 
   @Delete('project')
-  async deleteProject(
-    @CoreEngineProjectId() projectId: string,
-  ) {
+  async deleteProject(@CoreEngineProjectId() projectId: string) {
     return this.deleteProjectUsecase.execute({
-      projectId: new ObjectId(projectId)
+      projectId: new ObjectId(projectId),
     });
   }
 }

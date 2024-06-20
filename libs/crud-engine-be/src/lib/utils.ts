@@ -6,18 +6,18 @@ const filesSeperator = '/';
 
 export const CORE_ENGINE_UPLOAD_ROOT = 'core-engine-uploads';
 
-export async function crudDbConnectionFactory(projectId: string): Promise<{
+export async function crudDbConnectionFactory(url: string, projectId: string): Promise<{
   db: Db;
   connection: MongoClient;
 }> {
   const logger = new Logger(crudDbConnectionFactory.name);
   logger.log('Connecting to crud mongodb host...');
-  const mongoClient = new MongoClient('mongodb://localhost:27017');
+  const mongoClient = new MongoClient(url);
   const connection = await mongoClient.connect();
   logger.log('Connected to crud mongodb host');
 
   logger.log(`Creating core engine db connection to id ${projectId}...`);
-  const db = connection.db(`api-assistant-crud-${projectId}`);
+  const db = connection.db(`api-crud-${projectId}`);
   logger.log(`Core engine db connected to id ${projectId}`);
   return { db, connection };
 }
