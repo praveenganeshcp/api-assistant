@@ -1,0 +1,8 @@
+<div class="list-item">
+  <h2 class="list-item-name">{{ minimalEndpointInfo.name }}</h2>
+  <p class="list-item-description">{{ minimalEndpointInfo.description }}</p>
+  <p class="list-item-date">
+    {{ minimalEndpointInfo.createdOn | date : 'longDate' }}
+  </p>
+  <p class="list-item-url">{{ minimalEndpointInfo.url }}</p>
+</div>
