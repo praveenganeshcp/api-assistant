@@ -41,6 +41,20 @@ export class Repository<T extends MongoDocument> {
     return findOneResult as CanBeNull<T>;
   }
 
+  public async findAll(
+    query: Filter<T>,
+    findAllOptions: FindOptions = {}
+  ): Promise<T[]> {
+    this.logger.log(
+      `Performing findAll in ${this.collectionName} with query and options`
+    );
+    const findAllResult: T[] = (await this.collection
+      .find(query, findAllOptions)
+      .toArray()) as T[];
+    this.logger.log(`Computed findAll result`);
+    return findAllResult;
+  }
+
   public async aggregate<T>(steps: unknown): Promise<T> {
     this.logger.log(`Performing aggregate in ${this.collectionName}`);
     const aggregateResult: unknown = await this.collection
@@ -70,10 +84,8 @@ export class Repository<T extends MongoDocument> {
     return this.collection.updateOne(filter, updateFilter);
   }
 
-  public async deleteOne(
-    filter: Filter<T>,
-  ) {
+  public async deleteOne(filter: Filter<T>) {
     this.logger.log(`deleting record in ${this.collectionName}`);
-    return this.collection.deleteOne(filter)
+    return this.collection.deleteOne(filter);
   }
 }
