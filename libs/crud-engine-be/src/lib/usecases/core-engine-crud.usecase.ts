@@ -21,7 +21,7 @@ import {
   EndpointResponse,
   EndpointUpdateActionQuery,
 } from '@api-assistant/endpoints-be';
-import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint.usecase';
+import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint-by-url.usecase';
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
 
