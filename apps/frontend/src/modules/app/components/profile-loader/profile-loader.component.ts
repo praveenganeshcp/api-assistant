@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
-import { profileStateSelector } from '@api-assistant/auth-fe';
 import { AppState } from '../../app.state';
 import { AppInfoService } from '@api-assistant/commons-fe';
+import { profileStateSelector } from '../../../accounts/store/selectors';
 
 @Component({
   selector: 'api-assistant-profile-loader',

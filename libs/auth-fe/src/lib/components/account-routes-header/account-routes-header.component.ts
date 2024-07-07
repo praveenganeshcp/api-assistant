@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>
-      <a routerLink="/"> API Assistant </a>
+      <a aria-label="home-page" routerLink="/"> API Assistant </a>
     </h1>
   `,
   standalone: true,

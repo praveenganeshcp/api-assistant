@@ -1,0 +1,6 @@
+<api-assistant-login-form
+  [loading]="loading$ | async"
+  [forgotPasswordLink]="'/accounts/forgot-password'"
+  [signupLink]="'/accounts/signup'"
+  (submitData)="handleLogin($event)"
+></api-assistant-login-form>

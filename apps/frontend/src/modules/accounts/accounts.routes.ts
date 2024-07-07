@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AccountsGuard } from '@api-assistant/auth-fe';
+import { AccountsGuard } from './guards/accounts.guard';
 
 export const accountRoutes: Route[] = [
   {
@@ -11,26 +11,30 @@ export const accountRoutes: Route[] = [
         path: 'signup',
         canActivate: [AccountsGuard],
         loadComponent: () =>
-          import('@api-assistant/auth-fe').then((c) => c.SignupComponent),
+          import('./components/signup/signup.component').then(
+            (c) => c.SignupComponent
+          ),
       },
       {
         path: 'login',
         canActivate: [AccountsGuard],
         loadComponent: () =>
-          import('@api-assistant/auth-fe').then((c) => c.LoginComponent),
+          import('./components/login/login.component').then(
+            (c) => c.LoginComponent
+          ),
       },
       {
         path: 'forgot-password',
         canActivate: [AccountsGuard],
         loadComponent: () =>
-          import('@api-assistant/auth-fe').then(
+          import('./components/forgot-password/forgot-password.component').then(
             (c) => c.ForgotPasswordComponent
           ),
       },
       {
         path: 'verify-account/:secret',
         loadComponent: () =>
-          import('@api-assistant/auth-fe').then(
+          import('./components/verify-account/verify-account.component').then(
             (c) => c.VerifyAccountComponent
           ),
       },
