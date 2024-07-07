@@ -27,6 +27,7 @@ import {
   applicationDataSelector,
 } from '../../store/selectors';
 import { loadApplicationDetailsAction } from '../../store/actions';
+import { ApplicationEndpointsHostComponent } from '../application-endpoints-host/application-endpoints-host.component';
 
 @Component({
   selector: 'api-assistant-project-details-host',
@@ -45,6 +46,7 @@ import { loadApplicationDetailsAction } from '../../store/actions';
     ApplicationDatabaseHostComponent,
     ApplicationFilesHostComponent,
     ApplicationSettingsHostComponent,
+    ApplicationEndpointsHostComponent
   ],
   templateUrl: './project-details-host.component.html',
   styleUrls: ['./project-details-host.component.scss'],
