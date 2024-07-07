@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AuthenticatedGuard } from './authenticated.guard';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
 
 export const appRoutes: Route[] = [
   {

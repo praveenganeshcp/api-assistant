@@ -3,8 +3,8 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { SwToastService } from 'ngx-simple-widgets';
-import { AppState } from './app.state';
-import { profileStateSelector } from '../accounts/store/selectors';
+import { AppState } from '../app.state';
+import { profileStateSelector } from '../../accounts/store/selectors';
 
 /**
  * prevents unauthenticated user access to app
@@ -29,8 +29,7 @@ export class AuthenticatedGuard implements CanActivate {
         // if user is not authenticated, do not allow access
         else if (profile.data === null) {
           this.swToastService.error({
-            title: 'Session expired',
-            message: '',
+            message: 'Session expired'
           });
           return this.router.createUrlTree(['accounts', 'login']);
         }
