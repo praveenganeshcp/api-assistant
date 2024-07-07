@@ -1,29 +1,29 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import {
-  errorInLoadingProjectsAction,
-  loadProjectsAction,
-  projectsLoadedAction,
-} from './dashboard.actions';
-import { DASHBOARD_SLICE_NAME, DashboardState } from './dashboard.state';
+  errorInLoadingApplicationsAction,
+  loadApplicationsAction,
+  applicationsLoadedAction,
+} from './actions';
+import { DASHBOARD_SLICE_NAME, DashboardState } from './state';
 
 const DASHBOARD_STATE: DashboardState = {
-    data: [],
-    error: '',
-    isLoading: false,
+  data: [],
+  error: '',
+  isLoading: false,
 };
 
 const dashboardReducers = createReducer(
   DASHBOARD_STATE,
-  on(loadProjectsAction, (state) => ({
+  on(loadApplicationsAction, (state) => ({
     ...state,
     isLoading: true,
   })),
-  on(projectsLoadedAction, (state, { data }) => ({
+  on(applicationsLoadedAction, (state, { data }) => ({
     isLoading: false,
     data,
-    error: '',   
+    error: '',
   })),
-  on(errorInLoadingProjectsAction, (state, { error }) => ({
+  on(errorInLoadingApplicationsAction, (state, { error }) => ({
     isLoading: false,
     data: [],
     error,
@@ -32,8 +32,8 @@ const dashboardReducers = createReducer(
 
 export const dashboardFeature = createFeature({
   name: DASHBOARD_SLICE_NAME,
-  reducer: dashboardReducers
-})
+  reducer: dashboardReducers,
+});
 
 export const {
   reducer,
@@ -41,5 +41,5 @@ export const {
   selectDashboardState,
   selectData,
   selectError,
-  selectIsLoading
+  selectIsLoading,
 } = dashboardFeature;

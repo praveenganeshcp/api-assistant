@@ -1,13 +1,13 @@
 import { Observable, map } from 'rxjs';
-import { Project } from '../store/dashboard.state';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
+import { Application } from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectRepository {
+export class ApplicationsRepository {
   constructor(
     private http: HttpClient,
     @Inject(API_BASE_URL) private apiBaseURL: string
@@ -17,7 +17,7 @@ export class ProjectRepository {
     return this.apiBaseURL;
   }
 
-  public loadProjects(): Observable<Project[]> {
+  public fetchApplications(): Observable<Application[]> {
     return this.http
       .get<any[]>(`${this.apiUrl}api/v6/projects`, {
         withCredentials: true,
@@ -43,7 +43,7 @@ export class ProjectRepository {
       );
   }
 
-  public createProject(name: string): Observable<Project> {
+  public createApplication(name: string): Observable<Application> {
     return this.http
       .post<any>(
         `${this.apiUrl}api/v6/projects`,

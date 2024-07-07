@@ -1,8 +1,16 @@
 <sw-dialog [size]="dialogSize$ | async">
   <div class="create-project">
     <h3>New Project</h3>
-    <form [formGroup]="createProjectForm" (ngSubmit)="onCreateProject()" class="create-project__form">
-      <sw-form-control [errorMessagesMap]="errorMessagesMap" [control]="projectNameFormControl" label="Project name">
+    <form
+      [formGroup]="createProjectForm"
+      (ngSubmit)="onCreateProject()"
+      class="create-project__form"
+    >
+      <sw-form-control
+        [errorMessagesMap]="errorMessagesMap"
+        [control]="projectNameFormControl"
+        label="Project name"
+      >
         <input
           formControlName="name"
           sw-input
@@ -12,17 +20,14 @@
           placeholder="Project name"
         />
       </sw-form-control>
-      
+
       <button
-        [showLoader]="loading$ | async"
+        [showLoader]="loading"
         (click)="onCreateProject()"
         sw-primary-button
       >
         Create Project
       </button>
     </form>
-    <span class="error-msg">
-      {{ errorMessage }}
-    </span>
   </div>
 </sw-dialog>

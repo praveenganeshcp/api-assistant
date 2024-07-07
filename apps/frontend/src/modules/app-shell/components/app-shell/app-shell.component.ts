@@ -2,12 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Router, RouterModule } from '@angular/router';
-import { logoutAccountAction, logoutErrorAction, logoutSuccessAction } from '@api-assistant/auth-fe';
-import { isUserProfileVerifiedSelector } from '@api-assistant/auth-fe';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SwButtonComponent, SwIconComponent, SwToastService } from 'ngx-simple-widgets';
+import {
+  SwButtonComponent,
+  SwIconComponent,
+  SwToastService,
+} from 'ngx-simple-widgets';
 import { AppState } from '../../../app/app.state';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+import {
+  logoutAccountAction,
+  logoutErrorAction,
+  logoutSuccessAction,
+} from '../../../accounts/store/actions';
 
 @Component({
   selector: 'api-assistant-app-shell',
@@ -17,7 +24,6 @@ import { StoreActionDispatcher } from '@api-assistant/commons-fe';
   imports: [RouterModule, CommonModule, SwButtonComponent, SwIconComponent],
 })
 export class AppShellComponent {
-
   private loading$ = new BehaviorSubject(false);
 
   constructor(
@@ -28,23 +34,23 @@ export class AppShellComponent {
   ) {}
 
   public handleLogout() {
-    this.actionsDispatcher.dispatchAsyncAction(
-      logoutAccountAction(),
-      logoutSuccessAction,
-      logoutErrorAction,
-      this.loading$
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['']);
-      },
-      error: (err) => {
-        this.toastService.warn({
-          message: "Error in logging out"
-        })
-      },
-    })
+    this.actionsDispatcher
+      .dispatchAsyncAction(
+        logoutAccountAction(),
+        logoutSuccessAction,
+        logoutErrorAction,
+        this.loading$
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['']);
+        },
+        error: (err) => {
+          this.toastService.warn({
+            message: 'Error in logging out',
+          });
+        },
+      });
   }
 
-  public isAccountVerified$: Observable<boolean | undefined> =
-    this.store.select(isUserProfileVerifiedSelector);
 }
