@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { SwToastService } from 'ngx-simple-widgets';
 import { profileStateSelector } from '../store/selectors';
-import { GlobalState } from '../store/state';
+import { AppState } from '../../app/app.state';
 
 /**
  * Guard to protect logged in users to enter into
@@ -13,7 +13,7 @@ import { GlobalState } from '../store/state';
 @Injectable({ providedIn: 'root' })
 export class AccountsGuard implements CanActivate {
   constructor(
-    private store: Store<GlobalState>,
+    private store: Store<AppState>,
     private router: Router,
     private swToastService: SwToastService
   ) {}
@@ -26,10 +26,9 @@ export class AccountsGuard implements CanActivate {
           return this.router.createUrlTree(['load']);
         }
         // Show error message if already loggedin and do not allow to enter into route
-        else if (profile.data !== null && profile.data?.isVerified) {
+        else if (profile.data !== null) {
           this.swToastService.warn({
-            title: 'Already logged in',
-            message: '',
+            message: 'Already logged in',
           });
           return this.router.createUrlTree(['app', 'projects']);
         }

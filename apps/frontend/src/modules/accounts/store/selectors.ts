@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { GlobalState } from './state';
+import { AppState } from '../../app/app.state';
 
-export const profileStateSelector = (state: GlobalState) => state.profile;
+export const profileStateSelector = (state: AppState) => state.profile;
 
 // ############ Start User profile selectors ############### //
 

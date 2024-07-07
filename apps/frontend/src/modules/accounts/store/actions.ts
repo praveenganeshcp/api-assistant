@@ -1,10 +1,10 @@
+import { UserProfile } from '@api-assistant/auth-fe';
 import {
   ActionCreatorProps,
   NotAllowedCheck,
   createAction,
   props,
 } from '@ngrx/store';
-import { UserProfile } from '../models/accounts.types';
 import { CanBeNull } from 'ngx-simple-widgets';
 
 /**
@@ -84,7 +84,6 @@ export const loginErrorAction = createUserAccountActionWithProps(
   'Login Error',
   props<{ error: string }>()
 );
-
 
 // ############ End login account actions ############### //
 

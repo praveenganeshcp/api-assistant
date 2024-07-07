@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { SwToastService } from 'ngx-simple-widgets';
 import { AppState } from './app.state';
-import { profileStateSelector } from '@api-assistant/auth-fe';
+import { profileStateSelector } from '../accounts/store/selectors';
 
 /**
  * prevents unauthenticated user access to app
