@@ -22,8 +22,7 @@ import {
   verifyAccountErrorAction,
   verifyAccountSuccessAction,
 } from './actions';
-import { AccountsService } from '../services/accounts.service';
-import { UserProfile } from '../models/accounts.types';
+import { AccountsService, UserProfile } from '@api-assistant/auth-fe';
 
 /**
  * Handles user account action side effects
@@ -32,7 +31,7 @@ import { UserProfile } from '../models/accounts.types';
 export class AccountsEffects {
   constructor(
     private actions$: Actions,
-    private accountsService: AccountsService,
+    private accountsService: AccountsService
   ) {}
 
   /**
@@ -86,7 +85,7 @@ export class AccountsEffects {
       mergeMap(() => {
         return this.accountsService.logoutAccount().pipe(
           map(() => logoutSuccessAction()),
-          catchError(() => of(logoutErrorAction())),
+          catchError(() => of(logoutErrorAction()))
         );
       })
     )
