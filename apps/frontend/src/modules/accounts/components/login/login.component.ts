@@ -16,7 +16,6 @@ import { SwToastService } from 'ngx-simple-widgets';
   standalone: true,
   imports: [CommonModule, LoginFormComponent],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   public loading$ = new BehaviorSubject(false);
@@ -48,7 +47,7 @@ export class LoginComponent {
         next: () => {
           this.router.navigateByUrl(this.loginSuccessCallbackUrl);
         },
-        error: (err: ReturnType<typeof loginErrorAction>) => {
+        error: () => {
           this.toastService.error({
             message: "Error in signin"
           });

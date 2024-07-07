@@ -16,7 +16,6 @@ import { SwToastService } from 'ngx-simple-widgets';
   standalone: true,
   imports: [CommonModule, SignupFormComponent],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
   providers: [
     { provide: UniqueEmailIdValidator, useClass: DuplicateEmailIdValidatorService }
   ]
@@ -43,7 +42,7 @@ export class SignupComponent {
         next: () => {
           this.router.navigate(['app', 'projects']);
         },
-        error: (err: ReturnType<typeof createAccountErrorAction>) => {
+        error: () => {
           this.toastService.error({
             message: "Error in creating account"
           })

@@ -15,7 +15,6 @@ import { ForgotPasswordFormComponent } from '@api-assistant/auth-fe';
   standalone: true,
   imports: [CommonModule, ForgotPasswordFormComponent],
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
   public loading$ = new BehaviorSubject(false);
@@ -42,9 +41,7 @@ export class ForgotPasswordComponent {
             message: 'Password reset link sent to provided email',
           });
         },
-        error: (
-          exception: ReturnType<typeof sendPasswordResetLinkErrorAction>
-        ) => {
+        error: () => {
           this.toastService.error({
             title: 'Reset password',
             message: 'Error in sending password reset link',
