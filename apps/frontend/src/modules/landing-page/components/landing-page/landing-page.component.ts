@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { isUserLoggedInSelector } from '@api-assistant/auth-fe';
-import { logoutAccountAction } from '@api-assistant/auth-fe';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
 import { AppInfoService } from '@api-assistant/commons-fe';
+import { isUserLoggedInSelector } from '../../../accounts/store/selectors';
+import { logoutAccountAction } from '../../../accounts/store/actions';
 
 interface LandingPageFeatureCard {
   id: number;
