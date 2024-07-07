@@ -1,0 +1,6 @@
+<api-assistant-signup-form
+  [loading]="(loading$ | async) ?? false"
+  [loginLink]="'/accounts/login'"
+  (submitData)="handleSignup($event)"
+>
+</api-assistant-signup-form>

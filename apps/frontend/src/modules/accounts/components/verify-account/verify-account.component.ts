@@ -11,7 +11,6 @@ import {
   verifyAccountErrorAction,
   verifyAccountSuccessAction,
 } from '../../store/actions';
-import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 import { BehaviorSubject } from 'rxjs';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
@@ -35,12 +34,7 @@ import { StoreActionDispatcher } from '@api-assistant/commons-fe';
     </div>
   `,
   standalone: true,
-  imports: [
-    CommonModule,
-    SwInputComponent,
-    SwButtonComponent,
-    AlertBannerComponent,
-  ],
+  imports: [CommonModule, SwInputComponent, SwButtonComponent],
 })
 export class VerifyAccountComponent implements OnInit {
   public loading$ = new BehaviorSubject(false);

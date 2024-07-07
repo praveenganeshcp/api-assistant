@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AccountRoutesHeaderComponent } from '../account-routes-header/account-routes-header.component';
 import { AppInfoService } from '@api-assistant/commons-fe';
+import { AccountRoutesHeaderComponent } from '../account-routes-header/account-routes-header.component';
 
 /**
  * Shell component for account related routes.

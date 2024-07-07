@@ -1,7 +1,7 @@
-<div class="login-page">
+<div class="login">
   <!-- Login form  -->
   <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login-form">
-    <h2>Login</h2>
+    <h2 aria-label="form-heading">Login</h2>
 
     <!-- Email Id form control -->
     <sw-form-control [control]="emailIdControl" label="Email ID">
@@ -10,6 +10,7 @@
         formControlName="emailId"
         sw-input
         type="email"
+        aria-label="emailId"
       />
     </sw-form-control>
     <!-- End of email id form control -->
@@ -26,27 +27,28 @@
           formControlName="password"
           sw-input
           type="password"
+          aria-label="password"
+          role="textbox"
         />
       </sw-form-control>
-      <a routerLink="/accounts/forgot-password">Forgot password?</a>
+      <a aria-label="forgot-password" [routerLink]="forgotPasswordLink">Forgot password?</a>
     </div>
     <!-- end of password form control -->
 
     <!-- login button -->
     <button
       [disabled]="loginForm.invalid"
-      [showLoader]="loading$ | async"
+      [showLoader]="loading"
       sw-primary-button
+      aria-label="submit"
     >
       Login
     </button>
 
-    <div class="login-form__api-error">{{ loginErrorMessage }}</div>
-
     <!-- Signup link -->
     <span data-testid="signup-nudge">
       New to {{ appName }}?
-      <a routerLink="/accounts/signup">Signup here</a>
+      <a aria-label="signup" [routerLink]="signupLink">Signup here</a>
     </span>
   </form>
 </div>
