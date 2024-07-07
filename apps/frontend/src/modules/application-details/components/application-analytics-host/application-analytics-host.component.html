@@ -1,0 +1,5 @@
+<ng-container *ngIf="crudAnalyticsProps$ | async as crudAnalyticsData">
+  <api-assistant-application-analytics
+    [crudAnalyticsData]="crudAnalyticsData"
+  />
+</ng-container>

@@ -2,12 +2,12 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
-import { FileObject, ProjectDetails } from '../types';
+import { FileObject, ApplicationDetails } from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectDetailsRepository {
+export class ApplicationDetailsRepository {
   constructor(
     private http: HttpClient,
     @Inject(API_BASE_URL) private apiBaseUrl: string
@@ -17,27 +17,23 @@ export class ProjectDetailsRepository {
     return `${this.apiBaseUrl}api/v6`;
   }
 
-  fetchDetails(projectId: string): Observable<ProjectDetails> {
+  fetchDetails(applicationId: string): Observable<ApplicationDetails> {
     return this.http
-      .get<any>(
-        `${this.baseUrl}/projects/${projectId}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get<any>(`${this.baseUrl}/projects/${applicationId}`, {
+        withCredentials: true,
+      })
       .pipe(
         map((response) => {
-          const projectData = response.projectDetail;
+          const applicationData = response.projectDetail;
           return {
-            _id: projectData._id,
-            name: projectData.name,
-            count: projectData.metadata.count,
+            _id: applicationData._id,
+            name: applicationData.name,
+            count: applicationData.metadata.count,
             api: {
-              key: projectData.metadata.apiKey,
-              lastGeneratedOn: projectData.metadata.apiKeyLastGeneratedOn
-            }
-          }
-          return projectData
+              key: applicationData.metadata.apiKey,
+              lastGeneratedOn: applicationData.metadata.apiKeyLastGeneratedOn,
+            },
+          };
         })
       );
   }
@@ -55,7 +51,7 @@ export class ProjectDetailsRepository {
       headers: {
         'api-assist-auth': apiKey,
       },
-    })
+    });
   }
 
   fetchCollections(apiKey: string) {
@@ -72,8 +68,8 @@ export class ProjectDetailsRepository {
         'api-assist-auth': apiKey,
       },
       params: {
-        'path': path
-      }
-    })
+        path: path,
+      },
+    });
   }
 }

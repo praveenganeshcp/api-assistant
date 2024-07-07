@@ -1,9 +1,10 @@
 import { Route } from '@angular/router';
-import { DashboardEffects, dashboardFeature } from '@api-assistant/dashboard-fe';
-import { ProjectDetailsEffects } from '@api-assistant/project-core-fe';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
-import { projectDetailsFeature } from 'libs/project-core-fe/src/lib/store/reducers';
+import { dashboardFeature } from '../dashboard/store/reducers';
+import { DashboardEffects } from '../dashboard/store/effects';
+import { ApplicationDetailsEffects } from '../application-details/store/effects';
+import { applicationDetailsFeature } from '../application-details/store/reducers';
 
 export default [
   {
@@ -16,24 +17,24 @@ export default [
       {
         path: 'projects',
         loadComponent: () =>
-          import('@api-assistant/dashboard-fe').then(
-            (m) => m.DashboardComponent
-          ),
+          import(
+            '../dashboard/components/dashboard-host/dashboard-host.component'
+          ).then((m) => m.DashboardHostComponent),
         providers: [
           provideState(dashboardFeature),
-          provideEffects(DashboardEffects)
-        ]
+          provideEffects(DashboardEffects),
+        ],
       },
       {
-        path: 'projects/:projectId',
+        path: 'projects/:applicationId',
         loadComponent: () =>
           import(
-            '@api-assistant/project-core-fe'
-          ).then((m) => m.ProjectDetailsShellComponent),
+            '../application-details/components/project-details-host/project-details-host.component'
+          ).then((m) => m.ProjectDetailsHostComponent),
         providers: [
-          provideState(projectDetailsFeature),
-          provideEffects(ProjectDetailsEffects)
-        ]
+          provideState(applicationDetailsFeature),
+          provideEffects(ApplicationDetailsEffects),
+        ],
       },
     ],
   },
