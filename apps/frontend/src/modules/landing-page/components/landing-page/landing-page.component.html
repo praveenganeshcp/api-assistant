@@ -1,32 +1,48 @@
 <main class="landing-page">
   <!-- landing page header -->
   <header class="landing-page__header">
-    <a class="attention-grabbing-link" routerLink="/how-it-works">See How it works</a>
+    <a
+      aria-label="see-how-it-works"
+      class="attention-grabbing-link"
+      routerLink="/how-it-works"
+      >See How it works</a
+    >
 
     <!-- Provide link to app and logout if user is logged in -->
     <ng-container *ngIf="isUserLoggedIn$ | async; else loginLinks">
-      <a data-testid="go-to-app-link" routerLink="/app/projects">Go to app</a>
-      <button
-        sw-primary-button
-        (click)="logoutAccount()"
-        data-testid="logout-btn"
+      <a
+        aria-label="go-to-app"
+        data-testid="go-to-app-link"
+        routerLink="/app/projects"
+        >Go to app</a
       >
+      <button sw-primary-button (click)="logoutAccount()" aria-label="logout">
         Logout
       </button>
     </ng-container>
 
     <!-- provide link to signup and signin if user is not logged in-->
     <ng-template #loginLinks>
-      <a data-testid="signup-link" routerLink="/accounts/signup">Signup</a>
-      <a data-testid="login-link" routerLink="/accounts/login">Login</a>
+      <a
+        aria-label="signup"
+        data-testid="signup-link"
+        routerLink="/accounts/signup"
+        >Signup</a
+      >
+      <a
+        aria-label="login"
+        data-testid="login-link"
+        routerLink="/accounts/login"
+        >Login</a
+      >
     </ng-template>
   </header>
   <!-- End of header -->
 
   <!-- Banner content -->
   <div class="landing-page__banner">
-    <h1>{{ appName }}</h1>
-    <h4>{{ appCaption }}</h4>
+    <h1 aria-label="app-name">{{ appName }}</h1>
+    <h4 aria-label="app-caption">{{ appCaption }}</h4>
   </div>
   <!-- End of banner content -->
 
@@ -39,8 +55,10 @@
       *ngFor="let feature of landingPageFeatures; trackBy: trackFeatureCard"
     >
       <div class="landing-page__feature-card">
-        <h3>{{ feature.title }}</h3>
-        <span>{{ feature.description }}</span>
+        <h3 aria-label="feature-name">{{ feature.title }}</h3>
+        <span role="text" aria-label="feature-description">{{
+          feature.description
+        }}</span>
       </div>
     </ng-container>
   </div>
@@ -51,14 +69,18 @@
     <!-- Nudge users to create application if loggedin -->
     <span *ngIf="isUserLoggedIn$ | async; else nudgeCreateAccount">
       Start building applications rapidly with
-      <a routerLink="/app/projects">{{ appName }}</a>
+      <a aria-label="go-to-app-from-footer" routerLink="/app/projects">{{
+        appName
+      }}</a>
     </span>
 
     <!-- Nudge users to signup if not loggedin -->
     <ng-template #nudgeCreateAccount>
       <span>
         Want to build application with {{ appName }}?
-        <a routerLink="/accounts/signup">Signup here</a>
+        <a aria-label="signup-from-footer" routerLink="/accounts/signup"
+          >Signup here</a
+        >
       </span>
     </ng-template>
   </footer>
