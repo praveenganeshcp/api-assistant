@@ -1,0 +1,24 @@
+<form (ngSubmit)="handleSubmit()" [formGroup]="createEndpointForm">
+    
+    <sw-form-control label="Name" [control]="nameControl">
+        <input sw-input formControlName="name" />
+    </sw-form-control>
+
+    <sw-form-control label="URL" [control]="urlControl">
+        <input sw-input formControlName="url" />
+    </sw-form-control>
+
+    <sw-form-control label="Description" [control]="descriptionControl">
+        <input sw-input formControlName="description" />
+    </sw-form-control>
+
+    <commons-fe-json-input formControlName="body">
+
+    </commons-fe-json-input>
+
+    <commons-fe-json-input formControlName="response">
+
+    </commons-fe-json-input>
+
+    <button sw-primary-button>Save</button>
+</form>
