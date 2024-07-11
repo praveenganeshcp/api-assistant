@@ -1,18 +1,21 @@
+import { ServerData } from '@api-assistant/commons-be';
+import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 import { ApplicationDetails, FileObject } from '@api-assistant/project-core-fe';
-import { CanBeNull } from 'ngx-simple-widgets';
+
+interface ApplicationEndpointsState extends ServerData<MinimalEndpointInfo[]> {}
+
+interface ApplicationInfoState extends ServerData<ApplicationDetails> {}
+
+interface ApplicationFilesState extends ServerData<FileObject[]> {
+  currentPath: string;
+}
 
 export interface ApplicationDetailsState {
-  application: {
-    data: CanBeNull<ApplicationDetails>;
-    isLoading: boolean;
-    error: string;
-  };
-  files: {
-    isLoading: boolean;
-    currentPath: string;
-    objects: FileObject[];
-    error: string;
-  };
+  application: ApplicationInfoState;
+  files: ApplicationFilesState;
+  endpoints: {
+    list:  ApplicationEndpointsState;
+  }
 }
 
 export const APPLICATION_DETAILS_SLICE_NAME = 'applicationDetails';

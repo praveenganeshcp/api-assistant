@@ -1,3 +1,4 @@
+import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 import { ApplicationDetails, FileObject } from '@api-assistant/project-core-fe';
 import {
   ActionCreatorProps,
@@ -58,3 +59,19 @@ export const errorInLoadingExplorerObjectsAction =
     'Error in loading explorer objects',
     props<{ error: string }>()
   );
+
+
+export const fetchAllEndpoints = createApplicationDetailsActionWithProps(
+  'Fetch All Endpoints',
+  props<{ applicationId: string }>()
+)
+
+export const allEndpointsLoaded = createApplicationDetailsActionWithProps(
+  `All endpoints fetched`,
+  props<{ endpoints: MinimalEndpointInfo[] }>()
+)
+
+export const errorInFetchingEndpoints = createApplicationDetailsActionWithProps(
+  `Error in fetching endpoints`,
+  props<{ error: string }>()
+)
