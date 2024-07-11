@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { MinimalEndpointInfo } from '../../types';
 import { EndpointsListItemComponent } from '../endpoints-list-item/endpoints-list-item.component';
@@ -14,7 +14,13 @@ import { EndpointsListItemComponent } from '../endpoints-list-item/endpoints-lis
 export class EndpointsListViewComponent {
   @Input() endpointsMinimalInfo: MinimalEndpointInfo[] = [];
 
+  @Output() endpointClicked = new EventEmitter<MinimalEndpointInfo>();
+
   trackEndpoints(_: number, endpoint: MinimalEndpointInfo) {
     return endpoint._id;
+  }
+
+  public handleEndpointClicked(endpoint: MinimalEndpointInfo) {
+    this.endpointClicked.emit(endpoint);
   }
 }

@@ -14,33 +14,9 @@
       *ngIf="!(loadingError$ | async); else errorMsg"
       [activeTabIndex]="activeTabIndex"
       [showTabsInBottom]="(isDesktopScreen$ | async) === false"
-      (tabClick)="onTabChange($event)"
-      [style.--sw-tab-view-title-height]="'10%'"
-      [style.--sw-tab-view-content-height]="'90%'"
+      [style.--sw-tab-view-title-height]="'7%'"
+      [style.--sw-tab-view-content-height]="'93%'"
     >
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="home"></sw-icon>
-            <span>Home</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-application-analytics-host />
-        </sw-tab-content>
-      </sw-tab>
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="experiment"></sw-icon>
-            <span>Experiment</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-application-experiment-host />
-        </sw-tab-content>
-      </sw-tab>
-
       <sw-tab>
         <sw-tab-title>
           <div class="project-details__tab-title">
@@ -49,41 +25,7 @@
           </div>
         </sw-tab-title>
         <sw-tab-content>
-          <api-assistant-application-endpoints-host />
-        </sw-tab-content>
-      </sw-tab>
-
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="database"></sw-icon>
-            <span>Database</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-application-database-host />
-        </sw-tab-content>
-      </sw-tab>
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="folder"></sw-icon>
-            <span>Files</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-application-files-host />
-        </sw-tab-content>
-      </sw-tab>
-      <sw-tab>
-        <sw-tab-title>
-          <div class="project-details__tab-title">
-            <sw-icon size="lg" name="settings"></sw-icon>
-            <span>Settings</span>
-          </div>
-        </sw-tab-title>
-        <sw-tab-content>
-          <api-assistant-application-settings-host />
+          <router-outlet></router-outlet>
         </sw-tab-content>
       </sw-tab>
     </sw-tab-view>

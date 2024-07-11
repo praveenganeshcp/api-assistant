@@ -3,7 +3,7 @@ import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
 import { FileObject, ApplicationDetails } from '../types';
-import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +77,15 @@ export class ApplicationDetailsRepository {
   fetchAllEndpoints(projectId: string) {
     return this.http.get<MinimalEndpointInfo[]>(
       `${this.baseUrl}/projects/${projectId}/endpoints`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  fetchEndpointDetail(applicationId: string, endpointId: string) {
+    return this.http.get<Endpoint>(
+      `${this.baseUrl}/projects/${applicationId}/endpoints/${endpointId}`,
       {
         withCredentials: true,
       }

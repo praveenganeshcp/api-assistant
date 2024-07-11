@@ -9,6 +9,6 @@
 
     <ng-template #listView>
         <button (click)="handleAddEndpoint()" sw-primary-button>Add Endpoint</button>
-        <api-assistant-endpoints-list-view [endpointsMinimalInfo]="(allEndpoints$ | async) ?? []" />
+        <api-assistant-endpoints-list-view (endpointClicked)="handleEndpointDetailNavigation($event)" [endpointsMinimalInfo]="(allEndpoints$ | async) ?? []" />
     </ng-template>
 </ng-template>

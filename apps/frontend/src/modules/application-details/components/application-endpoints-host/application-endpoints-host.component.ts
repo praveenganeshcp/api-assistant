@@ -38,7 +38,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
   ) {}
 
   private get applicationId(): string {
-    return this.activatedRoute.snapshot.params['applicationId'];
+    return this.activatedRoute.parent?.snapshot.params['applicationId'];
   }
 
   ngOnInit(): void {
@@ -47,6 +47,10 @@ export class ApplicationEndpointsHostComponent implements OnInit {
 
   public handleAddEndpoint() {
     this.router.navigate(['app', 'projects', this.applicationId, 'endpoints', 'create'])
+  }
+
+  public handleEndpointDetailNavigation(endpoint: MinimalEndpointInfo) {
+    this.router.navigate(['app', 'projects', this.applicationId, 'endpoints', endpoint._id ])
   }
   
 }
