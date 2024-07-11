@@ -1,4 +1,4 @@
-import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 import { ApplicationDetails, FileObject } from '@api-assistant/project-core-fe';
 import {
   ActionCreatorProps,
@@ -23,6 +23,15 @@ function createApplicationDetailsActionWithProps<
   P extends Object
 >(type: T, config: ActionCreatorProps<P> & NotAllowedCheck<P>) {
   return createAction(`${APPLICATION_DETAILS_ACTION_PREFIX} ${type}`, config);
+}
+
+/**
+ * Create application details related actions. Attaches a common prefix in action names
+ * @param type Action type
+ * @returns Action that can be dispatched to store
+ */
+function createApplicationDetailsAction<T extends string>(type: T) {
+  return createAction(`${APPLICATION_DETAILS_ACTION_PREFIX} ${type}`);
 }
 
 export const loadApplicationDetailsAction =
@@ -74,4 +83,23 @@ export const allEndpointsLoaded = createApplicationDetailsActionWithProps(
 export const errorInFetchingEndpoints = createApplicationDetailsActionWithProps(
   `Error in fetching endpoints`,
   props<{ error: string }>()
+)
+
+export const fetchEndpointDetails = createApplicationDetailsActionWithProps(
+  'Fetch Endpoint details',
+  props<{ applicationId: string, endpointId: string }>()
+)
+
+export const endpointDetailsFetched = createApplicationDetailsActionWithProps(
+  `Endpoint details fetched`,
+  props<{ endpoint: Endpoint }>()
+)
+
+export const errorInFetchingEndpointDetails = createApplicationDetailsActionWithProps(
+  `Endpoint details fetch failed`,
+  props<{ error: string }>()
+)
+
+export const resetEndpointDetailsState = createApplicationDetailsAction(
+  'Reset Endpoint details state',
 )

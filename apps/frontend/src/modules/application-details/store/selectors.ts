@@ -102,3 +102,19 @@ export const allEndpointsErrorSelector = createSelector(
   applicationEndpointsSelector,
   (applicationEndpoints) => applicationEndpoints.list.error
 )
+
+export const endpointDetailsDataSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.detail.data
+)
+
+export const endpointDetailsLoadingSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.detail.isLoading
+)
+
+export const endpointDetailsErrorSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.detail.error
+)
+

@@ -13,6 +13,10 @@ import {
   allEndpointsLoaded,
   fetchAllEndpoints,
   errorInFetchingEndpoints,
+  fetchEndpointDetails,
+  endpointDetailsFetched,
+  errorInFetchingEndpointDetails,
+  resetEndpointDetailsState,
 } from './actions';
 
 const APPLICATION_DETAILS_DEFAULT_STATE: ApplicationDetailsState = {
@@ -31,6 +35,11 @@ const APPLICATION_DETAILS_DEFAULT_STATE: ApplicationDetailsState = {
     list: {
       isLoading: false,
       data: [],
+      error: ''
+    },
+    detail: {
+      isLoading: false,
+      data: null,
       error: ''
     }
   }
@@ -119,6 +128,50 @@ const applicationDetailsReducer = createReducer(
         isLoading: false,
         data: [],
         error
+      }
+    }
+  })),
+  on(fetchEndpointDetails, (state) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      detail: {
+        isLoading: true,
+        data: null,
+        error: ''
+      }
+    }
+  })),
+  on(endpointDetailsFetched, (state, { endpoint }) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      detail: {
+        isLoading: false,
+        data: endpoint,
+        error: ''
+      }
+    }
+  })),
+  on(errorInFetchingEndpointDetails, (state, { error }) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      detail: {
+        isLoading: false,
+        data: null,
+        error
+      }
+    }
+  })),
+  on(resetEndpointDetailsState, (state) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      detail: {
+        isLoading: false,
+        data: null,
+        error: ''
       }
     }
   }))

@@ -4,7 +4,7 @@ export interface Endpoint {
   description: string;
   url: string;
   crud: Object[];
-  response: unknown;
+  response: Object;
   createdBy: string;
   createdOn: Date;
   projectId: string;
