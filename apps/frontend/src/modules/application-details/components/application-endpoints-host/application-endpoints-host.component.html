@@ -1,1 +1,14 @@
-<p>application-endpoints-host works!</p>
+<ng-container *ngIf="endpointsLoading$ | async; else dataTemplate">
+    loading...
+</ng-container>
+
+<ng-template #dataTemplate>
+    <ng-container *ngIf="endpointsFetchError$ | async as errorMsg; else listView">
+        {{ errorMsg }}
+    </ng-container>
+
+    <ng-template #listView>
+        <button (click)="handleAddEndpoint()" sw-primary-button>Add Endpoint</button>
+        <api-assistant-endpoints-list-view [endpointsMinimalInfo]="(allEndpoints$ | async) ?? []" />
+    </ng-template>
+</ng-template>
