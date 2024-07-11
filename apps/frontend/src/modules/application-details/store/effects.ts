@@ -10,6 +10,9 @@ import {
   fetchAllEndpoints,
   allEndpointsLoaded,
   errorInFetchingEndpoints,
+  fetchEndpointDetails,
+  endpointDetailsFetched,
+  errorInFetchingEndpointDetails,
 } from './actions';
 import { catchError, exhaustMap, map, of, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -18,7 +21,7 @@ import {
   ApplicationDetailsRepository,
 } from '@api-assistant/project-core-fe';
 import { AppState } from '../../app/app.state';
-import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 
 @Injectable()
 export class ApplicationDetailsEffects {
@@ -83,6 +86,25 @@ export class ApplicationDetailsEffects {
             catchError(() => of(
                 errorInFetchingEndpoints({
                   error: 'Error in loading endpoints',
+                })
+              )
+            )
+          )
+        );
+      })
+    );
+  })
+
+  loadEndpointDetails$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(fetchEndpointDetails),
+      exhaustMap(({ applicationId, endpointId }) => {
+        return this.repository.fetchEndpointDetail(applicationId, endpointId).pipe(
+          map(
+            (endpoint: Endpoint) => endpointDetailsFetched({ endpoint }),
+            catchError(() => of(
+                errorInFetchingEndpointDetails({
+                  error: 'Error in loading endpoint details',
                 })
               )
             )

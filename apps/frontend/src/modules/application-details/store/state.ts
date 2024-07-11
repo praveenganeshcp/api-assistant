@@ -1,20 +1,23 @@
 import { ServerData } from '@api-assistant/commons-be';
-import { MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
 import { ApplicationDetails, FileObject } from '@api-assistant/project-core-fe';
 
-interface ApplicationEndpointsState extends ServerData<MinimalEndpointInfo[]> {}
+interface EndpointsListViewState extends ServerData<MinimalEndpointInfo[]> {}
 
 interface ApplicationInfoState extends ServerData<ApplicationDetails> {}
 
-interface ApplicationFilesState extends ServerData<FileObject[]> {
+interface FilesState extends ServerData<FileObject[]> {
   currentPath: string;
 }
 
+interface EndpointDetailState extends ServerData<Endpoint> {}
+
 export interface ApplicationDetailsState {
   application: ApplicationInfoState;
-  files: ApplicationFilesState;
+  files: FilesState;
   endpoints: {
-    list:  ApplicationEndpointsState;
+    list:  EndpointsListViewState;
+    detail: EndpointDetailState
   }
 }
 
