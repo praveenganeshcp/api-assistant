@@ -35,6 +35,25 @@ export default [
           provideState(applicationDetailsFeature),
           provideEffects(ApplicationDetailsEffects),
         ],
+        children: [
+          {
+            path: 'endpoints',
+            loadComponent: () => import("../application-details/components/application-endpoints-host/application-endpoints-host.component").then(c => c.ApplicationEndpointsHostComponent),
+          },
+          {
+            path: "endpoints/create",
+            loadComponent: () => import("../application-details/components/create-endpoints-host/create-endpoints-host.component").then(c => c.CreateEndpointsHostComponent)
+          },
+          {
+            path: "endpoints/:endpointId",
+            loadComponent: () => import("../application-details/components/edit-endpoints-host/edit-endpoints-host.component").then(c => c.EditEndpointsHostComponent)
+          },
+          {
+            path: "",
+            pathMatch: "full",
+            redirectTo: "endpoints"
+          }
+        ]
       },
     ],
   },
