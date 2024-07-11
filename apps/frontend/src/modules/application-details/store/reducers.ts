@@ -10,6 +10,9 @@ import {
   goInsideFolderAction,
   explorerObjectsLoadedAction,
   errorInLoadingExplorerObjectsAction,
+  allEndpointsLoaded,
+  fetchAllEndpoints,
+  errorInFetchingEndpoints,
 } from './actions';
 
 const APPLICATION_DETAILS_DEFAULT_STATE: ApplicationDetailsState = {
@@ -21,9 +24,16 @@ const APPLICATION_DETAILS_DEFAULT_STATE: ApplicationDetailsState = {
   files: {
     isLoading: false,
     currentPath: '',
-    objects: [],
+    data: [],
     error: '',
   },
+  endpoints: {
+    list: {
+      isLoading: false,
+      data: [],
+      error: ''
+    }
+  }
 };
 
 const applicationDetailsReducer = createReducer(
@@ -57,7 +67,7 @@ const applicationDetailsReducer = createReducer(
     files: {
       isLoading: true,
       currentPath: folderPath,
-      objects: [],
+      data: [],
       error: '',
     },
   })),
@@ -66,7 +76,7 @@ const applicationDetailsReducer = createReducer(
     files: {
       ...state.files,
       isLoading: false,
-      objects,
+      data: objects,
       error: '',
     },
   })),
@@ -75,9 +85,42 @@ const applicationDetailsReducer = createReducer(
     files: {
       ...state.files,
       isLoading: false,
-      objects: [],
+      data: [],
       error,
     },
+  })),
+  on(fetchAllEndpoints, (state) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      list: {
+        isLoading: true,
+        data: [],
+        error: ''
+      }
+    }
+  })),
+  on(allEndpointsLoaded, (state, { endpoints }) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      list: {
+        isLoading: false,
+        data: endpoints,
+        error: ''
+      }
+    }
+  })),
+  on(errorInFetchingEndpoints, (state, { error }) => ({
+    ...state,
+    endpoints: {
+      ...state.endpoints,
+      list: {
+        isLoading: false,
+        data: [],
+        error
+      }
+    }
   }))
 );
 

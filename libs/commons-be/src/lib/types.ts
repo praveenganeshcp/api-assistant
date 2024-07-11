@@ -18,3 +18,9 @@ export interface Mapper<I, O> {
   from(input: I): O;
   to(input: O): I;
 }
+
+export interface ServerData<D> {
+  isLoading: boolean;
+  data: CanBeNull<D>;
+  error: string;
+}

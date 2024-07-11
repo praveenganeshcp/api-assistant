@@ -9,6 +9,11 @@ const applicationFilesSelector = createSelector(
   (applicationDetails) => applicationDetails.files
 );
 
+const applicationEndpointsSelector = createSelector(
+  applicationDetailsSelector,
+  (applicationDetails) => applicationDetails.endpoints
+);
+
 export const applicationDataSelector = createSelector(
   applicationDetailsSelector,
   (applicationDetails) => applicationDetails.application
@@ -80,5 +85,20 @@ export const explorerObjectsErrorSelector = createSelector(
 
 export const explorerObjectsListSelector = createSelector(
   applicationFilesSelector,
-  (applicationFiles) => applicationFiles.objects
+  (applicationFiles) => applicationFiles.data
 );
+
+export const allEndpointsDataSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.list.data
+)
+
+export const allEndpointsLoadingSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.list.isLoading
+)
+
+export const allEndpointsErrorSelector = createSelector(
+  applicationEndpointsSelector,
+  (applicationEndpoints) => applicationEndpoints.list.error
+)
