@@ -1,20 +1,25 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Usecase, valueIsDefined } from '@api-assistant/commons-be';
+import { Usecase } from '@api-assistant/commons-be';
 import { Collection, Db, MongoServerError, ObjectId } from 'mongodb';
 import {
   CoreEngineFindActionPayloadMissingException,
   CoreEngineInsertManyActionInvalidDataException,
-  CoreEngineInvalidVariablePathException,
   CoreEngineProcessingException,
   CoreEngineUnSupportedActionException,
   CoreEngineUpdateActionPayloadMissingException,
 } from '../core-engine.exceptions';
-import { crudDbConnectionFactory } from '../utils';
+import {
+  crudDbConnectionFactory,
+  resolveObjectVariable,
+  resolveRequestVariable,
+  resolveStepVariable,
+  resolveSystemVariable,
+  resolveVariableType,
+} from '../utils';
 import { ProjectMetadataRepository } from '@api-assistant/projects-be';
 import {
   ALLOWED_DB_OPERATIONS_IN_ENDPOINT,
   EndpointActionDefinition,
-  EndpointActionQuery,
   EndpointCreateActionQuery,
   EndpointDeleteActionQuery,
   EndpointReadActionQuery,
@@ -25,9 +30,14 @@ import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
 
+interface CoreEngineCRUDUsecaseInput {
+  url: string;
+  reqBody: Object;
+}
+
 @Injectable()
 export class CoreEngineCRUDUsecase
-  implements Usecase<string, EndpointResponse>
+  implements Usecase<CoreEngineCRUDUsecaseInput, EndpointResponse>
 {
   private logger = new Logger(CoreEngineCRUDUsecase.name);
 
@@ -37,9 +47,10 @@ export class CoreEngineCRUDUsecase
     @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>
   ) {}
 
-  async execute(endpointUrl: string): Promise<EndpointResponse> {
+  async execute(input: CoreEngineCRUDUsecaseInput): Promise<EndpointResponse> {
     try {
-      const endpoint = await this.getEndpointByURL.execute(endpointUrl);
+      const { url, reqBody } = input;
+      const endpoint = await this.getEndpointByURL.execute(url);
       if (!endpoint) {
         throw new Error('Endpoint not found for the URL ' + endpoint);
         return;
@@ -61,7 +72,10 @@ export class CoreEngineCRUDUsecase
             projectId,
             {
               ...operation,
-              payload: this.replaceVariables(operation.payload, crudResponse),
+              payload: this.replaceVariables(operation.payload, {
+                crudResponseArr: crudResponse,
+                reqBody,
+              }),
             },
             db
           )
@@ -72,7 +86,10 @@ export class CoreEngineCRUDUsecase
       this.logger.log('Computed CRUD: ', crudResponse);
       mongoConnection.close();
       this.logger.log(`Core engine db ${projectId} connection closed`);
-      return this.replaceVariables(response, crudResponse);
+      return this.replaceVariables(response, {
+        crudResponseArr: crudResponse,
+        reqBody,
+      });
     } catch (err) {
       console.error(err);
       if (err instanceof MongoServerError)
@@ -237,7 +254,14 @@ export class CoreEngineCRUDUsecase
     return collection.updateOne(payload.filter, payload.patch);
   }
 
-  private replaceVariables(payload: any, crudResponseArr: any): any {
+  private replaceVariables(
+    payload: any,
+    inputs: {
+      crudResponseArr: any;
+      reqBody: any;
+    }
+  ): any {
+    const { crudResponseArr, reqBody } = inputs;
     if (Array.isArray(payload)) {
       const replacedVariablesInArr: unknown[] = [];
       payload.forEach((payloadArrayEle) => {
@@ -248,68 +272,59 @@ export class CoreEngineCRUDUsecase
         replacedVariablesInArr.push(processedArrayEle);
       });
       this.logger.log(
-        'completed processing array type' +
+        'completed processing array type ' +
           JSON.stringify(replacedVariablesInArr)
       );
       return replacedVariablesInArr;
     } else if (typeof payload === 'object') {
       const replacedVariablesInObject: Record<string, unknown> = {};
       Object.keys(payload).forEach((key) => {
-        replacedVariablesInObject[key] = this.replaceVariables(
-          payload[key],
-          crudResponseArr
-        );
+        replacedVariablesInObject[key] = this.replaceVariables(payload[key], {
+          crudResponseArr: crudResponseArr,
+          reqBody,
+        });
         this.logger.log(
-          'processed object value' +
+          `processed object value key ${key} ` +
             JSON.stringify(replacedVariablesInObject[key])
         );
       });
       this.logger.log(
-        'processed object type' + JSON.stringify(replacedVariablesInObject)
+        'processed entire object type ' +
+          JSON.stringify(replacedVariablesInObject)
       );
       return replacedVariablesInObject;
     }
-    const value: unknown = payload;
-    this.logger.log('found primitive value', value);
-    const variablePrefix = '${result';
-    const variableSuffix = '}';
-    const variablePrefixLen = variablePrefix.length;
-    if (
-      typeof value === 'string' &&
-      value.startsWith(variablePrefix) &&
-      value.endsWith(variableSuffix)
-    ) {
-      this.logger.log('processing variable' + value);
-      const valueKey: string = value.slice(variablePrefixLen, value.length - 1);
-      const valueKeyArr = valueKey.split('.').slice(1);
-      this.logger.log('found variable paths' + JSON.stringify(valueKeyArr));
-      let nestedval = crudResponseArr;
-      for (const key of valueKeyArr) {
-        if (!valueIsDefined(nestedval[key])) {
-          throw new CoreEngineInvalidVariablePathException(value);
-        }
-        this.logger.log(
-          `found nested value for key ${key}` + JSON.stringify(nestedval[key])
-        );
-        nestedval = nestedval[key];
-      }
-      this.logger.log(
-        `Found value or variable ${value}` + JSON.stringify(nestedval)
-      );
-      return nestedval;
-    }
 
-    const objectIdPrefix = 'ObjectId(';
-    const objectIdSuffix = ')';
-    const objectIdPrefixLen = objectIdPrefix.length;
-    if (
-      typeof value === 'string' &&
-      value.startsWith(objectIdPrefix) &&
-      value.endsWith(objectIdSuffix)
-    ) {
-      const valueKey: string = value.slice(objectIdPrefixLen, value.length - 1);
-      return new ObjectId(valueKey);
+    const primitiveValue: unknown = payload;
+    this.logger.log(
+      `found primitive value ${primitiveValue} with type ${typeof primitiveValue}`
+    );
+
+    if (typeof primitiveValue !== 'string') {
+      return primitiveValue;
     }
-    return value;
+    const crudVariableType = resolveVariableType(primitiveValue, this.logger);
+    switch (crudVariableType) {
+      case 'Request': {
+        return resolveRequestVariable(primitiveValue, reqBody, this.logger);
+      }
+      case 'System': {
+        return resolveSystemVariable(primitiveValue, this.logger);
+      }
+      case 'ObjectId': {
+        return resolveObjectVariable(primitiveValue, this.logger);
+      }
+      case 'Steps': {
+        return resolveStepVariable(
+          primitiveValue,
+          this.logger,
+          crudResponseArr
+        );
+      }
+      default: {
+        return primitiveValue;
+      }
+    }
+    return primitiveValue;
   }
 }
