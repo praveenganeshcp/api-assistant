@@ -41,8 +41,11 @@ export class CoreEngineController {
   }
 
   @Post('api/:path')
-  performCrud(@Param('path') endpointUrl: string) {
-    return this.coreEngineCRUDUsecase.execute(endpointUrl);
+  performPostCrud(@Param('path') endpointUrl: string, @Body() reqBody: any) {
+    return this.coreEngineCRUDUsecase.execute({
+      url: endpointUrl,
+      reqBody,
+    });
   }
 
   @Post('files')
