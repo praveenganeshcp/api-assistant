@@ -23,7 +23,7 @@ export class EndpointActionDefinitionDto {
   payload!: EndpointActionQuery;
 }
 
-export class EndpointCRUDDto {
+export class CreateEndpointCRUDDto {
   @IsString()
   @Length(3, 20)
   name!: string;
@@ -43,3 +43,5 @@ export class EndpointCRUDDto {
   @IsObject()
   response!: EndpointResponse;
 }
+
+export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}
