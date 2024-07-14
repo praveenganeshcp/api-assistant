@@ -69,37 +69,97 @@ export const errorInLoadingExplorerObjectsAction =
     props<{ error: string }>()
   );
 
-
 export const fetchAllEndpoints = createApplicationDetailsActionWithProps(
   'Fetch All Endpoints',
   props<{ applicationId: string }>()
-)
+);
 
 export const allEndpointsLoaded = createApplicationDetailsActionWithProps(
   `All endpoints fetched`,
   props<{ endpoints: MinimalEndpointInfo[] }>()
-)
+);
 
 export const errorInFetchingEndpoints = createApplicationDetailsActionWithProps(
   `Error in fetching endpoints`,
   props<{ error: string }>()
-)
+);
 
 export const fetchEndpointDetails = createApplicationDetailsActionWithProps(
   'Fetch Endpoint details',
-  props<{ applicationId: string, endpointId: string }>()
-)
+  props<{ applicationId: string; endpointId: string }>()
+);
 
 export const endpointDetailsFetched = createApplicationDetailsActionWithProps(
   `Endpoint details fetched`,
   props<{ endpoint: Endpoint }>()
-)
+);
 
-export const errorInFetchingEndpointDetails = createApplicationDetailsActionWithProps(
-  `Endpoint details fetch failed`,
-  props<{ error: string }>()
-)
+export const errorInFetchingEndpointDetails =
+  createApplicationDetailsActionWithProps(
+    `Endpoint details fetch failed`,
+    props<{ error: string }>()
+  );
 
 export const resetEndpointDetailsState = createApplicationDetailsAction(
-  'Reset Endpoint details state',
-)
+  'Reset Endpoint details state'
+);
+
+export const deleteEndpointAction = createApplicationDetailsActionWithProps(
+  'Delete Endpoint',
+  props<{ endpointId: string; applicationId: string }>()
+);
+
+export const endpointDeletedAction =
+  createApplicationDetailsAction(`Endpoint deleted`);
+
+export const errorInDeletingEndpointAction =
+  createApplicationDetailsActionWithProps(
+    'Error in deleteing endpoints',
+    props<{ error: string }>()
+  );
+
+export const createEndpointAction = createApplicationDetailsActionWithProps(
+  'Create Endpoint',
+  props<{
+    endpoint: Pick<
+      Endpoint,
+      'name' | 'description' | 'crud' | 'response' | 'url'
+    >;
+    applicationId: string;
+  }>()
+);
+
+export const endpointCreatedAction = createApplicationDetailsActionWithProps(
+  'Endpoint created',
+  props<{ endpoint: Endpoint }>()
+);
+
+export const errorInCreatingEndpointAction =
+  createApplicationDetailsActionWithProps(
+    'Error in creating endpoint',
+    props<{ error: string }>()
+  );
+
+export const editEndpointAction = createApplicationDetailsActionWithProps(
+  'Edit Endpoint',
+  props<{
+    endpoint: Pick<
+      Endpoint,
+      'name' | 'description' | 'crud' | 'response' | 'url'
+    >;
+    applicationId: string;
+    endpointId: string;
+  }>()
+);
+
+export const endpointUpdateSuccessAction =
+  createApplicationDetailsActionWithProps(
+    'Endpoint updated',
+    props<{ endpoint: Endpoint }>()
+  );
+
+export const errorInUpdatingEndpointAction =
+  createApplicationDetailsActionWithProps(
+    'Error in updating endpoint',
+    props<{ error: string }>()
+  );

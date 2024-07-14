@@ -1,13 +1,16 @@
 <ng-container *ngIf="isLoading$ | async; else endpointsForm">
-    loading...
+  loading...
 </ng-container>
 
 <ng-template #endpointsForm>
-    <ng-container *ngIf="!!(error$ | async); else editFormView">
-        Error
-    </ng-container>
+  <ng-container *ngIf="!!(error$ | async); else editFormView">
+    Error
+  </ng-container>
 
-    <ng-template #editFormView>
-        <api-assistant-endpoints-form [value]="endpointsFormValue$ | async" />
-    </ng-template>
+  <ng-template #editFormView>
+    <api-assistant-endpoints-form
+      (onSubmit)="handleSaveEndpoint($event.value)"
+      [value]="endpointsFormValue$ | async"
+    />
+  </ng-template>
 </ng-template>

@@ -4,32 +4,49 @@ import { Store } from '@ngrx/store';
 import { fetchAllEndpoints } from '../../store/actions';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { EndpointsListViewComponent, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
-import { allEndpointsDataSelector, allEndpointsErrorSelector, allEndpointsLoadingSelector } from "../../store/selectors"
+import {
+  EndpointsListViewComponent,
+  MinimalEndpointInfo,
+} from '@api-assistant/endpoints-fe';
+import {
+  allEndpointsDataSelector,
+  allEndpointsErrorSelector,
+  allEndpointsLoadingSelector,
+} from '../../store/selectors';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
 
 @Component({
   selector: 'api-assistant-application-endpoints-host',
   standalone: true,
-  imports: [CommonModule, EndpointsListViewComponent, RouterModule, SwButtonComponent],
+  imports: [
+    CommonModule,
+    EndpointsListViewComponent,
+    RouterModule,
+    SwButtonComponent,
+  ],
   templateUrl: './application-endpoints-host.component.html',
   styleUrls: ['./application-endpoints-host.component.scss'],
 })
 export class ApplicationEndpointsHostComponent implements OnInit {
+  public readonly allEndpoints$: Observable<MinimalEndpointInfo[]> = this.store
+    .select(allEndpointsDataSelector)
+    .pipe(
+      map((endpoints) => {
+        if (endpoints === null || endpoints === undefined) {
+          return [];
+        }
+        return endpoints;
+      })
+    );
 
-  public readonly allEndpoints$: Observable<MinimalEndpointInfo[]> = this.store.select(allEndpointsDataSelector).pipe(
-    map(endpoints => {
-      if(endpoints === null || endpoints === undefined) {
-        return []
-      }
-      return endpoints;
-    })
-  )
+  public readonly endpointsLoading$: Observable<boolean> = this.store.select(
+    allEndpointsLoadingSelector
+  );
 
-  public readonly endpointsLoading$: Observable<boolean> = this.store.select(allEndpointsLoadingSelector);
-
-  public readonly endpointsFetchError$: Observable<string> = this.store.select(allEndpointsErrorSelector);
+  public readonly endpointsFetchError$: Observable<string> = this.store.select(
+    allEndpointsErrorSelector
+  );
 
   constructor(
     private readonly store: Store<AppState>,
@@ -42,15 +59,29 @@ export class ApplicationEndpointsHostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.store.dispatch(fetchAllEndpoints({ applicationId: this.applicationId }))
+    this.store.dispatch(
+      fetchAllEndpoints({ applicationId: this.applicationId })
+    );
   }
 
   public handleAddEndpoint() {
-    this.router.navigate(['app', 'projects', this.applicationId, 'endpoints', 'create'])
+    this.router.navigate([
+      'app',
+      'projects',
+      this.applicationId,
+      'endpoints',
+      'create',
+    ]);
   }
 
   public handleEndpointDetailNavigation(endpoint: MinimalEndpointInfo) {
-    this.router.navigate(['app', 'projects', this.applicationId, 'endpoints', endpoint._id ])
+    this.router.navigate([
+      'app',
+      'projects',
+      this.applicationId,
+      'endpoints',
+      endpoint._id,
+      'view',
+    ]);
   }
-  
 }

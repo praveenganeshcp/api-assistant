@@ -91,4 +91,46 @@ export class ApplicationDetailsRepository {
       }
     );
   }
+
+  createEndpoint(
+    applicationId: string,
+    endpoint: Pick<
+      Endpoint,
+      'name' | 'description' | 'crud' | 'response' | 'url'
+    >
+  ) {
+    return this.http.post<Endpoint>(
+      `${this.baseUrl}/projects/${applicationId}/endpoints`,
+      endpoint,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  editEndpoint(
+    applicationId: string,
+    endpointId: string,
+    endpoint: Pick<
+      Endpoint,
+      'name' | 'description' | 'crud' | 'response' | 'url'
+    >
+  ) {
+    return this.http.patch<Endpoint>(
+      `${this.baseUrl}/projects/${applicationId}/endpoints/${endpointId}`,
+      endpoint,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  deleteEndpointById(applicationId: string, endpointId: string) {
+    return this.http.delete<void>(
+      `${this.baseUrl}/projects/${applicationId}/endpoints/${endpointId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

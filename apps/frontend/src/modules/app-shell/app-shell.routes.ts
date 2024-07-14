@@ -38,22 +38,38 @@ export default [
         children: [
           {
             path: 'endpoints',
-            loadComponent: () => import("../application-details/components/application-endpoints-host/application-endpoints-host.component").then(c => c.ApplicationEndpointsHostComponent),
+            loadComponent: () =>
+              import(
+                '../application-details/components/application-endpoints-host/application-endpoints-host.component'
+              ).then((c) => c.ApplicationEndpointsHostComponent),
           },
           {
-            path: "endpoints/create",
-            loadComponent: () => import("../application-details/components/create-endpoints-host/create-endpoints-host.component").then(c => c.CreateEndpointsHostComponent)
+            path: 'endpoints/create',
+            loadComponent: () =>
+              import(
+                '../application-details/components/create-endpoints-host/create-endpoints-host.component'
+              ).then((c) => c.CreateEndpointsHostComponent),
           },
           {
-            path: "endpoints/:endpointId",
-            loadComponent: () => import("../application-details/components/edit-endpoints-host/edit-endpoints-host.component").then(c => c.EditEndpointsHostComponent)
+            path: 'endpoints/:endpointId/edit',
+            loadComponent: () =>
+              import(
+                '../application-details/components/edit-endpoints-host/edit-endpoints-host.component'
+              ).then((c) => c.EditEndpointsHostComponent),
           },
           {
-            path: "",
-            pathMatch: "full",
-            redirectTo: "endpoints"
-          }
-        ]
+            path: 'endpoints/:endpointId/view',
+            loadComponent: () =>
+              import(
+                '../application-details/components/endpoint-details-view-host/endpoint-details-view-host.component'
+              ).then((c) => c.EndpointDetailsViewHostComponent),
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'endpoints',
+          },
+        ],
       },
     ],
   },

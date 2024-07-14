@@ -13,6 +13,15 @@ import {
   fetchEndpointDetails,
   endpointDetailsFetched,
   errorInFetchingEndpointDetails,
+  deleteEndpointAction,
+  endpointDeletedAction,
+  errorInDeletingEndpointAction,
+  createEndpointAction,
+  endpointCreatedAction,
+  errorInCreatingEndpointAction,
+  editEndpointAction,
+  endpointUpdateSuccessAction,
+  errorInUpdatingEndpointAction,
 } from './actions';
 import { catchError, exhaustMap, map, of, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -82,8 +91,10 @@ export class ApplicationDetailsEffects {
       exhaustMap(({ applicationId }) => {
         return this.repository.fetchAllEndpoints(applicationId).pipe(
           map(
-            (endpoints: MinimalEndpointInfo[]) => allEndpointsLoaded({ endpoints }),
-            catchError(() => of(
+            (endpoints: MinimalEndpointInfo[]) =>
+              allEndpointsLoaded({ endpoints }),
+            catchError(() =>
+              of(
                 errorInFetchingEndpoints({
                   error: 'Error in loading endpoints',
                 })
@@ -93,24 +104,73 @@ export class ApplicationDetailsEffects {
         );
       })
     );
-  })
+  });
 
   loadEndpointDetails$ = createEffect(() => {
     return this.actions.pipe(
       ofType(fetchEndpointDetails),
       exhaustMap(({ applicationId, endpointId }) => {
-        return this.repository.fetchEndpointDetail(applicationId, endpointId).pipe(
-          map(
-            (endpoint: Endpoint) => endpointDetailsFetched({ endpoint }),
-            catchError(() => of(
-                errorInFetchingEndpointDetails({
-                  error: 'Error in loading endpoint details',
-                })
+        return this.repository
+          .fetchEndpointDetail(applicationId, endpointId)
+          .pipe(
+            map(
+              (endpoint: Endpoint) => endpointDetailsFetched({ endpoint }),
+              catchError(() =>
+                of(
+                  errorInFetchingEndpointDetails({
+                    error: 'Error in loading endpoint details',
+                  })
+                )
               )
             )
+          );
+      })
+    );
+  });
+
+  deleteEndpoint$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(deleteEndpointAction),
+      exhaustMap(({ applicationId, endpointId }) => {
+        return this.repository
+          .deleteEndpointById(applicationId, endpointId)
+          .pipe(
+            map(() => endpointDeletedAction()),
+            catchError(() =>
+              of(errorInDeletingEndpointAction({ error: 'Error occured' }))
+            )
+          );
+      })
+    );
+  });
+
+  createEndpoint$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(createEndpointAction),
+      exhaustMap(({ applicationId, endpoint }) => {
+        return this.repository.createEndpoint(applicationId, endpoint).pipe(
+          map((endpoint) => endpointCreatedAction({ endpoint })),
+          catchError(() =>
+            of(errorInCreatingEndpointAction({ error: 'Error occured' }))
           )
         );
       })
     );
-  })
+  });
+
+  editEndpoint$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(editEndpointAction),
+      exhaustMap(({ applicationId, endpointId, endpoint }) => {
+        return this.repository
+          .editEndpoint(applicationId, endpointId, endpoint)
+          .pipe(
+            map((endpoint) => endpointUpdateSuccessAction({ endpoint })),
+            catchError(() =>
+              of(errorInUpdatingEndpointAction({ error: 'Error occured' }))
+            )
+          );
+      })
+    );
+  });
 }
