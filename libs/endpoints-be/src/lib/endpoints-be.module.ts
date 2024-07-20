@@ -6,6 +6,7 @@ import { GetAllEndpointsMinimalInfoUsecase } from './usecases/get-all-endpoints-
 import { GetEndpointByIdUsecase } from './usecases/get-endpoint-by-id.usecase';
 import { UpdateEndpointUsecase } from './usecases/update-endpoint.usecase';
 import { DeleteEndpointsUsecase } from './usecases/delete-endpoint.usecase';
+import { CreateAllBuiltinEndpointsUsecase } from './usecases/create-builtin-endpoints.usecase';
 
 @Module({
   controllers: [],
@@ -17,6 +18,7 @@ import { DeleteEndpointsUsecase } from './usecases/delete-endpoint.usecase';
     GetEndpointByIdUsecase,
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
+    CreateAllBuiltinEndpointsUsecase
   ],
   exports: [
     CreateEndpointUsecase,
@@ -25,6 +27,7 @@ import { DeleteEndpointsUsecase } from './usecases/delete-endpoint.usecase';
     GetEndpointByIdUsecase,
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
+    CreateAllBuiltinEndpointsUsecase
   ],
 })
 export class EndpointsBeModule {}
