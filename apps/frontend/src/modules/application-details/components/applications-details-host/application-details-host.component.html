@@ -18,7 +18,9 @@
       [style.--sw-tab-view-content-height]="'93%'"
       [tabNames]="tabNames"
     >
-      <router-outlet></router-outlet>
+      <div style="padding: 1rem">
+        <router-outlet></router-outlet>
+      </div>
     </sw-tab-view>
     <ng-template #errorMsg>
       <div class="application-details__error-msg">

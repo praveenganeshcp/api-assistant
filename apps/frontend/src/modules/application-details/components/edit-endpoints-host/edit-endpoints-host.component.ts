@@ -13,7 +13,7 @@ import {
   endpointDetailsErrorSelector,
   endpointDetailsLoadingSelector,
 } from '../../store/selectors';
-import { CanBeNull } from 'ngx-simple-widgets';
+import { CanBeNull, SwButtonComponent } from 'ngx-simple-widgets';
 import {
   editEndpointAction,
   endpointUpdateSuccessAction,
@@ -21,13 +21,18 @@ import {
   fetchEndpointDetails,
   resetEndpointDetailsState,
 } from '../../store/actions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-edit-endpoints-host',
   standalone: true,
-  imports: [CommonModule, EndpointsFormComponent],
+  imports: [
+    CommonModule,
+    EndpointsFormComponent,
+    RouterModule,
+    SwButtonComponent,
+  ],
   templateUrl: './edit-endpoints-host.component.html',
   styleUrls: ['./edit-endpoints-host.component.scss'],
 })
@@ -115,8 +120,6 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
           'applications',
           this.applicationId,
           'endpoints',
-          endpoint._id,
-          'view',
         ]);
       });
   }

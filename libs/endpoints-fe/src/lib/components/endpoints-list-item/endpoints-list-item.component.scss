@@ -11,6 +11,12 @@
   color: inherit;
 }
 
+.list-item-name-url {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .list-item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
@@ -23,19 +29,18 @@
 
 .list-item-name {
   font-size: 1.5em;
-  margin: 0 0 8px 0;
   color: #333;
 }
 
 .list-item-description {
   font-size: 1em;
-  margin: 0 0 8px 0;
+  margin: 8px 0 0 0;
   color: #666;
 }
 
 .list-item-date {
   font-size: 0.875em;
-  margin: 0 0 8px 0;
+  margin: 8px 0 0 0;
   color: #999;
 }
 

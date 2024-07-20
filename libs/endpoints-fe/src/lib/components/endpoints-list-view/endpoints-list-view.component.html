@@ -1,4 +1,7 @@
-<div *ngFor="let endpoint of endpointsMinimalInfo" style="margin: 1rem">
-  <api-assistant-endpoints-list-item (click)="handleEndpointClicked(endpoint)" [minimalEndpointInfo]="endpoint">
+<div *ngFor="let endpoint of endpointsMinimalInfo">
+  <api-assistant-endpoints-list-item
+    (click)="handleEndpointClicked(endpoint)"
+    [minimalEndpointInfo]="endpoint"
+  >
   </api-assistant-endpoints-list-item>
 </div>

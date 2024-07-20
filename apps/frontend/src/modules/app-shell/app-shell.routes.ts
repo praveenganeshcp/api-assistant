@@ -58,13 +58,6 @@ export default [
               ).then((c) => c.EditEndpointsHostComponent),
           },
           {
-            path: 'endpoints/:endpointId/view',
-            loadComponent: () =>
-              import(
-                '../application-details/components/endpoint-details-view-host/endpoint-details-view-host.component'
-              ).then((c) => c.EndpointDetailsViewHostComponent),
-          },
-          {
             path: '',
             pathMatch: 'full',
             redirectTo: 'endpoints',

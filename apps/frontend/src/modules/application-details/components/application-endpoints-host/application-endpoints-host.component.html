@@ -1,14 +1,22 @@
 <ng-container *ngIf="endpointsLoading$ | async; else dataTemplate">
-    loading...
+  loading...
 </ng-container>
 
 <ng-template #dataTemplate>
-    <ng-container *ngIf="endpointsFetchError$ | async as errorMsg; else listView">
-        {{ errorMsg }}
-    </ng-container>
+  <ng-container *ngIf="endpointsFetchError$ | async as errorMsg; else listView">
+    {{ errorMsg }}
+  </ng-container>
 
-    <ng-template #listView>
-        <button (click)="handleAddEndpoint()" sw-primary-button>Add Endpoint</button>
-        <api-assistant-endpoints-list-view (endpointClicked)="handleEndpointDetailNavigation($event)" [endpointsMinimalInfo]="(allEndpoints$ | async) ?? []" />
-    </ng-template>
+  <ng-template #listView>
+    <div class="endpoints-toolbar">
+      <h1>All Endpoints</h1>
+      <button (click)="handleAddEndpoint()" sw-bordered-button>
+        Add Endpoint
+      </button>
+    </div>
+    <api-assistant-endpoints-list-view
+      (endpointClicked)="handleEndpointDetailNavigation($event)"
+      [endpointsMinimalInfo]="(allEndpoints$ | async) ?? []"
+    />
+  </ng-template>
 </ng-template>

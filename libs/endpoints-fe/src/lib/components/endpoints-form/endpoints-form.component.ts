@@ -44,6 +44,8 @@ export interface EndpointFormValue {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EndpointsFormComponent {
+  @Input() loading: boolean = false;
+
   @Input()
   set value(formValue: CanBeNull<EndpointFormValue>) {
     if (formValue) {
@@ -65,8 +67,8 @@ export class EndpointsFormComponent {
     name: this.formBuilder.control('', [Validators.required]),
     url: this.formBuilder.control('', [Validators.required]),
     description: this.formBuilder.control('', [Validators.required]),
-    body: this.formBuilder.control(null, [Validators.required]),
-    response: this.formBuilder.control(null, [Validators.required]),
+    body: this.formBuilder.control([], [Validators.required]),
+    response: this.formBuilder.control({}, [Validators.required]),
   });
 
   public get nameControl() {

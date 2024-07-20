@@ -10,13 +10,19 @@ import {
   endpointCreatedAction,
   errorInCreatingEndpointAction,
 } from '../../store/actions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { SwButtonComponent } from 'ngx-simple-widgets';
 
 @Component({
   selector: 'api-assistant-create-endpoints-host',
   standalone: true,
-  imports: [CommonModule, EndpointsFormComponent],
+  imports: [
+    CommonModule,
+    EndpointsFormComponent,
+    SwButtonComponent,
+    RouterModule,
+  ],
   templateUrl: './create-endpoints-host.component.html',
   styleUrls: ['./create-endpoints-host.component.scss'],
 })
@@ -50,14 +56,12 @@ export class CreateEndpointsHostComponent {
         errorInCreatingEndpointAction,
         this.inProgress$
       )
-      .subscribe(({ endpoint }) => {
+      .subscribe((_) => {
         this.router.navigate([
           'app',
           'applications',
           this.applicationId,
           'endpoints',
-          endpoint._id,
-          'view',
         ]);
       });
   }

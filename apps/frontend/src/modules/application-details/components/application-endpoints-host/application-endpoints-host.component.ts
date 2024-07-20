@@ -81,7 +81,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
       this.applicationId,
       'endpoints',
       endpoint._id,
-      'view',
+      'edit',
     ]);
   }
 }

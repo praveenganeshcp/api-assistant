@@ -15,5 +15,11 @@
 
   <commons-fe-json-input label="Response" formControlName="response" />
 
-  <button sw-primary-button>Save</button>
+  <button
+    [disabled]="createEndpointForm.invalid"
+    [showLoader]="loading"
+    sw-primary-button
+  >
+    Save
+  </button>
 </form>
