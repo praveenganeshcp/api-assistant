@@ -53,7 +53,7 @@ export class CreateEndpointsHostComponent {
       .subscribe(({ endpoint }) => {
         this.router.navigate([
           'app',
-          'projects',
+          'applications',
           this.applicationId,
           'endpoints',
           endpoint._id,

@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 export interface CreateEndpointUsecaseInput
   extends Pick<Endpoint, 'crud' | 'description' | 'name' | 'response' | 'url'> {
   createdBy: ObjectId;
-  projectId: ObjectId;
+  applicationId: ObjectId;
 }
 
 @Injectable()
@@ -25,7 +25,7 @@ export class CreateEndpointUsecase
       response: data.response,
       createdBy: data.createdBy,
       createdOn: new Date(),
-      projectId: data.projectId,
+      applicationId: data.applicationId,
     });
   }
 }

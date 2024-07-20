@@ -8,7 +8,7 @@ interface UpdateEndpointUsecaseInput {
   id: ObjectId;
   details: Pick<Endpoint, 'name' | 'url' | 'response' | 'crud' | 'description'>;
   userId: ObjectId;
-  projectId: ObjectId;
+  applicationId: ObjectId;
 }
 
 @Injectable()
@@ -24,7 +24,7 @@ export class UpdateEndpointUsecase
       {
         _id: data.id,
         createdBy: data.userId,
-        projectId: data.projectId,
+        applicationId: data.applicationId,
       },
       {
         $set: {

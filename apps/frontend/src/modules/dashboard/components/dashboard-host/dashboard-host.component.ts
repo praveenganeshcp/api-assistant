@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppState } from '../../../app/app.state';
 import { Observable } from 'rxjs';
-import {
-  Application,
-  ApplicationsListViewComponent,
-} from '@api-assistant/dashboard-fe';
+import { ApplicationsListViewComponent } from '@api-assistant/dashboard-fe';
 import { Store } from '@ngrx/store';
 import {
   applicationsListDataErrorSelector,
@@ -14,6 +11,7 @@ import {
 } from '../../store/selectors';
 import { SwLoaderComponent } from 'ngx-simple-widgets';
 import { loadApplicationsAction } from '../../store/actions';
+import { Application } from '@api-assistant/application-core';
 
 @Component({
   selector: 'api-assistant-dashboard-host',

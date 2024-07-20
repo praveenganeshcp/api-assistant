@@ -6,7 +6,7 @@ import { MinimalEndpointInfo } from '../models';
 
 interface GetAllEndpointsMinimalInfoUsecaseInput {
   userId: ObjectId;
-  projectId: ObjectId;
+  applicationId: ObjectId;
 }
 
 @Injectable()
@@ -21,7 +21,7 @@ export class GetAllEndpointsMinimalInfoUsecase
   ): Promise<MinimalEndpointInfo[]> {
     return this.endpointsRepository
       .findAll({
-        projectId: data.projectId,
+        applicationId: data.applicationId,
         createdBy: data.userId,
       })
       .then((allEndpoints) => {
@@ -32,7 +32,7 @@ export class GetAllEndpointsMinimalInfoUsecase
             description: endpoint.description,
             url: endpoint.url,
             createdOn: endpoint.createdOn,
-            projectId: endpoint.projectId,
+            applicationId: endpoint.applicationId,
           };
           return endpointMinimalInfo;
         });

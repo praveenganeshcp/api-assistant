@@ -9,8 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SwToastService } from 'ngx-simple-widgets';
 
 describe('LoginComponent', () => {
-
-  const MOCK_LOGIN_FORM_DATA: LoginFormData = { emailId: "test@mail.com", password: "Password1" };
+  const MOCK_LOGIN_FORM_DATA: LoginFormData = {
+    emailId: 'test@mail.com',
+    password: 'Password1',
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,10 +22,10 @@ describe('LoginComponent', () => {
           provide: StoreActionDispatcher,
           useValue: {
             dispatchAsyncAction: () => of({}),
-          }
+          },
         },
-        SwToastService
-      ]
+        SwToastService,
+      ],
     }).compileComponents();
   });
 
@@ -34,58 +36,76 @@ describe('LoginComponent', () => {
 
   it('should have link for forgot password', async () => {
     const { getByRole } = await render(LoginComponent);
-    expect(getByRole("link", {name: "forgot-password"}).getAttribute("href")).toBe('/accounts/forgot-password')
-  })
+    expect(
+      getByRole('link', { name: 'forgot-password' }).getAttribute('href')
+    ).toBe('/accounts/forgot-password');
+  });
 
   it('should have link to signup', async () => {
     const { getByRole } = await render(LoginComponent);
-    expect(getByRole("link", {name: "signup"}).getAttribute("href")).toBe('/accounts/signup')
-  })
+    expect(getByRole('link', { name: 'signup' }).getAttribute('href')).toBe(
+      '/accounts/signup'
+    );
+  });
 
   it('should call the login component method when form data emitted from form', async () => {
     const { fixture } = await render(LoginComponent);
-    const handleLoginSpy = jest.spyOn(fixture.componentInstance, "handleLogin");
-    const loginFormComponent: LoginFormComponent  = fixture.debugElement.query(By.directive(LoginFormComponent)).componentInstance
-    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA)
-    expect(handleLoginSpy).toHaveBeenCalledWith(MOCK_LOGIN_FORM_DATA)
-  })
+    const handleLoginSpy = jest.spyOn(fixture.componentInstance, 'handleLogin');
+    const loginFormComponent: LoginFormComponent = fixture.debugElement.query(
+      By.directive(LoginFormComponent)
+    ).componentInstance;
+    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA);
+    expect(handleLoginSpy).toHaveBeenCalledWith(MOCK_LOGIN_FORM_DATA);
+  });
 
   it('should redirect to home page after login is success', async () => {
     const { fixture } = await render(LoginComponent);
-    const routerNavigateSpy = jest.spyOn(TestBed.inject(Router), "navigateByUrl");
-    const loginFormComponent: LoginFormComponent  = fixture.debugElement.query(By.directive(LoginFormComponent)).componentInstance
-    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA)
-    expect(routerNavigateSpy).toHaveBeenCalledWith("/app/projects")
-  })
+    const routerNavigateSpy = jest.spyOn(
+      TestBed.inject(Router),
+      'navigateByUrl'
+    );
+    const loginFormComponent: LoginFormComponent = fixture.debugElement.query(
+      By.directive(LoginFormComponent)
+    ).componentInstance;
+    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA);
+    expect(routerNavigateSpy).toHaveBeenCalledWith('/app/applications');
+  });
 
   it('should redirect to callBack url if provided in url after login is success', async () => {
-    const callBackUrl = "/app/applications/1";
+    const callBackUrl = '/app/applications/1';
     const { fixture } = await render(LoginComponent, {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { queryParamMap: { get: () => callBackUrl }  } }
-        }
-      ]
+          useValue: { snapshot: { queryParamMap: { get: () => callBackUrl } } },
+        },
+      ],
     });
-    const routerNavigateSpy = jest.spyOn(TestBed.inject(Router), "navigateByUrl");
-    const loginFormComponent: LoginFormComponent  = fixture.debugElement.query(By.directive(LoginFormComponent)).componentInstance
-    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA)
-    expect(routerNavigateSpy).toHaveBeenCalledWith(callBackUrl)
-  })
+    const routerNavigateSpy = jest.spyOn(
+      TestBed.inject(Router),
+      'navigateByUrl'
+    );
+    const loginFormComponent: LoginFormComponent = fixture.debugElement.query(
+      By.directive(LoginFormComponent)
+    ).componentInstance;
+    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA);
+    expect(routerNavigateSpy).toHaveBeenCalledWith(callBackUrl);
+  });
 
   it('should error toast message when login fails', async () => {
     const { fixture } = await render(LoginComponent, {
       providers: [
         {
           provide: StoreActionDispatcher,
-          useValue: { dispatchAsyncAction: () => throwError(() => {}) }
-        }
-      ]
-    })
-    const errorToastSpy = jest.spyOn(TestBed.inject(SwToastService), "error");
-    const loginFormComponent: LoginFormComponent  = fixture.debugElement.query(By.directive(LoginFormComponent)).componentInstance
-    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA)
-    expect(errorToastSpy).toHaveBeenCalledWith({"message": "Error in signin"})
-  })
+          useValue: { dispatchAsyncAction: () => throwError(() => {}) },
+        },
+      ],
+    });
+    const errorToastSpy = jest.spyOn(TestBed.inject(SwToastService), 'error');
+    const loginFormComponent: LoginFormComponent = fixture.debugElement.query(
+      By.directive(LoginFormComponent)
+    ).componentInstance;
+    loginFormComponent.submitData.emit(MOCK_LOGIN_FORM_DATA);
+    expect(errorToastSpy).toHaveBeenCalledWith({ message: 'Error in signin' });
+  });
 });

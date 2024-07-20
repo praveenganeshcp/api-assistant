@@ -30,7 +30,7 @@ export class AccountsGuard implements CanActivate {
           this.swToastService.warn({
             message: 'Already logged in',
           });
-          return this.router.createUrlTree(['app', 'projects']);
+          return this.router.createUrlTree(['app', 'applications']);
         }
         return true;
       })

@@ -6,7 +6,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CORE_ENGINE_UPLOAD_ROOT, removeRootPath } from '../utils';
 
 interface CoreEngineFetchFilesUsecaseInput {
-  projectId: string;
+  applicationId: string;
   path: string;
 }
 
@@ -28,18 +28,18 @@ export class CoreEngineFetchFilesUsecase
   async execute(
     input: CoreEngineFetchFilesUsecaseInput
   ): Promise<CoreEngineFetchFilesUsecaseOutput[]> {
-    const { path, projectId } = input;
+    const { path, applicationId } = input;
     this.logger.log(
-      `Fetching files in project id ${projectId} for path ${path}`
+      `Fetching files in application id ${applicationId} for path ${path}`
     );
     const fullPath = join(
       process.cwd(),
       CORE_ENGINE_UPLOAD_ROOT,
-      projectId,
+      applicationId,
       path
     );
     if (!existsSync(fullPath)) {
-      return []
+      return [];
     }
     const objects = await readdir(fullPath);
     return objects.map((objectName) => {

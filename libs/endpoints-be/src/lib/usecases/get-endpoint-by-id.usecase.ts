@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 
 interface GetEndpointByIdUsecaseInput {
   id: ObjectId;
-  projectId: ObjectId;
+  applicationId: ObjectId;
   userId: ObjectId;
 }
 
@@ -19,7 +19,7 @@ export class GetEndpointByIdUsecase
   execute(data: GetEndpointByIdUsecaseInput): Promise<CanBeNull<Endpoint>> {
     return this.endpointsRepository.findOne({
       _id: data.id,
-      projectId: data.projectId,
+      applicationId: data.applicationId,
       createdBy: data.userId,
     });
   }

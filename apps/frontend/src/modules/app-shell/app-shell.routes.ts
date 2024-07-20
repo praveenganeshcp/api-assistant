@@ -15,7 +15,7 @@ export default [
       ),
     children: [
       {
-        path: 'projects',
+        path: 'applications',
         loadComponent: () =>
           import(
             '../dashboard/components/dashboard-host/dashboard-host.component'
@@ -26,11 +26,11 @@ export default [
         ],
       },
       {
-        path: 'projects/:applicationId',
+        path: 'applications/:applicationId',
         loadComponent: () =>
           import(
-            '../application-details/components/project-details-host/project-details-host.component'
-          ).then((m) => m.ProjectDetailsHostComponent),
+            '../application-details/components/applications-details-host/application-details-host.component'
+          ).then((m) => m.ApplicationDetailsHostComponent),
         providers: [
           provideState(applicationDetailsFeature),
           provideEffects(ApplicationDetailsEffects),

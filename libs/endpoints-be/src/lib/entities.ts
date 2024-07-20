@@ -10,5 +10,5 @@ export interface Endpoint {
   response: EndpointResponse;
   createdBy: ObjectId;
   createdOn: Date;
-  projectId: ObjectId;
+  applicationId: ObjectId;
 }

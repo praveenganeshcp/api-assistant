@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SwIconComponent, SwButtonComponent } from 'ngx-simple-widgets';
-import { Application } from '../../types';
+import { Application } from '@api-assistant/application-core';
 
 @Component({
   selector: 'api-assistant-application-list-item',
