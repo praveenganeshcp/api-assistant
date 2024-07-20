@@ -58,9 +58,16 @@ export default [
               ).then((c) => c.EditEndpointsHostComponent),
           },
           {
+            path: 'users',
+            loadComponent: () =>
+              import(
+                '../application-users/components/application-users-grid/application-users-grid.component'
+              ).then((c) => c.ApplicationUsersGridComponent),
+          },
+          {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'endpoints',
+            redirectTo: 'users',
           },
         ],
       },

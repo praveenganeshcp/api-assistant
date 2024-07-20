@@ -44,7 +44,7 @@ import { ApplicationEndpointsHostComponent } from '../../../endpoints/components
 export class ApplicationDetailsHostComponent {
   protected readonly tabNames: string[] = [
     'Endpoints',
-    'Experiment',
+    'Users',
     'Files',
     'Settings',
   ];
@@ -71,7 +71,7 @@ export class ApplicationDetailsHostComponent {
     return this.activatedRoute.snapshot.params['applicationId'];
   }
 
-  activeTabIndex = 0;
+  activeTabIndex = 1;
 
   public isDesktopScreen$ = this.breakpointObserver.isDesktopScreen$;
 

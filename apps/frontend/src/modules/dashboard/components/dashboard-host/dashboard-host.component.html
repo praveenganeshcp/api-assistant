@@ -2,15 +2,11 @@
   <h1>All Applications</h1>
 
   <div class="dashboard-toolbar">
-    <input
-      [(ngModel)]="searchTerm"
-      (ngModelChange)="handleSearchQuery()"
-      class="dashboard-toolbar__input"
-      type="text"
-      sw-input
-      size="sm"
+    <commons-fe-search-input
       placeholder="Search Applications"
+      (search)="handleSearchQuery($event)"
     />
+
     <button sw-bordered-button (click)="handleClickCreateApplication()">
       Create Application
     </button>

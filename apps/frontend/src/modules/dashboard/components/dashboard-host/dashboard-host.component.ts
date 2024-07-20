@@ -13,13 +13,12 @@ import {
   SwButtonComponent,
   SwDialogModule,
   SwDialogService,
-  SwInputComponent,
   SwLoaderComponent,
 } from 'ngx-simple-widgets';
 import { loadApplicationsAction } from '../../store/actions';
 import { ApplicationDashboardView } from '@api-assistant/application-core';
-import { FormsModule } from '@angular/forms';
 import { CreateApplicationDialogComponent } from '../create-application-dialog/create-application-dialog.component';
+import { SearchInputComponent } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-dashboard-host',
@@ -28,17 +27,14 @@ import { CreateApplicationDialogComponent } from '../create-application-dialog/c
     CommonModule,
     SwLoaderComponent,
     ApplicationsGridViewComponent,
-    SwInputComponent,
-    FormsModule,
     SwButtonComponent,
     SwDialogModule,
+    SearchInputComponent,
   ],
   templateUrl: './dashboard-host.component.html',
   styleUrls: ['./dashboard-host.component.scss'],
 })
 export class DashboardHostComponent implements OnInit {
-  protected searchTerm: string = '';
-
   protected readonly searchTerm$ = new BehaviorSubject('');
 
   private readonly applications$: Observable<ApplicationDashboardView[]> =
@@ -73,8 +69,8 @@ export class DashboardHostComponent implements OnInit {
     this.store.dispatch(loadApplicationsAction());
   }
 
-  protected handleSearchQuery() {
-    this.searchTerm$.next(this.searchTerm);
+  protected handleSearchQuery(searchTerm: string) {
+    this.searchTerm$.next(searchTerm);
   }
 
   protected handleClickCreateApplication() {
