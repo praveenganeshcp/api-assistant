@@ -1,5 +1,4 @@
 import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
-import { ApplicationDetails, FileObject } from '@api-assistant/project-core-fe';
 import {
   ActionCreatorProps,
   NotAllowedCheck,
@@ -43,7 +42,7 @@ export const loadApplicationDetailsAction =
 export const applicationDetailsLoadedAction =
   createApplicationDetailsActionWithProps(
     'Loaded data',
-    props<{ applicationDetails: ApplicationDetails }>()
+    props<{ applicationDetails: any }>()
   );
 
 export const errorInLoadingApplicationDetailsAction =
@@ -60,7 +59,7 @@ export const goInsideFolderAction = createApplicationDetailsActionWithProps(
 export const explorerObjectsLoadedAction =
   createApplicationDetailsActionWithProps(
     'Explorer objects loaded',
-    props<{ objects: FileObject[] }>()
+    props<{ objects: any[] }>()
   );
 
 export const errorInLoadingExplorerObjectsAction =

@@ -28,7 +28,7 @@ export class LoginComponent {
   ) {}
 
   private get loginSuccessCallbackUrl(): string {
-    return this.route.snapshot.queryParamMap.get('next') ?? '/app/projects';
+    return this.route.snapshot.queryParamMap.get('next') ?? '/app/applications';
   }
 
   public handleLogin(formData: LoginFormData) {
@@ -49,7 +49,7 @@ export class LoginComponent {
         },
         error: () => {
           this.toastService.error({
-            message: "Error in signin"
+            message: 'Error in signin',
           });
         },
       });

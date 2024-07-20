@@ -13,7 +13,7 @@
       <a
         aria-label="go-to-app"
         data-testid="go-to-app-link"
-        routerLink="/app/projects"
+        routerLink="/app/applications"
         >Go to app</a
       >
       <button sw-primary-button (click)="logoutAccount()" aria-label="logout">
@@ -69,7 +69,7 @@
     <!-- Nudge users to create application if loggedin -->
     <span *ngIf="isUserLoggedIn$ | async; else nudgeCreateAccount">
       Start building applications rapidly with
-      <a aria-label="go-to-app-from-footer" routerLink="/app/projects">{{
+      <a aria-label="go-to-app-from-footer" routerLink="/app/applications">{{
         appName
       }}</a>
     </span>

@@ -11,16 +11,22 @@ export class CoreEngineFetchCollectionsUsecase
   private logger = new Logger(CoreEngineFetchCollectionsUsecase.name);
 
   constructor(
-    @Inject(dbConfig.KEY) private readonly databaseConfig: ConfigType<typeof dbConfig>
+    @Inject(dbConfig.KEY)
+    private readonly databaseConfig: ConfigType<typeof dbConfig>
   ) {}
 
-  async execute(projectId: string): Promise<string[]> {
-    const { db, connection } = await crudDbConnectionFactory(projectId, this.databaseConfig.DB_URL);
+  async execute(applicationId: string): Promise<string[]> {
+    const { db, connection } = await crudDbConnectionFactory(
+      applicationId,
+      this.databaseConfig.DB_URL
+    );
 
     const collectionNames: string[] = await (
       await db.listCollections().toArray()
     ).map((collection) => collection.name);
-    this.logger.log('Fetched all collections for projectid ' + projectId);
+    this.logger.log(
+      'Fetched all collections for applicationid ' + applicationId
+    );
     connection.close();
     this.logger.log('Closed connection to crud db');
     return collectionNames;

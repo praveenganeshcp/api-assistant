@@ -57,7 +57,7 @@ export class VerifyAccountComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.router.navigate(['app', 'projects']);
+          this.router.navigate(['app', 'applications']);
         },
         error: (err: ReturnType<typeof verifyAccountErrorAction>) => {
           this.toastService.warn({

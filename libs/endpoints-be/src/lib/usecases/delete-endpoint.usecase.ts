@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 interface DeleteEndpointsUsecaseInput {
   id: ObjectId;
   createdBy: ObjectId;
-  projectId: ObjectId;
+  applicationId: ObjectId;
 }
 
 @Injectable()
@@ -19,7 +19,7 @@ export class DeleteEndpointsUsecase
     await this.repo.deleteOne({
       _id: data.id,
       createdBy: data.createdBy,
-      projectId: data.projectId,
+      applicationId: data.applicationId,
     });
     return;
   }

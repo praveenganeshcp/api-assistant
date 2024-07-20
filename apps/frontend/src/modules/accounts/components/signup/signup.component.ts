@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DuplicateEmailIdValidatorService, SignupFormComponent, SignupFormData, UniqueEmailIdValidator } from '@api-assistant/auth-fe';
+import {
+  DuplicateEmailIdValidatorService,
+  SignupFormComponent,
+  SignupFormData,
+  UniqueEmailIdValidator,
+} from '@api-assistant/auth-fe';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 import {
   createAccountAction,
@@ -17,8 +22,11 @@ import { SwToastService } from 'ngx-simple-widgets';
   imports: [CommonModule, SignupFormComponent],
   templateUrl: './signup.component.html',
   providers: [
-    { provide: UniqueEmailIdValidator, useClass: DuplicateEmailIdValidatorService }
-  ]
+    {
+      provide: UniqueEmailIdValidator,
+      useClass: DuplicateEmailIdValidatorService,
+    },
+  ],
 })
 export class SignupComponent {
   public readonly loading$ = new BehaviorSubject(false);
@@ -40,12 +48,12 @@ export class SignupComponent {
       )
       .subscribe({
         next: () => {
-          this.router.navigate(['app', 'projects']);
+          this.router.navigate(['app', 'applications']);
         },
         error: () => {
           this.toastService.error({
-            message: "Error in creating account"
-          })
+            message: 'Error in creating account',
+          });
         },
       });
   }

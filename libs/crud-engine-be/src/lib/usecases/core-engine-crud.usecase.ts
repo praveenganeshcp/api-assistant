@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
-import { Collection, Db, MongoServerError, ObjectId } from 'mongodb';
+import { Collection, Db, MongoServerError } from 'mongodb';
 import {
   CoreEngineFindActionPayloadMissingException,
   CoreEngineInsertManyActionInvalidDataException,
@@ -51,15 +51,14 @@ export class CoreEngineCRUDUsecase
       const endpoint = await this.getEndpointByURL.execute(url);
       if (!endpoint) {
         throw new Error('Endpoint not found for the URL ' + endpoint);
-        return;
       }
-      const { crud, response, projectId: projectObjectId } = endpoint;
+      const { crud, response, applicationId: applicationObjectId } = endpoint;
 
-      const projectId = projectObjectId.toString();
+      const applicationId = applicationObjectId.toString();
 
       this.logger.log('Handling core engine CRUD');
       const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-        projectId,
+        applicationId,
         this.databaseConfig.DB_URL
       );
 
@@ -67,7 +66,6 @@ export class CoreEngineCRUDUsecase
       for (const operation of crud) {
         crudResponse.push(
           await this.performCRUD(
-            projectId,
             {
               ...operation,
               payload: this.replaceVariables(operation.payload, {
@@ -83,7 +81,7 @@ export class CoreEngineCRUDUsecase
       this.logger.log('Processed the operations');
       this.logger.log('Computed CRUD: ', crudResponse);
       mongoConnection.close();
-      this.logger.log(`Core engine db ${projectId} connection closed`);
+      this.logger.log(`Core engine db ${applicationId} connection closed`);
       return this.replaceVariables(response, {
         crudResponseArr: crudResponse,
         reqBody,
@@ -97,7 +95,6 @@ export class CoreEngineCRUDUsecase
   }
 
   private async performCRUD(
-    projectId: string,
     operation: EndpointActionDefinition,
     db: Db
   ): Promise<unknown> {

@@ -18,16 +18,18 @@ export class DashboardEffects {
     private applicationRepository: ApplicationsRepository
   ) {}
 
-  loadProjects$ = createEffect(() =>
+  loadapplications$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadApplicationsAction),
       exhaustMap(() =>
         this.applicationRepository.fetchApplications().pipe(
-          map((projects) => applicationsLoadedAction({ data: projects })),
+          map((applications) =>
+            applicationsLoadedAction({ data: applications })
+          ),
           catchError(() =>
             of(
               errorInLoadingApplicationsAction({
-                error: 'Error in loading projects',
+                error: 'Error in loading applications',
               })
             )
           )
@@ -36,16 +38,16 @@ export class DashboardEffects {
     )
   );
 
-  createProject$ = createEffect(() =>
+  createapplication$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createApplicationAction),
       exhaustMap(({ name }) =>
         this.applicationRepository.createApplication(name).pipe(
-          map((project) => applicationCreatedAction({ data: project })),
+          map((application) => applicationCreatedAction({ data: application })),
           catchError(() =>
             of(
               errorInCreatingApplicationAction({
-                error: 'Error in creating project',
+                error: 'Error in creating application',
               })
             )
           )

@@ -10,7 +10,6 @@ import {
 export class CoreEngineAuthenticationMiddleware implements NestMiddleware {
   private logger = new Logger(CoreEngineAuthenticationMiddleware.name);
 
-
   async use(req: any, res: Response, next: (error?: unknown) => void) {
     // this.logger.log('Running core engine auth middleware');
     // const coreEngineApiKey = req.headers[
@@ -20,11 +19,11 @@ export class CoreEngineAuthenticationMiddleware implements NestMiddleware {
     // if (!valueIsNotEmptyString(coreEngineApiKey)) {
     //   throw 'dwdw';
     // }
-    // const projectMetadata = "ss";
-    // if (!valueIsDefined(projectMetadata)) {
+    // const applicationMetadata = "ss";
+    // if (!valueIsDefined(applicationMetadata)) {
     //   throw 'Invald api key';
     // }
-    // req['projectId'] = projectMetadata.projectId.toString();
+    // req['applicationId'] = applicationMetadata.applicationId.toString();
     next();
   }
 }

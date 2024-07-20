@@ -19,7 +19,7 @@ import { AuthUser } from '@api-assistant/commons-be';
 import { UserDetails } from '@api-assistant/auth-be';
 import { ObjectId } from 'mongodb';
 
-@Controller('/projects/:projectId/endpoints')
+@Controller('/applications/:applicationId/endpoints')
 export class EndpointsController {
   constructor(
     private readonly createEndpointUsecase: CreateEndpointUsecase,
@@ -33,7 +33,7 @@ export class EndpointsController {
   createEndpoint(
     @AuthUser() currentUser: UserDetails,
     @Body() payload: CreateEndpointCRUDDto,
-    @Param('projectId') projectId: string
+    @Param('applicationId') applicationId: string
   ) {
     return this.createEndpointUsecase.execute({
       name: payload.name,
@@ -46,30 +46,30 @@ export class EndpointsController {
       })),
       response: payload.response,
       createdBy: currentUser._id,
-      projectId: new ObjectId(projectId),
+      applicationId: new ObjectId(applicationId),
     });
   }
 
   @Get('')
   getAllEndpointsMinimalInfo(
     @AuthUser() currentUser: UserDetails,
-    @Param('projectId') projectId: string
+    @Param('applicationId') applicationId: string
   ) {
     return this.getAllEndpointsMinimalInfoUsecase.execute({
       userId: currentUser._id,
-      projectId: new ObjectId(projectId),
+      applicationId: new ObjectId(applicationId),
     });
   }
 
   @Get(':endpointId')
   getEndpointById(
     @AuthUser() currentUser: UserDetails,
-    @Param('projectId') projectId: string,
+    @Param('applicationId') applicationId: string,
     @Param('endpointId') endpointId: string
   ) {
     return this.getEndpointByIdUsecase.execute({
       id: new ObjectId(endpointId),
-      projectId: new ObjectId(projectId),
+      applicationId: new ObjectId(applicationId),
       userId: currentUser._id,
     });
   }
@@ -77,14 +77,14 @@ export class EndpointsController {
   @Patch(':endpointId')
   editEndpoint(
     @AuthUser() currentUser: UserDetails,
-    @Param('projectId') projectId: string,
+    @Param('applicationId') applicationId: string,
     @Param('endpointId') endpointId: string,
     @Body() patchEndpointBody: PatchEndpointCRUDDto
   ) {
     return this.updateEndpointUsecase.execute({
       details: patchEndpointBody,
       userId: currentUser._id,
-      projectId: new ObjectId(projectId),
+      applicationId: new ObjectId(applicationId),
       id: new ObjectId(endpointId),
     });
   }
@@ -92,13 +92,13 @@ export class EndpointsController {
   @Delete(':endpointId')
   deleteEndpoint(
     @AuthUser() currentUser: UserDetails,
-    @Param('projectId') projectId: string,
+    @Param('applicationId') applicationId: string,
     @Param('endpointId') endpointId: string
   ) {
     return this.deleteEndpointUsecase.execute({
       createdBy: currentUser._id,
       id: new ObjectId(endpointId),
-      projectId: new ObjectId(projectId),
+      applicationId: new ObjectId(applicationId),
     });
   }
 }

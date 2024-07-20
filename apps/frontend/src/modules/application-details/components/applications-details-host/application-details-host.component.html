@@ -1,0 +1,38 @@
+<main class="application-details">
+  <div
+    class="application-details__loader"
+    *ngIf="loading$ | async; else applicationsDataView"
+  >
+    <sw-loader size="lg"></sw-loader>
+  </div>
+  <ng-template #applicationsDataView>
+    <header>
+      <h1>{{ applicationName$ | async }}</h1>
+    </header>
+
+    <sw-tab-view
+      *ngIf="!(loadingError$ | async); else errorMsg"
+      [activeTabIndex]="activeTabIndex"
+      [showTabsInBottom]="(isDesktopScreen$ | async) === false"
+      [style.--sw-tab-view-title-height]="'7%'"
+      [style.--sw-tab-view-content-height]="'93%'"
+    >
+      <sw-tab>
+        <sw-tab-title>
+          <div class="application-details__tab-title">
+            <sw-icon size="lg" name="api"></sw-icon>
+            <span>Endpoints</span>
+          </div>
+        </sw-tab-title>
+        <sw-tab-content>
+          <router-outlet></router-outlet>
+        </sw-tab-content>
+      </sw-tab>
+    </sw-tab-view>
+    <ng-template #errorMsg>
+      <div class="application-details__error-msg">
+        {{ loadingError$ | async }}
+      </div>
+    </ng-template>
+  </ng-template>
+</main>

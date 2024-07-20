@@ -1,4 +1,4 @@
-import { Application } from '@api-assistant/dashboard-fe';
+import { Application } from '@api-assistant/application-core';
 
 export interface DashboardState {
   isLoading: boolean;

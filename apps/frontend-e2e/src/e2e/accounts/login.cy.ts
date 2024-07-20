@@ -113,18 +113,18 @@ describe('Login page', () => {
     loginPage.typePassword(Cypress.env('password'));
     loginPage.submitLogin();
     cy.wait('@loginAPI');
-    cy.url().should('contain', '/app/projects');
+    cy.url().should('contain', '/app/applications');
   });
 
   it('should navigate to corresponding page using callback url after login is successful', () => {
-    cy.visit('/app/projects/dummyprojectid');
+    cy.visit('/app/applications/dummyapplicationid');
     cy.url().should('contain', accountFixture.loginUrl);
     cy.intercept('/api/v6/accounts/login').as('loginAPI');
     loginPage.typeEmailId(Cypress.env('emailId'));
     loginPage.typePassword(Cypress.env('password'));
     loginPage.submitLogin();
     cy.wait('@loginAPI');
-    cy.url().should('contain', '/app/projects/dummyprojectid');
+    cy.url().should('contain', '/app/applications/dummyapplicationid');
   });
 
   it('should show nudge to create user account if account does not exist in the platform', () => {

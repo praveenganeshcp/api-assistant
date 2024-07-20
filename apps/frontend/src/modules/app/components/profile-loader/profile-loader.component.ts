@@ -34,7 +34,7 @@ export class ProfileLoaderComponent implements OnInit {
       .subscribe((profileState) => {
         const nextUrl =
           this.activatedRoute.snapshot.queryParamMap.get('next') ??
-          '/app/projects';
+          '/app/applications';
         if (!!profileState.data) {
           this.router.navigate([nextUrl]);
         } else {

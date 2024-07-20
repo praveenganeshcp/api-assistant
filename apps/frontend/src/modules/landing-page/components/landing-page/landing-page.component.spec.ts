@@ -89,7 +89,7 @@ describe('LandingPageComponent', () => {
         name: 'go-to-app',
       });
       expect(goToAppLink).toHaveTextContent('Go to app');
-      expect(goToAppLink).toHaveAttribute('href', '/app/projects');
+      expect(goToAppLink).toHaveAttribute('href', '/app/applications');
     });
 
     it('should show logout button in the header', async () => {
@@ -142,7 +142,7 @@ describe('LandingPageComponent', () => {
       expect(goToAppLink).toHaveTextContent(
         TestBed.inject(AppInfoService).appName
       );
-      expect(goToAppLink).toHaveAttribute('href', '/app/projects');
+      expect(goToAppLink).toHaveAttribute('href', '/app/applications');
     });
   });
 

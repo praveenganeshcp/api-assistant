@@ -14,7 +14,7 @@ const filesSeperator = '/';
 export const CORE_ENGINE_UPLOAD_ROOT = 'core-engine-uploads';
 
 export async function crudDbConnectionFactory(
-  projectId: string,
+  applicationId: string,
   url: string
 ): Promise<{
   db: Db;
@@ -26,15 +26,15 @@ export async function crudDbConnectionFactory(
   const connection = await mongoClient.connect();
   logger.log('Connected to crud mongodb host');
 
-  logger.log(`Creating core engine db connection to id ${projectId}...`);
-  const db = connection.db(`api-crud-${projectId}`);
-  logger.log(`Core engine db connected to id ${projectId}`);
+  logger.log(`Creating core engine db connection to id ${applicationId}...`);
+  const db = connection.db(`api-crud-${applicationId}`);
+  logger.log(`Core engine db connected to id ${applicationId}`);
   return { db, connection };
 }
 
 export function removeRootPath(objectPath: string): string {
-  const projectRoot = objectPath.split(CORE_ENGINE_UPLOAD_ROOT)[1];
-  const removedPath = join(...projectRoot.split(filesSeperator).slice(2));
+  const applicationRoot = objectPath.split(CORE_ENGINE_UPLOAD_ROOT)[1];
+  const removedPath = join(...applicationRoot.split(filesSeperator).slice(2));
   return filesSeperator + removedPath;
 }
 

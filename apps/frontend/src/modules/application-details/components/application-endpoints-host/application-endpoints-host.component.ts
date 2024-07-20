@@ -67,7 +67,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
   public handleAddEndpoint() {
     this.router.navigate([
       'app',
-      'projects',
+      'applications',
       this.applicationId,
       'endpoints',
       'create',
@@ -77,7 +77,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
   public handleEndpointDetailNavigation(endpoint: MinimalEndpointInfo) {
     this.router.navigate([
       'app',
-      'projects',
+      'applications',
       this.applicationId,
       'endpoints',
       endpoint._id,

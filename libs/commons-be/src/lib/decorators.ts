@@ -8,9 +8,9 @@ export const AuthUser = createParamDecorator(
   }
 );
 
-export const CoreEngineProjectId = createParamDecorator(
+export const CoreEngineApplicationId = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
     const httpRequest: any = context.switchToHttp().getRequest();
-    return httpRequest['projectId'];
+    return httpRequest['applicationId'];
   }
 );

@@ -86,7 +86,7 @@ export class EndpointDetailsViewHostComponent {
       .subscribe(() => {
         this.router.navigate([
           'app',
-          'projects',
+          'applications',
           this.applicationId,
           'endpoints',
         ]);
@@ -96,7 +96,7 @@ export class EndpointDetailsViewHostComponent {
   protected handleEnableEdit() {
     this.router.navigate([
       'app',
-      'projects',
+      'applications',
       this.applicationId,
       'endpoints',
       this.endpointId,

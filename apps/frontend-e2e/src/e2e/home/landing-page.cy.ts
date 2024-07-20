@@ -52,7 +52,7 @@ describe('landing page', () => {
 
     landingPage
       .getDashboardLinkInHeader()
-      .should('have.attr', 'href', '/app/projects')
+      .should('have.attr', 'href', '/app/applications')
       .should('have.text', 'Go to app');
 
     landingPage.getLogoutButtonInHeader().should('contain.text', 'Logout');
@@ -72,6 +72,6 @@ describe('landing page', () => {
     landingPage
       .getFooterNudgeLink()
       .should('have.text', 'API Assistant')
-      .should('have.attr', 'href', '/app/projects');
+      .should('have.attr', 'href', '/app/applications');
   });
 });

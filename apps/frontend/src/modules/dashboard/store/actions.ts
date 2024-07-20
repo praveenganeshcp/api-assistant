@@ -1,4 +1,4 @@
-import { Application } from '@api-assistant/dashboard-fe';
+import { Application } from '@api-assistant/application-core';
 import {
   ActionCreatorProps,
   NotAllowedCheck,

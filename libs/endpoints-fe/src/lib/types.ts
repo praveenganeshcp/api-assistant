@@ -7,11 +7,11 @@ export interface Endpoint {
   response: Object;
   createdBy: string;
   createdOn: Date;
-  projectId: string;
+  applicationId: string;
 }
 
 export interface MinimalEndpointInfo
   extends Pick<
     Endpoint,
-    '_id' | 'name' | 'description' | 'createdOn' | 'url' | 'projectId'
+    '_id' | 'name' | 'description' | 'createdOn' | 'url' | 'applicationId'
   > {}

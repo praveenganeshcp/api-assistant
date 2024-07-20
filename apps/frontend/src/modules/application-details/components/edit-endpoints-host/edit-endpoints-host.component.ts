@@ -112,7 +112,7 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
       .subscribe(({ endpoint }) => {
         this.router.navigate([
           'app',
-          'projects',
+          'applications',
           this.applicationId,
           'endpoints',
           endpoint._id,

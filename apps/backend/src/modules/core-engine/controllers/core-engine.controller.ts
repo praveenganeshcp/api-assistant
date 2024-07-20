@@ -11,7 +11,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { CoreEngineProjectId } from '@api-assistant/commons-be';
+import { CoreEngineApplicationId } from '@api-assistant/commons-be';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
@@ -20,7 +20,7 @@ import {
   CoreEngineFetchCollectionsUsecase,
   CoreEngineFetchFilesUsecase,
   CORE_ENGINE_UPLOAD_ROOT,
-  DeleteProjectUsecase,
+  DeleteApplicationUsecase,
 } from '@api-assistant/crud-engine-be';
 import { ObjectId } from 'mongodb';
 
@@ -32,12 +32,12 @@ export class CoreEngineController {
     private coreEngineCRUDUsecase: CoreEngineCRUDUsecase,
     private coreEngineFetchCollectionsUsecase: CoreEngineFetchCollectionsUsecase,
     private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase,
-    private deleteProjectUsecase: DeleteProjectUsecase
+    private deleteApplicationUsecase: DeleteApplicationUsecase
   ) {}
 
   @Get('collections')
-  fetchDbCollections(@CoreEngineProjectId() projectId: string) {
-    return this.coreEngineFetchCollectionsUsecase.execute(projectId);
+  fetchDbCollections(@CoreEngineApplicationId() applicationId: string) {
+    return this.coreEngineFetchCollectionsUsecase.execute(applicationId);
   }
 
   @Post('api/:path')
@@ -57,7 +57,7 @@ export class CoreEngineController {
           const destinationPath = join(
             process.cwd(),
             CORE_ENGINE_UPLOAD_ROOT,
-            req.projectId,
+            req.applicationId,
             file.fieldname || ''
           );
           logger.log('Found path ' + destinationPath);
@@ -86,19 +86,19 @@ export class CoreEngineController {
 
   @Get('files')
   fetchFiles(
-    @CoreEngineProjectId() projectId: string,
+    @CoreEngineApplicationId() applicationId: string,
     @Query('path') path: string
   ) {
     return this.coreEngineFetchFilesUsecase.execute({
       path,
-      projectId,
+      applicationId,
     });
   }
 
-  @Delete('project')
-  async deleteProject(@CoreEngineProjectId() projectId: string) {
-    return this.deleteProjectUsecase.execute({
-      projectId: new ObjectId(projectId),
+  @Delete('application')
+  async deleteApplication(@CoreEngineApplicationId() applicationId: string) {
+    return this.deleteApplicationUsecase.execute({
+      applicationId: new ObjectId(applicationId),
     });
   }
 }
