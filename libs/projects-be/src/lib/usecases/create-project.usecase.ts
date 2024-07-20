@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
 import { ProjectRepository } from '../repositories/project.repository';
-import { ProjectMetadataRepository } from '../repositories/project-metadata.repository';
 import { ObjectId } from 'mongodb';
 
 import { createHash } from 'crypto';
 import { Project } from '../entities/project.entity';
-import {
-  ProjectMetadata,
-  ProjectWithMetadata,
-} from '../entities/project-metadata.entity';
+import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/endpoints-be';
 
 interface CreateProjectUsecaseInput {
   createdBy: ObjectId;
@@ -22,38 +18,23 @@ export class CreateProjectUsecase
 {
   constructor(
     private projectRepo: ProjectRepository,
-    private projectMetadataRepo: ProjectMetadataRepository
+    private readonly createAllBuiltinEndpointsUsecase: CreateAllBuiltinEndpointsUsecase
   ) {}
 
   async execute({
     name,
     createdBy,
-  }: CreateProjectUsecaseInput): Promise<ProjectWithMetadata> {
+  }: CreateProjectUsecaseInput): Promise<Project> {
     const project = await this.projectRepo.save({
       name,
       createdBy,
       createdOn: new Date(),
     });
-    const projectMetadata: ProjectMetadata =
-      await this.projectMetadataRepo.save({
-        projectId: project._id,
-        count: {
-          createAction: 0,
-          readAction: 0,
-          updateAction: 0,
-          deleteAction: 0,
-          aggregate: 0,
-        },
-        apiKey: this.createApiProjectKey(project._id.toString()),
-        apiKeyLastGeneratedOn: new Date(),
-        noOfFiles: 0,
-        storage: 0,
-        users: 0,
-      });
-    return {
-      ...project,
-      metadata: projectMetadata,
-    };
+    await this.createAllBuiltinEndpointsUsecase.execute({
+      userId: createdBy,
+      projectId: project._id
+    })
+    return project;
   }
 
   createApiProjectKey(projectId: string): string {
