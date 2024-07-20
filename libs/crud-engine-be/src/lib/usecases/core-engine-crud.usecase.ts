@@ -16,7 +16,6 @@ import {
   resolveSystemVariable,
   resolveVariableType,
 } from '../utils';
-import { ProjectMetadataRepository } from '@api-assistant/projects-be';
 import {
   ALLOWED_DB_OPERATIONS_IN_ENDPOINT,
   EndpointActionDefinition,
@@ -42,7 +41,6 @@ export class CoreEngineCRUDUsecase
   private logger = new Logger(CoreEngineCRUDUsecase.name);
 
   constructor(
-    private projectMetadataRepo: ProjectMetadataRepository,
     private readonly getEndpointByURL: GetEndpointByURLUsecase,
     @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>
   ) {}
@@ -107,10 +105,6 @@ export class CoreEngineCRUDUsecase
     this.logger.log(`connected to collection: ${operation.collectionName}`);
     switch (operation.action) {
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.deleteOne: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.deleteAction': 1 } }
-        );
         return this.deleteOne(
           collection,
           operation.payload as EndpointDeleteActionQuery
@@ -118,10 +112,6 @@ export class CoreEngineCRUDUsecase
       }
 
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.deleteMany: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.deleteAction': 1 } }
-        );
         return this.deleteMany(
           collection,
           operation.payload as EndpointDeleteActionQuery
@@ -129,50 +119,30 @@ export class CoreEngineCRUDUsecase
       }
 
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.findOne: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.readAction': 1 } }
-        );
         return this.findOne(
           collection,
           operation.payload as EndpointReadActionQuery
         );
       }
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.find: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.readAction': 1 } }
-        );
         return this.find(
           collection,
           operation.payload as EndpointReadActionQuery
         );
       }
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.insertOne: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.createAction': 1 } }
-        );
         return this.insertOne(
           collection,
           operation.payload as EndpointCreateActionQuery
         );
       }
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.insertMany: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.createAction': 1 } }
-        );
         return this.insertMany(
           collection,
           operation.payload as EndpointCreateActionQuery[]
         );
       }
       case ALLOWED_DB_OPERATIONS_IN_ENDPOINT.updateOne: {
-        await this.projectMetadataRepo.updateOne(
-          { projectId: new ObjectId(projectId) },
-          { $inc: { 'count.updateAction': 1 } }
-        );
         return this.updateOne(
           collection,
           operation.payload as EndpointUpdateActionQuery

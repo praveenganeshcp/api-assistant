@@ -13,7 +13,6 @@ import { Observable, map } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 import {
   BreakPointObserver,
-  StoreActionDispatcher,
 } from '@api-assistant/commons-fe';
 import { Store } from '@ngrx/store';
 import { ApplicationAnalyticsHostComponent } from '../application-analytics-host/application-analytics-host.component';
@@ -26,7 +25,6 @@ import {
   applicationDataLoadingSelector,
   applicationDataSelector,
 } from '../../store/selectors';
-import { loadApplicationDetailsAction } from '../../store/actions';
 import { ApplicationEndpointsHostComponent } from '../application-endpoints-host/application-endpoints-host.component';
 
 @Component({
@@ -65,16 +63,11 @@ export class ProjectDetailsHostComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
-    private actionsDispatcher: StoreActionDispatcher,
     private store: Store<AppState>
   ) {}
 
   ngOnInit() {
-    this.actionsDispatcher.dispatchAction(
-      loadApplicationDetailsAction({
-        applicationId: this.applicationId,
-      })
-    );
+   
   }
 
   public get applicationId(): string {

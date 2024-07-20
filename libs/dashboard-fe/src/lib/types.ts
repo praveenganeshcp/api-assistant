@@ -1,9 +1,6 @@
 export interface Application {
-  id: string;
+  _id: string;
   name: string;
-  totalOperations: number;
-  storageSize: number;
-  activeUsers: number;
+  createdBy: string;
   createdOn: Date;
-  status: boolean;
 }
