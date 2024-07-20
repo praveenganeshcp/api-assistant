@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { fetchAllEndpoints } from '../../store/actions';
+import { fetchAllEndpoints } from '../../../application-details/store/actions';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import {
@@ -12,7 +12,7 @@ import {
   allEndpointsDataSelector,
   allEndpointsErrorSelector,
   allEndpointsLoadingSelector,
-} from '../../store/selectors';
+} from '../../../application-details/store/selectors';
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
 

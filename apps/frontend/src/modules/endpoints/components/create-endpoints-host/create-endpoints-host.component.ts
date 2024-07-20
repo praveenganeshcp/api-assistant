@@ -9,7 +9,7 @@ import {
   createEndpointAction,
   endpointCreatedAction,
   errorInCreatingEndpointAction,
-} from '../../store/actions';
+} from '../../../application-details/store/actions';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { SwButtonComponent } from 'ngx-simple-widgets';

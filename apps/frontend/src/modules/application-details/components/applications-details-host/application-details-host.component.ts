@@ -20,7 +20,7 @@ import {
   applicationDataLoadingSelector,
   applicationDataSelector,
 } from '../../store/selectors';
-import { ApplicationEndpointsHostComponent } from '../application-endpoints-host/application-endpoints-host.component';
+import { ApplicationEndpointsHostComponent } from '../../../endpoints/components/application-endpoints-host/application-endpoints-host.component';
 
 @Component({
   selector: 'api-assistant-application-details-host',
@@ -42,7 +42,12 @@ import { ApplicationEndpointsHostComponent } from '../application-endpoints-host
   styleUrls: ['./application-details-host.component.scss'],
 })
 export class ApplicationDetailsHostComponent {
-  protected readonly tabNames: string[] = ['Endpoints', 'Experiment', 'Files', 'Settings', ];
+  protected readonly tabNames: string[] = [
+    'Endpoints',
+    'Experiment',
+    'Files',
+    'Settings',
+  ];
 
   public readonly loading$ = this.store.select(applicationDataLoadingSelector);
 

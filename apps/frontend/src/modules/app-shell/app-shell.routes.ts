@@ -40,21 +40,21 @@ export default [
             path: 'endpoints',
             loadComponent: () =>
               import(
-                '../application-details/components/application-endpoints-host/application-endpoints-host.component'
+                '../endpoints/components/application-endpoints-host/application-endpoints-host.component'
               ).then((c) => c.ApplicationEndpointsHostComponent),
           },
           {
             path: 'endpoints/create',
             loadComponent: () =>
               import(
-                '../application-details/components/create-endpoints-host/create-endpoints-host.component'
+                '../endpoints/components/create-endpoints-host/create-endpoints-host.component'
               ).then((c) => c.CreateEndpointsHostComponent),
           },
           {
             path: 'endpoints/:endpointId/edit',
             loadComponent: () =>
               import(
-                '../application-details/components/edit-endpoints-host/edit-endpoints-host.component'
+                '../endpoints/components/edit-endpoints-host/edit-endpoints-host.component'
               ).then((c) => c.EditEndpointsHostComponent),
           },
           {

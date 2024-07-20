@@ -12,7 +12,7 @@ import {
   endpointDetailsDataSelector,
   endpointDetailsErrorSelector,
   endpointDetailsLoadingSelector,
-} from '../../store/selectors';
+} from '../../../application-details/store/selectors';
 import { CanBeNull, SwButtonComponent } from 'ngx-simple-widgets';
 import {
   editEndpointAction,
@@ -20,7 +20,7 @@ import {
   errorInUpdatingEndpointAction,
   fetchEndpointDetails,
   resetEndpointDetailsState,
-} from '../../store/actions';
+} from '../../../application-details/store/actions';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 
