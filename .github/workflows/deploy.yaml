@@ -37,21 +37,8 @@ jobs:
       - name: Build backend
         run: npm run backend:build
 
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PASS }}
-          script: |
-            cd applications/api-assistant
-            git pull origin main
+      - name: Test frontend
+        run: npm run frontend:test
 
-            npm install
-
-            npm run backend:build
-            cp ./.env ./dist/apps/backend
-            pm2 restart 0
-
-            npm run frontend:build
-            sudo nginx -s reload
+      - name: Test backend
+        run: npm run backend:test
