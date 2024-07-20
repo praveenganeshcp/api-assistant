@@ -1,4 +1,4 @@
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
@@ -19,28 +19,9 @@ export class ApplicationsRepository {
 
   public fetchApplications(): Observable<Application[]> {
     return this.http
-      .get<any[]>(`${this.apiUrl}api/v6/projects`, {
+      .get<Application[]>(`${this.apiUrl}api/v6/projects`, {
         withCredentials: true,
-      })
-      .pipe(
-        map((projects) =>
-          projects.map((project) => {
-            const count = project.metadata.count;
-            return {
-              id: project._id,
-              name: project.name,
-              totalOperations: Object.keys(count).reduce(
-                (acc, key) => count[key] + acc,
-                0
-              ),
-              storageSize: project.metadata.storage,
-              activeUsers: project.metadata.users,
-              createdOn: new Date(project.createdOn),
-              status: true,
-            };
-          })
-        )
-      );
+      });
   }
 
   public createApplication(name: string): Observable<Application> {
@@ -51,23 +32,6 @@ export class ApplicationsRepository {
         {
           withCredentials: true,
         }
-      )
-      .pipe(
-        map((project) => {
-          const count = project.metadata.count;
-          return {
-            id: project._id,
-            name: project.name,
-            totalOperations: Object.keys(count).reduce(
-              (acc, key) => count[key] + acc,
-              0
-            ),
-            storageSize: project.metadata.storage,
-            activeUsers: project.metadata.users,
-            createdOn: new Date(project.createdOn),
-            status: true,
-          };
-        })
       );
   }
 }

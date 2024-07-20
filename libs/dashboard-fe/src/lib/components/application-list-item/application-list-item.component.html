@@ -3,28 +3,18 @@
     <h3 class="application__details-name">{{ application.name }}</h3>
     <div class="divider"></div>
     <div class="application__details-stats">
-      <div class="application__details-stat">
-        <span class="application__details-stat-label">Operations:</span>
-        <span class="application__details-stat-value">{{
-          application.totalOperations
-        }}</span>
-      </div>
+      
       <div class="application__details-stat">
         <span class="application__details-stat-label">Created Date:</span>
         <span class="application__details-stat-value">{{
           application.createdOn | date : 'MMM d, y'
         }}</span>
       </div>
-      <div class="application__details-stat">
-        <span class="application__details-stat-label">Active Users:</span>
-        <span class="application__details-stat-value">{{
-          application.activeUsers
-        }}</span>
-      </div>
+      
     </div>
   </div>
   <a
-    [routerLink]="['/app', 'projects', application.id]"
+    [routerLink]="['/app', 'projects', application._id]"
     class="application__link"
     >View Details</a
   >

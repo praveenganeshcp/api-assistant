@@ -1,11 +1,9 @@
-import { Controller, Post, Param, Get, Body, Delete } from '@nestjs/common';
+import { Controller, Post, Get, Body } from '@nestjs/common';
 import { CreateProjectDTO } from '../projects.dto';
-import { AuthUser, ObjectIdPipe } from '@api-assistant/commons-be';
-import { ObjectId } from 'mongodb';
+import { AuthUser } from '@api-assistant/commons-be';
 import { UserDetails } from '@api-assistant/auth-be';
 import {
   CreateProjectUsecase,
-  FetchProjectByIdUsecase,
   FetchProjectsByUserIdUsecase,
 } from '@api-assistant/projects-be';
 
@@ -14,7 +12,6 @@ export class ProjectsController {
   constructor(
     private createProjectUsecase: CreateProjectUsecase,
     private fetchProjectsByUserIdUsecase: FetchProjectsByUserIdUsecase,
-    private fetchProjectByIdUsecase: FetchProjectByIdUsecase,
   ) {}
 
   @Post()
@@ -34,15 +31,4 @@ export class ProjectsController {
     return projects;
   }
 
-  @Get(':projectId')
-  async fetchProjectById(
-    @AuthUser() user: UserDetails,
-    @Param('projectId', ObjectIdPipe) projectId: ObjectId
-  ) {
-    const projectDetail = await this.fetchProjectByIdUsecase.execute({
-      userId: user._id,
-      projectId: projectId,
-    });
-    return { projectDetail: projectDetail ? projectDetail : null };
-  }
 }
