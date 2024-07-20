@@ -112,7 +112,7 @@
     "mongodb": "^5.6.0",
     "multer": "^1.4.5-lts.1",
     "ng2-charts": "^3.1.0",
-    "ngx-simple-widgets": "^1.22.0",
+    "ngx-simple-widgets": "^1.22.1",
     "nodemailer": "^6.9.3",
     "prop-types": "^15.8.1",
     "reflect-metadata": "^0.1.13",

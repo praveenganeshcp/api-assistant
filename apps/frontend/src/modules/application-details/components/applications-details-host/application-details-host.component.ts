@@ -42,7 +42,7 @@ import { ApplicationEndpointsHostComponent } from '../application-endpoints-host
   styleUrls: ['./application-details-host.component.scss'],
 })
 export class ApplicationDetailsHostComponent {
-  protected readonly tabNames: string[] = ['Endpoints'];
+  protected readonly tabNames: string[] = ['Endpoints', 'Experiment', 'Files', 'Settings', ];
 
   public readonly loading$ = this.store.select(applicationDataLoadingSelector);
 
