@@ -1,8 +1,8 @@
-import { Application } from '@api-assistant/application-core';
+import { ApplicationDashboardView } from '@api-assistant/application-core';
 
 export interface DashboardState {
   isLoading: boolean;
-  data: Application[];
+  data: ApplicationDashboardView[];
   error: string;
 }
 

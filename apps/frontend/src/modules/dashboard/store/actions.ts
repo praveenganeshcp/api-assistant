@@ -1,4 +1,7 @@
-import { Application } from '@api-assistant/application-core';
+import {
+  Application,
+  ApplicationDashboardView,
+} from '@api-assistant/application-core';
 import {
   ActionCreatorProps,
   NotAllowedCheck,
@@ -39,7 +42,7 @@ export const loadApplicationsAction = createDashboardAction(
 
 export const applicationsLoadedAction = createDashboardActionWithProps(
   `${DASHBOARD_ACTION_PREFIX} Applications loaded`,
-  props<{ data: Application[] }>()
+  props<{ data: ApplicationDashboardView[] }>()
 );
 
 export const errorInLoadingApplicationsAction = createDashboardActionWithProps(

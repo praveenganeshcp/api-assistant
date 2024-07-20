@@ -1,15 +1,29 @@
-<ng-container *ngIf="loading$ | async; else listOrErrorTemplate">
-  <sw-loader></sw-loader>
-</ng-container>
+<section class="dashboard">
+  <h1>All Applications</h1>
 
-<ng-template #listOrErrorTemplate>
+  <div class="dashboard-toolbar">
+    <input
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="handleSearchQuery()"
+      class="dashboard-toolbar__input"
+      type="text"
+      sw-input
+      size="sm"
+      placeholder="Search Applications"
+    />
+    <button sw-bordered-button (click)="handleClickCreateApplication()">
+      Create Application
+    </button>
+  </div>
+
   <ng-container *ngIf="!!(error$ | async); else applicationsList">
     <span>{{ error$ | async }}</span>
   </ng-container>
 
   <ng-template #applicationsList>
-    <api-assistant-applications-list-view
-      [applications]="(applications$ | async) ?? []"
+    <api-assistant-applications-grid-view
+      [isLoading]="(loading$ | async) ?? false"
+      [rows]="(applicationRows$ | async) ?? []"
     />
   </ng-template>
-</ng-template>
+</section>

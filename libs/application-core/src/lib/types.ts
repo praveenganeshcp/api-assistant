@@ -7,7 +7,8 @@ export interface Application {
   createdOn: Date;
 }
 
-export interface ApplicationDashboardView extends Application {
+export interface ApplicationDashboardView extends Omit<Application, '_id'> {
+  _id: string;
   endpointsCount: number;
   usersCount: number;
 }

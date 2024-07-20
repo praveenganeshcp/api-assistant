@@ -1,0 +1,24 @@
+<sw-table
+  [isLoading]="isLoading"
+  [activeColumns]="activeColumns"
+  [customCellTemplate]="customCellTemplate"
+  [rows]="rows"
+>
+</sw-table>
+
+<ng-template
+  #customCellTemplate
+  let-row="row"
+  let-column="column"
+  let-value="value"
+>
+  <ng-container [ngSwitch]="column.fieldName">
+    <ng-template [ngSwitchCase]="'createdOn'">
+      <span>{{ value | date : 'MMM d, y' }}</span>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'_id'">
+      <a [routerLink]="[value]">Go to app</a>
+    </ng-template>
+  </ng-container>
+</ng-template>

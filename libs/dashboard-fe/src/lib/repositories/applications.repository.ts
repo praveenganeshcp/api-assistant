@@ -2,7 +2,10 @@ import { Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '@api-assistant/commons-fe';
-import { Application } from '@api-assistant/application-core';
+import {
+  Application,
+  ApplicationDashboardView,
+} from '@api-assistant/application-core';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +20,13 @@ export class ApplicationsRepository {
     return this.apiBaseURL;
   }
 
-  public fetchApplications(): Observable<Application[]> {
-    return this.http.get<Application[]>(`${this.apiUrl}api/v6/applications`, {
-      withCredentials: true,
-    });
+  public fetchApplications(): Observable<ApplicationDashboardView[]> {
+    return this.http.get<ApplicationDashboardView[]>(
+      `${this.apiUrl}api/v6/applications`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   public createApplication(name: string): Observable<Application> {

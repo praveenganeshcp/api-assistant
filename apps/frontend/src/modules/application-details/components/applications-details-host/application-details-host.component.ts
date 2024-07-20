@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   SwIconComponent,
   SwLoaderComponent,
-  SwTabComponent,
-  SwTabContentComponent,
-  SwTabTitleComponent,
   SwTabViewComponent,
 } from 'ngx-simple-widgets';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -30,10 +27,7 @@ import { ApplicationEndpointsHostComponent } from '../application-endpoints-host
   standalone: true,
   imports: [
     CommonModule,
-    SwTabComponent,
     SwIconComponent,
-    SwTabContentComponent,
-    SwTabTitleComponent,
     SwTabViewComponent,
     RouterModule,
     SwLoaderComponent,
@@ -48,6 +42,8 @@ import { ApplicationEndpointsHostComponent } from '../application-endpoints-host
   styleUrls: ['./application-details-host.component.scss'],
 })
 export class ApplicationDetailsHostComponent {
+  protected readonly tabNames: string[] = ['Endpoints'];
+
   public readonly loading$ = this.store.select(applicationDataLoadingSelector);
 
   public readonly loadingError$ = this.store.select(
