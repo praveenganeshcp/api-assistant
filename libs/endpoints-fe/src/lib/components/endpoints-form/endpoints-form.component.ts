@@ -16,6 +16,7 @@ import {
   CanBeNull,
   SwButtonComponent,
   SwFormControlComponent,
+  SwInputComponent,
 } from 'ngx-simple-widgets';
 import { JsonInputComponent } from '@api-assistant/commons-fe';
 
@@ -36,6 +37,7 @@ export interface EndpointFormValue {
     SwFormControlComponent,
     SwButtonComponent,
     JsonInputComponent,
+    SwInputComponent,
   ],
   templateUrl: './endpoints-form.component.html',
   styleUrls: ['./endpoints-form.component.scss'],

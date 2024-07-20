@@ -1,7 +1,25 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, ViewChild, forwardRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewEncapsulation,
+  forwardRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  JsonEditorComponent,
+  JsonEditorOptions,
+  NgJsonEditorModule,
+} from 'ang-jsoneditor';
 import { CanBeNull } from 'ngx-simple-widgets';
 import { BehaviorSubject, skip, takeUntil } from 'rxjs';
 
@@ -14,18 +32,23 @@ import { BehaviorSubject, skip, takeUntil } from 'rxjs';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => JsonInputComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class JsonInputComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class JsonInputComponent
+  implements ControlValueAccessor, AfterViewInit, OnDestroy
+{
+  @Input() label: string = '';
 
-  @ViewChild(JsonEditorComponent) jsonEditorComponent: CanBeNull<JsonEditorComponent> = null;
+  @ViewChild(JsonEditorComponent)
+  jsonEditorComponent: CanBeNull<JsonEditorComponent> = null;
 
   public editorOptions = this.getEditorOptions();
 
-  private onChange: CanBeNull<any> = null;;
+  private onChange: CanBeNull<any> = null;
 
   private onTouched: CanBeNull<any> = null;
 
@@ -34,14 +57,16 @@ export class JsonInputComponent implements ControlValueAccessor, AfterViewInit, 
   private destroy$ = new BehaviorSubject(null);
 
   ngAfterViewInit(): void {
-    if(this.jsonEditorComponent) {
-      (this.jsonEditorComponent as any).editor.aceEditor.renderer.setShowGutter(false)
+    if (this.jsonEditorComponent) {
+      (this.jsonEditorComponent as any).editor.aceEditor.renderer.setShowGutter(
+        false
+      );
     }
-    this.formControl.valueChanges.pipe(
-      takeUntil(this.destroy$.pipe(skip(1)))
-    ).subscribe((value: any) => {
-      this.onChange(value);
-    })
+    this.formControl.valueChanges
+      .pipe(takeUntil(this.destroy$.pipe(skip(1))))
+      .subscribe((value: any) => {
+        this.onChange(value);
+      });
   }
 
   ngOnDestroy(): void {
@@ -49,7 +74,7 @@ export class JsonInputComponent implements ControlValueAccessor, AfterViewInit, 
   }
 
   writeValue(value: any): void {
-    this.formControl.setValue(value)
+    this.formControl.setValue(value);
   }
 
   registerOnChange(fn: any): void {
@@ -66,7 +91,7 @@ export class JsonInputComponent implements ControlValueAccessor, AfterViewInit, 
 
   private getEditorOptions(): JsonEditorOptions {
     const editorOptions = new JsonEditorOptions();
-    editorOptions.mode = "code";
+    editorOptions.mode = 'code';
     editorOptions.indentation = 2;
     editorOptions.mainMenuBar = false;
     editorOptions.navigationBar = false;
@@ -74,5 +99,4 @@ export class JsonInputComponent implements ControlValueAccessor, AfterViewInit, 
     (editorOptions as any).showErrorTable = false;
     return editorOptions;
   }
-  
 }
