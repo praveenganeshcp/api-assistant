@@ -1,0 +1,6 @@
+<sw-dialog [size]="dialogSize$ | async">
+  <api-assistant-create-application-form
+    [loading]="(createAppInProgress$ | async) ?? false"
+    (createApplication)="handleCreateApplication($event)"
+  />
+</sw-dialog>

@@ -1,33 +1,25 @@
-<sw-dialog [size]="dialogSize$ | async">
-  <div class="create-application">
-    <h3>New Application</h3>
-    <form
-      [formGroup]="createApplicationForm"
-      (ngSubmit)="onCreateApplication()"
-      class="create-application__form"
+<div class="create-application">
+  <h3>New Application</h3>
+  <form
+    [formGroup]="createApplicationForm"
+    (ngSubmit)="onCreateApplication()"
+    class="create-application__form"
+  >
+    <sw-form-control
+      [errorMessagesMap]="errorMessagesMap"
+      [control]="applicationNameFormControl"
+      label="Application name"
     >
-      <sw-form-control
-        [errorMessagesMap]="errorMessagesMap"
-        [control]="applicationNameFormControl"
-        label="Application name"
-      >
-        <input
-          formControlName="name"
-          sw-input
-          type="text"
-          size="md"
-          autofocus
-          placeholder="Application name"
-        />
-      </sw-form-control>
+      <input formControlName="name" sw-input type="text" size="md" autofocus />
+    </sw-form-control>
 
-      <button
-        [showLoader]="loading"
-        (click)="onCreateApplication()"
-        sw-primary-button
-      >
-        Create Application
-      </button>
-    </form>
-  </div>
-</sw-dialog>
+    <button
+      [showLoader]="loading"
+      (click)="onCreateApplication()"
+      sw-primary-button
+      [disabled]="createApplicationForm.invalid"
+    >
+      Create Application
+    </button>
+  </form>
+</div>

@@ -7,14 +7,10 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import {
-  SwDialogModule,
   SwButtonComponent,
   SwInputComponent,
-  SwAllowedSizes,
   SwFormControlComponent,
 } from 'ngx-simple-widgets';
-import { Observable, map, combineLatest } from 'rxjs';
-import { BreakPointObserver } from '@api-assistant/commons-fe';
 
 @Component({
   selector: 'api-assistant-create-application-form',
@@ -23,7 +19,6 @@ import { BreakPointObserver } from '@api-assistant/commons-fe';
   standalone: true,
   imports: [
     CommonModule,
-    SwDialogModule,
     SwButtonComponent,
     SwInputComponent,
     ReactiveFormsModule,
@@ -44,25 +39,10 @@ export class CreateApplicationFormComponent {
   });
 
   public errorMessagesMap: Record<string, string> = {
-    minLength: 'Minimum 3 characters is required',
+    minlength: 'Minimum 3 characters is required',
   };
 
-  constructor(
-    private breakpointObserver: BreakPointObserver,
-    private formBuilder: FormBuilder
-  ) {}
-
-  public dialogSize$: Observable<SwAllowedSizes> = combineLatest([
-    this.breakpointObserver.isDesktopScreen$,
-    this.breakpointObserver.isTabletScreen$,
-    this.breakpointObserver.isMobileScreen$,
-  ]).pipe(
-    map(([isDesktopScreen, isTabletScreen]) => {
-      if (isDesktopScreen) return 'sm';
-      else if (isTabletScreen) return 'sm';
-      return 'lg';
-    })
-  );
+  constructor(private formBuilder: FormBuilder) {}
 
   public get applicationNameFormControl(): FormControl {
     return this.createApplicationForm.controls['name'];
