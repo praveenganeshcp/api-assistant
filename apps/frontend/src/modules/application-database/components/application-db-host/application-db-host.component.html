@@ -1,0 +1,15 @@
+<div
+  style="height: 100%; display: flex; align-items: flex-start; column-gap: 20px"
+>
+  <api-assistant-db-collections-view
+    [selectedCollectionName]="selectedCollectionName"
+    [collectionNames]="(collectionNames$ | async) ?? []"
+    (change)="handleCollectionChange($event)"
+  />
+  <div style="flex-grow: 1">
+    <div style="display: flex; flex-direction: column">
+      <api-assistant-db-query-input />
+      <api-assistant-db-results-viewer [results]="rows" />
+    </div>
+  </div>
+</div>

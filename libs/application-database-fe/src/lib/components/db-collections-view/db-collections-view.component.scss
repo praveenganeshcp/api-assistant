@@ -1,0 +1,17 @@
+:host {
+  --collections-container-width: 15vw;
+}
+
+.db-collections {
+  width: var(--collections-container-width);
+  height: 100vh;
+
+  .db-collections__list-item {
+    padding: 0.5rem;
+    width: 100%;
+
+    &.db-collections__active-list-item {
+      background-color: lightgray;
+    }
+  }
+}

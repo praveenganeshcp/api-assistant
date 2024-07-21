@@ -65,9 +65,16 @@ export default [
               ).then((c) => c.ApplicationUsersGridComponent),
           },
           {
+            path: 'database',
+            loadComponent: () =>
+              import(
+                '../application-database/components/application-db-host/application-db-host.component'
+              ).then((c) => c.ApplicationDbHostComponent),
+          },
+          {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'users',
+            redirectTo: 'endpoints',
           },
         ],
       },

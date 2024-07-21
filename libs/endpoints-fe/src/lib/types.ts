@@ -15,3 +15,14 @@ export interface MinimalEndpointInfo
     Endpoint,
     '_id' | 'name' | 'description' | 'createdOn' | 'url' | 'applicationId'
   > {}
+
+export enum ALLOWED_DB_OPERATIONS_IN_ENDPOINT {
+  findOne = 'findOne',
+  find = 'find',
+  insertOne = 'insertOne',
+  insertMany = 'insertMany',
+  updateOne = 'updateOne',
+  updateMany = 'updateMany',
+  deleteOne = 'deleteOne',
+  deleteMany = 'deleteMany',
+}

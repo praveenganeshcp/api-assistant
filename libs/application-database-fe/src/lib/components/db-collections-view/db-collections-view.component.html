@@ -1,0 +1,14 @@
+<div role="list" class="db-collections">
+  <button
+    (click)="handleSelectCollection(collectionName)"
+    sw-text-button
+    role="listitem"
+    class="db-collections__list-item"
+    [class.db-collections__active-list-item]="
+      collectionName === selectedCollectionName
+    "
+    *ngFor="let collectionName of collectionNames"
+  >
+    {{ collectionName }}
+  </button>
+</div>
