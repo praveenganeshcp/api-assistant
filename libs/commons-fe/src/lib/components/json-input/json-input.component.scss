@@ -22,5 +22,9 @@ commons-fe-json-input {
     .jsoneditor-outer {
       padding: 0.8rem 0.4rem;
     }
+
+    .ace-jsoneditor {
+      min-height: var(--height, 300);
+    }
   }
 }

@@ -22,6 +22,20 @@ import {
 } from '../../store/selectors';
 import { ApplicationEndpointsHostComponent } from '../../../endpoints/components/application-endpoints-host/application-endpoints-host.component';
 
+enum TabNames {
+  ENDPOINTS = 'Endpoints',
+  SETTINGS = 'Settings',
+  USERS = 'Users',
+  DATABASE = 'Database',
+}
+
+const routeUrlTabMapping: Record<TabNames, string> = {
+  [TabNames.DATABASE]: 'database',
+  [TabNames.ENDPOINTS]: 'endpoints',
+  [TabNames.SETTINGS]: 'settings',
+  [TabNames.USERS]: 'users',
+};
+
 @Component({
   selector: 'api-assistant-application-details-host',
   standalone: true,
@@ -42,11 +56,11 @@ import { ApplicationEndpointsHostComponent } from '../../../endpoints/components
   styleUrls: ['./application-details-host.component.scss'],
 })
 export class ApplicationDetailsHostComponent {
-  protected readonly tabNames: string[] = [
-    'Endpoints',
-    'Users',
-    'Files',
-    'Settings',
+  protected readonly tabNames: TabNames[] = [
+    TabNames.ENDPOINTS,
+    TabNames.DATABASE,
+    TabNames.USERS,
+    TabNames.SETTINGS,
   ];
 
   public readonly loading$ = this.store.select(applicationDataLoadingSelector);
@@ -62,7 +76,8 @@ export class ApplicationDetailsHostComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {}
@@ -71,11 +86,15 @@ export class ApplicationDetailsHostComponent {
     return this.activatedRoute.snapshot.params['applicationId'];
   }
 
-  activeTabIndex = 1;
+  activeTabIndex = 0;
 
   public isDesktopScreen$ = this.breakpointObserver.isDesktopScreen$;
 
-  onTabChange(index: number) {
+  handleTabChange(index: number) {
     this.activeTabIndex = index;
+    const url: string = routeUrlTabMapping[this.tabNames[index]];
+    this.router.navigate([url], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

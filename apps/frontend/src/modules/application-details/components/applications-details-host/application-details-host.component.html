@@ -17,6 +17,7 @@
       [style.--sw-tab-view-title-height]="'7%'"
       [style.--sw-tab-view-content-height]="'93%'"
       [tabNames]="tabNames"
+      (tabClick)="handleTabChange($event)"
     >
       <div style="padding: 2rem 1rem 1rem 1rem">
         <router-outlet></router-outlet>
