@@ -10,11 +10,6 @@ import { Observable, map } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 import { BreakPointObserver } from '@api-assistant/commons-fe';
 import { Store } from '@ngrx/store';
-import { ApplicationAnalyticsHostComponent } from '../application-analytics-host/application-analytics-host.component';
-import { ApplicationExperimentHostComponent } from '../application-experiment-host/application-experiment-host.component';
-import { ApplicationDatabaseHostComponent } from '../application-database-host/application-database-host.component';
-import { ApplicationFilesHostComponent } from '../application-files-host/application-files-host.component';
-import { ApplicationSettingsHostComponent } from '../application-settings-host/application-settings-host.component';
 import {
   applicationDataErrorSelector,
   applicationDataLoadingSelector,
@@ -45,11 +40,6 @@ const routeUrlTabMapping: Record<TabNames, string> = {
     SwTabViewComponent,
     RouterModule,
     SwLoaderComponent,
-    ApplicationAnalyticsHostComponent,
-    ApplicationExperimentHostComponent,
-    ApplicationDatabaseHostComponent,
-    ApplicationFilesHostComponent,
-    ApplicationSettingsHostComponent,
     ApplicationEndpointsHostComponent,
   ],
   templateUrl: './application-details-host.component.html',
