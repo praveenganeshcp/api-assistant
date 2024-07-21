@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@api-assistant/application-core": ["libs/application-core/src/index.ts"],
+      "@api-assistant/application-database-fe": [
+        "libs/application-database-fe/src/index.ts"
+      ],
       "@api-assistant/applications-be": ["libs/applications-be/src/index.ts"],
       "@api-assistant/auth-be": ["libs/auth-be/src/index.ts"],
       "@api-assistant/auth-fe": ["libs/auth-fe/src/index.ts"],
