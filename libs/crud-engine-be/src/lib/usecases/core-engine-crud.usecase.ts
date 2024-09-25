@@ -28,6 +28,7 @@ import {
 import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint-by-url.usecase';
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
+import { CRUDSupportedVariablesInfo } from '../types';
 
 interface CoreEngineCRUDUsecaseInput {
   url: string;
@@ -273,7 +274,11 @@ export class CoreEngineCRUDUsecase
     const crudVariableType = resolveVariableType(primitiveValue, this.logger);
     switch (crudVariableType) {
       case 'Request': {
-        return resolveRequestVariable(primitiveValue, reqBody, this.logger);
+        const requestBodyVariable = resolveRequestVariable(primitiveValue, reqBody, this.logger);
+        if(resolveVariableType(requestBodyVariable as unknown as string, this.logger) === "ObjectId") {
+          return resolveObjectVariable(requestBodyVariable as unknown as string, this.logger)
+        }
+        return requestBodyVariable;
       }
       case 'System': {
         return resolveSystemVariable(primitiveValue, this.logger);
