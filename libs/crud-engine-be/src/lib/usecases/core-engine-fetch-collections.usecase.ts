@@ -1,6 +1,6 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { crudDbConnectionFactory } from '../utils';
+import { crudDbConnectionFactory } from '../utils/utils';
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
 

@@ -1,6 +1,7 @@
-import { BehaviorSubject, map, switchMap, tap } from "rxjs";
+import { BehaviorSubject, map, switchMap } from "rxjs";
 
-import { ComponentStore, tapResponse } from "@ngrx/component-store";
+import { ComponentStore } from "@ngrx/component-store";
+import { tapResponse } from "@ngrx/operators";
 import { Inject, Injectable } from "@angular/core";
 import { API_BASE_URL } from "@api-assistant/commons-fe";
 import { HttpClient } from "@angular/common/http";
@@ -69,7 +70,7 @@ export class EmployeesStore extends ComponentStore<EmployeesState> {
                 this.patchState(state => ({
                     list: state.list.filter(item => item._id !== deleteId)
                 }))
-            }, (err) => {
+            }, (err: unknown) => {
                 console.error(err)
             })
         )
@@ -100,7 +101,7 @@ export class EmployeesStore extends ComponentStore<EmployeesState> {
                 this.patchState(state => ({
                     list: [...state.list, ...data]
                 }))
-            }, (err) => {
+            }, (err: unknown) => {
                 console.error(err)
             })
         )
@@ -139,7 +140,7 @@ export class EmployeesStore extends ComponentStore<EmployeesState> {
                 this.patchState(state => ({
                     list: [data, ...state.list]
                 }))
-            }, (err) => {
+            }, (err: unknown) => {
                 console.error(err)
             })
         )
@@ -193,7 +194,7 @@ export class EmployeesStore extends ComponentStore<EmployeesState> {
                         return emp
                     })
                 }))
-            }, (err) => {
+            }, (err: unknown) => {
                 console.error(err)
             })
         )

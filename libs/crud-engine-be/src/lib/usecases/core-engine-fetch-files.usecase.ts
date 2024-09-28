@@ -3,7 +3,7 @@ import { existsSync, statSync } from 'fs';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 import { Injectable, Logger } from '@nestjs/common';
-import { CORE_ENGINE_UPLOAD_ROOT, removeRootPath } from '../utils';
+import { CORE_ENGINE_UPLOAD_ROOT, removeRootPath } from '../utils/utils';
 
 interface CoreEngineFetchFilesUsecaseInput {
   applicationId: string;

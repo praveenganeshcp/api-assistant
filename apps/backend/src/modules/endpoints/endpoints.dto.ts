@@ -1,8 +1,4 @@
-import {
-  ALLOWED_DB_OPERATIONS_IN_ENDPOINT,
-  EndpointActionQuery,
-  EndpointResponse,
-} from '@api-assistant/endpoints-be';
+import { ALLOWED_DB_OPERATIONS, CRUDActionDefinition, CRUDActionResponse } from '@api-assistant/crud-engine-core';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -14,13 +10,13 @@ import {
 } from 'class-validator';
 
 export class EndpointActionDefinitionDto {
-  @IsEnum(ALLOWED_DB_OPERATIONS_IN_ENDPOINT)
-  action!: ALLOWED_DB_OPERATIONS_IN_ENDPOINT;
+  @IsEnum(ALLOWED_DB_OPERATIONS)
+  operation!: ALLOWED_DB_OPERATIONS;
 
   @IsString()
   collectionName!: string;
 
-  payload!: EndpointActionQuery;
+  payload!: CRUDActionDefinition;
 }
 
 export class CreateEndpointCRUDDto {
@@ -41,7 +37,7 @@ export class CreateEndpointCRUDDto {
   crud!: EndpointActionDefinitionDto[];
 
   @IsObject()
-  response!: EndpointResponse;
+  response!: CRUDActionResponse;
 }
 
 export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}

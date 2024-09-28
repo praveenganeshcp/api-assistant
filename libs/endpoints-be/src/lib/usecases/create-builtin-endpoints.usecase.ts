@@ -4,8 +4,8 @@ import {
   CreateEndpointUsecase,
   CreateEndpointUsecaseInput,
 } from './create-endpoint.usecase';
-import { ALLOWED_DB_OPERATIONS_IN_ENDPOINT } from '../models';
 import { Injectable } from '@nestjs/common';
+import { ALLOWED_DB_OPERATIONS } from '@api-assistant/crud-engine-core';
 
 interface CreateAllBuiltinEndpointsUsecaseInput {
   userId: ObjectId;
@@ -45,7 +45,7 @@ export class CreateAllBuiltinEndpointsUsecase
       crud: [
         {
           collectionName: 'users',
-          action: ALLOWED_DB_OPERATIONS_IN_ENDPOINT.insertOne,
+          operation: ALLOWED_DB_OPERATIONS.insertOne,
           payload: {
             username: '${Request.body.username}',
             emailId: '${Request.body.emailId}',
@@ -54,7 +54,7 @@ export class CreateAllBuiltinEndpointsUsecase
         },
         {
           collectionName: 'users',
-          action: ALLOWED_DB_OPERATIONS_IN_ENDPOINT.findOne,
+          operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
             filter: {
               _id: '${Steps.0.insertedId}',
@@ -88,7 +88,7 @@ export class CreateAllBuiltinEndpointsUsecase
       crud: [
         {
           collectionName: 'users',
-          action: ALLOWED_DB_OPERATIONS_IN_ENDPOINT.findOne,
+          operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
             emailId: '${Request.body.emailId}',
             password: '${Request.body.password}',

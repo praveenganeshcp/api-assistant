@@ -41,7 +41,7 @@ export class EndpointsController {
       url: payload.url,
       crud: payload.crud.map((crud) => ({
         collectionName: crud.collectionName,
-        action: crud.action,
+        operation: crud.operation,
         payload: crud.payload,
       })),
       response: payload.response,

@@ -26,6 +26,7 @@
       "@api-assistant/commons-fe": ["libs/commons-fe/src/index.ts"],
       "@api-assistant/configuration-be": ["libs/configuration-be/src/index.ts"],
       "@api-assistant/crud-engine-be": ["libs/crud-engine-be/src/index.ts"],
+      "@api-assistant/crud-engine-core": ["libs/crud-engine-core/src/index.ts"],
       "@api-assistant/dashboard-fe": ["libs/dashboard-fe/src/index.ts"],
       "@api-assistant/endpoints-be": ["libs/endpoints-be/src/index.ts"],
       "@api-assistant/endpoints-fe": ["libs/endpoints-fe/src/index.ts"],

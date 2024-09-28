@@ -1,5 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 
+export class CoreEngineUnSupportedVariableTypeException extends BadRequestException {
+    constructor(variableType: string) {
+      super(`${variableType} currently not supported`);
+    }
+  }
+
 export class CoreEngineUnSupportedActionException extends BadRequestException {
   constructor(actionName: string) {
     super(`${actionName} currently not supported`);
