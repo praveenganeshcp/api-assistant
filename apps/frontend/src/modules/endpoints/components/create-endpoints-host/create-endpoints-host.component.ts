@@ -49,6 +49,7 @@ export class CreateEndpointsHostComponent {
             url: value.url,
             crud: value.body,
             response: value.response,
+            validations: value.validations,
           },
           applicationId: this.applicationId,
         }),

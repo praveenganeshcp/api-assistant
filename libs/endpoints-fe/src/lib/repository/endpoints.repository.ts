@@ -38,7 +38,7 @@ export class EndpointsFeRepository {
     applicationId: string,
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'validations'
     >
   ) {
     return this.http.post<Endpoint>(

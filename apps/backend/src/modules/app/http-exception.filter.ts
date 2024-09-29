@@ -13,9 +13,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const status = exception.getStatus();
     const errorResponse: any = exception.getResponse();
-
     response.status(status).json({
-      message: errorResponse?.message || 'Something went wrong!',
+      message:
+        (typeof errorResponse === 'string'
+          ? errorResponse
+          : errorResponse?.message) || 'Something went wrong!',
     });
   }
 }

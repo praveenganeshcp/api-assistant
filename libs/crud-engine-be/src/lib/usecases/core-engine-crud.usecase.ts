@@ -1,19 +1,23 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
-import { Db, MongoServerError } from 'mongodb';
-import {
-  crudDbConnectionFactory,
-} from '../utils/utils';
+import { MongoServerError } from 'mongodb';
+import { crudDbConnectionFactory } from '../utils/utils';
 import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint-by-url.usecase';
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
 import { CRUDActionExecutorUsecase } from './crud-action-executor.usecase';
-import { CoreEngineProcessingException, CRUDActionResponse, PlaceholderDataSource } from '@api-assistant/crud-engine-core';
+import {
+  CoreEngineProcessingException,
+  CRUDActionResponse,
+  PlaceholderDataSource,
+  RequestDataValidation,
+} from '@api-assistant/crud-engine-core';
 import { VariableValuePopulaterService } from '../services/variable-value-populater.service';
+import { RequestDataValidatorFacadeService } from './request-data-validator-facade.service';
 
 interface CoreEngineCRUDUsecaseInput {
   url: string;
-  placeholderDataSouce: PlaceholderDataSource
+  placeholderDataSouce: PlaceholderDataSource;
 }
 
 @Injectable()
@@ -27,58 +31,78 @@ export class CoreEngineCRUDUsecase
   constructor(
     private readonly getEndpointByURL: GetEndpointByURLUsecase,
     @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>,
-    private readonly crudActionExecutorUsecase: CRUDActionExecutorUsecase
+    private readonly crudActionExecutorUsecase: CRUDActionExecutorUsecase,
+    private readonly requestDataValidatorService: RequestDataValidatorFacadeService
   ) {}
 
-  async execute(input: CoreEngineCRUDUsecaseInput): Promise<CRUDActionResponse> {
-      const { url, placeholderDataSouce } = input;
-      const endpoint = await this.getEndpointByURL.execute(url);
-      if (!endpoint) {
-        throw new Error('Endpoint not found for the URL ' + endpoint);
-      }
+  async execute(
+    input: CoreEngineCRUDUsecaseInput
+  ): Promise<CRUDActionResponse> {
+    const { url, placeholderDataSouce } = input;
+    const endpoint = await this.getEndpointByURL.execute(url);
+    if (!endpoint) {
+      throw new Error('Endpoint not found for the URL ' + endpoint);
+    }
 
-      const { crud, response, applicationId: applicationObjectId } = endpoint;
+    const {
+      crud,
+      response,
+      applicationId: applicationObjectId,
+      validations,
+    } = endpoint;
 
-      const applicationId = applicationObjectId.toString();
+    const applicationId = applicationObjectId.toString();
 
-      this.logger.log('Handling core engine CRUD');
-      const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-        applicationId,
-        this.databaseConfig.DB_URL
-      );
-      this.logger.log(`OPENED CONNECTION`)
+    this.logger.log('Handling core engine CRUD');
+    const { connection: mongoConnection, db } = await crudDbConnectionFactory(
+      applicationId,
+      this.databaseConfig.DB_URL
+    );
+    this.logger.log(`OPENED CONNECTION`);
+
     try {
-      let stepsResponse: Document[] = []
+      await this.requestDataValidatorService.validate({
+        db,
+        requestData: placeholderDataSouce,
+        validations: this.variableValuePopulater.replaceVariables(
+          validations,
+          placeholderDataSouce
+        ) as RequestDataValidation,
+      });
+      let stepsResponse: Document[] = [];
       for (const action of crud) {
-        this.logger.log('processing step', action)
-        let payloadPlaceholdersPopulatedWithValues = this.variableValuePopulater.replaceVariables(action.payload, {
-          ...placeholderDataSouce,
-          crudSteps: stepsResponse
-        });
+        this.logger.log('processing step', action);
+        let payloadPlaceholdersPopulatedWithValues =
+          this.variableValuePopulater.replaceVariables(action.payload, {
+            ...placeholderDataSouce,
+            crudSteps: stepsResponse,
+          });
         let currentStepResponse = await this.crudActionExecutorUsecase.execute({
-          db, 
+          db,
           actionDef: {
             collectionName: action.collectionName,
             payload: payloadPlaceholdersPopulatedWithValues as Document,
-            operation: action.operation
-          }
-        })
-        stepsResponse = [...stepsResponse, currentStepResponse as Document]
+            operation: action.operation,
+          },
+        });
+        stepsResponse = [...stepsResponse, currentStepResponse as Document];
         this.logger.log('processed current step', currentStepResponse);
       }
       this.logger.log('Processed the operations');
       this.logger.log('Computed CRUD: ', placeholderDataSouce.crudSteps);
       mongoConnection.close();
       this.logger.log(`Core engine db ${applicationId} connection closed`);
-      return this.variableValuePopulater.replaceVariables(response, {...placeholderDataSouce, crudSteps: stepsResponse}) as CRUDActionResponse;
+      return this.variableValuePopulater.replaceVariables(response, {
+        ...placeholderDataSouce,
+        crudSteps: stepsResponse,
+      }) as CRUDActionResponse;
     } catch (err) {
       console.error(err);
       mongoConnection.close();
-      this.logger.log('CONNECTION CLOSED')
+      this.logger.log('CONNECTION CLOSED');
       if (err instanceof MongoServerError)
         throw new CoreEngineProcessingException();
       else throw err;
     }
   }
-
 }

@@ -26,6 +26,7 @@ export interface EndpointFormValue {
   description: string;
   body: Object[];
   response: Object;
+  validations: Object;
 }
 
 @Component({
@@ -57,6 +58,7 @@ export class EndpointsFormComponent {
         description: '',
         body: '',
         response: '',
+        validations: '',
       });
     }
   }
@@ -69,6 +71,7 @@ export class EndpointsFormComponent {
     description: this.formBuilder.control('', [Validators.required]),
     body: this.formBuilder.control([], [Validators.required]),
     response: this.formBuilder.control({}, [Validators.required]),
+    validations: this.formBuilder.control({}, [Validators.required]),
   });
 
   public get nameControl() {

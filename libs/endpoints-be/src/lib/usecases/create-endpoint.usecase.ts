@@ -5,7 +5,10 @@ import { EndpointsRepository } from '../repositories/endpoints.repository';
 import { ObjectId } from 'mongodb';
 
 export interface CreateEndpointUsecaseInput
-  extends Pick<Endpoint, 'crud' | 'description' | 'name' | 'response' | 'url'> {
+  extends Pick<
+    Endpoint,
+    'crud' | 'description' | 'name' | 'response' | 'url' | 'validations'
+  > {
   createdBy: ObjectId;
   applicationId: ObjectId;
 }
@@ -26,6 +29,7 @@ export class CreateEndpointUsecase
       createdBy: data.createdBy,
       createdOn: new Date(),
       applicationId: data.applicationId,
+      validations: data.validations,
     });
   }
 }

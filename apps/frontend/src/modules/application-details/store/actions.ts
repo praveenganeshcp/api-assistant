@@ -122,7 +122,7 @@ export const createEndpointAction = createApplicationDetailsActionWithProps(
   props<{
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'validations'
     >;
     applicationId: string;
   }>()
@@ -144,7 +144,7 @@ export const editEndpointAction = createApplicationDetailsActionWithProps(
   props<{
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'validations'
     >;
     applicationId: string;
     endpointId: string;

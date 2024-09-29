@@ -47,6 +47,7 @@ export class EndpointsController {
       response: payload.response,
       createdBy: currentUser._id,
       applicationId: new ObjectId(applicationId),
+      validations: payload.validations,
     });
   }
 

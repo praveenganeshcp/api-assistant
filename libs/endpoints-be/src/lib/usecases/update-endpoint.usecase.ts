@@ -6,7 +6,10 @@ import { EndpointsRepository } from '../repositories/endpoints.repository';
 
 interface UpdateEndpointUsecaseInput {
   id: ObjectId;
-  details: Pick<Endpoint, 'name' | 'url' | 'response' | 'crud' | 'description'>;
+  details: Pick<
+    Endpoint,
+    'name' | 'url' | 'response' | 'crud' | 'description' | 'validations'
+  >;
   userId: ObjectId;
   applicationId: ObjectId;
 }
@@ -33,6 +36,7 @@ export class UpdateEndpointUsecase
           crud: data.details.crud,
           response: data.details.response,
           description: data.details.description,
+          validations: data.details.validations,
         },
       }
     );

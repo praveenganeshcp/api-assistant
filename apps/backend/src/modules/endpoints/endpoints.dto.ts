@@ -1,4 +1,9 @@
-import { ALLOWED_DB_OPERATIONS, CRUDActionDefinition, CRUDActionResponse } from '@api-assistant/crud-engine-core';
+import {
+  ALLOWED_DB_OPERATIONS,
+  CRUDActionDefinition,
+  CRUDActionResponse,
+  RequestDataValidation,
+} from '@api-assistant/crud-engine-core';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -35,6 +40,9 @@ export class CreateEndpointCRUDDto {
   @ValidateNested({ each: true })
   @IsArray()
   crud!: EndpointActionDefinitionDto[];
+
+  @IsObject()
+  validations!: RequestDataValidation;
 
   @IsObject()
   response!: CRUDActionResponse;

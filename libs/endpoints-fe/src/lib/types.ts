@@ -8,6 +8,7 @@ export interface Endpoint {
   createdBy: string;
   createdOn: Date;
   applicationId: string;
+  validations: Object;
 }
 
 export interface MinimalEndpointInfo

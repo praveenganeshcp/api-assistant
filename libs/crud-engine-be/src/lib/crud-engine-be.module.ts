@@ -8,6 +8,9 @@ import { EndpointsBeModule } from '@api-assistant/endpoints-be';
 import { CRUDActionExecutorUsecase } from './usecases/crud-action-executor.usecase';
 import { CoreEngineInsertActionUsecase } from './usecases/core-engine-insert-action.usecase';
 import { CoreEngineFindOneActionUsecase } from './usecases/core-engine-find-one-action.usecase';
+import { RequestDataValidatorService } from './usecases/request-data-validator.service';
+import { RequestDataAsyncValidatorService } from './usecases/request-data-async-validator.service';
+import { RequestDataValidatorFacadeService } from './usecases/request-data-validator-facade.service';
 
 @Module({
   imports: [ApplicationsBeModule, EndpointsBeModule],
@@ -18,7 +21,10 @@ import { CoreEngineFindOneActionUsecase } from './usecases/core-engine-find-one-
     DeleteApplicationUsecase,
     CRUDActionExecutorUsecase,
     CoreEngineInsertActionUsecase,
-    CoreEngineFindOneActionUsecase
+    CoreEngineFindOneActionUsecase,
+    RequestDataValidatorService,
+    RequestDataAsyncValidatorService,
+    RequestDataValidatorFacadeService,
   ],
   exports: [
     CoreEngineCRUDUsecase,
