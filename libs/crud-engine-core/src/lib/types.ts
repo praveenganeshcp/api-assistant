@@ -30,12 +30,16 @@ export interface SaveActionPayload extends Document {}
 export interface PlaceholderDataSource {
   requestBody: Document;
   crudSteps: Document[];
+  queryParams: Record<string, unknown>;
+  pathParams: Record<string, unknown>
 }
 
 export type RequestDataFieldSyncValidators =
   | 'string-type'
   | 'numeric-type'
   | 'boolean-type';
+
+export type ParamDataTypes = 'string' | 'number' | 'boolean' | 'ObjectId';
 
 export interface RequestDataSyncValidation {
   name: RequestDataFieldSyncValidators;
@@ -85,6 +89,8 @@ export type CRUDSupportedVariablesTypes =
   | 'ObjectId'
   | 'System'
   | 'RequestBody'
+  | 'RequestPathParams'
+  | 'RequestQueryParams'
   | 'Steps';
 
 export const CRUDSupportedVariablesInfo: Record<
@@ -107,6 +113,14 @@ export const CRUDSupportedVariablesInfo: Record<
     prefix: '${Steps',
     suffix: '}',
   },
+  RequestPathParams: {
+    prefix: '${Request.params.',
+    suffix: '}'
+  },
+  RequestQueryParams: {
+    prefix: '${Request.query.',
+    suffix: '}'
+  }
 };
 
 export enum CRUDSystemVariables {

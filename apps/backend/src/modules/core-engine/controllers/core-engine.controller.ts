@@ -9,6 +9,7 @@ import {
   Query,
   Delete,
   Param,
+  Patch,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CoreEngineApplicationId } from '@api-assistant/commons-be';
@@ -40,14 +41,81 @@ export class CoreEngineController {
     return this.coreEngineFetchCollectionsUsecase.execute(applicationId);
   }
 
-  @Post('api/:path')
-  performPostCrud(@Param('path') endpointUrl: string, @Body() reqBody: any) {
+  @Post('api/*')
+  performPostCrud(
+    @Param() params: any,
+    @Body() reqBody: any,
+    @Query() queryParams: any,
+    @CoreEngineApplicationId() applicationId: ObjectId
+  ) {
     return this.coreEngineCRUDUsecase.execute({
-      url: `/${endpointUrl}`,
+      url: `/${params[0]}`,
       placeholderDataSouce: {
         requestBody: reqBody,
-        crudSteps: []
-      }
+        crudSteps: [],
+        queryParams,
+        pathParams: {},
+      },
+      applicationId,
+      method: 'POST'
+    });
+  }
+
+  @Get('api/*')
+  performGetCrud(
+    @Param() params: any,
+    @Query() queryParams: any,
+    @CoreEngineApplicationId() applicationId: ObjectId
+  ) {
+    return this.coreEngineCRUDUsecase.execute({
+      url: `/${params[0]}`,
+      placeholderDataSouce: {
+        requestBody: {},
+        crudSteps: [],
+        queryParams,
+        pathParams: {},
+      },
+      applicationId,
+      method: 'GET'
+    });
+  }
+
+  @Delete('api/*')
+  performDeleteCrud(
+    @Param() params: any,
+    @Query() queryParams: any,
+    @CoreEngineApplicationId() applicationId: ObjectId
+  ) {
+    return this.coreEngineCRUDUsecase.execute({
+      url: `/${params[0]}`,
+      placeholderDataSouce: {
+        requestBody: {},
+        crudSteps: [],
+        queryParams,
+        pathParams: {},
+      },
+      applicationId,
+      method: 'DELETE'
+    });
+  }
+
+  @Patch('api/*')
+  performPatchCrud(
+    @Param() params: any,
+    @Body() reqBody: any,
+    @Query() queryParams: any,
+    @CoreEngineApplicationId() applicationId: ObjectId
+  ) {
+    return this.coreEngineCRUDUsecase.execute({
+      url: `/${params[0]}`,
+      placeholderDataSouce: {
+        requestBody: reqBody,
+        crudSteps: [],
+        queryParams,
+        pathParams: {},
+      },
+      applicationId,
+      method: 'PATCH'
     });
   }
 

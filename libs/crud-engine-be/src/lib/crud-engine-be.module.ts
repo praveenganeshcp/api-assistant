@@ -11,6 +11,7 @@ import { CoreEngineFindOneActionUsecase } from './usecases/core-engine-find-one-
 import { RequestDataValidatorService } from './usecases/request-data-validator.service';
 import { RequestDataAsyncValidatorService } from './usecases/request-data-async-validator.service';
 import { RequestDataValidatorFacadeService } from './usecases/request-data-validator-facade.service';
+import { ParamsParserService } from './usecases/params-parser.service';
 
 @Module({
   imports: [ApplicationsBeModule, EndpointsBeModule],
@@ -25,6 +26,7 @@ import { RequestDataValidatorFacadeService } from './usecases/request-data-valid
     RequestDataValidatorService,
     RequestDataAsyncValidatorService,
     RequestDataValidatorFacadeService,
+    ParamsParserService
   ],
   exports: [
     CoreEngineCRUDUsecase,

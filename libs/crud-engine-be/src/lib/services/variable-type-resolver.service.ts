@@ -33,6 +33,20 @@ export class VariableTypeResolverService {
     );
   }
 
+  private isRequestParamsVariable(value: string) {
+    return (
+      value.startsWith(CRUDSupportedVariablesInfo.RequestPathParams.prefix) &&
+      value.endsWith(CRUDSupportedVariablesInfo.RequestPathParams.suffix)
+    );
+  }
+
+  private isRequestQueryVariable(value: string) {
+    return (
+      value.startsWith(CRUDSupportedVariablesInfo.RequestQueryParams.prefix) &&
+      value.endsWith(CRUDSupportedVariablesInfo.RequestQueryParams.suffix)
+    );
+  }
+
   public resolve(value: string): CRUDSupportedVariablesTypes | '' {
     if (this.isRequestVariable(value)) {
       return 'RequestBody';
@@ -42,6 +56,12 @@ export class VariableTypeResolverService {
       return 'ObjectId';
     } else if (this.isStepVariable(value)) {
       return 'Steps';
+    }
+    else if(this.isRequestParamsVariable(value)) {
+      return 'RequestPathParams';
+    }
+    else if(this.isRequestQueryVariable(value)) {
+      return 'RequestQueryParams';
     }
     return '';
   }

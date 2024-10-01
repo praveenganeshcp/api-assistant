@@ -42,6 +42,7 @@ export class CreateAllBuiltinEndpointsUsecase
       name: 'Signup',
       description: 'Endpoint to create user accounts',
       url: '/signup',
+      method: 'POST',
       validations: {},
       crud: [
         {
@@ -86,6 +87,7 @@ export class CreateAllBuiltinEndpointsUsecase
       name: 'Login',
       description: 'Endpoint to login user accounts',
       url: '/login',
+      method: 'POST',
       crud: [
         {
           collectionName: 'users',
@@ -120,6 +122,7 @@ export class CreateAllBuiltinEndpointsUsecase
       description: 'Endpoint to logout user accounts',
       url: '/logout',
       crud: [],
+      method: 'POST',
       response: {},
       validations: {},
     };

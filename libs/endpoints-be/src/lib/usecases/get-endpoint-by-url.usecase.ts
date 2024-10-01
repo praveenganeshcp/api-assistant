@@ -2,14 +2,16 @@ import { CanBeNull, Usecase } from '@api-assistant/commons-be';
 import { Endpoint } from '../entities';
 import { EndpointsRepository } from '../repositories/endpoints.repository';
 import { Injectable } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
+interface GetEndpointByURLUsecaseInput {endpointUrl: string, applicationId: ObjectId}
 @Injectable()
 export class GetEndpointByURLUsecase
-  implements Usecase<string, CanBeNull<Endpoint>>
+  implements Usecase<GetEndpointByURLUsecaseInput, CanBeNull<Endpoint>>
 {
   constructor(private readonly endpointsRepo: EndpointsRepository) {}
 
-  execute(endpointUrl: string): Promise<CanBeNull<Endpoint>> {
-    return this.endpointsRepo.findOne({ url: endpointUrl });
+  execute(input: GetEndpointByURLUsecaseInput): Promise<CanBeNull<Endpoint>> {
+    return this.endpointsRepo.findOne({ url: input.endpointUrl, applicationId: input.applicationId });
   }
 }

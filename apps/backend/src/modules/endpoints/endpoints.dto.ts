@@ -2,6 +2,7 @@ import {
   ALLOWED_DB_OPERATIONS,
   CRUDActionDefinition,
   CRUDActionResponse,
+  CRUDEngineHttpMethods,
   RequestDataValidation,
 } from '@api-assistant/crud-engine-core';
 import { Type } from 'class-transformer';
@@ -46,6 +47,9 @@ export class CreateEndpointCRUDDto {
 
   @IsObject()
   response!: CRUDActionResponse;
+
+  @IsString()
+  method!: CRUDEngineHttpMethods
 }
 
 export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}

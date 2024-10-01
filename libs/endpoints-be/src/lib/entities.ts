@@ -1,6 +1,7 @@
 import {
   CRUDActionDefinition,
   CRUDActionResponse,
+  CRUDEngineHttpMethods,
   RequestDataValidation,
 } from '@api-assistant/crud-engine-core';
 import { ObjectId } from 'mongodb';
@@ -10,6 +11,7 @@ export interface Endpoint {
   name: string;
   description: string;
   url: string;
+  method: CRUDEngineHttpMethods;
   crud: CRUDActionDefinition[];
   response: CRUDActionResponse;
   validations: RequestDataValidation;

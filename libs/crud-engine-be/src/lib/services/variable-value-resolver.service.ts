@@ -34,6 +34,30 @@ export class VariableValueResolver {
     return valueObject;
   }
 
+  private resolveRequestParamsVariable(value: string, inputParams: Document) {
+    this.logger.log(`processing param placeholder ${value}`);
+    const variableParamPrefixLen =
+      CRUDSupportedVariablesInfo.RequestPathParams.prefix.length;
+    const valueKey: string = value.slice(
+      variableParamPrefixLen,
+      value.length - 1
+    );
+    this.logger.log(`processed param placeholder ${inputParams[valueKey]}`);
+    return inputParams[valueKey];
+  }
+
+  private resolveRequestQueryVariable(value: string, inputParams: Document) {
+    this.logger.log(`processing query placeholder ${value}`);
+    const variableParamPrefixLen =
+      CRUDSupportedVariablesInfo.RequestQueryParams.prefix.length;
+    const valueKey: string = value.slice(
+      variableParamPrefixLen,
+      value.length - 1
+    );
+    this.logger.log(`processed query placeholder ${inputParams[valueKey]}`);
+    return inputParams[valueKey];
+  }
+
   private resolveSystemVariable(value: string) {
     this.logger.log(`processing system var placeholder ${value}`);
     const systemVariablePrefixLen =
@@ -106,6 +130,12 @@ export class VariableValueResolver {
       }
       case 'System': {
         return this.resolveSystemVariable(value);
+      }
+      case 'RequestPathParams': {
+        return this.resolveRequestParamsVariable(value, inputData.pathParams);
+      }
+      case 'RequestQueryParams': {
+        return this.resolveRequestQueryVariable(value, inputData.queryParams);
       }
       default: {
         return value;

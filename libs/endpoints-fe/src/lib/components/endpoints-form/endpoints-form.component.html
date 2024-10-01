@@ -7,6 +7,12 @@
     <input type="text" sw-input formControlName="url" />
   </sw-form-control>
 
+  <sw-form-control label="Method" [control]="methodControl">
+    <select formControlName="method">
+      <option [value]="option.value" *ngFor="let option of httpMethodOptions">{{ option.label }}</option>
+    </select>
+  </sw-form-control>
+
   <sw-form-control label="Description" [control]="descriptionControl">
     <input type="text" sw-input formControlName="description" />
   </sw-form-control>

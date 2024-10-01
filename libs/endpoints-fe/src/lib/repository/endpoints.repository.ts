@@ -38,7 +38,7 @@ export class EndpointsFeRepository {
     applicationId: string,
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url' | 'validations'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'validations' | 'method'
     >
   ) {
     return this.http.post<Endpoint>(
@@ -55,7 +55,7 @@ export class EndpointsFeRepository {
     endpointId: string,
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'method'
     >
   ) {
     return this.http.patch<Endpoint>(

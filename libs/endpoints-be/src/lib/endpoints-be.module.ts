@@ -7,6 +7,7 @@ import { GetEndpointByIdUsecase } from './usecases/get-endpoint-by-id.usecase';
 import { UpdateEndpointUsecase } from './usecases/update-endpoint.usecase';
 import { DeleteEndpointsUsecase } from './usecases/delete-endpoint.usecase';
 import { CreateAllBuiltinEndpointsUsecase } from './usecases/create-builtin-endpoints.usecase';
+import { FindEndpointByPathMatchUsecase } from './usecases/find-endpoint-by-path-match.usecase';
 
 @Module({
   controllers: [],
@@ -18,7 +19,8 @@ import { CreateAllBuiltinEndpointsUsecase } from './usecases/create-builtin-endp
     GetEndpointByIdUsecase,
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
-    CreateAllBuiltinEndpointsUsecase
+    CreateAllBuiltinEndpointsUsecase,
+    FindEndpointByPathMatchUsecase
   ],
   exports: [
     CreateEndpointUsecase,
@@ -27,7 +29,8 @@ import { CreateAllBuiltinEndpointsUsecase } from './usecases/create-builtin-endp
     GetEndpointByIdUsecase,
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
-    CreateAllBuiltinEndpointsUsecase
+    CreateAllBuiltinEndpointsUsecase,
+    FindEndpointByPathMatchUsecase
   ],
 })
 export class EndpointsBeModule {}

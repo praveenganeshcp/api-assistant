@@ -8,7 +8,7 @@ interface UpdateEndpointUsecaseInput {
   id: ObjectId;
   details: Pick<
     Endpoint,
-    'name' | 'url' | 'response' | 'crud' | 'description' | 'validations'
+    'name' | 'url' | 'response' | 'crud' | 'description' | 'validations' | 'method'
   >;
   userId: ObjectId;
   applicationId: ObjectId;
@@ -37,6 +37,7 @@ export class UpdateEndpointUsecase
           response: data.details.response,
           description: data.details.description,
           validations: data.details.validations,
+          method: data.details.method
         },
       }
     );

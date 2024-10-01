@@ -19,6 +19,7 @@ import {
   SwInputComponent,
 } from 'ngx-simple-widgets';
 import { JsonInputComponent } from '@api-assistant/commons-fe';
+import { CRUDEngineHttpMethods } from '@api-assistant/crud-engine-core';
 
 export interface EndpointFormValue {
   name: string;
@@ -27,6 +28,7 @@ export interface EndpointFormValue {
   body: Object[];
   response: Object;
   validations: Object;
+  method: CRUDEngineHttpMethods
 }
 
 @Component({
@@ -59,15 +61,24 @@ export class EndpointsFormComponent {
         body: '',
         response: '',
         validations: '',
+        method: 'POST'
       });
     }
   }
 
   @Output() onSubmit = new EventEmitter<{ value: EndpointFormValue }>();
 
+  public readonly httpMethodOptions: Array<{label: string, value: CRUDEngineHttpMethods}> = [
+    { label: 'Post', value: 'POST' },
+    { label: 'Get', value: 'GET' },
+    { label: 'Patch', value: 'PATCH' },
+    { label: 'Delete', value: 'DELETE' }
+  ]
+
   public readonly createEndpointForm: FormGroup = this.formBuilder.group({
     name: this.formBuilder.control('', [Validators.required]),
     url: this.formBuilder.control('', [Validators.required]),
+    method: this.formBuilder.control('POST', [Validators.required]),
     description: this.formBuilder.control('', [Validators.required]),
     body: this.formBuilder.control([], [Validators.required]),
     response: this.formBuilder.control({}, [Validators.required]),
@@ -80,6 +91,10 @@ export class EndpointsFormComponent {
 
   public get urlControl() {
     return this.createEndpointForm.controls['url'];
+  }
+
+  public get methodControl() {
+    return this.createEndpointForm.controls['method'];
   }
 
   public get descriptionControl() {

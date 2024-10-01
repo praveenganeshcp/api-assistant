@@ -1,23 +1,27 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
-import { MongoServerError } from 'mongodb';
+import { MongoServerError, ObjectId } from 'mongodb';
 import { crudDbConnectionFactory } from '../utils/utils';
-import { GetEndpointByURLUsecase } from 'libs/endpoints-be/src/lib/usecases/get-endpoint-by-url.usecase';
 import { dbConfig } from '@api-assistant/configuration-be';
 import { ConfigType } from '@nestjs/config';
 import { CRUDActionExecutorUsecase } from './crud-action-executor.usecase';
 import {
   CoreEngineProcessingException,
   CRUDActionResponse,
+  CRUDEngineHttpMethods,
   PlaceholderDataSource,
   RequestDataValidation,
 } from '@api-assistant/crud-engine-core';
 import { VariableValuePopulaterService } from '../services/variable-value-populater.service';
 import { RequestDataValidatorFacadeService } from './request-data-validator-facade.service';
+import { FindEndpointByPathMatchUsecase } from '@api-assistant/endpoints-be';
+import { ParamsParserService } from './params-parser.service';
 
 interface CoreEngineCRUDUsecaseInput {
   url: string;
   placeholderDataSouce: PlaceholderDataSource;
+  applicationId: ObjectId;
+  method: CRUDEngineHttpMethods
 }
 
 @Injectable()
@@ -29,33 +33,42 @@ export class CoreEngineCRUDUsecase
   private readonly variableValuePopulater = new VariableValuePopulaterService();
 
   constructor(
-    private readonly getEndpointByURL: GetEndpointByURLUsecase,
     @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>,
     private readonly crudActionExecutorUsecase: CRUDActionExecutorUsecase,
-    private readonly requestDataValidatorService: RequestDataValidatorFacadeService
+    private readonly requestDataValidatorService: RequestDataValidatorFacadeService,
+    private readonly findEndpointByPathMatching: FindEndpointByPathMatchUsecase,
+    private readonly paramsParserService: ParamsParserService
   ) {}
 
   async execute(
     input: CoreEngineCRUDUsecaseInput
   ): Promise<CRUDActionResponse> {
-    const { url, placeholderDataSouce } = input;
-    const endpoint = await this.getEndpointByURL.execute(url);
-    if (!endpoint) {
-      throw new Error('Endpoint not found for the URL ' + endpoint);
+
+    const { url, placeholderDataSouce, applicationId } = input;
+
+    const matchedEndpoint = await this.findEndpointByPathMatching.execute({
+      applicationId: input.applicationId,
+      url: input.url,
+      method: input.method
+    });
+    if (!matchedEndpoint) {
+      throw new HttpException('Endpoint not found for the URL:' + url, 400);
     }
+
+    const { endpoint, params } = matchedEndpoint;
+
+    placeholderDataSouce.pathParams = this.paramsParserService.parse(params);
+    placeholderDataSouce.queryParams = this.paramsParserService.parse(placeholderDataSouce.queryParams as Record<string, string>);
 
     const {
       crud,
       response,
-      applicationId: applicationObjectId,
       validations,
     } = endpoint;
 
-    const applicationId = applicationObjectId.toString();
-
     this.logger.log('Handling core engine CRUD');
     const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-      applicationId,
+      applicationId.toString(),
       this.databaseConfig.DB_URL
     );
     this.logger.log(`OPENED CONNECTION`);

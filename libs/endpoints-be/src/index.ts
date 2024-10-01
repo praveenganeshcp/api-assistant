@@ -6,3 +6,4 @@ export * from './lib/usecases/get-endpoint-by-id.usecase';
 export * from "./lib/usecases/create-builtin-endpoints.usecase";
 export * from './lib/usecases/update-endpoint.usecase';
 export * from './lib/usecases/delete-endpoint.usecase';
+export * from "./lib/usecases/find-endpoint-by-path-match.usecase";
