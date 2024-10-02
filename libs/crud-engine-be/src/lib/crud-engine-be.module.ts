@@ -16,14 +16,21 @@ import { CoreEngineSignupUsecase } from './usecases/core-engine-signup.usecase';
 import { CoreEngineJWTService } from './services/core-engine-jwt.service';
 import { CoreEngineLoginUsecase } from './usecases/core-engine-login.usecase';
 import { AuthenticateAppUserUsecase } from './usecases/authenticate-app-user.usecase';
+import { CRUD_DB_CONNECTION, crudDbConnectionFactory } from './utils/utils';
+import { dbConfig } from '@api-assistant/configuration-be';
+
 
 @Module({
   imports: [ApplicationsBeModule, EndpointsBeModule],
   providers: [
+    {
+      provide: CRUD_DB_CONNECTION,
+      useFactory: crudDbConnectionFactory,
+      inject: [dbConfig.KEY]
+    },
     CoreEngineCRUDUsecase,
     CoreEngineFetchCollectionsUsecase,
     CoreEngineFetchFilesUsecase,
-    DeleteApplicationUsecase,
     CRUDActionExecutorUsecase,
     CoreEngineInsertActionUsecase,
     CoreEngineFindOneActionUsecase,
@@ -34,15 +41,15 @@ import { AuthenticateAppUserUsecase } from './usecases/authenticate-app-user.use
     CoreEngineSignupUsecase,
     CoreEngineJWTService,
     CoreEngineLoginUsecase,
-    AuthenticateAppUserUsecase
+    AuthenticateAppUserUsecase,
   ],
   exports: [
     CoreEngineCRUDUsecase,
     CoreEngineFetchCollectionsUsecase,
     CoreEngineFetchFilesUsecase,
-    DeleteApplicationUsecase,
     CoreEngineSignupUsecase,
-    CoreEngineLoginUsecase
+    CoreEngineLoginUsecase,
+    CRUD_DB_CONNECTION
   ],
 })
 export class CrudEngineBeModule {}

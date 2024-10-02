@@ -1,9 +1,6 @@
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { Usecase } from '@api-assistant/commons-be';
-import { MongoServerError, ObjectId } from 'mongodb';
-import { crudDbConnectionFactory } from '../utils/utils';
-import { dbConfig } from '@api-assistant/configuration-be';
-import { ConfigType } from '@nestjs/config';
+import { MongoClient, MongoServerError, ObjectId } from 'mongodb';
 import { CRUDActionExecutorUsecase } from './crud-action-executor.usecase';
 import {
   CoreEngineProcessingException,
@@ -17,6 +14,7 @@ import { RequestDataValidatorFacadeService } from './request-data-validator-faca
 import { FindEndpointByPathMatchUsecase } from '@api-assistant/endpoints-be';
 import { ParamsParserService } from './params-parser.service';
 import { AuthenticateAppUserUsecase } from './authenticate-app-user.usecase';
+import { CRUD_DB_CONNECTION } from '../utils/utils';
 
 export interface CoreEngineCRUDUsecaseInput {
   url: string;
@@ -35,7 +33,7 @@ export class CoreEngineCRUDUsecase
   private readonly variableValuePopulater = new VariableValuePopulaterService();
 
   constructor(
-    @Inject(dbConfig.KEY) private databaseConfig: ConfigType<typeof dbConfig>,
+    @Inject(CRUD_DB_CONNECTION) private dbConnection: MongoClient,
     private readonly crudActionExecutorUsecase: CRUDActionExecutorUsecase,
     private readonly requestDataValidatorService: RequestDataValidatorFacadeService,
     private readonly findEndpointByPathMatching: FindEndpointByPathMatchUsecase,
@@ -67,10 +65,8 @@ export class CoreEngineCRUDUsecase
     const { endpoint, params } = matchedEndpoint;
 
     this.logger.log('Handling core engine CRUD');
-    const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-      applicationId.toString(),
-      this.databaseConfig.DB_URL
-    );
+
+    const db = this.dbConnection.db(`api-crud-${applicationId.toString()}`);
 
     if(endpoint.isAuthenticated) {
       placeholderDataSouce.authUser = await this.authenticateAppUser.execute({ db, token: token || '' })
@@ -117,16 +113,12 @@ export class CoreEngineCRUDUsecase
       }
       this.logger.log('Processed the operations');
       this.logger.log('Computed CRUD: ', placeholderDataSouce.crudSteps);
-      mongoConnection.close();
-      this.logger.log(`Core engine db ${applicationId} connection closed`);
       return this.variableValuePopulater.replaceVariables(response, {
         ...placeholderDataSouce,
         crudSteps: stepsResponse,
       }) as CRUDActionResponse;
     } catch (err) {
       console.error(err);
-      mongoConnection.close();
-      this.logger.log('CONNECTION CLOSED');
       if (err instanceof MongoServerError)
         throw new CoreEngineProcessingException();
       else throw err;

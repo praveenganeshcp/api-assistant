@@ -1,4 +1,6 @@
+import { dbConfig } from '@api-assistant/configuration-be';
 import { Logger } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { Db, MongoClient } from 'mongodb';
 import { join } from 'path';
 
@@ -6,23 +8,17 @@ const filesSeperator = '/';
 
 export const CORE_ENGINE_UPLOAD_ROOT = 'core-engine-uploads';
 
+export const CRUD_DB_CONNECTION = 'CRUD_DB_CONNECTION';
+
 export async function crudDbConnectionFactory(
-  applicationId: string,
-  url: string
-): Promise<{
-  db: Db;
-  connection: MongoClient;
-}> {
+  config: ConfigType<typeof dbConfig>
+): Promise<MongoClient> {
   const logger = new Logger(crudDbConnectionFactory.name);
   logger.log('Connecting to crud mongodb host...');
-  const mongoClient = new MongoClient(url);
+  const mongoClient = new MongoClient(config.DB_URL);
   const connection = await mongoClient.connect();
   logger.log('Connected to crud mongodb host');
-
-  logger.log(`Creating core engine db connection to id ${applicationId}...`);
-  const db = connection.db(`api-crud-${applicationId}`);
-  logger.log(`Core engine db connected to id ${applicationId}`);
-  return { db, connection };
+  return connection;
 }
 
 export function removeRootPath(objectPath: string): string {

@@ -1,16 +1,14 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { Inject, Injectable } from '@nestjs/common';
-import { ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import {
   CORE_ENGINE_UPLOAD_ROOT,
-  crudDbConnectionFactory,
+  CRUD_DB_CONNECTION,
 } from '@api-assistant/crud-engine-be';
 import { join } from 'path';
 import { rm } from 'fs/promises';
 import { existsSync } from 'fs';
 import { ApplicationRepository } from '@api-assistant/applications-be';
-import { ConfigType } from '@nestjs/config';
-import { dbConfig } from '@api-assistant/configuration-be';
 
 interface DeleteApplicationUsecaseInput {
   applicationId: ObjectId;
@@ -22,8 +20,8 @@ export class DeleteApplicationUsecase
 {
   constructor(
     private applicationRepository: ApplicationRepository,
-    @Inject(dbConfig.KEY)
-    private readonly databaseConfig: ConfigType<typeof dbConfig>
+    @Inject(CRUD_DB_CONNECTION)
+    private readonly connection: MongoClient
   ) {}
 
   async execute(data: DeleteApplicationUsecaseInput): Promise<string> {
@@ -40,14 +38,9 @@ export class DeleteApplicationUsecase
     if (existsSync(destinationPath))
       await rm(destinationPath, { recursive: true });
 
-    const { db, connection } = await crudDbConnectionFactory(
-      data.applicationId.toString(),
-      this.databaseConfig.DB_URL
-    );
+    const db = this.connection.db(`api-crud-${data.applicationId.toString()}`)
 
     await db.dropDatabase();
-
-    await connection.close();
 
     return '';
   }

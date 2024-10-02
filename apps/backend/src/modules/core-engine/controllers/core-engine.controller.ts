@@ -38,7 +38,6 @@ export class CoreEngineController {
     private coreEngineCRUDUsecase: CoreEngineCRUDUsecase,
     private coreEngineFetchCollectionsUsecase: CoreEngineFetchCollectionsUsecase,
     private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase,
-    private deleteApplicationUsecase: DeleteApplicationUsecase,
     private readonly coreEngineSignupUsecase: CoreEngineSignupUsecase,
     private readonly coreEngineLoginUsecase: CoreEngineLoginUsecase
   ) {}
@@ -216,10 +215,10 @@ export class CoreEngineController {
     });
   }
 
-  @Delete('application')
-  async deleteApplication(@CoreEngineApplicationId() applicationId: string) {
-    return this.deleteApplicationUsecase.execute({
-      applicationId: new ObjectId(applicationId),
-    });
-  }
+  // @Delete('application')
+  // async deleteApplication(@CoreEngineApplicationId() applicationId: string) {
+  //   return this.deleteApplicationUsecase.execute({
+  //     applicationId: new ObjectId(applicationId),
+  //   });
+  // }
 }

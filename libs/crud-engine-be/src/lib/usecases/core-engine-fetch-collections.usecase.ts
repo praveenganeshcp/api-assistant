@@ -1,8 +1,7 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { crudDbConnectionFactory } from '../utils/utils';
-import { dbConfig } from '@api-assistant/configuration-be';
-import { ConfigType } from '@nestjs/config';
+import { MongoClient } from 'mongodb';
+import { CRUD_DB_CONNECTION } from '../utils/utils';
 
 @Injectable()
 export class CoreEngineFetchCollectionsUsecase
@@ -11,15 +10,12 @@ export class CoreEngineFetchCollectionsUsecase
   private logger = new Logger(CoreEngineFetchCollectionsUsecase.name);
 
   constructor(
-    @Inject(dbConfig.KEY)
-    private readonly databaseConfig: ConfigType<typeof dbConfig>
+    @Inject(CRUD_DB_CONNECTION)
+    private readonly connection: MongoClient
   ) {}
 
   async execute(applicationId: string): Promise<string[]> {
-    const { db, connection } = await crudDbConnectionFactory(
-      applicationId,
-      this.databaseConfig.DB_URL
-    );
+    const db = this.connection.db(`api-crud-${applicationId.toString()}`)
 
     const collectionNames: string[] = await (
       await db.listCollections().toArray()
@@ -27,8 +23,6 @@ export class CoreEngineFetchCollectionsUsecase
     this.logger.log(
       'Fetched all collections for applicationid ' + applicationId
     );
-    connection.close();
-    this.logger.log('Closed connection to crud db');
     return collectionNames;
   }
 }
