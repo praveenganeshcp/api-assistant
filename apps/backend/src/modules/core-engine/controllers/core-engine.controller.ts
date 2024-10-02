@@ -10,6 +10,8 @@ import {
   Delete,
   Param,
   Patch,
+  Res,
+  Req,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CoreEngineApplicationId } from '@api-assistant/commons-be';
@@ -22,8 +24,11 @@ import {
   CoreEngineFetchFilesUsecase,
   CORE_ENGINE_UPLOAD_ROOT,
   DeleteApplicationUsecase,
+  CoreEngineSignupUsecase,
+  CoreEngineLoginUsecase,
 } from '@api-assistant/crud-engine-be';
 import { ObjectId } from 'mongodb';
+import { Request, Response } from 'express';
 
 @Controller('core-engine')
 export class CoreEngineController {
@@ -33,7 +38,9 @@ export class CoreEngineController {
     private coreEngineCRUDUsecase: CoreEngineCRUDUsecase,
     private coreEngineFetchCollectionsUsecase: CoreEngineFetchCollectionsUsecase,
     private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase,
-    private deleteApplicationUsecase: DeleteApplicationUsecase
+    private deleteApplicationUsecase: DeleteApplicationUsecase,
+    private readonly coreEngineSignupUsecase: CoreEngineSignupUsecase,
+    private readonly coreEngineLoginUsecase: CoreEngineLoginUsecase
   ) {}
 
   @Get('collections')
@@ -41,18 +48,64 @@ export class CoreEngineController {
     return this.coreEngineFetchCollectionsUsecase.execute(applicationId);
   }
 
+  @Post('api/signup')
+  async signupAccount(
+    @Body() reqBody: any,
+    @CoreEngineApplicationId() applicationId: ObjectId,
+    @Res() response: Response
+  ) {
+    const { user, token } = await this.coreEngineSignupUsecase.execute({
+      url: `/signup`,
+      placeholderDataSouce: {
+        requestBody: reqBody,
+        queryParams: {},
+        pathParams: {},
+      },
+      applicationId,
+      method: 'POST'
+    });
+    response.cookie('token', token).json(user);
+  }
+
+  @Post('api/login')
+  async loginAccount(
+    @Body() reqBody: any,
+    @CoreEngineApplicationId() applicationId: ObjectId,
+    @Res() response: Response
+  ) {
+    const { user, token } = await this.coreEngineLoginUsecase.execute({
+      url: `/login`,
+      placeholderDataSouce: {
+        requestBody: reqBody,
+        queryParams: {},
+        pathParams: {},
+      },
+      applicationId,
+      method: 'POST'
+    });
+    response.cookie('token', token).status(200).json(user);
+  }
+
+  @Post('api/logout')
+  async logoutAccount(
+    @Res() response: Response
+  ) {
+    response.cookie('token', '', {maxAge: 0}).status(200).send()
+  }
+
   @Post('api/*')
   performPostCrud(
+    @Req() request: Request,
     @Param() params: any,
     @Body() reqBody: any,
     @Query() queryParams: any,
     @CoreEngineApplicationId() applicationId: ObjectId
   ) {
     return this.coreEngineCRUDUsecase.execute({
+      token: request.cookies['token'],
       url: `/${params[0]}`,
       placeholderDataSouce: {
         requestBody: reqBody,
-        crudSteps: [],
         queryParams,
         pathParams: {},
       },
@@ -71,7 +124,6 @@ export class CoreEngineController {
       url: `/${params[0]}`,
       placeholderDataSouce: {
         requestBody: {},
-        crudSteps: [],
         queryParams,
         pathParams: {},
       },
@@ -90,7 +142,6 @@ export class CoreEngineController {
       url: `/${params[0]}`,
       placeholderDataSouce: {
         requestBody: {},
-        crudSteps: [],
         queryParams,
         pathParams: {},
       },
@@ -110,7 +161,6 @@ export class CoreEngineController {
       url: `/${params[0]}`,
       placeholderDataSouce: {
         requestBody: reqBody,
-        crudSteps: [],
         queryParams,
         pathParams: {},
       },

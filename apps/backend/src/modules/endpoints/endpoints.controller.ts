@@ -48,7 +48,8 @@ export class EndpointsController {
       createdBy: currentUser._id,
       applicationId: new ObjectId(applicationId),
       validations: payload.validations,
-      method: payload.method
+      method: payload.method,
+      isAuthenticated: payload.isAuthenticated
     });
   }
 

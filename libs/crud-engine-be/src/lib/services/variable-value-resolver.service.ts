@@ -34,6 +34,26 @@ export class VariableValueResolver {
     return valueObject;
   }
 
+  private resolveAuthUserVariable(value: string, inputBody: Document) {
+    this.logger.log(`processing auth user placeholder ${value}`);
+    const variableAuthUserPrefixLen =
+      CRUDSupportedVariablesInfo.Authuser.prefix.length;
+    const valueKey: string = value.slice(
+      variableAuthUserPrefixLen,
+      value.length - 1
+    );
+    const valuePathSeperatedByPeriods = valueKey.split('.').slice(1);
+    let valueObject = { ...inputBody };
+    for (const key of valuePathSeperatedByPeriods) {
+      if (!valueObject[key]) {
+        throw new CoreEngineInvalidVariablePathException(value);
+      }
+      valueObject = valueObject[key];
+    }
+    this.logger.log(`processed auth user placeholder ${valueObject}`);
+    return valueObject;
+  }
+
   private resolveRequestParamsVariable(value: string, inputParams: Document) {
     this.logger.log(`processing param placeholder ${value}`);
     const variableParamPrefixLen =
@@ -92,7 +112,7 @@ export class VariableValueResolver {
     let stepsInputObject: Document = stepsInput.slice();
     for (const key of valuePathSeperatedByPeriods) {
       if (!stepsInputObject[key as unknown as number]) {
-        throw new CoreEngineInvalidVariablePathException(value);
+        return null;
       }
       stepsInputObject = stepsInputObject[key as unknown as number];
     }
@@ -136,6 +156,9 @@ export class VariableValueResolver {
       }
       case 'RequestQueryParams': {
         return this.resolveRequestQueryVariable(value, inputData.queryParams);
+      }
+      case 'Authuser': {
+        return this.resolveAuthUserVariable(value, inputData.authUser ?? {});
       }
       default: {
         return value;

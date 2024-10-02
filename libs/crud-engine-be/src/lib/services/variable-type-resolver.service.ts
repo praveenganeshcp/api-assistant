@@ -33,6 +33,13 @@ export class VariableTypeResolverService {
     );
   }
 
+  private isAuthUserVariable(value: string) {
+    return (
+      value.startsWith(CRUDSupportedVariablesInfo.Authuser.prefix) &&
+      value.endsWith(CRUDSupportedVariablesInfo.Authuser.suffix)
+    );
+  }
+
   private isRequestParamsVariable(value: string) {
     return (
       value.startsWith(CRUDSupportedVariablesInfo.RequestPathParams.prefix) &&
@@ -62,6 +69,9 @@ export class VariableTypeResolverService {
     }
     else if(this.isRequestQueryVariable(value)) {
       return 'RequestQueryParams';
+    }
+    else if(this.isAuthUserVariable(value)) {
+      return 'Authuser';
     }
     return '';
   }

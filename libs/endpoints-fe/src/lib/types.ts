@@ -11,7 +11,8 @@ export interface Endpoint {
   createdOn: Date;
   applicationId: string;
   validations: Object;
-  method: CRUDEngineHttpMethods
+  method: CRUDEngineHttpMethods;
+  isAuthenticated: boolean;
 }
 
 export interface MinimalEndpointInfo

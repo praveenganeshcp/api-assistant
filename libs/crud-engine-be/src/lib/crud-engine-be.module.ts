@@ -12,6 +12,10 @@ import { RequestDataValidatorService } from './usecases/request-data-validator.s
 import { RequestDataAsyncValidatorService } from './usecases/request-data-async-validator.service';
 import { RequestDataValidatorFacadeService } from './usecases/request-data-validator-facade.service';
 import { ParamsParserService } from './usecases/params-parser.service';
+import { CoreEngineSignupUsecase } from './usecases/core-engine-signup.usecase';
+import { CoreEngineJWTService } from './services/core-engine-jwt.service';
+import { CoreEngineLoginUsecase } from './usecases/core-engine-login.usecase';
+import { AuthenticateAppUserUsecase } from './usecases/authenticate-app-user.usecase';
 
 @Module({
   imports: [ApplicationsBeModule, EndpointsBeModule],
@@ -26,13 +30,19 @@ import { ParamsParserService } from './usecases/params-parser.service';
     RequestDataValidatorService,
     RequestDataAsyncValidatorService,
     RequestDataValidatorFacadeService,
-    ParamsParserService
+    ParamsParserService,
+    CoreEngineSignupUsecase,
+    CoreEngineJWTService,
+    CoreEngineLoginUsecase,
+    AuthenticateAppUserUsecase
   ],
   exports: [
     CoreEngineCRUDUsecase,
     CoreEngineFetchCollectionsUsecase,
     CoreEngineFetchFilesUsecase,
     DeleteApplicationUsecase,
+    CoreEngineSignupUsecase,
+    CoreEngineLoginUsecase
   ],
 })
 export class CrudEngineBeModule {}

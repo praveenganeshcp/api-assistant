@@ -13,6 +13,10 @@
     </select>
   </sw-form-control>
 
+  <sw-form-control label="Is isAuthenticated" [control]="isAuthenticatedControl">
+    <input type="checkbox" formControlName="isAuthenticated">
+  </sw-form-control>
+
   <sw-form-control label="Description" [control]="descriptionControl">
     <input type="text" sw-input formControlName="description" />
   </sw-form-control>

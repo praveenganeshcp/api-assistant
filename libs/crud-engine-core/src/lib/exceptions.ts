@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 
 export class CoreEngineUnSupportedVariableTypeException extends BadRequestException {
     constructor(variableType: string) {
@@ -45,5 +45,17 @@ export class CoreEngineProcessingException extends BadRequestException {
 export class InvalidFilePathException extends BadRequestException {
   constructor() {
     super('File path does not exist in your folder');
+  }
+}
+
+export class InvalidLoginException extends ForbiddenException {
+  constructor() {
+    super('Invalid emailId or password');
+  }
+}
+
+export class SessionExpiredException extends UnauthorizedException {
+  constructor() {
+    super('Session expired')
   }
 }

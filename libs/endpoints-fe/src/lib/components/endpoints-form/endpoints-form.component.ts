@@ -29,6 +29,7 @@ export interface EndpointFormValue {
   response: Object;
   validations: Object;
   method: CRUDEngineHttpMethods
+  isAuthenticated: boolean
 }
 
 @Component({
@@ -61,7 +62,8 @@ export class EndpointsFormComponent {
         body: '',
         response: '',
         validations: '',
-        method: 'POST'
+        method: 'POST',
+        isAuthenticated: false
       });
     }
   }
@@ -83,6 +85,7 @@ export class EndpointsFormComponent {
     body: this.formBuilder.control([], [Validators.required]),
     response: this.formBuilder.control({}, [Validators.required]),
     validations: this.formBuilder.control({}, [Validators.required]),
+    isAuthenticated: this.formBuilder.control(false, [Validators.required]),
   });
 
   public get nameControl() {
@@ -99,6 +102,10 @@ export class EndpointsFormComponent {
 
   public get descriptionControl() {
     return this.createEndpointForm.controls['description'];
+  }
+
+  public get isAuthenticatedControl() {
+    return this.createEndpointForm.controls['isAuthenticated'];
   }
 
   constructor(private readonly formBuilder: FormBuilder) {}

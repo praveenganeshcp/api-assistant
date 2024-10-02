@@ -16,12 +16,14 @@ import { VariableValuePopulaterService } from '../services/variable-value-popula
 import { RequestDataValidatorFacadeService } from './request-data-validator-facade.service';
 import { FindEndpointByPathMatchUsecase } from '@api-assistant/endpoints-be';
 import { ParamsParserService } from './params-parser.service';
+import { AuthenticateAppUserUsecase } from './authenticate-app-user.usecase';
 
-interface CoreEngineCRUDUsecaseInput {
+export interface CoreEngineCRUDUsecaseInput {
   url: string;
-  placeholderDataSouce: PlaceholderDataSource;
+  placeholderDataSouce: Omit<PlaceholderDataSource, 'crudSteps' | 'authUser'>;
   applicationId: ObjectId;
-  method: CRUDEngineHttpMethods
+  method: CRUDEngineHttpMethods;
+  token?: string
 }
 
 @Injectable()
@@ -37,14 +39,21 @@ export class CoreEngineCRUDUsecase
     private readonly crudActionExecutorUsecase: CRUDActionExecutorUsecase,
     private readonly requestDataValidatorService: RequestDataValidatorFacadeService,
     private readonly findEndpointByPathMatching: FindEndpointByPathMatchUsecase,
-    private readonly paramsParserService: ParamsParserService
+    private readonly paramsParserService: ParamsParserService,
+    private readonly authenticateAppUser: AuthenticateAppUserUsecase
   ) {}
 
   async execute(
     input: CoreEngineCRUDUsecaseInput
   ): Promise<CRUDActionResponse> {
 
-    const { url, placeholderDataSouce, applicationId } = input;
+    const { url, placeholderDataSouce: requestPlaceholderSource, applicationId, token } = input;
+
+    const placeholderDataSouce: PlaceholderDataSource = {
+      ...requestPlaceholderSource,
+      crudSteps: [],
+      authUser: null
+    }
 
     const matchedEndpoint = await this.findEndpointByPathMatching.execute({
       applicationId: input.applicationId,
@@ -57,6 +66,18 @@ export class CoreEngineCRUDUsecase
 
     const { endpoint, params } = matchedEndpoint;
 
+    this.logger.log('Handling core engine CRUD');
+    const { connection: mongoConnection, db } = await crudDbConnectionFactory(
+      applicationId.toString(),
+      this.databaseConfig.DB_URL
+    );
+
+    if(endpoint.isAuthenticated) {
+      placeholderDataSouce.authUser = await this.authenticateAppUser.execute({ db, token: token || '' })
+    }
+    
+    this.logger.log('found auth user', placeholderDataSouce.authUser);
+
     placeholderDataSouce.pathParams = this.paramsParserService.parse(params);
     placeholderDataSouce.queryParams = this.paramsParserService.parse(placeholderDataSouce.queryParams as Record<string, string>);
 
@@ -65,13 +86,6 @@ export class CoreEngineCRUDUsecase
       response,
       validations,
     } = endpoint;
-
-    this.logger.log('Handling core engine CRUD');
-    const { connection: mongoConnection, db } = await crudDbConnectionFactory(
-      applicationId.toString(),
-      this.databaseConfig.DB_URL
-    );
-    this.logger.log(`OPENED CONNECTION`);
 
     try {
       await this.requestDataValidatorService.validate({

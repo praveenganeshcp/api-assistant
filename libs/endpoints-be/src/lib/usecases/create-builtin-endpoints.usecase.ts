@@ -42,6 +42,7 @@ export class CreateAllBuiltinEndpointsUsecase
       name: 'Signup',
       description: 'Endpoint to create user accounts',
       url: '/signup',
+      isAuthenticated: false,
       method: 'POST',
       validations: {},
       crud: [
@@ -88,24 +89,23 @@ export class CreateAllBuiltinEndpointsUsecase
       description: 'Endpoint to login user accounts',
       url: '/login',
       method: 'POST',
+      isAuthenticated: false,
       crud: [
         {
           collectionName: 'users',
           operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
-            emailId: '${Request.body.emailId}',
-            password: '${Request.body.password}',
+            filter: {
+              emailId: '${Request.body.emailId}'
+            },
+            options: {}
           },
         },
       ],
       validations: {},
       response: {
         message: 'User loggedin successfully',
-        user: {
-          id: '${Steps.0._id}',
-          username: '${Steps.0.username}',
-          emailId: '${Steps.0.emailId}',
-        },
+        user: "${Steps.0}",
       },
     };
     return input;
@@ -118,6 +118,7 @@ export class CreateAllBuiltinEndpointsUsecase
     const input: CreateEndpointUsecaseInput = {
       createdBy: userId,
       applicationId,
+      isAuthenticated: false,
       name: 'Logout',
       description: 'Endpoint to logout user accounts',
       url: '/logout',

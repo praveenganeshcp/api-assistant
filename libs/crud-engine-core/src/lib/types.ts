@@ -1,4 +1,5 @@
-import { Filter, Document, FindOptions, UpdateFilter } from 'mongodb';
+import { CanBeNull } from '@api-assistant/commons-be';
+import { Filter, Document, FindOptions, UpdateFilter, ObjectId } from 'mongodb';
 
 export enum ALLOWED_DB_OPERATIONS {
   findOne = 'findOne',
@@ -31,7 +32,12 @@ export interface PlaceholderDataSource {
   requestBody: Document;
   crudSteps: Document[];
   queryParams: Record<string, unknown>;
-  pathParams: Record<string, unknown>
+  pathParams: Record<string, unknown>;
+  authUser: CanBeNull<{
+    id: ObjectId;
+    username: string;
+    emailId: string
+  }>
 }
 
 export type RequestDataFieldSyncValidators =
@@ -91,7 +97,8 @@ export type CRUDSupportedVariablesTypes =
   | 'RequestBody'
   | 'RequestPathParams'
   | 'RequestQueryParams'
-  | 'Steps';
+  | 'Steps'
+  | 'Authuser'
 
 export const CRUDSupportedVariablesInfo: Record<
   CRUDSupportedVariablesTypes,
@@ -119,6 +126,10 @@ export const CRUDSupportedVariablesInfo: Record<
   },
   RequestQueryParams: {
     prefix: '${Request.query.',
+    suffix: '}'
+  },
+  Authuser: {
+    prefix: '${Authuser',
     suffix: '}'
   }
 };

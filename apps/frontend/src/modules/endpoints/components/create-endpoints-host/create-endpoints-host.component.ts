@@ -50,7 +50,8 @@ export class CreateEndpointsHostComponent {
             crud: value.body,
             response: value.response,
             validations: value.validations,
-            method: value.method
+            method: value.method,
+            isAuthenticated: value.isAuthenticated
           },
           applicationId: this.applicationId,
         }),

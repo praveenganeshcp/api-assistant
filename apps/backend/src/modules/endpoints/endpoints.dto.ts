@@ -8,6 +8,7 @@ import {
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsEnum,
   IsObject,
   IsString,
@@ -49,7 +50,10 @@ export class CreateEndpointCRUDDto {
   response!: CRUDActionResponse;
 
   @IsString()
-  method!: CRUDEngineHttpMethods
+  method!: CRUDEngineHttpMethods;
+
+  @IsBoolean()
+  isAuthenticated!: boolean;
 }
 
 export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}

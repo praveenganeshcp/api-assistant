@@ -62,7 +62,8 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
         response: endpoint.response,
         body: endpoint.crud,
         validations: endpoint.validations,
-        method: endpoint.method
+        method: endpoint.method,
+        isAuthenticated: endpoint.isAuthenticated
       };
       return formValue;
     })
@@ -109,7 +110,8 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
             crud: value.body,
             response: value.response,
             validations: value.validations,
-            method: value.method
+            method: value.method,
+            isAuthenticated: value.isAuthenticated
           },
           applicationId: this.applicationId,
           endpointId: this.endpointId,
