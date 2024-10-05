@@ -36,8 +36,8 @@ export interface PlaceholderDataSource {
   authUser: CanBeNull<{
     id: ObjectId;
     username: string;
-    emailId: string
-  }>
+    emailId: string;
+  }>;
 }
 
 export type RequestDataFieldSyncValidators =
@@ -75,6 +75,10 @@ export interface RequestDataValidation {
   body?: RequestDataFieldValidation;
 }
 
+export function applicationDbName(applicationId: ObjectId) {
+  return `api-crud-${applicationId.toString()}`;
+}
+
 export type CRUDActionPayload =
   | SaveActionPayload
   | FindActionPayload
@@ -98,7 +102,7 @@ export type CRUDSupportedVariablesTypes =
   | 'RequestPathParams'
   | 'RequestQueryParams'
   | 'Steps'
-  | 'Authuser'
+  | 'Authuser';
 
 export const CRUDSupportedVariablesInfo: Record<
   CRUDSupportedVariablesTypes,
@@ -122,16 +126,16 @@ export const CRUDSupportedVariablesInfo: Record<
   },
   RequestPathParams: {
     prefix: '${Request.params.',
-    suffix: '}'
+    suffix: '}',
   },
   RequestQueryParams: {
     prefix: '${Request.query.',
-    suffix: '}'
+    suffix: '}',
   },
   Authuser: {
     prefix: '${Authuser',
-    suffix: '}'
-  }
+    suffix: '}',
+  },
 };
 
 export enum CRUDSystemVariables {

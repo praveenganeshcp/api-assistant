@@ -9,6 +9,7 @@ import { RepositoryModule } from '@api-assistant/repository';
 import { NotificationsModule } from '@api-assistant/notifications-be';
 import { EndpointsModule } from '../endpoints/endpoints.module';
 import { ApplicationModule } from '../applications/applications.module';
+import { ApplicationMigrationsModule } from '../app-migrations/app-migrations.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ApplicationModule } from '../applications/applications.module';
     ApplicationModule,
     CoreEngineModule,
     EndpointsModule,
+    ApplicationMigrationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

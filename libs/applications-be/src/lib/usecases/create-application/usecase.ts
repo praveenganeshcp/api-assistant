@@ -6,6 +6,8 @@ import { createHash } from 'crypto';
 import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/endpoints-be';
 import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
+import { mkdir } from 'fs/promises';
+import { applicationMigrationFolder } from '@api-assistant/migrations-core';
 
 interface CreateApplicationUsecaseInput {
   createdBy: ObjectId;
@@ -31,6 +33,9 @@ export class CreateApplicationUsecase
     await this.createAllBuiltinEndpointsUsecase.execute({
       userId: createdBy,
       applicationId: application._id,
+    });
+    await mkdir(applicationMigrationFolder(application._id), {
+      recursive: true,
     });
     return application;
   }
