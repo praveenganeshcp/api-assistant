@@ -20,7 +20,6 @@ import { ApplicationEndpointsHostComponent } from '../../../endpoints/components
 enum TabNames {
   ENDPOINTS = 'Endpoints',
   SETTINGS = 'Settings',
-  USERS = 'Users',
   DATABASE = 'Database',
   MIGRATIONS = 'Migrations',
 }
@@ -30,7 +29,6 @@ const routeUrlTabMapping: Record<TabNames, string> = {
   [TabNames.ENDPOINTS]: 'endpoints',
   [TabNames.MIGRATIONS]: 'migrations',
   [TabNames.SETTINGS]: 'settings',
-  [TabNames.USERS]: 'users',
 };
 
 @Component({
@@ -52,7 +50,6 @@ export class ApplicationDetailsHostComponent {
     TabNames.ENDPOINTS,
     TabNames.MIGRATIONS,
     TabNames.DATABASE,
-    TabNames.USERS,
     TabNames.SETTINGS,
   ];
 
