@@ -1,8 +1,4 @@
-import { CanBeNull } from '@api-assistant/commons-be';
-
-export const MIGRATIONS_FOLDER = 'app_migrations';
-
-export const MIGRATIONS_COLLECTION = 'changelog';
+import { CanBeNull } from 'ngx-simple-widgets';
 
 export interface ApplicationMigration {
   fileName: string;

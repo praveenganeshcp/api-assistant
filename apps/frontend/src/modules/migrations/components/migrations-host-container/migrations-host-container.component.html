@@ -1,0 +1,32 @@
+<header class="migrations-header">
+  <h1>Migrations</h1>
+  <div class="migrations-header-ctas">
+    <button
+      [disabled]="isApplyMigrationInProgress$ | async"
+      [showLoader]="isRevertMigrationInProgress$ | async"
+      (click)="handleRevertMigration()"
+      sw-danger-button
+    >
+      Revert
+    </button>
+    <button
+      [disabled]="isRevertMigrationInProgress$ | async"
+      [showLoader]="isApplyMigrationInProgress$ | async"
+      (click)="handleApplyMigration()"
+      sw-bordered-button
+    >
+      Apply
+    </button>
+    <button [disabled]="isMigrationInProgress$ | async" sw-primary-button>
+      Create migration
+    </button>
+  </div>
+</header>
+<div class="migration-cards-container">
+  <div *ngFor="let migration of migrations$ | async" class="migration-card">
+    <api-assistant-migrations-list-item
+      (click)="handleItemNavigation(migration)"
+      [migration]="migration"
+    ></api-assistant-migrations-list-item>
+  </div>
+</div>

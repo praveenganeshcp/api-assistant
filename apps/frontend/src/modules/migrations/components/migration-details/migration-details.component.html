@@ -1,0 +1,17 @@
+<ng-container *ngIf="migrationDetails$ | async as migrationDetails">
+  <header class="migration-details-header">
+    <div class="title-and-back-btn">
+      <a routerLink="..">Back</a>
+      <h5>{{ migrationDetails.fileName }}</h5>
+    </div>
+    <h4>{{ migrationDetails.status }}</h4>
+  </header>
+
+  <div class="editor">
+    <api-assistant-migration-logic-form [formControl]="formControl" />
+  </div>
+
+  <footer class="migration-details-footer">
+    <button (click)="handleSave()" sw-primary-button>Save changes</button>
+  </footer>
+</ng-container>

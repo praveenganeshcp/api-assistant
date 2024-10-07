@@ -1,0 +1,24 @@
+.migration-details-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .title-and-back-btn {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+}
+
+.editor {
+  margin-top: 2rem;
+  height: 450px;
+}
+
+.migration-details-footer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

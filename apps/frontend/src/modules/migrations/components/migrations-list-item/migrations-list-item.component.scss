@@ -1,0 +1,37 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  .file-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    text-transform: capitalize;
+
+    &.applied {
+      background-color: #28a745;
+      color: white;
+    }
+
+    &.pending {
+      background-color: #ffc107;
+      color: black;
+    }
+  }
+}
+
+.card-body {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+
+  .applied-at {
+    color: #6c757d;
+  }
+}

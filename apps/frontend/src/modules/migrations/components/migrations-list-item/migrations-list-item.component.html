@@ -1,0 +1,18 @@
+<ng-container *ngIf="migration">
+  <div class="card-header">
+    <span class="file-name">{{ migration.fileName }}</span>
+    <span class="status">
+      {{ migration.status | titlecase }}
+    </span>
+  </div>
+  <div
+    *ngIf="migration.status === 'APPLIED'"
+    class="card-body"
+    [class.applied]="migration.status === 'APPLIED'"
+    [class.pending]="migration.status !== 'APPLIED'"
+  >
+    <span class="applied-at">
+      Applied at: {{ migration.appliedAt | date }}
+    </span>
+  </div>
+</ng-container>
