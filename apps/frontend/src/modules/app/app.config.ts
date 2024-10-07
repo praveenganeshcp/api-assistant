@@ -1,6 +1,7 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
       EffectsModule.forRoot([AccountsEffects]),
       StoreDevtoolsModule.instrument(),
       HttpClientModule,
+      MonacoEditorModule.forRoot(),
     ]),
   ],
 };

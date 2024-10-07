@@ -1,14 +1,28 @@
-<div role="list" class="db-collections">
-  <button
-    (click)="handleSelectCollection(collectionName)"
-    sw-text-button
-    role="listitem"
-    class="db-collections__list-item"
-    [class.db-collections__active-list-item]="
-      collectionName === selectedCollectionName
-    "
-    *ngFor="let collectionName of collectionNames"
-  >
-    {{ collectionName }}
-  </button>
-</div>
+<sw-table
+  [customCellTemplate]="customCellTemplate"
+  [activeColumns]="columns"
+  [rows]="rows"
+></sw-table>
+
+<ng-template
+  #customCellTemplate
+  let-row="row"
+  let-column="column"
+  let-value="value"
+>
+  <ng-container [ngSwitch]="column.fieldName">
+    <ng-template [ngSwitchCase]="'name'">
+      <button
+        (click)="handleSelectCollection(value)"
+        sw-text-button
+        role="listitem"
+        class="db-collections__list-item"
+        [class.db-collections__active-list-item]="
+          value === selectedCollectionName
+        "
+      >
+        {{ value }}
+      </button>
+    </ng-template>
+  </ng-container>
+</ng-template>

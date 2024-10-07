@@ -18,7 +18,8 @@ import { CoreEngineLoginUsecase } from './usecases/core-engine-login.usecase';
 import { AuthenticateAppUserUsecase } from './usecases/authenticate-app-user.usecase';
 import { CRUD_DB_CONNECTION, crudDbConnectionFactory } from './utils/utils';
 import { dbConfig } from '@api-assistant/configuration-be';
-
+import { CoreEngineDatabaseOperationsUsecase } from './usecases/core-engine-db-operations.usecase';
+import { CoreEngineFindAllActionUsecase } from './usecases/core-engine-findall-action.usecase';
 
 @Module({
   imports: [ApplicationsBeModule, EndpointsBeModule],
@@ -42,6 +43,8 @@ import { dbConfig } from '@api-assistant/configuration-be';
     CoreEngineJWTService,
     CoreEngineLoginUsecase,
     AuthenticateAppUserUsecase,
+    CoreEngineDatabaseOperationsUsecase,
+    CoreEngineFindAllActionUsecase,
   ],
   exports: [
     CoreEngineCRUDUsecase,
@@ -49,7 +52,8 @@ import { dbConfig } from '@api-assistant/configuration-be';
     CoreEngineFetchFilesUsecase,
     CoreEngineSignupUsecase,
     CoreEngineLoginUsecase,
-    CRUD_DB_CONNECTION
+    CRUD_DB_CONNECTION,
+    CoreEngineDatabaseOperationsUsecase,
   ],
 })
 export class CrudEngineBeModule {}

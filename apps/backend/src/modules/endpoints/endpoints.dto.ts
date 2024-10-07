@@ -1,6 +1,6 @@
 import {
   ALLOWED_DB_OPERATIONS,
-  CRUDActionDefinition,
+  CRUDActionPayload,
   CRUDActionResponse,
   CRUDEngineHttpMethods,
   RequestDataValidation,
@@ -23,7 +23,7 @@ export class EndpointActionDefinitionDto {
   @IsString()
   collectionName!: string;
 
-  payload!: CRUDActionDefinition;
+  payload!: CRUDActionPayload;
 }
 
 export class CreateEndpointCRUDDto {

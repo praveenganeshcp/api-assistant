@@ -1,4 +1,17 @@
-<div class="db-results-viewer">
-  <h1 style="margin: 1rem 0">Results</h1>
-  <api-assistant-db-results-raw-json-view [results]="results" />
+<div class="db-results-viewer" *ngIf="columns.length">
+  <!-- <sw-table style="width: 100%;" [activeColumns]="columns" [rows]="rows"></sw-table> -->
+  <table>
+    <thead>
+      <tr>
+        <td *ngFor="let column of columns">{{ column.label }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let column of columns">
+          {{ row[column.fieldName] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

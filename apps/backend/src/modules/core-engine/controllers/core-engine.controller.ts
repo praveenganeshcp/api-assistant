@@ -36,16 +36,10 @@ export class CoreEngineController {
 
   constructor(
     private coreEngineCRUDUsecase: CoreEngineCRUDUsecase,
-    private coreEngineFetchCollectionsUsecase: CoreEngineFetchCollectionsUsecase,
     private coreEngineFetchFilesUsecase: CoreEngineFetchFilesUsecase,
     private readonly coreEngineSignupUsecase: CoreEngineSignupUsecase,
     private readonly coreEngineLoginUsecase: CoreEngineLoginUsecase
   ) {}
-
-  @Get('collections')
-  fetchDbCollections(@CoreEngineApplicationId() applicationId: string) {
-    return this.coreEngineFetchCollectionsUsecase.execute(applicationId);
-  }
 
   @Post('api/signup')
   async signupAccount(
@@ -61,7 +55,7 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'POST'
+      method: 'POST',
     });
     response.cookie('token', token).json(user);
   }
@@ -80,16 +74,14 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'POST'
+      method: 'POST',
     });
     response.cookie('token', token).status(200).json(user);
   }
 
   @Post('api/logout')
-  async logoutAccount(
-    @Res() response: Response
-  ) {
-    response.cookie('token', '', {maxAge: 0}).status(200).send()
+  async logoutAccount(@Res() response: Response) {
+    response.cookie('token', '', { maxAge: 0 }).status(200).send();
   }
 
   @Post('api/*')
@@ -109,7 +101,7 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'POST'
+      method: 'POST',
     });
   }
 
@@ -127,7 +119,7 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'GET'
+      method: 'GET',
     });
   }
 
@@ -145,7 +137,7 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'DELETE'
+      method: 'DELETE',
     });
   }
 
@@ -164,7 +156,7 @@ export class CoreEngineController {
         pathParams: {},
       },
       applicationId,
-      method: 'PATCH'
+      method: 'PATCH',
     });
   }
 

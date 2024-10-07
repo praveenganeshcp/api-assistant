@@ -5,19 +5,37 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
-import { SwButtonComponent } from 'ngx-simple-widgets';
+import { CommonModule, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import {
+  SwButtonComponent,
+  SwColumnDef,
+  SwTableComponent,
+} from 'ngx-simple-widgets';
 
 @Component({
   selector: 'api-assistant-db-collections-view',
   standalone: true,
-  imports: [NgFor, SwButtonComponent],
+  imports: [CommonModule, SwButtonComponent, SwTableComponent],
   templateUrl: './db-collections-view.component.html',
   styleUrls: ['./db-collections-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DbCollectionsViewComponent {
-  @Input() collectionNames: string[] = [];
+  protected columns: SwColumnDef[] = [
+    {
+      label: 'Collections',
+      fieldName: 'name',
+      renderTemplate: true,
+      flex: '1',
+    },
+  ];
+
+  protected rows: Array<{ name: string }> = [];
+
+  @Input()
+  set collectionNames(data: string[]) {
+    this.rows = data.map((collectionName) => ({ name: collectionName }));
+  }
 
   @Input() selectedCollectionName: string = '';
 

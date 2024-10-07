@@ -5,6 +5,10 @@ import { dashboardFeature } from '../dashboard/store/reducers';
 import { DashboardEffects } from '../dashboard/store/effects';
 import { ApplicationDetailsEffects } from '../application-details/store/effects';
 import { applicationDetailsFeature } from '../application-details/store/reducers';
+import { applicationMigrationsFeature } from '../migrations/store/reducers';
+import { MigrationsEffects } from '../migrations/store/effects';
+import { applicationDbFeature } from '../application-database/store/reducers';
+import { ApplicationDatabaseEffects } from '../application-database/store/effects';
 
 export default [
   {
@@ -33,7 +37,13 @@ export default [
           ).then((m) => m.ApplicationDetailsHostComponent),
         providers: [
           provideState(applicationDetailsFeature),
-          provideEffects(ApplicationDetailsEffects),
+          provideState(applicationMigrationsFeature),
+          provideState(applicationDbFeature),
+          provideEffects(
+            ApplicationDetailsEffects,
+            MigrationsEffects,
+            ApplicationDatabaseEffects
+          ),
         ],
         children: [
           {
@@ -70,6 +80,20 @@ export default [
               import(
                 '../application-database/components/application-db-host/application-db-host.component'
               ).then((c) => c.ApplicationDbHostComponent),
+          },
+          {
+            path: 'migrations',
+            loadComponent: () =>
+              import(
+                '../migrations/components/migrations-host-container/migrations-host-container.component'
+              ).then((c) => c.MigrationsHostContainerComponent),
+          },
+          {
+            path: 'migrations/:fileName',
+            loadComponent: () =>
+              import(
+                '../migrations/components/migration-details/migration-details.component'
+              ).then((c) => c.MigrationDetailsComponent),
           },
           {
             path: '',

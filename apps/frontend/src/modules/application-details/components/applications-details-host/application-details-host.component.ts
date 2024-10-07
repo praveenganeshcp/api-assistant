@@ -22,11 +22,13 @@ enum TabNames {
   SETTINGS = 'Settings',
   USERS = 'Users',
   DATABASE = 'Database',
+  MIGRATIONS = 'Migrations',
 }
 
 const routeUrlTabMapping: Record<TabNames, string> = {
   [TabNames.DATABASE]: 'database',
   [TabNames.ENDPOINTS]: 'endpoints',
+  [TabNames.MIGRATIONS]: 'migrations',
   [TabNames.SETTINGS]: 'settings',
   [TabNames.USERS]: 'users',
 };
@@ -48,6 +50,7 @@ const routeUrlTabMapping: Record<TabNames, string> = {
 export class ApplicationDetailsHostComponent {
   protected readonly tabNames: TabNames[] = [
     TabNames.ENDPOINTS,
+    TabNames.MIGRATIONS,
     TabNames.DATABASE,
     TabNames.USERS,
     TabNames.SETTINGS,
