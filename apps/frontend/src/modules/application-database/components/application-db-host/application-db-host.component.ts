@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe, NgFor } from '@angular/common';
 import {
   DbCollectionsViewComponent,
-  DbQueryInputComponent,
   DbResultsViewerComponent,
 } from '@api-assistant/application-database-fe';
 import { BehaviorSubject, Observable, filter, map, of, tap } from 'rxjs';
@@ -40,7 +39,6 @@ import { CRUDActionDefinition } from '@api-assistant/crud-engine-core';
     DbCollectionsViewComponent,
     AsyncPipe,
     NgFor,
-    DbQueryInputComponent,
     DbResultsViewerComponent,
     SwDropdownComponent,
     ReactiveFormsModule,

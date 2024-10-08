@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { DbResultsRawJsonViewComponent } from '../db-results-raw-json-view/db-results-raw-json-view.component';
 import { SwColumnDef, SwTableComponent } from 'ngx-simple-widgets';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'api-assistant-db-results-viewer',
   standalone: true,
-  imports: [DbResultsRawJsonViewComponent, SwTableComponent, NgFor, NgIf],
+  imports: [SwTableComponent, NgFor, NgIf],
   templateUrl: './db-results-viewer.component.html',
   styleUrls: ['./db-results-viewer.component.scss'],
 })
