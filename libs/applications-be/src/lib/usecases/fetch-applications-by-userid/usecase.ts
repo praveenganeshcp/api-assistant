@@ -12,13 +12,24 @@ export class FetchApplicationsByUserIdUsecase
 
   execute(userId: ObjectId): Promise<ApplicationDashboardView[]> {
     return this.applicationRepo
-      .findAll({ createdBy: userId })
+      .aggregate([
+        {
+          $lookup: {
+            from: "endpoints",
+            localField: "_id",
+            foreignField: "applicationId",
+            as: "endpoints"
+          },
+        }
+      ])
       .then((applications) => {
-        return applications.map((application) => ({
-          ...application,
-          endpointsCount: 2,
-          usersCount: 3,
+        const allApps =  applications as Array<ApplicationDashboardView & {endpoints: []}>
+        return allApps.map((application) => ({
           _id: application._id.toString(),
+          name: application.name,
+          endpointsCount: application.endpoints.length,
+          createdOn: application.createdOn,
+          createdBy: application.createdBy
         }));
       });
   }

@@ -30,12 +30,6 @@ export class ApplicationsGridViewComponent {
       renderTemplate: false,
       flex: '1',
     },
-    {
-      fieldName: 'usersCount',
-      label: 'Total Users',
-      renderTemplate: false,
-      flex: '1',
-    },
     { fieldName: '_id', label: 'Action', renderTemplate: true, flex: '1' },
   ];
 }
