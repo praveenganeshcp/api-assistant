@@ -1,25 +1,29 @@
 <form (ngSubmit)="handleSubmit()" [formGroup]="createEndpointForm">
-  <sw-form-control label="Name" [control]="nameControl">
-    <input type="text" sw-input formControlName="name" />
-  </sw-form-control>
 
-  <sw-form-control label="URL" [control]="urlControl">
-    <input type="text" sw-input formControlName="url" />
-  </sw-form-control>
+  <div style="display: flex; align-items: center; column-gap: 12px;">
+    <sw-form-control label="Name" [control]="nameControl">
+      <input type="text" sw-input formControlName="name" />
+    </sw-form-control>
+    <sw-form-control style="flex-grow: 1;" label="Description" [control]="descriptionControl">
+      <input type="text" sw-input formControlName="description" />
+    </sw-form-control>
+  </div>
+ 
 
-  <sw-form-control label="Method" [control]="methodControl">
-    <select formControlName="method">
-      <option [value]="option.value" *ngFor="let option of httpMethodOptions">{{ option.label }}</option>
-    </select>
-  </sw-form-control>
+  <div style="display: flex; align-items: center; column-gap: 12px;">
+      <select formControlName="method">
+        <option [value]="option.value" *ngFor="let option of httpMethodOptions">{{ option.label }}</option>
+      </select>
+  
+      <div>
+        <input id="is-auth" type="checkbox" formControlName="isAuthenticated">
+        <label for="is-auth">Is Authenticated</label>
+      </div>
 
-  <sw-form-control label="Is isAuthenticated" [control]="isAuthenticatedControl">
-    <input type="checkbox" formControlName="isAuthenticated">
-  </sw-form-control>
-
-  <sw-form-control label="Description" [control]="descriptionControl">
-    <input type="text" sw-input formControlName="description" />
-  </sw-form-control>
+      <sw-form-control style="flex-grow: 1;" label="URL" [control]="urlControl">
+        <input type="text" sw-input formControlName="url" />
+      </sw-form-control>
+  </div>
 
   <commons-fe-json-input label="Validations" formControlName="validations" />
 
@@ -32,6 +36,6 @@
     [showLoader]="loading"
     sw-primary-button
   >
-    Save
+    Deploy
   </button>
 </form>

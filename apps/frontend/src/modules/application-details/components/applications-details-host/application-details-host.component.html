@@ -6,9 +6,6 @@
     <sw-loader size="lg"></sw-loader>
   </div>
   <ng-template #applicationsDataView>
-    <header>
-      <h1>{{ applicationName$ | async }}</h1>
-    </header>
 
     <sw-tab-view
       *ngIf="!(loadingError$ | async); else errorMsg"

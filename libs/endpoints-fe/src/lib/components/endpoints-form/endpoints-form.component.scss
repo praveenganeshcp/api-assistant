@@ -7,4 +7,12 @@ form {
   commons-fe-json-input {
     --height: 300px;
   }
+
+  select {
+    font-size: 1rem;
+  }
+
+  input[type='checkbox'] {
+    margin-right: 8px;
+  }
 }

@@ -7,7 +7,6 @@
   flex-direction: column;
 
   header {
-    height: 7%;
     display: flex;
     align-items: center;
     padding: 0 1%;
@@ -17,7 +16,8 @@
     --sw-tab-view-width: 100%;
     --sw-tab-view-height: 95%;
     --sw-tab-view-title-height: 5% !important;
-    height: 95%;
+    --sw-tab-view-content-height: 95% !important;
+    height: 100%;
   }
 
   .application-details__tab-title {
