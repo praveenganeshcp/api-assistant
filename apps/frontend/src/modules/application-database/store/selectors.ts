@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { AppState } from '../../app/app.state';
 
 export const appDbStateSelector = (state: AppState) =>
-  state.applicationDatabase;
+  state.application.database;
 
 export const appDbCollectionsStateSelector = createSelector(
   appDbStateSelector,

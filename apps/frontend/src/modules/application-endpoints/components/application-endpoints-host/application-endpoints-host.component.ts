@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { fetchAllEndpoints } from '../../../application-details/store/actions';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import {
   EndpointsListViewComponent,
   MinimalEndpointInfo,
 } from '@api-assistant/endpoints-fe';
-import {
-  allEndpointsDataSelector,
-  allEndpointsErrorSelector,
-  allEndpointsLoadingSelector,
-} from '../../../application-details/store/selectors';
+
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';
+import {
+  allEndpointsDataSelector,
+  allEndpointsLoadingSelector,
+  allEndpointsErrorSelector,
+} from '../../store/selectors';
+import { fetchAllEndpointsAction } from '../../store/actions';
 
 @Component({
   selector: 'api-assistant-application-endpoints-host',
@@ -60,7 +61,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(
-      fetchAllEndpoints({ applicationId: this.applicationId })
+      fetchAllEndpointsAction({ applicationId: this.applicationId })
     );
   }
 

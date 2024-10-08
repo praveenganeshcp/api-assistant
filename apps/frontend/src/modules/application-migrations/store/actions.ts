@@ -6,7 +6,7 @@ import {
 } from '@ngrx/store';
 import { ApplicationMigration } from '../types';
 
-const APPLICATION_MIGRATION_ACTION_PREFIX = '[Migrations]';
+const APPLICATION_MIGRATION_ACTION_PREFIX = '[Application Migrations]';
 
 /**
  * Create application migration related actions with props. Attaches a common prefix in action names

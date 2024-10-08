@@ -2,7 +2,7 @@ import { createSelector, select } from '@ngrx/store';
 import { AppState } from '../../app/app.state';
 
 export const migrationsDataSelector = (state: AppState) =>
-  state.applicationMigration;
+  state.application.migration;
 
 export const migrationsDetailsStateSelector = createSelector(
   migrationsDataSelector,

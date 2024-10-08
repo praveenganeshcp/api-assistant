@@ -8,21 +8,23 @@ import {
 } from '@api-assistant/endpoints-fe';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
-import {
-  endpointDetailsDataSelector,
-  endpointDetailsErrorSelector,
-  endpointDetailsLoadingSelector,
-} from '../../../application-details/store/selectors';
+
 import { CanBeNull, SwButtonComponent } from 'ngx-simple-widgets';
+
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 import {
   editEndpointAction,
   endpointUpdateSuccessAction,
   errorInUpdatingEndpointAction,
-  fetchEndpointDetails,
-  resetEndpointDetailsState,
-} from '../../../application-details/store/actions';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+  fetchEndpointDetailsAction,
+  resetEndpointDetailsStateAction,
+} from '../../store/actions';
+import {
+  endpointDetailsDataSelector,
+  endpointDetailsLoadingSelector,
+  endpointDetailsErrorSelector,
+} from '../../store/selectors';
 
 @Component({
   selector: 'api-assistant-edit-endpoints-host',
@@ -63,7 +65,7 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
         body: endpoint.crud,
         validations: endpoint.validations,
         method: endpoint.method,
-        isAuthenticated: endpoint.isAuthenticated
+        isAuthenticated: endpoint.isAuthenticated,
       };
       return formValue;
     })
@@ -88,7 +90,7 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.store.dispatch(
-      fetchEndpointDetails({
+      fetchEndpointDetailsAction({
         applicationId: this.applicationId,
         endpointId: this.endpointId,
       })
@@ -96,7 +98,7 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(resetEndpointDetailsState());
+    this.store.dispatch(resetEndpointDetailsStateAction());
   }
 
   handleSaveEndpoint(value: EndpointFormValue) {
@@ -111,7 +113,7 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
             response: value.response,
             validations: value.validations,
             method: value.method,
-            isAuthenticated: value.isAuthenticated
+            isAuthenticated: value.isAuthenticated,
           },
           applicationId: this.applicationId,
           endpointId: this.endpointId,

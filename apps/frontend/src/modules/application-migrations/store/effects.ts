@@ -22,7 +22,7 @@ import { catchError, exhaustMap, map, of } from 'rxjs';
 import { ApplicationMigration } from '../types';
 
 @Injectable()
-export class MigrationsEffects {
+export class ApplicationMigrationsEffects {
   constructor(
     private actions: Actions,
     private readonly repository: MigrationsRepository

@@ -5,4 +5,4 @@ export interface ApplicationDatabaseState {
   result: ServerData<unknown>;
 }
 
-export const APPLICATION_DATABASE_SLICE_NAME = 'applicationDatabase';
+export const APPLICATION_DATABASE_SLICE_NAME = 'database';

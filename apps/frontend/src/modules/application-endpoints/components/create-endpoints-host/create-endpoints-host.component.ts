@@ -5,14 +5,14 @@ import {
   EndpointsFormComponent,
 } from '@api-assistant/endpoints-fe';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { BehaviorSubject, from } from 'rxjs';
+import { SwButtonComponent } from 'ngx-simple-widgets';
 import {
   createEndpointAction,
   endpointCreatedAction,
   errorInCreatingEndpointAction,
-} from '../../../application-details/store/actions';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { SwButtonComponent } from 'ngx-simple-widgets';
+} from '../../store/actions';
 
 @Component({
   selector: 'api-assistant-create-endpoints-host',
@@ -51,7 +51,7 @@ export class CreateEndpointsHostComponent {
             response: value.response,
             validations: value.validations,
             method: value.method,
-            isAuthenticated: value.isAuthenticated
+            isAuthenticated: value.isAuthenticated,
           },
           applicationId: this.applicationId,
         }),

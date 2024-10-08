@@ -6,7 +6,7 @@ import {
   SwTabViewComponent,
 } from 'ngx-simple-widgets';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 import { BreakPointObserver } from '@api-assistant/commons-fe';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import {
   applicationDataLoadingSelector,
   applicationDataSelector,
 } from '../../store/selectors';
-import { ApplicationEndpointsHostComponent } from '../../../endpoints/components/application-endpoints-host/application-endpoints-host.component';
+import { ApplicationEndpointsHostComponent } from '../../../application-endpoints/components/application-endpoints-host/application-endpoints-host.component';
 
 enum TabNames {
   ENDPOINTS = 'Endpoints',
@@ -61,7 +61,10 @@ export class ApplicationDetailsHostComponent {
 
   public readonly applicationName$: Observable<string> = this.store
     .select(applicationDataSelector)
-    .pipe(map((applicationData) => applicationData.data?.name ?? ''));
+    .pipe(
+      filter((applicationData) => !!applicationData),
+      map((applicationData) => applicationData?.name ?? '')
+    );
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -6,9 +6,9 @@ export interface MigrationsList extends ServerData<ApplicationMigration[]> {}
 export interface MigrationDetails
   extends ServerData<ApplicationMigration & { logic: string }> {}
 
-export interface MigrationsState {
+export interface ApplicationMigrationsState {
   list: MigrationsList;
   details: MigrationDetails;
 }
 
-export const APPLICATION_MIGRATION_SLICE_NAME = 'applicationMigration';
+export const APPLICATION_MIGRATION_SLICE_NAME = 'migration';

@@ -2,184 +2,35 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import {
   APPLICATION_DETAILS_SLICE_NAME,
   ApplicationDetailsState,
-} from './state';
+} from './type';
 import {
-  loadApplicationDetailsAction,
   applicationDetailsLoadedAction,
   errorInLoadingApplicationDetailsAction,
-  goInsideFolderAction,
-  explorerObjectsLoadedAction,
-  errorInLoadingExplorerObjectsAction,
-  allEndpointsLoaded,
-  fetchAllEndpoints,
-  errorInFetchingEndpoints,
-  fetchEndpointDetails,
-  endpointDetailsFetched,
-  errorInFetchingEndpointDetails,
-  resetEndpointDetailsState,
+  loadApplicationDetailsAction,
 } from './actions';
 
-const APPLICATION_DETAILS_DEFAULT_STATE: ApplicationDetailsState = {
-  application: {
-    isLoading: false,
-    data: null,
-    error: '',
-  },
-  files: {
-    isLoading: false,
-    currentPath: '',
-    data: [],
-    error: '',
-  },
-  endpoints: {
-    list: {
-      isLoading: false,
-      data: [],
-      error: ''
-    },
-    detail: {
-      isLoading: false,
-      data: null,
-      error: ''
-    }
-  }
+const DEFAULT_STATE: ApplicationDetailsState = {
+  data: null,
+  isLoading: false,
+  error: '',
 };
 
-const applicationDetailsReducer = createReducer(
-  APPLICATION_DETAILS_DEFAULT_STATE,
-  on(loadApplicationDetailsAction, (state) => ({
-    ...state,
-    application: {
-      isLoading: true,
-      error: '',
-      data: null,
-    },
+export const reducer = createReducer(
+  DEFAULT_STATE,
+  on(loadApplicationDetailsAction, (state) => ({ ...state, isLoading: true })),
+  on(applicationDetailsLoadedAction, (state, payload) => ({
+    error: '',
+    isLoading: false,
+    data: payload.applicationDetails,
   })),
-  on(applicationDetailsLoadedAction, (state, { applicationDetails }) => ({
-    ...state,
-    application: {
-      isLoading: false,
-      data: applicationDetails,
-      error: '',
-    },
-  })),
-  on(errorInLoadingApplicationDetailsAction, (state, { error }) => ({
-    ...state,
-    application: {
-      isLoading: false,
-      data: null,
-      error,
-    },
-  })),
-  on(goInsideFolderAction, (state, { folderPath }) => ({
-    ...state,
-    files: {
-      isLoading: true,
-      currentPath: folderPath,
-      data: [],
-      error: '',
-    },
-  })),
-  on(explorerObjectsLoadedAction, (state, { objects }) => ({
-    ...state,
-    files: {
-      ...state.files,
-      isLoading: false,
-      data: objects,
-      error: '',
-    },
-  })),
-  on(errorInLoadingExplorerObjectsAction, (state, { error }) => ({
-    ...state,
-    files: {
-      ...state.files,
-      isLoading: false,
-      data: [],
-      error,
-    },
-  })),
-  on(fetchAllEndpoints, (state) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      list: {
-        isLoading: true,
-        data: [],
-        error: ''
-      }
-    }
-  })),
-  on(allEndpointsLoaded, (state, { endpoints }) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      list: {
-        isLoading: false,
-        data: endpoints,
-        error: ''
-      }
-    }
-  })),
-  on(errorInFetchingEndpoints, (state, { error }) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      list: {
-        isLoading: false,
-        data: [],
-        error
-      }
-    }
-  })),
-  on(fetchEndpointDetails, (state) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      detail: {
-        isLoading: true,
-        data: null,
-        error: ''
-      }
-    }
-  })),
-  on(endpointDetailsFetched, (state, { endpoint }) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      detail: {
-        isLoading: false,
-        data: endpoint,
-        error: ''
-      }
-    }
-  })),
-  on(errorInFetchingEndpointDetails, (state, { error }) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      detail: {
-        isLoading: false,
-        data: null,
-        error
-      }
-    }
-  })),
-  on(resetEndpointDetailsState, (state) => ({
-    ...state,
-    endpoints: {
-      ...state.endpoints,
-      detail: {
-        isLoading: false,
-        data: null,
-        error: ''
-      }
-    }
+  on(errorInLoadingApplicationDetailsAction, (state, payload) => ({
+    error: payload.error,
+    data: null,
+    isLoading: false,
   }))
 );
 
 export const applicationDetailsFeature = createFeature({
   name: APPLICATION_DETAILS_SLICE_NAME,
-  reducer: applicationDetailsReducer,
+  reducer,
 });
-
-export const { name, reducer } = applicationDetailsFeature;

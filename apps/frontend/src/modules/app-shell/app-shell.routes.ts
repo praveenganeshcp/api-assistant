@@ -3,12 +3,12 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { dashboardFeature } from '../dashboard/store/reducers';
 import { DashboardEffects } from '../dashboard/store/effects';
-import { ApplicationDetailsEffects } from '../application-details/store/effects';
-import { applicationDetailsFeature } from '../application-details/store/reducers';
-import { applicationMigrationsFeature } from '../migrations/store/reducers';
-import { MigrationsEffects } from '../migrations/store/effects';
+import { applicationMigrationsFeature } from '../application-migrations/store/reducers';
 import { applicationDbFeature } from '../application-database/store/reducers';
 import { ApplicationDatabaseEffects } from '../application-database/store/effects';
+import { ApplicationMigrationsEffects } from '../application-migrations/store/effects';
+import { ApplicationEndpointsEffects } from '../application-endpoints/store/effects';
+import { applicationEndpointsFeature } from '../application-endpoints/store/reducers';
 
 export default [
   {
@@ -36,13 +36,13 @@ export default [
             '../application-details/components/applications-details-host/application-details-host.component'
           ).then((m) => m.ApplicationDetailsHostComponent),
         providers: [
-          provideState(applicationDetailsFeature),
+          provideState(applicationEndpointsFeature),
           provideState(applicationMigrationsFeature),
           provideState(applicationDbFeature),
           provideEffects(
-            ApplicationDetailsEffects,
-            MigrationsEffects,
-            ApplicationDatabaseEffects
+            ApplicationMigrationsEffects,
+            ApplicationDatabaseEffects,
+            ApplicationEndpointsEffects
           ),
         ],
         children: [
@@ -50,21 +50,21 @@ export default [
             path: 'endpoints',
             loadComponent: () =>
               import(
-                '../endpoints/components/application-endpoints-host/application-endpoints-host.component'
+                '../application-endpoints/components/application-endpoints-host/application-endpoints-host.component'
               ).then((c) => c.ApplicationEndpointsHostComponent),
           },
           {
             path: 'endpoints/create',
             loadComponent: () =>
               import(
-                '../endpoints/components/create-endpoints-host/create-endpoints-host.component'
+                '../application-endpoints/components/create-endpoints-host/create-endpoints-host.component'
               ).then((c) => c.CreateEndpointsHostComponent),
           },
           {
             path: 'endpoints/:endpointId/edit',
             loadComponent: () =>
               import(
-                '../endpoints/components/edit-endpoints-host/edit-endpoints-host.component'
+                '../application-endpoints/components/edit-endpoints-host/edit-endpoints-host.component'
               ).then((c) => c.EditEndpointsHostComponent),
           },
           {
@@ -78,14 +78,14 @@ export default [
             path: 'migrations',
             loadComponent: () =>
               import(
-                '../migrations/components/migrations-host-container/migrations-host-container.component'
+                '../application-migrations/components/migrations-host-container/migrations-host-container.component'
               ).then((c) => c.MigrationsHostContainerComponent),
           },
           {
             path: 'migrations/:fileName',
             loadComponent: () =>
               import(
-                '../migrations/components/migration-details/migration-details.component'
+                '../application-migrations/components/migration-details/migration-details.component'
               ).then((c) => c.MigrationDetailsComponent),
           },
           {

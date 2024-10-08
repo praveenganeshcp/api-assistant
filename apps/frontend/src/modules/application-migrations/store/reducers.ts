@@ -1,5 +1,8 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { APPLICATION_MIGRATION_SLICE_NAME, MigrationsState } from './types';
+import {
+  APPLICATION_MIGRATION_SLICE_NAME,
+  ApplicationMigrationsState,
+} from './types';
 import {
   errorInLoadingMigrationDetailsAction,
   errorInLoadingMigrationListAction,
@@ -9,7 +12,7 @@ import {
   migrationsListLoadedAction,
 } from './actions';
 
-const DEFAULT_STATE: MigrationsState = {
+const DEFAULT_STATE: ApplicationMigrationsState = {
   list: {
     data: [],
     isLoading: false,
@@ -22,7 +25,7 @@ const DEFAULT_STATE: MigrationsState = {
   },
 };
 
-export const migrationsReducer = createReducer<MigrationsState>(
+export const migrationsReducer = createReducer<ApplicationMigrationsState>(
   DEFAULT_STATE,
   on(loadMigrationsListAction, (state) => ({
     ...state,
