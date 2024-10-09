@@ -7,7 +7,7 @@ import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/application-end
 import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
 import { mkdir } from 'fs/promises';
-import { applicationMigrationFolder } from '@api-assistant/migrations-core';
+import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
 
 interface CreateApplicationUsecaseInput {
   createdBy: ObjectId;

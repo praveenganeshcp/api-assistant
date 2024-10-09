@@ -5,7 +5,7 @@ import {
   ApplicationMigration,
   applicationMigrationFolder,
   MIGRATIONS_COLLECTION,
-} from '@api-assistant/migrations-core';
+} from '@api-assistant/application-migrations-core';
 import path = require('path');
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { CRUD_DB_CONNECTION } from '@api-assistant/application-crud-engine-be';

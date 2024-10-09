@@ -5,7 +5,7 @@ import {
   ApplicationMigration,
   applicationMigrationFolder,
   MIGRATIONS_COLLECTION,
-} from '@api-assistant/migrations-core';
+} from '@api-assistant/application-migrations-core';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { MongoClient, ObjectId } from 'mongodb';
 import { readdir } from 'fs/promises';

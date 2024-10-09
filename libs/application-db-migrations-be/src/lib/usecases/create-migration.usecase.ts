@@ -1,7 +1,7 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { Injectable, Logger } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
-import { applicationMigrationFolder } from '@api-assistant/migrations-core';
+import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
 import path = require('path');
 import { writeFile } from 'fs/promises';
 

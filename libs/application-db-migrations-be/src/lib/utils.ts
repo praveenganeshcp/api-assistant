@@ -1,4 +1,4 @@
-import { applicationMigrationFolder } from '@api-assistant/migrations-core';
+import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
 import { config } from 'migrate-mongo';
 import { ObjectId } from 'mongodb';
 

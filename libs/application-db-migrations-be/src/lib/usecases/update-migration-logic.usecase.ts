@@ -2,7 +2,7 @@ import { Usecase } from '@api-assistant/commons-be';
 import { ObjectId } from 'mongodb';
 import { writeFile } from 'fs/promises';
 import path = require('path');
-import { applicationMigrationFolder } from '@api-assistant/migrations-core';
+import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
 import { Injectable, Logger } from '@nestjs/common';
 
 interface UpdateMigrationLogicUsecaseInput {
