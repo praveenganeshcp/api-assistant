@@ -12,12 +12,23 @@ import { applicationEndpointsReducer } from '../application-endpoints/store/redu
 import { APPLICATION_DATABASE_SLICE_NAME } from '../application-database/store/types';
 import { APPLICATION_ENDPOINTS_SLICE_NAME } from '../application-endpoints/store/types';
 import { APPLICATION_MIGRATION_SLICE_NAME } from '../application-migrations/store/types';
+import { ApplicationDetailsEffects } from '../application-details/store/effects';
+import { APPLICATION_DETAILS_SLICE_NAME } from '../application-details/store/type';
+import { applicationDetailsreducer } from '../application-details/store/reducers';
 
 const applicationFeatureStates = combineReducers({
+  [APPLICATION_DETAILS_SLICE_NAME]: applicationDetailsreducer,
   [APPLICATION_DATABASE_SLICE_NAME]: applicationDatabaseReducer,
   [APPLICATION_ENDPOINTS_SLICE_NAME]: applicationEndpointsReducer,
   [APPLICATION_MIGRATION_SLICE_NAME]: applicationMigrationsReducer,
 });
+
+const applicationEffects = [
+  ApplicationMigrationsEffects,
+  ApplicationDatabaseEffects,
+  ApplicationEndpointsEffects,
+  ApplicationDetailsEffects,
+];
 
 export default [
   {
@@ -46,11 +57,7 @@ export default [
           ).then((m) => m.ApplicationDetailsHostComponent),
         providers: [
           provideState('application', applicationFeatureStates),
-          provideEffects(
-            ApplicationMigrationsEffects,
-            ApplicationDatabaseEffects,
-            ApplicationEndpointsEffects
-          ),
+          provideEffects(...applicationEffects),
         ],
         children: [
           {

@@ -6,7 +6,7 @@ import {
   props,
 } from '@ngrx/store';
 
-const APPLICATION_DETAILS_ENDPOINT_PREFIX = '[Application Details - Endpoint]';
+const APPLICATION_DETAILS_ENDPOINT_PREFIX = '[Application Endpoints]';
 
 /**
  * Create application endpoint related actions with props. Attaches a common prefix in action names

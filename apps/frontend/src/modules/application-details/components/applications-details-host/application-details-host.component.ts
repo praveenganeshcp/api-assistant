@@ -16,6 +16,7 @@ import {
   applicationDataSelector,
 } from '../../store/selectors';
 import { ApplicationEndpointsHostComponent } from '../../../application-endpoints/components/application-endpoints-host/application-endpoints-host.component';
+import { loadApplicationDetailsAction } from '../../store/actions';
 
 enum TabNames {
   ENDPOINTS = 'Endpoints',
@@ -73,7 +74,11 @@ export class ApplicationDetailsHostComponent {
     private readonly router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(
+      loadApplicationDetailsAction({ applicationId: this.applicationId })
+    );
+  }
 
   public get applicationId(): string {
     return this.activatedRoute.snapshot.params['applicationId'];

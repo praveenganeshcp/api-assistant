@@ -1,3 +1,4 @@
+import { Application } from '@api-assistant/application-core';
 import {
   ActionCreatorProps,
   NotAllowedCheck,
@@ -8,7 +9,7 @@ import {
 /**
  * Prefix to be included in user account action names
  */
-const APPLICATION_DETAILS_ACTION_PREFIX = '[Application Details]';
+const APPLICATION_DETAILS_ACTION_PREFIX = '[Application Info]';
 
 /**
  * Create application details related actions with props. Attaches a common prefix in action names
@@ -39,7 +40,7 @@ export const loadApplicationDetailsAction = createActionWithProps(
 
 export const applicationDetailsLoadedAction = createActionWithProps(
   'Loaded data',
-  props<{ applicationDetails: any }>()
+  props<{ applicationDetails: Application }>()
 );
 
 export const errorInLoadingApplicationDetailsAction = createActionWithProps(

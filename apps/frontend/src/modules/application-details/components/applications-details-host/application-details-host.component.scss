@@ -3,13 +3,12 @@
   height: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
 
   header {
     display: flex;
     align-items: center;
-    padding: 0 1%;
+    padding: 0.75rem 0;
   }
 
   sw-tab-view {
@@ -17,7 +16,7 @@
     --sw-tab-view-height: 95%;
     --sw-tab-view-title-height: 5% !important;
     --sw-tab-view-content-height: 95% !important;
-    height: 100%;
+    height: 90%;
   }
 
   .application-details__tab-title {
