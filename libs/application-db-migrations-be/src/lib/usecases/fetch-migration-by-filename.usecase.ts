@@ -8,7 +8,7 @@ import {
 } from '@api-assistant/migrations-core';
 import path = require('path');
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { CRUD_DB_CONNECTION } from '@api-assistant/crud-engine-be';
+import { CRUD_DB_CONNECTION } from '@api-assistant/application-crud-engine-be';
 import { applicationDbName } from '@api-assistant/crud-engine-core';
 
 interface FetchMigrationByFileNameUsecaseInput {

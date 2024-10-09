@@ -1,7 +1,7 @@
 import {
   CoreEngineFetchCollectionsUsecase,
   CoreEngineDatabaseOperationsUsecase,
-} from '@api-assistant/crud-engine-be';
+} from '@api-assistant/application-crud-engine-be';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { ApplicationDatabaseOperation } from '../application-details.dto';

@@ -1,4 +1,4 @@
-import { CrudEngineBeModule } from '@api-assistant/crud-engine-be';
+import { CrudEngineBeModule } from '@api-assistant/application-crud-engine-be';
 import { Module } from '@nestjs/common';
 import { FetchApplicationMigrationsUsecase } from './usecases/fetch-application-migrations.usecase';
 import { UpdateMigrationLogicUsecase } from './usecases/update-migration-logic.usecase';

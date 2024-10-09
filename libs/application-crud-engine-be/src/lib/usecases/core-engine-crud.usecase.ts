@@ -21,7 +21,7 @@ export interface CoreEngineCRUDUsecaseInput {
   placeholderDataSouce: Omit<PlaceholderDataSource, 'crudSteps' | 'authUser'>;
   applicationId: ObjectId;
   method: CRUDEngineHttpMethods;
-  token?: string
+  token?: string;
 }
 
 @Injectable()
@@ -44,19 +44,23 @@ export class CoreEngineCRUDUsecase
   async execute(
     input: CoreEngineCRUDUsecaseInput
   ): Promise<CRUDActionResponse> {
-
-    const { url, placeholderDataSouce: requestPlaceholderSource, applicationId, token } = input;
+    const {
+      url,
+      placeholderDataSouce: requestPlaceholderSource,
+      applicationId,
+      token,
+    } = input;
 
     const placeholderDataSouce: PlaceholderDataSource = {
       ...requestPlaceholderSource,
       crudSteps: [],
-      authUser: null
-    }
+      authUser: null,
+    };
 
     const matchedEndpoint = await this.findEndpointByPathMatching.execute({
       applicationId: input.applicationId,
       url: input.url,
-      method: input.method
+      method: input.method,
     });
     if (!matchedEndpoint) {
       throw new HttpException('Endpoint not found for the URL:' + url, 400);
@@ -68,20 +72,21 @@ export class CoreEngineCRUDUsecase
 
     const db = this.dbConnection.db(`api-crud-${applicationId.toString()}`);
 
-    if(endpoint.isAuthenticated) {
-      placeholderDataSouce.authUser = await this.authenticateAppUser.execute({ db, token: token || '' })
+    if (endpoint.isAuthenticated) {
+      placeholderDataSouce.authUser = await this.authenticateAppUser.execute({
+        db,
+        token: token || '',
+      });
     }
-    
+
     this.logger.log('found auth user', placeholderDataSouce.authUser);
 
     placeholderDataSouce.pathParams = this.paramsParserService.parse(params);
-    placeholderDataSouce.queryParams = this.paramsParserService.parse(placeholderDataSouce.queryParams as Record<string, string>);
+    placeholderDataSouce.queryParams = this.paramsParserService.parse(
+      placeholderDataSouce.queryParams as Record<string, string>
+    );
 
-    const {
-      crud,
-      response,
-      validations,
-    } = endpoint;
+    const { crud, response, validations } = endpoint;
 
     try {
       await this.requestDataValidatorService.validate({

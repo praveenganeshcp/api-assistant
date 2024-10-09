@@ -27,7 +27,7 @@ import { CoreEngineFindAllActionUsecase } from './usecases/core-engine-findall-a
     {
       provide: CRUD_DB_CONNECTION,
       useFactory: crudDbConnectionFactory,
-      inject: [dbConfig.KEY]
+      inject: [dbConfig.KEY],
     },
     CoreEngineCRUDUsecase,
     CoreEngineFetchCollectionsUsecase,

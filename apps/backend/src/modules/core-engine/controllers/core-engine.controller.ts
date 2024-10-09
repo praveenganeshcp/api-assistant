@@ -26,7 +26,7 @@ import {
   DeleteApplicationUsecase,
   CoreEngineSignupUsecase,
   CoreEngineLoginUsecase,
-} from '@api-assistant/crud-engine-be';
+} from '@api-assistant/application-crud-engine-be';
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 

@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { CoreEngineController } from './controllers/core-engine.controller';
-import { CrudEngineBeModule } from '@api-assistant/crud-engine-be';
+import { CrudEngineBeModule } from '@api-assistant/application-crud-engine-be';
 import { CoreEngineAuthenticationMiddleware } from './middleware/core-engine-auth.middleware';
 import { ApplicationsBeModule } from '@api-assistant/applications-be';
 import { ApplicationDetailsController } from './controllers/application-details.controller';

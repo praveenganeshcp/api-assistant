@@ -4,7 +4,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import {
   CORE_ENGINE_UPLOAD_ROOT,
   CRUD_DB_CONNECTION,
-} from '@api-assistant/crud-engine-be';
+} from '@api-assistant/application-crud-engine-be';
 import { join } from 'path';
 import { rm } from 'fs/promises';
 import { existsSync } from 'fs';
@@ -38,7 +38,7 @@ export class DeleteApplicationUsecase
     if (existsSync(destinationPath))
       await rm(destinationPath, { recursive: true });
 
-    const db = this.connection.db(`api-crud-${data.applicationId.toString()}`)
+    const db = this.connection.db(`api-crud-${data.applicationId.toString()}`);
 
     await db.dropDatabase();
 

@@ -63,14 +63,11 @@ export class VariableTypeResolverService {
       return 'ObjectId';
     } else if (this.isStepVariable(value)) {
       return 'Steps';
-    }
-    else if(this.isRequestParamsVariable(value)) {
+    } else if (this.isRequestParamsVariable(value)) {
       return 'RequestPathParams';
-    }
-    else if(this.isRequestQueryVariable(value)) {
+    } else if (this.isRequestQueryVariable(value)) {
       return 'RequestQueryParams';
-    }
-    else if(this.isAuthUserVariable(value)) {
+    } else if (this.isAuthUserVariable(value)) {
       return 'Authuser';
     }
     return '';

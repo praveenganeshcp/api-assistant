@@ -26,7 +26,3 @@ export function removeRootPath(objectPath: string): string {
   const removedPath = join(...applicationRoot.split(filesSeperator).slice(2));
   return filesSeperator + removedPath;
 }
-
-
-
-
