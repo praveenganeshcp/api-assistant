@@ -22,7 +22,7 @@ import {
   Endpoint,
   EndpointsFeRepository,
   MinimalEndpointInfo,
-} from '@api-assistant/endpoints-fe';
+} from '@api-assistant/application-endpoints-fe';
 
 @Injectable()
 export class ApplicationEndpointsEffects {

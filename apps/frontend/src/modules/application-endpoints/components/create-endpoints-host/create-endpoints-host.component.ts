@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   EndpointFormValue,
   EndpointsFormComponent,
-} from '@api-assistant/endpoints-fe';
+} from '@api-assistant/application-endpoints-fe';
 import { StoreActionDispatcher } from '@api-assistant/commons-fe';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, from } from 'rxjs';

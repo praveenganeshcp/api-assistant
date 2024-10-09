@@ -5,7 +5,7 @@ import {
   Endpoint,
   EndpointFormValue,
   EndpointsFormComponent,
-} from '@api-assistant/endpoints-fe';
+} from '@api-assistant/application-endpoints-fe';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
 

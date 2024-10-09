@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { NgFor } from '@angular/common';
 import { MinimalEndpointInfo } from '../../types';
 import { EndpointsListItemComponent } from '../endpoints-list-item/endpoints-list-item.component';

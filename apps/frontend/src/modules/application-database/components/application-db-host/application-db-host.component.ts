@@ -25,7 +25,7 @@ import {
   queryExecutedAction,
 } from '../../store/actions';
 import { ActivatedRoute } from '@angular/router';
-import { ALLOWED_DB_OPERATIONS_IN_ENDPOINT } from '@api-assistant/endpoints-fe';
+import { ALLOWED_DB_OPERATIONS_IN_ENDPOINT } from '@api-assistant/application-endpoints-fe';
 import {
   JsonInputComponent,
   StoreActionDispatcher,

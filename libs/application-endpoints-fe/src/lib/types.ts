@@ -1,4 +1,4 @@
-import { CRUDEngineHttpMethods } from "@api-assistant/crud-engine-core";
+import { CRUDEngineHttpMethods } from '@api-assistant/crud-engine-core';
 
 export interface Endpoint {
   _id: string;
@@ -18,7 +18,13 @@ export interface Endpoint {
 export interface MinimalEndpointInfo
   extends Pick<
     Endpoint,
-    '_id' | 'name' | 'description' | 'createdOn' | 'url' | 'applicationId' | 'method'
+    | '_id'
+    | 'name'
+    | 'description'
+    | 'createdOn'
+    | 'url'
+    | 'applicationId'
+    | 'method'
   > {}
 
 export enum ALLOWED_DB_OPERATIONS_IN_ENDPOINT {

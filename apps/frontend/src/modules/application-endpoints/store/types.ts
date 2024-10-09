@@ -1,5 +1,8 @@
 import { ServerData } from '@api-assistant/commons-be';
-import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import {
+  Endpoint,
+  MinimalEndpointInfo,
+} from '@api-assistant/application-endpoints-fe';
 
 export const APPLICATION_ENDPOINTS_SLICE_NAME = 'endpoints';
 

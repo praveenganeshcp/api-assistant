@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
 import {
   EndpointsListViewComponent,
   MinimalEndpointInfo,
-} from '@api-assistant/endpoints-fe';
+} from '@api-assistant/application-endpoints-fe';
 
 import { AppState } from '../../../app/app.state';
 import { SwButtonComponent } from 'ngx-simple-widgets';

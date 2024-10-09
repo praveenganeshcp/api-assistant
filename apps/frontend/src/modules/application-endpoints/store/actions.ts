@@ -1,4 +1,7 @@
-import { Endpoint, MinimalEndpointInfo } from '@api-assistant/endpoints-fe';
+import {
+  Endpoint,
+  MinimalEndpointInfo,
+} from '@api-assistant/application-endpoints-fe';
 import {
   ActionCreatorProps,
   createAction as ngrxAction,

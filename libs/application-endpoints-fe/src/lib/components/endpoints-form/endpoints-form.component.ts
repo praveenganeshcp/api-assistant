@@ -28,8 +28,8 @@ export interface EndpointFormValue {
   body: Object[];
   response: Object;
   validations: Object;
-  method: CRUDEngineHttpMethods
-  isAuthenticated: boolean
+  method: CRUDEngineHttpMethods;
+  isAuthenticated: boolean;
 }
 
 @Component({
@@ -63,19 +63,22 @@ export class EndpointsFormComponent {
         response: '',
         validations: '',
         method: 'POST',
-        isAuthenticated: false
+        isAuthenticated: false,
       });
     }
   }
 
   @Output() onSubmit = new EventEmitter<{ value: EndpointFormValue }>();
 
-  public readonly httpMethodOptions: Array<{label: string, value: CRUDEngineHttpMethods}> = [
+  public readonly httpMethodOptions: Array<{
+    label: string;
+    value: CRUDEngineHttpMethods;
+  }> = [
     { label: 'Post', value: 'POST' },
     { label: 'Get', value: 'GET' },
     { label: 'Patch', value: 'PATCH' },
-    { label: 'Delete', value: 'DELETE' }
-  ]
+    { label: 'Delete', value: 'DELETE' },
+  ];
 
   public readonly createEndpointForm: FormGroup = this.formBuilder.group({
     name: this.formBuilder.control('', [Validators.required]),
