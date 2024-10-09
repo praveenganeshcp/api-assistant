@@ -5,7 +5,7 @@ import {
 } from './core-engine-crud.usecase';
 import { Injectable, Logger } from '@nestjs/common';
 import { CoreEngineJWTService } from '../services/core-engine-jwt.service';
-import { InvalidLoginException } from '@api-assistant/crud-engine-core';
+import { InvalidLoginException } from '@api-assistant/applications-crud-engine-core';
 import { ObjectId } from 'mongodb';
 
 interface CoreEngineLoginUsecaseOutput {

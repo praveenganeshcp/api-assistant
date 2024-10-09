@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { VariableValueResolver } from './variable-value-resolver.service';
-import { PlaceholderDataSource } from '@api-assistant/crud-engine-core';
+import { PlaceholderDataSource } from '@api-assistant/applications-crud-engine-core';
 
 export class VariableValuePopulaterService {
   private readonly logger = new Logger(VariableValuePopulaterService.name);

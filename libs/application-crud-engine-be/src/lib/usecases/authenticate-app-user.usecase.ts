@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Db, ObjectId } from 'mongodb';
 import { CoreEngineJWTService } from '../services/core-engine-jwt.service';
 import { CRUDActionExecutorUsecase } from './crud-action-executor.usecase';
-import { ALLOWED_DB_OPERATIONS } from '@api-assistant/crud-engine-core';
+import { ALLOWED_DB_OPERATIONS } from '@api-assistant/applications-crud-engine-core';
 
 interface AuthenticatedUser {
   id: ObjectId;

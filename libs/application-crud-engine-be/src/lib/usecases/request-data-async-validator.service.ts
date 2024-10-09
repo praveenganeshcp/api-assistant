@@ -2,7 +2,7 @@ import {
   PlaceholderDataSource,
   RequestDataAsyncValidation,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { CRUDActionExecutorUsecase } from './crud-action-executor.usecase';

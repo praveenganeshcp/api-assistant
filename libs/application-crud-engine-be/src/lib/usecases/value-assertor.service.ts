@@ -1,4 +1,4 @@
-import { CRUDValidationOperators } from '@api-assistant/crud-engine-core';
+import { CRUDValidationOperators } from '@api-assistant/applications-crud-engine-core';
 import { Logger } from '@nestjs/common';
 
 export class ValueAssertorService {

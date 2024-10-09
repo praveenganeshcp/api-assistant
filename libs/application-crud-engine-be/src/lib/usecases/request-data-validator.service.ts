@@ -2,7 +2,7 @@ import {
   PlaceholderDataSource,
   RequestDataSyncValidation,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 
 interface RequestDataValidatorInput {

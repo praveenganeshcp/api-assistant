@@ -1,7 +1,7 @@
 import {
   PlaceholderDataSource,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { Injectable } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { RequestDataValidatorService } from './request-data-validator.service';

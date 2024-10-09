@@ -1,5 +1,5 @@
 import { CanBeNull, Usecase } from '@api-assistant/commons-be';
-import { FindActionPayload } from '@api-assistant/crud-engine-core';
+import { FindActionPayload } from '@api-assistant/applications-crud-engine-core';
 import { Injectable } from '@nestjs/common';
 import { Db } from 'mongodb';
 

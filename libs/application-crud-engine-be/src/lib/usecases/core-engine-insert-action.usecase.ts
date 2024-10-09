@@ -1,5 +1,5 @@
 import { Usecase } from '@api-assistant/commons-be';
-import { SaveActionPayload } from '@api-assistant/crud-engine-core';
+import { SaveActionPayload } from '@api-assistant/applications-crud-engine-core';
 import { Db, Document, InsertOneResult } from 'mongodb';
 
 interface CoreEngineInsertActionUsecaseInput {

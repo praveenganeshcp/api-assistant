@@ -1,4 +1,4 @@
-import { ParamDataTypes } from '@api-assistant/crud-engine-core';
+import { ParamDataTypes } from '@api-assistant/applications-crud-engine-core';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 

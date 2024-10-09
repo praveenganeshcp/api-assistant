@@ -1,10 +1,14 @@
-import { BadRequestException, ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 export class CoreEngineUnSupportedVariableTypeException extends BadRequestException {
-    constructor(variableType: string) {
-      super(`${variableType} currently not supported`);
-    }
+  constructor(variableType: string) {
+    super(`${variableType} currently not supported`);
   }
+}
 
 export class CoreEngineUnSupportedActionException extends BadRequestException {
   constructor(actionName: string) {
@@ -56,6 +60,6 @@ export class InvalidLoginException extends ForbiddenException {
 
 export class SessionExpiredException extends UnauthorizedException {
   constructor() {
-    super('Session expired')
+    super('Session expired');
   }
 }

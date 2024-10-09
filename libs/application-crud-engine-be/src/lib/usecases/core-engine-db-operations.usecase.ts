@@ -2,7 +2,7 @@ import { CanBeNull, Usecase } from '@api-assistant/commons-be';
 import {
   CRUDActionDefinition,
   CRUDActionResponse,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { MongoClient, ObjectId } from 'mongodb';
 import { CRUD_DB_CONNECTION } from '../utils/utils';

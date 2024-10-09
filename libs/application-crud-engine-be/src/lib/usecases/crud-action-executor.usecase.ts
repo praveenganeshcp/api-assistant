@@ -5,7 +5,7 @@ import {
   CRUDActionDefinition,
   CRUDActionResponse,
   FindActionPayload,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { Injectable, Logger } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { CoreEngineInsertActionUsecase } from './core-engine-insert-action.usecase';

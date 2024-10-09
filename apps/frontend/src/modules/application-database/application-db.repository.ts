@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.dev';
-import { CRUDActionDefinition } from '@api-assistant/crud-engine-core';
+import { CRUDActionDefinition } from '@api-assistant/applications-crud-engine-core';
 
 @Injectable({
   providedIn: 'root',

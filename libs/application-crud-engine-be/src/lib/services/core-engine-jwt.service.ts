@@ -1,4 +1,4 @@
-import { SessionExpiredException } from '@api-assistant/crud-engine-core';
+import { SessionExpiredException } from '@api-assistant/applications-crud-engine-core';
 import { Injectable } from '@nestjs/common';
 import { JsonWebTokenError, sign, verify } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';

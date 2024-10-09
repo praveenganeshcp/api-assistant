@@ -1,6 +1,6 @@
 import { Usecase } from '@api-assistant/commons-be';
 import { CRUD_DB_CONNECTION } from '@api-assistant/application-crud-engine-be';
-import { applicationDbName } from '@api-assistant/crud-engine-core';
+import { applicationDbName } from '@api-assistant/applications-crud-engine-core';
 import {
   ApplicationMigration,
   applicationMigrationFolder,

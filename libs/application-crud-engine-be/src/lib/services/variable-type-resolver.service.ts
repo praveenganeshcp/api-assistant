@@ -2,7 +2,7 @@ import {
   CoreEngineUnSupportedVariableTypeException,
   CRUDSupportedVariablesInfo,
   CRUDSupportedVariablesTypes,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 
 export class VariableTypeResolverService {
   private isRequestVariable(value: string) {

@@ -8,7 +8,7 @@ import {
   CRUDEngineHttpMethods,
   PlaceholderDataSource,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { VariableValuePopulaterService } from '../services/variable-value-populater.service';
 import { RequestDataValidatorFacadeService } from './request-data-validator-facade.service';
 import { FindEndpointByPathMatchUsecase } from '@api-assistant/application-endpoints-be';

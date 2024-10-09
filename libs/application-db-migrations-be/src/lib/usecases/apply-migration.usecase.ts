@@ -5,7 +5,7 @@ import { ConfigType } from '@nestjs/config';
 import { ObjectId } from 'mongodb';
 import { config, database, status, up } from 'migrate-mongo';
 import { buildMigrationConfig } from '../utils';
-import { applicationDbName } from '@api-assistant/crud-engine-core';
+import { applicationDbName } from '@api-assistant/applications-crud-engine-core';
 
 interface ApplyMigrationUsecaseInput {
   applicationId: ObjectId;

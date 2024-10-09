@@ -1,5 +1,5 @@
 import { CanBeNull, Usecase } from '@api-assistant/commons-be';
-import { CRUDEngineHttpMethods } from '@api-assistant/crud-engine-core';
+import { CRUDEngineHttpMethods } from '@api-assistant/applications-crud-engine-core';
 import { Endpoint } from '../entities';
 import { ObjectId } from 'mongodb';
 import { Injectable, Logger } from '@nestjs/common';

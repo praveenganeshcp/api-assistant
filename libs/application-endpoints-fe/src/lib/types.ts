@@ -1,4 +1,4 @@
-import { CRUDEngineHttpMethods } from '@api-assistant/crud-engine-core';
+import { CRUDEngineHttpMethods } from '@api-assistant/applications-crud-engine-core';
 
 export interface Endpoint {
   _id: string;

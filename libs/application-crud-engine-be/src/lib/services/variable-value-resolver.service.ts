@@ -7,7 +7,7 @@ import {
   CRUDSupportedVariablesInfo,
   CRUDSystemVariables,
   PlaceholderDataSource,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 
 export class VariableValueResolver {
   private readonly logger = new Logger(VariableValueResolver.name);

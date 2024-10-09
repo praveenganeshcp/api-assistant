@@ -19,7 +19,7 @@ import {
   SwInputComponent,
 } from 'ngx-simple-widgets';
 import { JsonInputComponent } from '@api-assistant/commons-fe';
-import { CRUDEngineHttpMethods } from '@api-assistant/crud-engine-core';
+import { CRUDEngineHttpMethods } from '@api-assistant/applications-crud-engine-core';
 
 export interface EndpointFormValue {
   name: string;

@@ -3,7 +3,7 @@ import {
   CRUDActionResponse,
   CRUDEngineHttpMethods,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { ObjectId } from 'mongodb';
 
 export interface Endpoint {

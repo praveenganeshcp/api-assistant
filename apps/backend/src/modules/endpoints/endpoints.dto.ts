@@ -4,7 +4,7 @@ import {
   CRUDActionResponse,
   CRUDEngineHttpMethods,
   RequestDataValidation,
-} from '@api-assistant/crud-engine-core';
+} from '@api-assistant/applications-crud-engine-core';
 import { Type } from 'class-transformer';
 import {
   IsArray,

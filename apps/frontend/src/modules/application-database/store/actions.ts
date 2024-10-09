@@ -1,4 +1,4 @@
-import { CRUDActionDefinition } from '@api-assistant/crud-engine-core';
+import { CRUDActionDefinition } from '@api-assistant/applications-crud-engine-core';
 import {
   ActionCreatorProps,
   NotAllowedCheck,

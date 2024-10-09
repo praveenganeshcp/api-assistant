@@ -5,7 +5,7 @@ import {
   CreateEndpointUsecaseInput,
 } from './create-endpoint.usecase';
 import { Injectable } from '@nestjs/common';
-import { ALLOWED_DB_OPERATIONS } from '@api-assistant/crud-engine-core';
+import { ALLOWED_DB_OPERATIONS } from '@api-assistant/applications-crud-engine-core';
 
 interface CreateAllBuiltinEndpointsUsecaseInput {
   userId: ObjectId;

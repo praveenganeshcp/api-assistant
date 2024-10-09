@@ -30,7 +30,7 @@ import {
   JsonInputComponent,
   StoreActionDispatcher,
 } from '@api-assistant/commons-fe';
-import { CRUDActionDefinition } from '@api-assistant/crud-engine-core';
+import { CRUDActionDefinition } from '@api-assistant/applications-crud-engine-core';
 
 @Component({
   selector: 'api-assistant-application-db-host',
