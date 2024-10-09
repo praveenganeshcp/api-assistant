@@ -1,4 +1,4 @@
-import { Endpoint } from "./entities";
+import { Endpoint } from './entities';
 
 export interface MinimalEndpointInfo
   extends Pick<

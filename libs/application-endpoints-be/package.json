@@ -1,5 +1,5 @@
 {
-  "name": "@api-assistant/endpoint-be",
+  "name": "@api-assistant/application-endpoints-be",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"

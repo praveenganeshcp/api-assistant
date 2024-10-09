@@ -11,7 +11,7 @@ import {
 } from '@api-assistant/crud-engine-core';
 import { VariableValuePopulaterService } from '../services/variable-value-populater.service';
 import { RequestDataValidatorFacadeService } from './request-data-validator-facade.service';
-import { FindEndpointByPathMatchUsecase } from '@api-assistant/endpoints-be';
+import { FindEndpointByPathMatchUsecase } from '@api-assistant/application-endpoints-be';
 import { ParamsParserService } from './params-parser.service';
 import { AuthenticateAppUserUsecase } from './authenticate-app-user.usecase';
 import { CRUD_DB_CONNECTION } from '../utils/utils';

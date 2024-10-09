@@ -3,7 +3,7 @@ import { Usecase } from '@api-assistant/commons-be';
 import { ObjectId } from 'mongodb';
 
 import { createHash } from 'crypto';
-import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/endpoints-be';
+import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/application-endpoints-be';
 import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
 import { mkdir } from 'fs/promises';

@@ -20,7 +20,7 @@ import { FindEndpointByPathMatchUsecase } from './usecases/find-endpoint-by-path
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
     CreateAllBuiltinEndpointsUsecase,
-    FindEndpointByPathMatchUsecase
+    FindEndpointByPathMatchUsecase,
   ],
   exports: [
     CreateEndpointUsecase,
@@ -30,7 +30,7 @@ import { FindEndpointByPathMatchUsecase } from './usecases/find-endpoint-by-path
     UpdateEndpointUsecase,
     DeleteEndpointsUsecase,
     CreateAllBuiltinEndpointsUsecase,
-    FindEndpointByPathMatchUsecase
+    FindEndpointByPathMatchUsecase,
   ],
 })
 export class EndpointsBeModule {}

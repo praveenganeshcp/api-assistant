@@ -14,7 +14,7 @@ import {
   GetAllEndpointsMinimalInfoUsecase,
   GetEndpointByIdUsecase,
   UpdateEndpointUsecase,
-} from '@api-assistant/endpoints-be';
+} from '@api-assistant/application-endpoints-be';
 import { AuthUser } from '@api-assistant/commons-be';
 import { UserDetails } from '@api-assistant/auth-be';
 import { ObjectId } from 'mongodb';
@@ -49,7 +49,7 @@ export class EndpointsController {
       applicationId: new ObjectId(applicationId),
       validations: payload.validations,
       method: payload.method,
-      isAuthenticated: payload.isAuthenticated
+      isAuthenticated: payload.isAuthenticated,
     });
   }
 

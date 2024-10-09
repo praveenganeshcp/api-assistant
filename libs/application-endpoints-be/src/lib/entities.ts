@@ -18,5 +18,5 @@ export interface Endpoint {
   createdBy: ObjectId;
   createdOn: Date;
   applicationId: ObjectId;
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
 }

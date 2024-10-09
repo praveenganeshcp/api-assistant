@@ -96,16 +96,16 @@ export class CreateAllBuiltinEndpointsUsecase
           operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
             filter: {
-              emailId: '${Request.body.emailId}'
+              emailId: '${Request.body.emailId}',
             },
-            options: {}
+            options: {},
           },
         },
       ],
       validations: {},
       response: {
         message: 'User loggedin successfully',
-        user: "${Steps.0}",
+        user: '${Steps.0}',
       },
     };
     return input;

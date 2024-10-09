@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { EndpointsController } from './endpoints.controller';
-import { EndpointsBeModule } from '@api-assistant/endpoints-be';
+import { EndpointsBeModule } from '@api-assistant/application-endpoints-be';
 import {
   AccountsBeModule,
   AuthenticationMiddleware,

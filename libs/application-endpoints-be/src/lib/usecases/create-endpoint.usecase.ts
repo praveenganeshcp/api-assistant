@@ -7,7 +7,14 @@ import { ObjectId } from 'mongodb';
 export interface CreateEndpointUsecaseInput
   extends Pick<
     Endpoint,
-    'crud' | 'description' | 'name' | 'response' | 'url' | 'validations' | 'method' | 'isAuthenticated'
+    | 'crud'
+    | 'description'
+    | 'name'
+    | 'response'
+    | 'url'
+    | 'validations'
+    | 'method'
+    | 'isAuthenticated'
   > {
   createdBy: ObjectId;
   applicationId: ObjectId;
@@ -31,7 +38,7 @@ export class CreateEndpointUsecase
       applicationId: data.applicationId,
       validations: data.validations,
       method: data.method,
-      isAuthenticated: data.isAuthenticated
+      isAuthenticated: data.isAuthenticated,
     });
   }
 }

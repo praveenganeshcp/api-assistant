@@ -4,7 +4,10 @@ import { EndpointsRepository } from '../repositories/endpoints.repository';
 import { Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 
-interface GetEndpointByURLUsecaseInput {endpointUrl: string, applicationId: ObjectId}
+interface GetEndpointByURLUsecaseInput {
+  endpointUrl: string;
+  applicationId: ObjectId;
+}
 @Injectable()
 export class GetEndpointByURLUsecase
   implements Usecase<GetEndpointByURLUsecaseInput, CanBeNull<Endpoint>>
@@ -12,6 +15,9 @@ export class GetEndpointByURLUsecase
   constructor(private readonly endpointsRepo: EndpointsRepository) {}
 
   execute(input: GetEndpointByURLUsecaseInput): Promise<CanBeNull<Endpoint>> {
-    return this.endpointsRepo.findOne({ url: input.endpointUrl, applicationId: input.applicationId });
+    return this.endpointsRepo.findOne({
+      url: input.endpointUrl,
+      applicationId: input.applicationId,
+    });
   }
 }
