@@ -5,7 +5,7 @@ import {
   FetchMigrationByFileNameUsecase,
   RevertMigrationUsecase,
   UpdateMigrationLogicUsecase,
-} from '@api-assistant/db-migrations-be';
+} from '@api-assistant/application-db-migrations-be';
 import {
   Body,
   Controller,

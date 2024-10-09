@@ -1,5 +1,5 @@
 {
-  "name": "@api-assistant/db-migrations-be",
+  "name": "@api-assistant/application-db-migrations-be",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"
