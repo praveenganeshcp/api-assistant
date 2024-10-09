@@ -1,8 +1,5 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
-import {
-  APPLICATION_ENDPOINTS_SLICE_NAME,
-  ApplicationEndpointsState,
-} from './types';
+import { createReducer, on } from '@ngrx/store';
+import { ApplicationEndpointsState } from './types';
 import {
   allEndpointsLoadedAction,
   endpointDetailsFetchedAction,
@@ -26,7 +23,7 @@ const DEFAULT_STATE: ApplicationEndpointsState = {
   },
 };
 
-const reducer = createReducer(
+export const applicationEndpointsReducer = createReducer(
   DEFAULT_STATE,
   on(fetchAllEndpointsAction, (state) => ({
     ...state,
@@ -85,8 +82,3 @@ const reducer = createReducer(
     },
   }))
 );
-
-export const applicationEndpointsFeature = createFeature({
-  name: APPLICATION_ENDPOINTS_SLICE_NAME,
-  reducer,
-});

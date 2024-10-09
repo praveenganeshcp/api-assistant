@@ -1,8 +1,5 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
-import {
-  APPLICATION_DETAILS_SLICE_NAME,
-  ApplicationDetailsState,
-} from './type';
+import { createReducer, on } from '@ngrx/store';
+import { ApplicationDetailsState } from './type';
 import {
   applicationDetailsLoadedAction,
   errorInLoadingApplicationDetailsAction,
@@ -15,7 +12,7 @@ const DEFAULT_STATE: ApplicationDetailsState = {
   error: '',
 };
 
-export const reducer = createReducer(
+export const applicationDetailsreducer = createReducer(
   DEFAULT_STATE,
   on(loadApplicationDetailsAction, (state) => ({ ...state, isLoading: true })),
   on(applicationDetailsLoadedAction, (state, payload) => ({
@@ -29,8 +26,3 @@ export const reducer = createReducer(
     isLoading: false,
   }))
 );
-
-export const applicationDetailsFeature = createFeature({
-  name: APPLICATION_DETAILS_SLICE_NAME,
-  reducer,
-});

@@ -1,8 +1,5 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
-import {
-  APPLICATION_DATABASE_SLICE_NAME,
-  ApplicationDatabaseState,
-} from './types';
+import { createReducer, on } from '@ngrx/store';
+import { ApplicationDatabaseState } from './types';
 import {
   collectionsLoadedAction,
   errorInExecutingQueryAction,
@@ -52,8 +49,3 @@ export const applicationDatabaseReducer = createReducer(
     result: { data: null, isLoading: false, error },
   }))
 );
-
-export const applicationDbFeature = createFeature({
-  name: APPLICATION_DATABASE_SLICE_NAME,
-  reducer: applicationDatabaseReducer,
-});

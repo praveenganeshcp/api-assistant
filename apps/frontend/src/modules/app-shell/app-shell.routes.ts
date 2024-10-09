@@ -1,14 +1,23 @@
 import { Route } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
-import { provideState } from '@ngrx/store';
+import { combineReducers, provideState } from '@ngrx/store';
 import { dashboardFeature } from '../dashboard/store/reducers';
 import { DashboardEffects } from '../dashboard/store/effects';
-import { applicationMigrationsFeature } from '../application-migrations/store/reducers';
-import { applicationDbFeature } from '../application-database/store/reducers';
+import { applicationMigrationsReducer } from '../application-migrations/store/reducers';
+import { applicationDatabaseReducer } from '../application-database/store/reducers';
 import { ApplicationDatabaseEffects } from '../application-database/store/effects';
 import { ApplicationMigrationsEffects } from '../application-migrations/store/effects';
 import { ApplicationEndpointsEffects } from '../application-endpoints/store/effects';
-import { applicationEndpointsFeature } from '../application-endpoints/store/reducers';
+import { applicationEndpointsReducer } from '../application-endpoints/store/reducers';
+import { APPLICATION_DATABASE_SLICE_NAME } from '../application-database/store/types';
+import { APPLICATION_ENDPOINTS_SLICE_NAME } from '../application-endpoints/store/types';
+import { APPLICATION_MIGRATION_SLICE_NAME } from '../application-migrations/store/types';
+
+const applicationFeatureStates = combineReducers({
+  [APPLICATION_DATABASE_SLICE_NAME]: applicationDatabaseReducer,
+  [APPLICATION_ENDPOINTS_SLICE_NAME]: applicationEndpointsReducer,
+  [APPLICATION_MIGRATION_SLICE_NAME]: applicationMigrationsReducer,
+});
 
 export default [
   {
@@ -36,9 +45,7 @@ export default [
             '../application-details/components/applications-details-host/application-details-host.component'
           ).then((m) => m.ApplicationDetailsHostComponent),
         providers: [
-          provideState(applicationEndpointsFeature),
-          provideState(applicationMigrationsFeature),
-          provideState(applicationDbFeature),
+          provideState('application', applicationFeatureStates),
           provideEffects(
             ApplicationMigrationsEffects,
             ApplicationDatabaseEffects,
