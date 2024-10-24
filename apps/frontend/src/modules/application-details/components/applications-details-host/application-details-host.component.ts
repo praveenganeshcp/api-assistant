@@ -23,6 +23,7 @@ enum TabNames {
   SETTINGS = 'Settings',
   DATABASE = 'Database',
   MIGRATIONS = 'Migrations',
+  CLOUD_CODE = "Cloud code"
 }
 
 const routeUrlTabMapping: Record<TabNames, string> = {
@@ -30,6 +31,7 @@ const routeUrlTabMapping: Record<TabNames, string> = {
   [TabNames.ENDPOINTS]: 'endpoints',
   [TabNames.MIGRATIONS]: 'migrations',
   [TabNames.SETTINGS]: 'settings',
+  [TabNames.CLOUD_CODE]: "cloud-code"
 };
 
 @Component({
@@ -51,6 +53,7 @@ export class ApplicationDetailsHostComponent {
     TabNames.ENDPOINTS,
     TabNames.MIGRATIONS,
     TabNames.DATABASE,
+    TabNames.CLOUD_CODE,
     TabNames.SETTINGS,
   ];
 

@@ -103,6 +103,10 @@ export default [
               ).then((c) => c.MigrationDetailsComponent),
           },
           {
+            path: "cloud-code",
+            loadComponent: () => import("../application-cloud-code/components/application-cloud-code-host/application-cloud-code-host.component").then(c => c.ApplicationCloudCodeHostComponent)
+          },
+          {
             path: '',
             pathMatch: 'full',
             redirectTo: 'endpoints',
