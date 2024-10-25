@@ -1,0 +1,63 @@
+import { Injectable, Logger } from "@nestjs/common";
+import { ObjectId } from "mongodb";
+const pm2 = require('pm2');
+
+@Injectable()
+export class CloudCodeProcessManagerService {
+
+    private readonly logger = new Logger(CloudCodeProcessManagerService.name);
+
+    constructor() {
+        this.logger.log('connecting to pm2 daemon')
+        pm2.connect((err: any) => {
+            if(err) {
+                console.error(err)
+                throw new Error(err.message);
+            }
+        })
+    }
+
+    startApplication(applicationId: ObjectId): void {
+        const scriptPath = `/Users/praveenkumar/Documents/projects/cloud_code/${applicationId.toString()}/index.js`;
+        this.logger.log('starting service for application '+applicationId.toString())
+        this.logger.log('starting script at '+scriptPath)
+        pm2.start({
+            script: scriptPath,
+            name: applicationId.toString(),
+        }, (error: any) => {
+            if(error) {
+                console.error(error)
+                this.logger.error('error in starting process');
+            }
+        })
+    }
+
+    restartApplication(applicationId: ObjectId) {
+        this.logger.log('restarting application id '+applicationId.toString());
+        pm2.restart(applicationId.toString(), (error: any) => {
+            if(error) {
+                console.error('error in restarting the application');
+            }
+        })
+    }
+
+    stopApplication(applicationId: ObjectId) {
+        this.logger.log('stopping application id '+applicationId.toString());
+        pm2.stop(applicationId.toString(), (error: any) => {
+            if(error) {
+                console.error('error in stopping the application');
+            }
+        })
+    }
+
+    getAllApplicationStatus() {
+        return new Promise((resolve, reject) => {
+            pm2.list((error: any, data: any) => {
+                if(error) {
+                    reject(error)
+                }
+                resolve(data)
+            })
+        })
+    }
+}

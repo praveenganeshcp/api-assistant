@@ -8,6 +8,7 @@ import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
 import { mkdir } from 'fs/promises';
 import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
+import { BootstrapApplicationUsecase } from '@api-assistant/application-cloud-code-be';
 
 interface CreateApplicationUsecaseInput {
   createdBy: ObjectId;
@@ -20,7 +21,8 @@ export class CreateApplicationUsecase
 {
   constructor(
     private readonly applicationRepo: ApplicationRepository,
-    private readonly createAllBuiltinEndpointsUsecase: CreateAllBuiltinEndpointsUsecase
+    private readonly createAllBuiltinEndpointsUsecase: CreateAllBuiltinEndpointsUsecase,
+    private readonly bootstrapCloudCodeUsecase: BootstrapApplicationUsecase,
   ) {}
 
   async execute(input: CreateApplicationUsecaseInput): Promise<Application> {
@@ -37,6 +39,10 @@ export class CreateApplicationUsecase
     await mkdir(applicationMigrationFolder(application._id), {
       recursive: true,
     });
+    await this.bootstrapCloudCodeUsecase.execute({
+      applicationId: application._id,
+      port: 5555
+    })
     return application;
   }
 

@@ -5,10 +5,15 @@ import {
 } from '@api-assistant/auth-be';
 import { ApplicationsBeModule } from '@api-assistant/applications-be';
 import { ApplicationsController } from './application.controller';
+import { ApplicationCloudCodeBeModule } from '@api-assistant/application-cloud-code-be';
+import { ApplicationProcessManagerController } from './application-process.controller';
 
 @Module({
-  controllers: [ApplicationsController],
-  imports: [AccountsBeModule, ApplicationsBeModule],
+  controllers: [
+    ApplicationProcessManagerController,
+    ApplicationsController
+  ],
+  imports: [AccountsBeModule, ApplicationsBeModule, ApplicationCloudCodeBeModule],
 })
 export class ApplicationModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -4,9 +4,10 @@ import { ApplicationRepository } from './repositories/application.repository';
 import { CreateApplicationUsecase } from './usecases/create-application/usecase';
 import { FetchApplicationsByUserIdUsecase } from './usecases/fetch-applications-by-userid/usecase';
 import { FetchApplicationByIdUsecase } from './usecases/fetch-application-by-id.usecase';
+import { ApplicationCloudCodeBeModule } from '@api-assistant/application-cloud-code-be';
 
 @Module({
-  imports: [EndpointsBeModule],
+  imports: [EndpointsBeModule, ApplicationCloudCodeBeModule],
   providers: [
     ApplicationRepository,
     CreateApplicationUsecase,
