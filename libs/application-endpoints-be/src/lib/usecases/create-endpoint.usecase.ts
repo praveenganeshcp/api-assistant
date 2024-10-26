@@ -3,6 +3,7 @@ import { Endpoint } from '../entities';
 import { Injectable } from '@nestjs/common';
 import { EndpointsRepository } from '../repositories/endpoints.repository';
 import { ObjectId } from 'mongodb';
+import { UpdateRouteHandlersUsecase } from '@api-assistant/application-cloud-code-be';
 
 export interface CreateEndpointUsecaseInput
   extends Pick<
@@ -26,10 +27,13 @@ export interface CreateEndpointUsecaseInput
 export class CreateEndpointUsecase
   implements Usecase<CreateEndpointUsecaseInput, Endpoint>
 {
-  constructor(private readonly endpointsRepo: EndpointsRepository) {}
+  constructor(
+    private readonly endpointsRepo: EndpointsRepository,
+    private readonly updateRouteHandlersUsecase: UpdateRouteHandlersUsecase
+  ) {}
 
-  execute(data: CreateEndpointUsecaseInput): Promise<Endpoint> {
-    return this.endpointsRepo.save({
+  async execute(data: CreateEndpointUsecaseInput): Promise<Endpoint> {
+    const endpoint = await this.endpointsRepo.save({
       name: data.name,
       url: data.url,
       description: data.description,
@@ -44,5 +48,7 @@ export class CreateEndpointUsecase
       useCloudCode: data.useCloudCode,
       requestHandler: data.requestHandler
     });
+    await this.updateRouteHandlersUsecase.execute(data.applicationId)
+    return endpoint;
   }
 }

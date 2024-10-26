@@ -32,10 +32,6 @@ export class CreateApplicationUsecase
       createdBy,
       createdOn: new Date(),
     });
-    await this.createAllBuiltinEndpointsUsecase.execute({
-      userId: createdBy,
-      applicationId: application._id,
-    });
     await mkdir(applicationMigrationFolder(application._id), {
       recursive: true,
     });
@@ -43,6 +39,10 @@ export class CreateApplicationUsecase
       applicationId: application._id,
       port: 5555
     })
+    await this.createAllBuiltinEndpointsUsecase.execute({
+      userId: createdBy,
+      applicationId: application._id,
+    });
     return application;
   }
 

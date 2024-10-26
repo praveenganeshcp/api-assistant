@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Endpoint } from '../entities';
 import { Injectable } from '@nestjs/common';
 import { EndpointsRepository } from '../repositories/endpoints.repository';
+import { UpdateRouteHandlersUsecase } from '@api-assistant/application-cloud-code-be';
 
 interface UpdateEndpointUsecaseInput {
   id: ObjectId;
@@ -26,7 +27,10 @@ interface UpdateEndpointUsecaseInput {
 export class UpdateEndpointUsecase
   implements Usecase<UpdateEndpointUsecaseInput, CanBeNull<Endpoint>>
 {
-  constructor(private readonly repo: EndpointsRepository) {}
+  constructor(
+    private readonly repo: EndpointsRepository,
+    private readonly updateRouteHandlersUsecase: UpdateRouteHandlersUsecase
+  ) {}
 
   async execute(
     data: UpdateEndpointUsecaseInput
@@ -51,6 +55,7 @@ export class UpdateEndpointUsecase
         },
       }
     );
+    await this.updateRouteHandlersUsecase.execute(data.applicationId);
     return this.repo.findOne({ _id: data.id });
   }
 }
