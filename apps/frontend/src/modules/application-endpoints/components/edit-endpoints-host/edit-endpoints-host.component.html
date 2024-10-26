@@ -17,6 +17,8 @@
           (onSubmit)="handleSaveEndpoint($event.value)"
           [value]="endpointsFormValue$ | async"
           [loading]="(updateInProgress$ | async) ?? false"
+          [requestHandlers]="(requestHandlers$ | async) ?? []"
+          [inEditMode]="true"
         />
       </div>
     </div>

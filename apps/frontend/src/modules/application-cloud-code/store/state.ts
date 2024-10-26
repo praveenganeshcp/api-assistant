@@ -1,0 +1,5 @@
+import { ServerData } from "@api-assistant/commons-be";
+
+export interface ApplicationCloudCodeState {
+    requestHandlers: ServerData<string[]>;
+}

@@ -19,6 +19,8 @@ import {
   APPLICATION_DETAILS_SLICE_NAME,
   ApplicationDetailsState,
 } from '../application-details/store/type';
+import { APPLICATION_CLOUD_CODE_SLICE_NAME } from '../application-cloud-code/store/reducers';
+import { ApplicationCloudCodeState } from '../application-cloud-code/store/state';
 
 export interface AppState {
   [PROFILE_STATE_SLICE_NAME]: ProfileState;
@@ -28,5 +30,6 @@ export interface AppState {
     [APPLICATION_MIGRATION_SLICE_NAME]: ApplicationMigrationsState;
     [APPLICATION_DATABASE_SLICE_NAME]: ApplicationDatabaseState;
     [APPLICATION_ENDPOINTS_SLICE_NAME]: ApplicationEndpointsState;
+    [APPLICATION_CLOUD_CODE_SLICE_NAME]: ApplicationCloudCodeState
   };
 }

@@ -92,6 +92,8 @@ export const createEndpointAction = createActionWithProps(
       | 'validations'
       | 'method'
       | 'isAuthenticated'
+      | 'requestHandler'
+      | 'useCloudCode'
     >;
     applicationId: string;
   }>()
@@ -120,6 +122,8 @@ export const editEndpointAction = createActionWithProps(
       | 'validations'
       | 'method'
       | 'isAuthenticated'
+      | 'requestHandler'
+      | 'useCloudCode'
     >;
     applicationId: string;
     endpointId: string;

@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -30,6 +33,8 @@ export interface EndpointFormValue {
   validations: Object;
   method: CRUDEngineHttpMethods;
   isAuthenticated: boolean;
+  useCloudCode: boolean,
+  requestHandler: string
 }
 
 @Component({
@@ -47,12 +52,17 @@ export interface EndpointFormValue {
   styleUrls: ['./endpoints-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EndpointsFormComponent {
+export class EndpointsFormComponent implements AfterViewInit, OnChanges {
   @Input() loading: boolean = false;
+
+  @Input() requestHandlers: string[] = [];
+
+  @Input() inEditMode: boolean = false;
 
   @Input()
   set value(formValue: CanBeNull<EndpointFormValue>) {
     if (formValue) {
+      console.log(formValue)
       this.createEndpointForm?.setValue(formValue);
     } else {
       this.createEndpointForm.setValue({
@@ -64,6 +74,8 @@ export class EndpointsFormComponent {
         validations: '',
         method: 'POST',
         isAuthenticated: false,
+        useCloudCode: false,
+        requestHandler: ''
       });
     }
   }
@@ -85,10 +97,12 @@ export class EndpointsFormComponent {
     url: this.formBuilder.control('', [Validators.required]),
     method: this.formBuilder.control('POST', [Validators.required]),
     description: this.formBuilder.control('', [Validators.required]),
-    body: this.formBuilder.control([], [Validators.required]),
-    response: this.formBuilder.control({}, [Validators.required]),
+    body: this.formBuilder.control([]),
+    response: this.formBuilder.control({}),
     validations: this.formBuilder.control({}, [Validators.required]),
     isAuthenticated: this.formBuilder.control(false, [Validators.required]),
+    useCloudCode: this.formBuilder.control(false, [Validators.required]),
+    requestHandler: this.formBuilder.control('')
   });
 
   public get nameControl() {
@@ -107,11 +121,46 @@ export class EndpointsFormComponent {
     return this.createEndpointForm.controls['description'];
   }
 
+  public get useCloudCodeControl() {
+    return this.createEndpointForm.controls['useCloudCode'];
+  }
+
+  public get cloudCodeEnabled() {
+    return this.useCloudCodeControl.value === true;
+  }
+
   public get isAuthenticatedControl() {
     return this.createEndpointForm.controls['isAuthenticated'];
   }
 
   constructor(private readonly formBuilder: FormBuilder) {}
+
+  ngAfterViewInit(): void {
+      this.useCloudCodeControl.valueChanges.subscribe(isEnabled => {
+        if(isEnabled) {
+          this.createEndpointForm.patchValue({
+            response: {},
+            body: []
+          })
+        }
+        else {
+          this.createEndpointForm.patchValue({
+            requestHandler: ''
+          })
+        }
+      })
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+      if(changes['inEditMode']) {
+        if(this.inEditMode) {
+          this.useCloudCodeControl.disable()
+        }
+        else {
+          this.useCloudCodeControl.enable();
+        }
+      }
+  }
 
   public handleSubmit() {
     if (this.createEndpointForm.valid) {

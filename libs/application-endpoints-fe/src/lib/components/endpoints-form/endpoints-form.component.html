@@ -31,10 +31,23 @@
 
   <commons-fe-json-input label="Validations" formControlName="validations" />
 
-  <commons-fe-json-input label="CRUD" formControlName="body" />
+  <div>
+    <input id="is-cloud_code" type="checkbox" formControlName="useCloudCode" />
+    <label for="is-cloud_code">Use Cloud code</label>
+  </div>
 
-  <commons-fe-json-input label="Response" formControlName="response" />
+  <ng-container *ngIf="cloudCodeEnabled; else apiBuilderCRUD">
+    <select formControlName="requestHandler">
+      <option *ngFor="let handler of requestHandlers" [value]="handler">{{ handler }}</option>
+    </select>
+  </ng-container>
 
+  <ng-template #apiBuilderCRUD>
+    <commons-fe-json-input label="CRUD" formControlName="body" />
+
+    <commons-fe-json-input label="Response" formControlName="response" />
+  </ng-template>
+  
   <button
     [disabled]="createEndpointForm.invalid"
     [showLoader]="loading"

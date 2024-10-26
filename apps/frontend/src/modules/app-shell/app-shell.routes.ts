@@ -15,12 +15,15 @@ import { APPLICATION_MIGRATION_SLICE_NAME } from '../application-migrations/stor
 import { ApplicationDetailsEffects } from '../application-details/store/effects';
 import { APPLICATION_DETAILS_SLICE_NAME } from '../application-details/store/type';
 import { applicationDetailsreducer } from '../application-details/store/reducers';
+import { APPLICATION_CLOUD_CODE_SLICE_NAME, applicationCloudCodeReducer } from '../application-cloud-code/store/reducers';
+import { ApplicationCloudCodeEffects } from '../application-cloud-code/store/effects';
 
 const applicationFeatureStates = combineReducers({
   [APPLICATION_DETAILS_SLICE_NAME]: applicationDetailsreducer,
   [APPLICATION_DATABASE_SLICE_NAME]: applicationDatabaseReducer,
   [APPLICATION_ENDPOINTS_SLICE_NAME]: applicationEndpointsReducer,
   [APPLICATION_MIGRATION_SLICE_NAME]: applicationMigrationsReducer,
+  [APPLICATION_CLOUD_CODE_SLICE_NAME]: applicationCloudCodeReducer
 });
 
 const applicationEffects = [
@@ -28,6 +31,7 @@ const applicationEffects = [
   ApplicationDatabaseEffects,
   ApplicationEndpointsEffects,
   ApplicationDetailsEffects,
+  ApplicationCloudCodeEffects
 ];
 
 export default [

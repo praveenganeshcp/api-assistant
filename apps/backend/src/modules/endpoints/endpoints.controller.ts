@@ -50,6 +50,8 @@ export class EndpointsController {
       validations: payload.validations,
       method: payload.method,
       isAuthenticated: payload.isAuthenticated,
+      useCloudCode: payload.useCloudCode,
+      requestHandler: payload.requestHandler
     });
   }
 

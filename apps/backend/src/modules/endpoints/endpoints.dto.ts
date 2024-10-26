@@ -54,6 +54,12 @@ export class CreateEndpointCRUDDto {
 
   @IsBoolean()
   isAuthenticated!: boolean;
+
+  @IsString()
+  requestHandler!: string
+
+  @IsBoolean()
+  useCloudCode!: boolean
 }
 
 export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}

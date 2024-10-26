@@ -6,6 +6,7 @@
     <api-assistant-endpoints-form
       [loading]="(inProgress$ | async) ?? false"
       (onSubmit)="handleCreateEndpoint($event.value)"
+      [requestHandlers]="(requestHandlers$ | async) ?? []"
     />
   </div>
 </div>

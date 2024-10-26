@@ -41,6 +41,8 @@ export class CreateAllBuiltinEndpointsUsecase
       applicationId,
       name: 'Signup',
       description: 'Endpoint to create user accounts',
+      useCloudCode: false,
+      requestHandler: '',
       url: '/signup',
       isAuthenticated: false,
       method: 'POST',
@@ -90,6 +92,8 @@ export class CreateAllBuiltinEndpointsUsecase
       url: '/login',
       method: 'POST',
       isAuthenticated: false,
+      useCloudCode: false,
+      requestHandler: '',
       crud: [
         {
           collectionName: 'users',
@@ -117,6 +121,8 @@ export class CreateAllBuiltinEndpointsUsecase
   ): CreateEndpointUsecaseInput {
     const input: CreateEndpointUsecaseInput = {
       createdBy: userId,
+      useCloudCode: false,
+      requestHandler: '',
       applicationId,
       isAuthenticated: false,
       name: 'Logout',

@@ -14,6 +14,8 @@ export interface Endpoint {
   method: CRUDEngineHttpMethods;
   crud: CRUDActionDefinition[];
   response: CRUDActionResponse;
+  requestHandler: string;
+  useCloudCode: boolean
   validations: RequestDataValidation;
   createdBy: ObjectId;
   createdOn: Date;

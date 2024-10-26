@@ -13,6 +13,8 @@ export interface Endpoint {
   validations: Object;
   method: CRUDEngineHttpMethods;
   isAuthenticated: boolean;
+  useCloudCode: boolean;
+  requestHandler: string
 }
 
 export interface MinimalEndpointInfo

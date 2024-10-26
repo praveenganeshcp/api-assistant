@@ -16,6 +16,15 @@ export class EndpointsFeRepository {
     @Inject(API_BASE_URL) private apiBaseUrl: string
   ) {}
 
+  fetchAllRequestHandlers(applicationId: string) {
+    return this.http.get<string[]>(
+      `${this.baseUrl}/applications/${applicationId}/cloud-code/handlers`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
   fetchAllEndpoints(applicationId: string) {
     return this.http.get<MinimalEndpointInfo[]>(
       `${this.baseUrl}/applications/${applicationId}/endpoints`,
@@ -61,7 +70,7 @@ export class EndpointsFeRepository {
     endpointId: string,
     endpoint: Pick<
       Endpoint,
-      'name' | 'description' | 'crud' | 'response' | 'url' | 'method'
+      'name' | 'description' | 'crud' | 'response' | 'url' | 'method' | 'useCloudCode' | 'requestHandler'
     >
   ) {
     return this.http.patch<Endpoint>(

@@ -16,6 +16,7 @@ interface UpdateEndpointUsecaseInput {
     | 'validations'
     | 'method'
     | 'isAuthenticated'
+    | 'requestHandler'
   >;
   userId: ObjectId;
   applicationId: ObjectId;
@@ -46,6 +47,7 @@ export class UpdateEndpointUsecase
           validations: data.details.validations,
           method: data.details.method,
           isAuthenticated: data.details.isAuthenticated,
+          requestHandler: data.details.requestHandler
         },
       }
     );

@@ -10,6 +10,7 @@ import { NotificationsModule } from '@api-assistant/notifications-be';
 import { EndpointsModule } from '../endpoints/endpoints.module';
 import { ApplicationModule } from '../applications/applications.module';
 import { ApplicationMigrationsModule } from '../app-migrations/app-migrations.module';
+import { CloudCodeModule } from '../cloud-code/cloud-code.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ApplicationMigrationsModule } from '../app-migrations/app-migrations.mo
     CoreEngineModule,
     EndpointsModule,
     ApplicationMigrationsModule,
+    CloudCodeModule
   ],
   controllers: [AppController],
   providers: [AppService],

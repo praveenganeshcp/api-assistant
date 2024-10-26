@@ -15,6 +15,8 @@ export interface CreateEndpointUsecaseInput
     | 'validations'
     | 'method'
     | 'isAuthenticated'
+    | 'requestHandler'
+    | 'useCloudCode'
   > {
   createdBy: ObjectId;
   applicationId: ObjectId;
@@ -39,6 +41,8 @@ export class CreateEndpointUsecase
       validations: data.validations,
       method: data.method,
       isAuthenticated: data.isAuthenticated,
+      useCloudCode: data.useCloudCode,
+      requestHandler: data.requestHandler
     });
   }
 }

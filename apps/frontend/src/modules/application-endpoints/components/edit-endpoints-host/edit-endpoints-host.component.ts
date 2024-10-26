@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, switchMap, take } from 'rxjs';
 import {
   Endpoint,
   EndpointFormValue,
@@ -25,6 +25,8 @@ import {
   endpointDetailsLoadingSelector,
   endpointDetailsErrorSelector,
 } from '../../store/selectors';
+import { fetchAllRequestHandlersAction } from '../../../application-cloud-code/store/actions';
+import { requestHandlersDataSelector } from '../../../application-cloud-code/store/selectors';
 
 @Component({
   selector: 'api-assistant-edit-endpoints-host',
@@ -50,6 +52,8 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
     endpointDetailsErrorSelector
   );
 
+  protected readonly requestHandlers$: Observable<CanBeNull<string[]>> = this.store.select(requestHandlersDataSelector);
+
   protected readonly endpointsFormValue$: Observable<
     CanBeNull<EndpointFormValue>
   > = this.endpoint$.pipe(
@@ -66,6 +70,8 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
         validations: endpoint.validations,
         method: endpoint.method,
         isAuthenticated: endpoint.isAuthenticated,
+        useCloudCode: endpoint.useCloudCode,
+        requestHandler: endpoint.requestHandler
       };
       return formValue;
     })
@@ -95,6 +101,9 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
         endpointId: this.endpointId,
       })
     );
+    this.store.dispatch(fetchAllRequestHandlersAction({
+      applicationId: this.applicationId
+    }))
   }
 
   ngOnDestroy(): void {
@@ -102,26 +111,35 @@ export class EditEndpointsHostComponent implements AfterViewInit, OnDestroy {
   }
 
   handleSaveEndpoint(value: EndpointFormValue) {
-    this.storeActionDispatcher
-      .dispatchAsyncAction(
-        editEndpointAction({
-          endpoint: {
-            name: value.name,
-            description: value.description,
-            url: value.url,
-            crud: value.body,
-            response: value.response,
-            validations: value.validations,
-            method: value.method,
-            isAuthenticated: value.isAuthenticated,
-          },
-          applicationId: this.applicationId,
-          endpointId: this.endpointId,
-        }),
-        endpointUpdateSuccessAction,
-        errorInUpdatingEndpointAction,
-        this.updateInProgress$
-      )
+    this.endpointsFormValue$.pipe(
+      take(1),
+      filter(value => value !== null && value !== undefined),
+      switchMap((formValue: CanBeNull<EndpointFormValue>) => {
+        return this.storeActionDispatcher
+        .dispatchAsyncAction(
+          editEndpointAction({
+            endpoint: {
+              name: value.name,
+              description: value.description,
+              url: value.url,
+              crud: value.body,
+              response: value.response,
+              validations: value.validations,
+              method: value.method,
+              isAuthenticated: value.isAuthenticated,
+              useCloudCode: formValue?.useCloudCode ?? false,
+              requestHandler: value.requestHandler
+            },
+            applicationId: this.applicationId,
+            endpointId: this.endpointId,
+          }),
+          endpointUpdateSuccessAction,
+          errorInUpdatingEndpointAction,
+          this.updateInProgress$
+        )
+      }
+    )
+  )
       .subscribe(({ endpoint }) => {
         this.router.navigate([
           'app',
