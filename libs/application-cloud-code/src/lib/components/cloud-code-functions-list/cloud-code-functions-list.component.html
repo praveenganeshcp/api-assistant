@@ -1,11 +1,11 @@
 <div class="file-list-container">
     <div class="file-list-header">
-      <h3>Explorer</h3>
+      <h3>Request Handlers</h3>
     </div>
     <ul class="file-list">
-      <li *ngFor="let file of files" class="file-item">
+      <li (click)="handleFileSelection(file)" *ngFor="let file of files" class="file-item">
         <i class="file-icon"></i>
-        {{ file.name }}
+        {{ file }}
       </li>
     </ul>
   </div>

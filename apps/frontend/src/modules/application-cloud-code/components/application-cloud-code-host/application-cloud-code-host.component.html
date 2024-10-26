@@ -1,9 +1,15 @@
 <main class="cloud-code-host">
     <aside class="cloud-code-functions-list">
-        <api-assistant-cloud-code-functions-list />
+        <api-assistant-cloud-code-functions-list [files]="(requestHandlers$ | async) ?? []" (fileSelected)="handleFileSelection($event)" />
     </aside>
-    <section class="cloud-code-editor">
-        <api-assistant-cloud-code-editor />
-        <button sw-primary-button>Deploy</button>
+    <section class="cloud-code-editor" *ngIf="selectedHandler; else selectFileUI">
+        <api-assistant-cloud-code-editor [formControl]="handlerCodeControl" />
+        <button (click)="updateHandlerCode()" sw-primary-button>Deploy</button>
     </section>
+
+    <ng-template #selectFileUI>
+        <div class="select-file-nudge">
+            <h1>Select a handler to edit</h1>
+        </div>
+    </ng-template>
 </main>

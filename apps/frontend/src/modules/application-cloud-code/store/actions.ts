@@ -39,3 +39,32 @@ export const fetchAllRequestHandlersAction = createActionWithProps(
     props<{ error: string }>()
   );
   
+
+export const fetchRequestHandlerCodeAction = createActionWithProps(
+  'Fetch handler code',
+  props<{applicationId: string, fileName: string}>()
+)
+
+export const requestHandlerCodeFetchedAction = createActionWithProps(
+  'Handler code fetched',
+  props<{code: string}>()
+)
+
+export const errorInFetchingHandlerCodeAction = createActionWithProps(
+  'Error in fetching handler code',
+  props<{error: string}>()
+)
+
+export const updateRequestHandlerCodeAction = createActionWithProps(
+  'Update handler code',
+  props<{applicationId: string, fileName: string, code: string}>()
+)
+
+export const requestHandlerCodeUpdatedAction = createAction(
+  'Handler code updated',
+)
+
+export const errorInUpdatingHandlerCodeAction = createActionWithProps(
+  'Error in updating handler code',
+  props<{error: string}>()
+)

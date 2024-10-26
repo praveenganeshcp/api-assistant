@@ -4,6 +4,8 @@ import { CloudCodeProcessManagerService } from './usecases/cloud-code-process-ma
 import { FetchAllHandlersUsecase } from './usecases/fetch-all-handlers.usecase';
 import { UpdateRouteHandlersUsecase } from './usecases/update-route-handlers.usecase';
 import { EndpointsBeModule } from '@api-assistant/application-endpoints-be';
+import { FetchRequestHandlerCodeUsecase } from './usecases/fetch-request-handler-code.usecase';
+import { UpdateHandlerCodeUsecase } from './usecases/update-handler-code.usecase';
 
 @Module({
   imports: [forwardRef(() => EndpointsBeModule)],
@@ -13,12 +15,16 @@ import { EndpointsBeModule } from '@api-assistant/application-endpoints-be';
     FetchAllHandlersUsecase,
     CloudCodeProcessManagerService,
     UpdateRouteHandlersUsecase,
+    FetchRequestHandlerCodeUsecase,
+    UpdateHandlerCodeUsecase
   ],
   exports: [
     BootstrapApplicationUsecase,
     CloudCodeProcessManagerService,
     FetchAllHandlersUsecase,
     UpdateRouteHandlersUsecase,
+    FetchRequestHandlerCodeUsecase,
+    UpdateHandlerCodeUsecase
   ],
 })
 export class ApplicationCloudCodeBeModule {}

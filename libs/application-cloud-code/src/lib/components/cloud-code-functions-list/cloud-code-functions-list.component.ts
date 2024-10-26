@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,16 +9,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./cloud-code-functions-list.component.scss'],
 })
 export class CloudCodeFunctionsListComponent {
-  files = [
-    { name: 'index.html' },
-    { name: 'app.component.ts' },
-    { name: 'styles.scss' },
-    { name: 'main.ts' },
-    { name: 'README.md' },
-    { name: 'angular.json' },
-    { name: 'package.json' },
-    { name: 'tsconfig.json' },
-    { name: 'polyfills.ts' },
-    { name: 'app.module.ts' }
-  ];
+
+  @Input() files: string[] = []
+
+  @Output() fileSelected = new EventEmitter<string>();
+
+  protected handleFileSelection(fileName: string) {
+    this.fileSelected.emit(fileName);
+  }
 }
