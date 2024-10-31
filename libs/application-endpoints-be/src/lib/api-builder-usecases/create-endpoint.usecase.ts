@@ -3,7 +3,7 @@ import { Endpoint } from '../entities';
 import { Injectable } from '@nestjs/common';
 import { EndpointsRepository } from '../repositories/endpoints.repository';
 import { ObjectId } from 'mongodb';
-import { UpdateRouteHandlersUsecase } from '@api-assistant/application-endpoints-be';
+import { UpdateRouteHandlersUsecase } from '../cloud-code-usecases/update-route-handlers.usecase';
 
 export interface CreateEndpointUsecaseInput
   extends Pick<

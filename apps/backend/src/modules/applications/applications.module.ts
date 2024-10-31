@@ -6,13 +6,14 @@ import {
 import { ApplicationsBeModule } from '@api-assistant/applications-be';
 import { ApplicationsController } from './application.controller';
 import { ApplicationProcessManagerController } from './application-process.controller';
+import { EndpointsBeModule } from '@api-assistant/application-endpoints-be';
 
 @Module({
   controllers: [
     ApplicationProcessManagerController,
     ApplicationsController
   ],
-  imports: [AccountsBeModule, ApplicationsBeModule],
+  imports: [AccountsBeModule, ApplicationsBeModule, EndpointsBeModule],
 })
 export class ApplicationModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,15 +1,14 @@
-import { FetchAllEndpointsByApplicationIdUsecase } from "@api-assistant/application-endpoints-be";
 import { Usecase } from "@api-assistant/commons-be";
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { writeFile } from "fs/promises";
 import { ObjectId } from "mongodb";
 import { CloudCodeProcessManagerService } from "./cloud-code-process-manager.service";
+import { FetchAllEndpointsByApplicationIdUsecase } from "../api-builder-usecases/fetch-all-endpoints-by-app-id.usecase";
 
 @Injectable()
 export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
 
     constructor(
-        @Inject(forwardRef(() =>  FetchAllEndpointsByApplicationIdUsecase))
         private fetchAllEndpointsByAppIdUsecase: FetchAllEndpointsByApplicationIdUsecase,
         private cloudCodeProcessManagerService: CloudCodeProcessManagerService
     ) {}
