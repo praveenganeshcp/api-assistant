@@ -22,3 +22,23 @@ export const requestHandlersErrorSelector = createSelector(
     requestHandlersSelector,
     (requestHandlersState) => requestHandlersState.error
 )  
+
+const processStateSelector = createSelector(
+    cloudCodeSelector,
+    (cloudCodeState) => cloudCodeState.processStatus
+)
+
+export const processStateDataSelector = createSelector(
+    processStateSelector,
+    (processState) => processState.data
+)  
+
+export const processStateLoadingSelector = createSelector(
+    processStateSelector,
+    (processState) => processState.isLoading
+)  
+
+export const processStateErrorSelector = createSelector(
+    processStateSelector,
+    (processState) => processState.error
+)  

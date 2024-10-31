@@ -50,6 +50,22 @@ export class CloudCodeProcessManagerService {
         })
     }
 
+    getApplicationStatus(applicationId: ObjectId) {
+        return new Promise((resolve, reject) => {
+            pm2.describe(applicationId.toString(), (error: any, data: any) => {
+                if(error) {
+                    reject(error)
+                }
+                if(Array.isArray(data) && data.length === 1) {
+                    resolve({
+                        status: data[0].pm2_env.status,
+                        restartCount: data[0].pm2_env.restart_time,
+                    })
+                }
+            })
+        })
+    }
+
     getAllApplicationStatus() {
         return new Promise((resolve, reject) => {
             pm2.list((error: any, data: any) => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   SwIconComponent,
@@ -6,7 +6,7 @@ import {
   SwTabViewComponent,
 } from 'ngx-simple-widgets';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, filter, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, filter, interval, map, startWith, takeUntil, timer } from 'rxjs';
 import { AppState } from '../../../app/app.state';
 import { BreakPointObserver } from '@api-assistant/commons-fe';
 import { Store } from '@ngrx/store';
@@ -17,6 +17,8 @@ import {
 } from '../../store/selectors';
 import { ApplicationEndpointsHostComponent } from '../../../application-endpoints/components/application-endpoints-host/application-endpoints-host.component';
 import { loadApplicationDetailsAction } from '../../store/actions';
+import { fetchCloudCodeStatusAction } from '../../../application-cloud-code/store/actions';
+import { processStateDataSelector } from '../../../application-cloud-code/store/selectors';
 
 enum TabNames {
   ENDPOINTS = 'Endpoints',
@@ -48,7 +50,7 @@ const routeUrlTabMapping: Record<TabNames, string> = {
   templateUrl: './application-details-host.component.html',
   styleUrls: ['./application-details-host.component.scss'],
 })
-export class ApplicationDetailsHostComponent {
+export class ApplicationDetailsHostComponent implements OnDestroy {
   protected readonly tabNames: TabNames[] = [
     TabNames.ENDPOINTS,
     TabNames.MIGRATIONS,
@@ -56,6 +58,8 @@ export class ApplicationDetailsHostComponent {
     TabNames.CLOUD_CODE,
     TabNames.SETTINGS,
   ];
+
+  private readonly destroy$ = new Subject();
 
   public readonly loading$ = this.store.select(applicationDataLoadingSelector);
 
@@ -70,6 +74,8 @@ export class ApplicationDetailsHostComponent {
       map((applicationData) => applicationData?.name ?? '')
     );
 
+  public readonly cloudCodeStatus$ = this.store.select(processStateDataSelector);
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
@@ -77,10 +83,23 @@ export class ApplicationDetailsHostComponent {
     private readonly router: Router
   ) {}
 
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+  }
+
   ngOnInit() {
     this.store.dispatch(
       loadApplicationDetailsAction({ applicationId: this.applicationId })
     );
+    interval(5000).pipe(
+      startWith(0),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.store.dispatch(
+        fetchCloudCodeStatusAction({ applicationId: this.applicationId })
+      )
+    })
+   
   }
 
   public get applicationId(): string {

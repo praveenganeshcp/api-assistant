@@ -1,6 +1,10 @@
 <main class="application-details">
   <header>
     <h1>{{ applicationName$ | async }}</h1>
+    <div class="process-status" *ngIf="cloudCodeStatus$ | async as cloudCodeStatus">
+      <p>Status: <b>{{ cloudCodeStatus.status }}</b></p>
+      <p>Restart count: <b> {{ cloudCodeStatus.restartCount }}</b></p>
+    </div>
   </header>
   <div
     class="application-details__loader"

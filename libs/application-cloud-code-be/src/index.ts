@@ -5,3 +5,4 @@ export * from "./lib/usecases/fetch-all-handlers.usecase"
 export * from "./lib/usecases/update-route-handlers.usecase";
 export * from "./lib/usecases/fetch-request-handler-code.usecase";
 export * from "./lib/usecases/update-handler-code.usecase";
+export * from "./lib/usecases/fetch-application-status.usecase";

@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { allRequestHandlersLoadedAction, errorInFetchingHandlerCodeAction, errorInFetchingRequestHandlerssAction, errorInUpdatingHandlerCodeAction, fetchAllRequestHandlersAction, fetchRequestHandlerCodeAction, requestHandlerCodeFetchedAction, requestHandlerCodeUpdatedAction, updateRequestHandlerCodeAction } from "./actions";
+import { allRequestHandlersLoadedAction, cloudCodeStatusFetchedAction, errorInFetchingCloudCodeStatusAction, errorInFetchingHandlerCodeAction, errorInFetchingRequestHandlerssAction, errorInUpdatingHandlerCodeAction, fetchAllRequestHandlersAction, fetchCloudCodeStatusAction, fetchRequestHandlerCodeAction, requestHandlerCodeFetchedAction, requestHandlerCodeUpdatedAction, updateRequestHandlerCodeAction } from "./actions";
 import { catchError, exhaustMap, map, of } from "rxjs";
 import { ApplicationCloudCodeRepository } from "@api-assistant/application-cloud-code-fe";
 
@@ -65,6 +65,30 @@ export class ApplicationCloudCodeEffects {
                   of(
                     errorInUpdatingHandlerCodeAction({
                       error: 'Error in updating handler code',
+                    })
+                  )
+                )
+              )
+            );
+          })
+        );
+      });
+
+  fetchCloudCodeStatus$ = createEffect(() => {
+        return this.actions.pipe(
+          ofType(fetchCloudCodeStatusAction),
+          exhaustMap(({ applicationId }) => {
+            return this.repository.fetchApplicationStatus(applicationId).pipe(
+              map(
+                (response) =>
+                  cloudCodeStatusFetchedAction({
+                    status: response.status,
+                    restartCount: response.restartCount
+                  }),
+                catchError(() =>
+                  of(
+                    errorInFetchingCloudCodeStatusAction({
+                      error: 'Error in fetching cloud code status',
                     })
                   )
                 )

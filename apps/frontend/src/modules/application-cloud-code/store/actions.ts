@@ -68,3 +68,18 @@ export const errorInUpdatingHandlerCodeAction = createActionWithProps(
   'Error in updating handler code',
   props<{error: string}>()
 )
+
+export const fetchCloudCodeStatusAction = createActionWithProps(
+  'Fetch cloud code status',
+  props<{ applicationId: string }>()
+)
+
+export const cloudCodeStatusFetchedAction = createActionWithProps(
+  'Cloud code status fetched',
+  props<{ status: string, restartCount: number }>()
+)
+
+export const errorInFetchingCloudCodeStatusAction = createActionWithProps(
+  'Error in fetching cloud code status', 
+  props<{ error: string }>()
+)

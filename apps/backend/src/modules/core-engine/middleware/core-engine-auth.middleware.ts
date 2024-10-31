@@ -24,7 +24,7 @@ export class CoreEngineAuthenticationMiddleware implements NestMiddleware {
     // if (!valueIsDefined(applicationMetadata)) {
     //   throw 'Invald api key';
     // }
-    req['applicationId'] = new ObjectId('66fcf278b1e08b3eab1eab59');
+    req['applicationId'] = new ObjectId('67226332aa036a364920906c');
     next();
   }
 }

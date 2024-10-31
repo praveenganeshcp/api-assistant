@@ -6,6 +6,7 @@ import { UpdateRouteHandlersUsecase } from './usecases/update-route-handlers.use
 import { EndpointsBeModule } from '@api-assistant/application-endpoints-be';
 import { FetchRequestHandlerCodeUsecase } from './usecases/fetch-request-handler-code.usecase';
 import { UpdateHandlerCodeUsecase } from './usecases/update-handler-code.usecase';
+import { FetchApplicationStatusUsecase } from './usecases/fetch-application-status.usecase';
 
 @Module({
   imports: [forwardRef(() => EndpointsBeModule)],
@@ -16,7 +17,8 @@ import { UpdateHandlerCodeUsecase } from './usecases/update-handler-code.usecase
     CloudCodeProcessManagerService,
     UpdateRouteHandlersUsecase,
     FetchRequestHandlerCodeUsecase,
-    UpdateHandlerCodeUsecase
+    UpdateHandlerCodeUsecase,
+    FetchApplicationStatusUsecase
   ],
   exports: [
     BootstrapApplicationUsecase,
@@ -24,7 +26,8 @@ import { UpdateHandlerCodeUsecase } from './usecases/update-handler-code.usecase
     FetchAllHandlersUsecase,
     UpdateRouteHandlersUsecase,
     FetchRequestHandlerCodeUsecase,
-    UpdateHandlerCodeUsecase
+    UpdateHandlerCodeUsecase,
+    FetchApplicationStatusUsecase
   ],
 })
 export class ApplicationCloudCodeBeModule {}

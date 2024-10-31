@@ -42,4 +42,13 @@ import { API_BASE_URL } from "@api-assistant/commons-fe";
         }
       );
     }
+
+    fetchApplicationStatus(applicationId: string) {
+      return this.http.get<{ status: string, restartCount: number }>(
+        `${this.baseUrl}/applications/process/${applicationId}`,
+        {
+          withCredentials: true,
+        }
+      );
+    }
 }

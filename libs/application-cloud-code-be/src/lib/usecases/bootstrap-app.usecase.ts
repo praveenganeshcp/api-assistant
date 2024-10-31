@@ -1,9 +1,11 @@
 import { Usecase } from "@api-assistant/commons-be";
 import { ObjectId } from "mongodb";
 import { exec } from "child_process";
-import { Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import { mkdir, writeFile } from "fs/promises";
 import { CloudCodeProcessManagerService } from "./cloud-code-process-manager.service";
+import { dbConfig } from "@api-assistant/configuration-be";
+import { ConfigType } from "@nestjs/config";
 
 interface BootstrapApplicationUsecaseInput {
     applicationId: ObjectId;
@@ -16,7 +18,8 @@ export class BootstrapApplicationUsecase implements Usecase<BootstrapApplication
     private readonly logger = new Logger(BootstrapApplicationUsecase.name);
 
     constructor(
-        private readonly cloudCodeProcessManagerService: CloudCodeProcessManagerService
+        private readonly cloudCodeProcessManagerService: CloudCodeProcessManagerService,
+        @Inject(dbConfig.KEY) private readonly databaseConfig: ConfigType<typeof dbConfig>
     ) {}
 
     async execute(data: BootstrapApplicationUsecaseInput): Promise<void> {
@@ -33,7 +36,13 @@ export class BootstrapApplicationUsecase implements Usecase<BootstrapApplication
         await this.executeCommand('npm install');
         this.logger.log('dependencies installed')
         this.logger.log('creating env');
-        await writeFile(`${applicationPath}/.env`, `PORTNO=${data.port}`, 'utf-8');
+        await writeFile(`${applicationPath}/config.js`, `
+        module.exports = {
+            PORT: ${data.port},
+            DB_URL: '${this.databaseConfig.DB_URL}',
+            API_ID: '${data.applicationId.toString()}'
+        }    
+        `, 'utf-8');
         this.logger.log('env created');
         await this.cloudCodeProcessManagerService.startApplication(data.applicationId);
         process.chdir(cwd)

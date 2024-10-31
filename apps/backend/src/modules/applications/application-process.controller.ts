@@ -14,6 +14,11 @@ export class ApplicationProcessManagerController {
       return this.cloudCodeProcessManagerService.getAllApplicationStatus();
     }
 
+    @Get(':applicationId')
+    async fetchApplicationCloudCodeStatus(@Param('applicationId') applicationId: string) {
+      return this.cloudCodeProcessManagerService.getApplicationStatus(new ObjectId(applicationId));
+    }
+
     @Patch('restart/:applicationId')
     async restartApplicationProcess(@Param('applicationId') applicationId: string) {
         return this.cloudCodeProcessManagerService.restartApplication(new ObjectId(applicationId))
