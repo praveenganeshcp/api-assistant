@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CloudCodeEditorComponent, CloudCodeFunctionsListComponent } from '@api-assistant/application-cloud-code-fe';
+import { CloudCodeEditorComponent, CloudCodeFunctionsListComponent } from '@api-assistant/application-endpoints-fe';
 import { CanBeNull, SwButtonComponent } from 'ngx-simple-widgets';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';

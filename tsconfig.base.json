@@ -15,9 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@api-assistant/application-cloud-code-fe": [
-        "libs/application-cloud-code/src/index.ts"
-      ],
       "@api-assistant/application-core": ["libs/application-core/src/index.ts"],
       "@api-assistant/application-crud-engine-be": [
         "libs/application-crud-engine-be/src/index.ts"

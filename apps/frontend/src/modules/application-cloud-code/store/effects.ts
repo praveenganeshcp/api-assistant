@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { allRequestHandlersLoadedAction, cloudCodeStatusFetchedAction, errorInFetchingCloudCodeStatusAction, errorInFetchingHandlerCodeAction, errorInFetchingRequestHandlerssAction, errorInUpdatingHandlerCodeAction, fetchAllRequestHandlersAction, fetchCloudCodeStatusAction, fetchRequestHandlerCodeAction, requestHandlerCodeFetchedAction, requestHandlerCodeUpdatedAction, updateRequestHandlerCodeAction } from "./actions";
 import { catchError, exhaustMap, map, of } from "rxjs";
-import { ApplicationCloudCodeRepository } from "@api-assistant/application-cloud-code-fe";
+import { ApplicationCloudCodeRepository } from "@api-assistant/application-endpoints-fe";
 
 @Injectable()
 export class ApplicationCloudCodeEffects {
