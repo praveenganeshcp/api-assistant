@@ -8,7 +8,7 @@ import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
 import { mkdir } from 'fs/promises';
 import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
-import { BootstrapApplicationUsecase } from '@api-assistant/application-cloud-code-be';
+import { BootstrapApplicationUsecase } from '@api-assistant/application-endpoints-be';
 
 interface CreateApplicationUsecaseInput {
   createdBy: ObjectId;

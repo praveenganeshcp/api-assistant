@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Endpoint } from '../entities';
 import { Injectable } from '@nestjs/common';
 import { EndpointsRepository } from '../repositories/endpoints.repository';
-import { UpdateRouteHandlersUsecase } from '@api-assistant/application-cloud-code-be';
+import { UpdateRouteHandlersUsecase } from '@api-assistant/application-endpoints-be';
 
 interface UpdateEndpointUsecaseInput {
   id: ObjectId;

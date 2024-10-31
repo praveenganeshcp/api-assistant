@@ -1,9 +1,9 @@
-import { ApplicationCloudCodeBeModule } from "@api-assistant/application-cloud-code-be";
 import { Module } from "@nestjs/common";
 import { CloudCodeController } from "./cloud-code.controller";
+import { EndpointsBeModule } from "@api-assistant/application-endpoints-be";
 
 @Module({
-    imports: [ApplicationCloudCodeBeModule],
+    imports: [EndpointsBeModule],
     controllers: [CloudCodeController]
 })
 export class CloudCodeModule {}

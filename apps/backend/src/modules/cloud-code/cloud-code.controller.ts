@@ -1,4 +1,4 @@
-import { FetchAllHandlersUsecase, FetchRequestHandlerCodeUsecase, UpdateHandlerCodeUsecase } from "@api-assistant/application-cloud-code-be";
+import { FetchAllHandlersUsecase, FetchRequestHandlerCodeUsecase, UpdateHandlerCodeUsecase } from "@api-assistant/application-endpoints-be";
 import { Body, Controller, Get, Param, Patch } from "@nestjs/common";
 import { ObjectId } from "mongodb";
 

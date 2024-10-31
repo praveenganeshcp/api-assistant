@@ -1,4 +1,4 @@
-import { CloudCodeProcessManagerService } from "@api-assistant/application-cloud-code-be";
+import { CloudCodeProcessManagerService } from "@api-assistant/application-endpoints-be";
 import { Controller, Get, Param, Patch } from "@nestjs/common";
 import { ObjectId } from "mongodb";
 
