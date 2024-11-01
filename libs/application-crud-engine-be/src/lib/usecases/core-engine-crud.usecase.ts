@@ -15,6 +15,7 @@ import { FindEndpointByPathMatchUsecase } from '@api-assistant/application-endpo
 import { ParamsParserService } from './params-parser.service';
 import { AuthenticateAppUserUsecase } from './authenticate-app-user.usecase';
 import { CRUD_DB_CONNECTION } from '../utils/utils';
+import * as axios from "axios";
 
 export interface CoreEngineCRUDUsecaseInput {
   url: string;
@@ -86,7 +87,7 @@ export class CoreEngineCRUDUsecase
       placeholderDataSouce.queryParams as Record<string, string>
     );
 
-    const { crud, response, validations } = endpoint;
+    const { crud, response, validations, useCloudCode } = endpoint;
 
     try {
       await this.requestDataValidatorService.validate({
@@ -97,6 +98,14 @@ export class CoreEngineCRUDUsecase
           placeholderDataSouce
         ) as RequestDataValidation,
       });
+      if(useCloudCode) {
+        this.logger.log('calling cloud code function '+  `http://localhost:5555${url}`)
+        const response = await axios.default.request({
+          url: `http://localhost:5555${url}`,
+          method: input.method,
+        })
+        return response.data;
+      }
       let stepsResponse: Document[] = [];
       for (const action of crud) {
         this.logger.log('processing step', action);
