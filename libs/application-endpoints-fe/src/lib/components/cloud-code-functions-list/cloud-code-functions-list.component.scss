@@ -1,94 +1,10 @@
-// VS Code inspired colors
-$file-list-width-small: 100%;
-$file-list-width-large: 100%;
-$background-color-dark: #1e1e1e;
-$file-item-hover-bg: #2a2d2e;
-$header-bg: #252526;
-$text-color-light: #d4d4d4;
-$highlight-color: #007acc;
-$border-color-dark: #3c3c3c;
+.functions-list {
+  width: 100%;
+  height: 100%;
+  border: 0.5px solid gray;
 
-// Container styles
-.file-list-container {
-  width: $file-list-width-large;
-  background-color: $background-color-dark;
-  border-right: 1px solid $border-color-dark;
-  height: 100vh;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-
-  @media (max-width: 768px) {
-    width: $file-list-width-small;
+  .file-item {
+    cursor: pointer;
+    border-bottom: 0.25px solid gray;
   }
-}
-
-// Header styles
-.file-list-header {
-  text-align: left;
-  color: $text-color-light;
-  background-color: $header-bg;
-  padding: 0.5rem 0;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid $border-color-dark;
-
-  h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-}
-
-// File list styles
-.file-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.file-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  color: $text-color-light;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: $file-item-hover-bg;
-  }
-
-  // Selected file effect (simulating the selected file in VS Code)
-  &.selected {
-    background-color: $highlight-color;
-    color: white;
-
-    .file-icon {
-      color: white;
-    }
-  }
-
-  .file-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    color: $text-color-light;
-  }
-}
-
-// Scrollbar customization
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: $border-color-dark;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: $background-color-dark;
 }

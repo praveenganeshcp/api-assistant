@@ -1,20 +1,23 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SwIconComponent } from "ngx-simple-widgets";
 
 @Component({
-  selector: 'api-assistant-cloud-code-functions-list',
+  selector: "api-assistant-cloud-code-functions-list",
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './cloud-code-functions-list.component.html',
-  styleUrls: ['./cloud-code-functions-list.component.scss'],
+  imports: [CommonModule, SwIconComponent],
+  templateUrl: "./cloud-code-functions-list.component.html",
+  styleUrls: ["./cloud-code-functions-list.component.scss"],
 })
 export class CloudCodeFunctionsListComponent {
+  protected selectedFileName: string = "";
 
-  @Input() files: string[] = []
+  @Input() files: string[] = [];
 
   @Output() fileSelected = new EventEmitter<string>();
 
   protected handleFileSelection(fileName: string) {
+    this.selectedFileName = fileName;
     this.fileSelected.emit(fileName);
   }
 }
