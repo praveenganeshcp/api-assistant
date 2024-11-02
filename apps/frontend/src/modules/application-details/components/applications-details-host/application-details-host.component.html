@@ -1,9 +1,16 @@
 <main class="application-details">
   <header>
     <h1>{{ applicationName$ | async }}</h1>
-    <div class="process-status" *ngIf="cloudCodeStatus$ | async as cloudCodeStatus">
-      <p>Status: <b>{{ cloudCodeStatus.status }}</b></p>
-      <p>Restart count: <b> {{ cloudCodeStatus.restartCount }}</b></p>
+    <div
+      class="process-status"
+      *ngIf="cloudCodeStatus$ | async as cloudCodeStatus"
+    >
+      <p>
+        Status: <b>{{ cloudCodeStatus.status }}</b>
+      </p>
+      <p>
+        Restart count: <b> {{ cloudCodeStatus.restartCount }}</b>
+      </p>
     </div>
   </header>
   <div
@@ -22,7 +29,7 @@
       [tabNames]="tabNames"
       (tabClick)="handleTabChange($event)"
     >
-      <div style="padding: 2rem 1rem 1rem 1rem">
+      <div style="width: 100%; height: 100%" class="pd-y-2">
         <router-outlet></router-outlet>
       </div>
     </sw-tab-view>

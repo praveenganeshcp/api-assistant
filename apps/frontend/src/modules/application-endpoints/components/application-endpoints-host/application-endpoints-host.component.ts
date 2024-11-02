@@ -1,33 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { Observable, map } from "rxjs";
 import {
   EndpointsListViewComponent,
   MinimalEndpointInfo,
-} from '@api-assistant/application-endpoints-fe';
+} from "@api-assistant/application-endpoints-fe";
 
-import { AppState } from '../../../app/app.state';
-import { SwButtonComponent } from 'ngx-simple-widgets';
+import { AppState } from "../../../app/app.state";
+import { SwButtonComponent, SwLoaderComponent } from "ngx-simple-widgets";
 import {
   allEndpointsDataSelector,
   allEndpointsLoadingSelector,
   allEndpointsErrorSelector,
-} from '../../store/selectors';
-import { fetchAllEndpointsAction } from '../../store/actions';
+} from "../../store/selectors";
+import { fetchAllEndpointsAction } from "../../store/actions";
 
 @Component({
-  selector: 'api-assistant-application-endpoints-host',
+  selector: "api-assistant-application-endpoints-host",
   standalone: true,
   imports: [
     CommonModule,
     EndpointsListViewComponent,
     RouterModule,
     SwButtonComponent,
+    SwLoaderComponent,
   ],
-  templateUrl: './application-endpoints-host.component.html',
-  styleUrls: ['./application-endpoints-host.component.scss'],
+  templateUrl: "./application-endpoints-host.component.html",
+  styleUrls: ["./application-endpoints-host.component.scss"],
 })
 export class ApplicationEndpointsHostComponent implements OnInit {
   public readonly allEndpoints$: Observable<MinimalEndpointInfo[]> = this.store
@@ -56,7 +57,7 @@ export class ApplicationEndpointsHostComponent implements OnInit {
   ) {}
 
   private get applicationId(): string {
-    return this.activatedRoute.parent?.snapshot.params['applicationId'];
+    return this.activatedRoute.parent?.snapshot.params["applicationId"];
   }
 
   ngOnInit(): void {
@@ -67,22 +68,22 @@ export class ApplicationEndpointsHostComponent implements OnInit {
 
   public handleAddEndpoint() {
     this.router.navigate([
-      'app',
-      'applications',
+      "app",
+      "applications",
       this.applicationId,
-      'endpoints',
-      'create',
+      "endpoints",
+      "create",
     ]);
   }
 
   public handleEndpointDetailNavigation(endpoint: MinimalEndpointInfo) {
     this.router.navigate([
-      'app',
-      'applications',
+      "app",
+      "applications",
       this.applicationId,
-      'endpoints',
+      "endpoints",
       endpoint._id,
-      'edit',
+      "edit",
     ]);
   }
 }
