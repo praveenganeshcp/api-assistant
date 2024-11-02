@@ -6,19 +6,21 @@
       (fileSelected)="handleFileSelection($event)"
     />
   </aside>
-  <section class="cloud-code-editor" *ngIf="selectedHandler; else selectFileUI">
-    <api-assistant-cloud-code-editor [formControl]="handlerCodeControl" />
-    <div
-      class="flex align-items-center mg-right-2 mg-top-3"
-      style="justify-content: flex-end"
-    >
-      <button (click)="closeEditor()" class="mg-right-2" sw-bordered-button>
-        Close editor
-      </button>
-      <button (click)="updateHandlerCode()" sw-primary-button>
-        Deploy code
-      </button>
-    </div>
+  <section class="cloud-code-editor">
+    <ng-container *ngIf="selectedHandler; else selectFileUI">
+      <api-assistant-cloud-code-editor [formControl]="handlerCodeControl" />
+      <div
+        class="flex align-items-center mg-right-2 mg-top-3"
+        style="justify-content: flex-end"
+      >
+        <button (click)="closeEditor()" class="mg-right-2" sw-bordered-button>
+          Close editor
+        </button>
+        <button (click)="updateHandlerCode()" sw-primary-button>
+          Deploy code
+        </button>
+      </div>
+    </ng-container>
   </section>
 
   <ng-template #selectFileUI>
