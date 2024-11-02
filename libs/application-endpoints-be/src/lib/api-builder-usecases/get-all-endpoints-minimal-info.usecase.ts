@@ -1,8 +1,8 @@
-import { Usecase } from '@api-assistant/commons-be';
-import { ObjectId } from 'mongodb';
-import { EndpointsRepository } from '../repositories/endpoints.repository';
-import { Injectable } from '@nestjs/common';
-import { MinimalEndpointInfo } from '../models';
+import { Usecase } from "@api-assistant/commons-be";
+import { ObjectId } from "mongodb";
+import { EndpointsRepository } from "../repositories/endpoints.repository";
+import { Injectable } from "@nestjs/common";
+import { MinimalEndpointInfo } from "../models";
 
 interface GetAllEndpointsMinimalInfoUsecaseInput {
   userId: ObjectId;
@@ -33,6 +33,9 @@ export class GetAllEndpointsMinimalInfoUsecase
             url: endpoint.url,
             createdOn: endpoint.createdOn,
             applicationId: endpoint.applicationId,
+            useCloudCode: endpoint.useCloudCode,
+            isAuthenticated: endpoint.isAuthenticated,
+            method: endpoint.method,
           };
           return endpointMinimalInfo;
         });

@@ -1,10 +1,22 @@
 <div class="endpoint flex flex-column pd-3 br-1">
   <div class="flex align-items-center justify-space-between">
     <h2>{{ minimalEndpointInfo.name }}</h2>
-    <p class="sw-primary-color-600">{{ minimalEndpointInfo.url }}</p>
+    <p class="sw-primary-color-600">
+      {{ minimalEndpointInfo.method }} : {{ minimalEndpointInfo.url }}
+    </p>
   </div>
   <p>{{ minimalEndpointInfo.description }}</p>
-  <p class="small-font">
-    {{ minimalEndpointInfo.createdOn | date : "longDate" }}
-  </p>
+  <div class="flex align-items-center justify-space-between">
+    <p class="small-font">
+      {{ minimalEndpointInfo.createdOn | date : "longDate" }}
+    </p>
+    <div class="endpoint-icon-info flex align-items-center">
+      <sw-tooltip [text]="securityTooltip">
+        <sw-icon class="sw-primary-color-700" [name]="securityIcon" />
+      </sw-tooltip>
+      <sw-tooltip [text]="logicTypeToolip">
+        <sw-icon class="sw-primary-color-700" [name]="logicTypeIcon" />
+      </sw-tooltip>
+    </div>
+  </div>
 </div>

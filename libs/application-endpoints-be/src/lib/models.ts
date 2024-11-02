@@ -1,7 +1,15 @@
-import { Endpoint } from './entities';
+import { Endpoint } from "./entities";
 
 export interface MinimalEndpointInfo
   extends Pick<
     Endpoint,
-    '_id' | 'name' | 'description' | 'createdOn' | 'url' | 'applicationId'
+    | "_id"
+    | "name"
+    | "description"
+    | "createdOn"
+    | "url"
+    | "applicationId"
+    | "isAuthenticated"
+    | "useCloudCode"
+    | "method"
   > {}
