@@ -1,10 +1,10 @@
-<div class="list-item">
-  <div class="list-item-name-url">
-    <h2 class="list-item-name">{{ minimalEndpointInfo.name }}</h2>
-    <p class="list-item-url">{{ minimalEndpointInfo.url }}</p>
+<div class="endpoint flex flex-column pd-3 br-1">
+  <div class="flex align-items-center justify-space-between">
+    <h2>{{ minimalEndpointInfo.name }}</h2>
+    <p class="sw-primary-color-600">{{ minimalEndpointInfo.url }}</p>
   </div>
-  <p class="list-item-description">{{ minimalEndpointInfo.description }}</p>
-  <p class="list-item-date">
-    {{ minimalEndpointInfo.createdOn | date : 'longDate' }}
+  <p>{{ minimalEndpointInfo.description }}</p>
+  <p class="small-font">
+    {{ minimalEndpointInfo.createdOn | date : "longDate" }}
   </p>
 </div>
