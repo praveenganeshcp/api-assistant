@@ -1,6 +1,6 @@
 <div class="functions-list">
   <div
-    [class.sw-primary-bg-color-50]="selectedFileName == file"
+    [class.sw-primary-bg-color-50]="selectedFile == file"
     (click)="handleFileSelection(file)"
     *ngFor="let file of files"
     class="file-item flex align-items-center pd-1"

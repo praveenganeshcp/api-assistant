@@ -1,15 +1,33 @@
 <main class="cloud-code-host">
-    <aside class="cloud-code-functions-list">
-        <api-assistant-cloud-code-functions-list [files]="(requestHandlers$ | async) ?? []" (fileSelected)="handleFileSelection($event)" />
-    </aside>
-    <section class="cloud-code-editor" *ngIf="selectedHandler; else selectFileUI">
-        <api-assistant-cloud-code-editor [formControl]="handlerCodeControl" />
-        <button (click)="updateHandlerCode()" sw-primary-button>Deploy</button>
-    </section>
+  <aside class="cloud-code-functions-list">
+    <api-assistant-cloud-code-functions-list
+      [files]="(requestHandlers$ | async) ?? []"
+      [selectedFile]="selectedHandler"
+      (fileSelected)="handleFileSelection($event)"
+    />
+  </aside>
+  <section class="cloud-code-editor" *ngIf="selectedHandler; else selectFileUI">
+    <api-assistant-cloud-code-editor [formControl]="handlerCodeControl" />
+    <div
+      class="flex align-items-center mg-right-2 mg-top-3"
+      style="justify-content: flex-end"
+    >
+      <button (click)="closeEditor()" class="mg-right-2" sw-bordered-button>
+        Close editor
+      </button>
+      <button (click)="updateHandlerCode()" sw-primary-button>
+        Deploy code
+      </button>
+    </div>
+  </section>
 
-    <ng-template #selectFileUI>
-        <div class="select-file-nudge">
-            <h1>Select a handler to edit</h1>
-        </div>
-    </ng-template>
+  <ng-template #selectFileUI>
+    <div
+      style="width: 100%; height: 100%; justify-content: center"
+      class="flex flex-column align-items-center"
+    >
+      <sw-icon name="code" [size]="'lg'" />
+      <p class="small-font">Select a cloud function to edit</p>
+    </div>
+  </ng-template>
 </main>

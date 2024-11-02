@@ -10,14 +10,13 @@ import { SwIconComponent } from "ngx-simple-widgets";
   styleUrls: ["./cloud-code-functions-list.component.scss"],
 })
 export class CloudCodeFunctionsListComponent {
-  protected selectedFileName: string = "";
-
   @Input() files: string[] = [];
+
+  @Input() selectedFile: string = "";
 
   @Output() fileSelected = new EventEmitter<string>();
 
   protected handleFileSelection(fileName: string) {
-    this.selectedFileName = fileName;
     this.fileSelected.emit(fileName);
   }
 }
