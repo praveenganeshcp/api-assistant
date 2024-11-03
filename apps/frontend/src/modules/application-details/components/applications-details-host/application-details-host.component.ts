@@ -1,62 +1,93 @@
-import { Component, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnDestroy } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SwIconComponent, SwLoaderComponent } from "ngx-simple-widgets";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import {
-  SwIconComponent,
-  SwLoaderComponent,
-  SwTabViewComponent,
-} from 'ngx-simple-widgets';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, filter, interval, map, startWith, takeUntil, timer } from 'rxjs';
-import { AppState } from '../../../app/app.state';
-import { BreakPointObserver } from '@api-assistant/commons-fe';
-import { Store } from '@ngrx/store';
+  Observable,
+  Subject,
+  filter,
+  interval,
+  map,
+  startWith,
+  takeUntil,
+} from "rxjs";
+import { AppState } from "../../../app/app.state";
+import {
+  BreakPointObserver,
+  SidePanelComponent,
+  SidepanelMenuItem,
+} from "@api-assistant/commons-fe";
+import { Store } from "@ngrx/store";
 import {
   applicationDataErrorSelector,
   applicationDataLoadingSelector,
   applicationDataSelector,
-} from '../../store/selectors';
-import { ApplicationEndpointsHostComponent } from '../../../application-endpoints/components/application-endpoints-host/application-endpoints-host.component';
-import { loadApplicationDetailsAction } from '../../store/actions';
-import { fetchCloudCodeStatusAction } from '../../../application-cloud-code/store/actions';
-import { processStateDataSelector } from '../../../application-cloud-code/store/selectors';
+} from "../../store/selectors";
+import { ApplicationEndpointsHostComponent } from "../../../application-endpoints/components/application-endpoints-host/application-endpoints-host.component";
+import { loadApplicationDetailsAction } from "../../store/actions";
+import { fetchCloudCodeStatusAction } from "../../../application-cloud-code/store/actions";
+import { processStateDataSelector } from "../../../application-cloud-code/store/selectors";
 
 enum TabNames {
-  ENDPOINTS = 'Endpoints',
-  SETTINGS = 'Settings',
-  DATABASE = 'Database',
-  MIGRATIONS = 'Migrations',
-  CLOUD_CODE = "Cloud code"
+  ENDPOINTS = "Endpoints",
+  SETTINGS = "Settings",
+  DATABASE = "Database",
+  MIGRATIONS = "Migrations",
+  CLOUD_CODE = "Cloud code",
 }
 
 const routeUrlTabMapping: Record<TabNames, string> = {
-  [TabNames.DATABASE]: 'database',
-  [TabNames.ENDPOINTS]: 'endpoints',
-  [TabNames.MIGRATIONS]: 'migrations',
-  [TabNames.SETTINGS]: 'settings',
-  [TabNames.CLOUD_CODE]: "cloud-code"
+  [TabNames.DATABASE]: "database",
+  [TabNames.ENDPOINTS]: "endpoints",
+  [TabNames.MIGRATIONS]: "migrations",
+  [TabNames.SETTINGS]: "settings",
+  [TabNames.CLOUD_CODE]: "cloud-code",
 };
 
 @Component({
-  selector: 'api-assistant-application-details-host',
+  selector: "api-assistant-application-details-host",
   standalone: true,
   imports: [
     CommonModule,
     SwIconComponent,
-    SwTabViewComponent,
+    SidePanelComponent,
     RouterModule,
     SwLoaderComponent,
     ApplicationEndpointsHostComponent,
   ],
-  templateUrl: './application-details-host.component.html',
-  styleUrls: ['./application-details-host.component.scss'],
+  templateUrl: "./application-details-host.component.html",
+  styleUrls: ["./application-details-host.component.scss"],
 })
 export class ApplicationDetailsHostComponent implements OnDestroy {
-  protected readonly tabNames: TabNames[] = [
-    TabNames.ENDPOINTS,
-    TabNames.MIGRATIONS,
-    TabNames.DATABASE,
-    TabNames.CLOUD_CODE,
-    TabNames.SETTINGS,
+  protected readonly sidepanelMenuItems: SidepanelMenuItem[] = [
+    {
+      label: TabNames.ENDPOINTS,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.ENDPOINTS]
+      }`,
+      icon: "link",
+    },
+    {
+      label: TabNames.DATABASE,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.DATABASE]
+      }`,
+      icon: "database",
+    },
+    {
+      label: TabNames.CLOUD_CODE,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.CLOUD_CODE]
+      }`,
+      icon: "folder_code",
+    },
+    {
+      label: TabNames.MIGRATIONS,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.MIGRATIONS]
+      }`,
+      icon: "table_edit",
+    },
   ];
 
   private readonly destroy$ = new Subject();
@@ -71,16 +102,17 @@ export class ApplicationDetailsHostComponent implements OnDestroy {
     .select(applicationDataSelector)
     .pipe(
       filter((applicationData) => !!applicationData),
-      map((applicationData) => applicationData?.name ?? '')
+      map((applicationData) => applicationData?.name ?? "")
     );
 
-  public readonly cloudCodeStatus$ = this.store.select(processStateDataSelector);
+  public readonly cloudCodeStatus$ = this.store.select(
+    processStateDataSelector
+  );
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakPointObserver,
-    private store: Store<AppState>,
-    private readonly router: Router
+    private store: Store<AppState>
   ) {}
 
   ngOnDestroy(): void {
@@ -91,30 +123,18 @@ export class ApplicationDetailsHostComponent implements OnDestroy {
     this.store.dispatch(
       loadApplicationDetailsAction({ applicationId: this.applicationId })
     );
-    interval(5000).pipe(
-      startWith(0),
-      takeUntil(this.destroy$)
-    ).subscribe(() => {
-      this.store.dispatch(
-        fetchCloudCodeStatusAction({ applicationId: this.applicationId })
-      )
-    })
-   
+    interval(5000)
+      .pipe(startWith(0), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.store.dispatch(
+          fetchCloudCodeStatusAction({ applicationId: this.applicationId })
+        );
+      });
   }
 
   public get applicationId(): string {
-    return this.activatedRoute.snapshot.params['applicationId'];
+    return this.activatedRoute.snapshot.params["applicationId"];
   }
-
-  activeTabIndex = 0;
 
   public isDesktopScreen$ = this.breakpointObserver.isDesktopScreen$;
-
-  handleTabChange(index: number) {
-    this.activeTabIndex = index;
-    const url: string = routeUrlTabMapping[this.tabNames[index]];
-    this.router.navigate([url], {
-      relativeTo: this.activatedRoute,
-    });
-  }
 }

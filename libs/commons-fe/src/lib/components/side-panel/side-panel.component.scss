@@ -1,0 +1,12 @@
+.active-menu {
+  background-color: var(--sw-secondary-color-100);
+}
+
+aside {
+  border: 1px solid var(--sw-secondary-color-300);
+
+  a {
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--sw-secondary-color-400);
+  }
+}

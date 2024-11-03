@@ -1,42 +1,36 @@
-<main class="application-details">
-  <header>
-    <h1>{{ applicationName$ | async }}</h1>
+<main class="height-100 width-100 flex flex-column row-gap-2">
+  <header
+    class="flex align-items-center justify-space-between sw-secondary-bg-color-200 pd-x-3"
+  >
+    <h1 class="large-font font-weight-lighter">
+      {{ applicationName$ | async }}
+    </h1>
     <div
-      class="process-status"
+      class="flex align-items-center column-gap-2"
       *ngIf="cloudCodeStatus$ | async as cloudCodeStatus"
     >
-      <p>
-        Status: <b>{{ cloudCodeStatus.status }}</b>
-      </p>
-      <p>
-        Restart count: <b> {{ cloudCodeStatus.restartCount }}</b>
+      <p class="flex align-items-center column-gap-1">
+        <sw-icon size="lg" name="dns" /> {{ cloudCodeStatus.status }}
       </p>
     </div>
   </header>
-  <div
-    class="application-details__loader"
-    *ngIf="loading$ | async; else applicationsDataView"
-  >
-    <sw-loader size="lg"></sw-loader>
-  </div>
-  <ng-template #applicationsDataView>
-    <sw-tab-view
-      *ngIf="!(loadingError$ | async); else errorMsg"
-      [activeTabIndex]="activeTabIndex"
-      [showTabsInBottom]="(isDesktopScreen$ | async) === false"
-      [style.--sw-tab-view-title-height]="'7%'"
-      [style.--sw-tab-view-content-height]="'93%'"
-      [tabNames]="tabNames"
-      (tabClick)="handleTabChange($event)"
+
+  <section class="app-details-outlet pd-x-3">
+    <div
+      *ngIf="loading$ | async; else applicationsDataView"
+      class="flex align-items-center justify-space-evenly"
     >
-      <div style="width: 100%; height: 100%" class="pd-y-2">
+      <sw-loader size="lg"></sw-loader>
+    </div>
+    <ng-template #applicationsDataView>
+      <commons-fe-side-panel [menuItems]="sidepanelMenuItems">
         <router-outlet></router-outlet>
-      </div>
-    </sw-tab-view>
-    <ng-template #errorMsg>
-      <div class="application-details__error-msg">
-        {{ loadingError$ | async }}
-      </div>
+      </commons-fe-side-panel>
+      <ng-template #errorMsg>
+        <div class="application-details__error-msg">
+          {{ loadingError$ | async }}
+        </div>
+      </ng-template>
     </ng-template>
-  </ng-template>
+  </section>
 </main>

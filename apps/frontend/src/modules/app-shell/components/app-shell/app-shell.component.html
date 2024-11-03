@@ -1,14 +1,23 @@
 <!-- view for verified account. renders app side nav and router outlet -->
-<main class="app-shell" *ngIf="true; else accountNotVerified">
+<main
+  class="app-shell height-100 width-100 flex flex-column"
+  *ngIf="true; else accountNotVerified"
+>
   <!-- navigation items -->
-  <nav class="app-shell__navigation">
+  <nav
+    class="app-shell__navigation flex align-items-center justify-space-between pd-x-3"
+  >
     <!-- dashboard link -->
-    <a routerLink="/app/applications">
-      <sw-icon size="lg" name="apps"></sw-icon>
+    <a
+      class="flex align-items-center column-gap-1"
+      routerLink="/app/applications"
+    >
+      <sw-icon size="lg" name="home"></sw-icon>
+      <span>API Assistant</span>
     </a>
 
     <!-- bottom items -->
-    <div class="app-shell__user-options">
+    <div class="flex align-items-center justify-space-between column-gap-2">
       <a>
         <sw-icon size="lg" name="person"></sw-icon>
       </a>
