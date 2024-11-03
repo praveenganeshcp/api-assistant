@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppState } from '../../../app/app.state';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { ApplicationsGridViewComponent } from '@api-assistant/dashboard-fe';
+import { ApplicationsListViewComponent } from '@api-assistant/dashboard-fe';
 import { Store } from '@ngrx/store';
 import {
   applicationsListDataErrorSelector,
@@ -26,7 +26,7 @@ import { SearchInputComponent } from '@api-assistant/commons-fe';
   imports: [
     CommonModule,
     SwLoaderComponent,
-    ApplicationsGridViewComponent,
+    ApplicationsListViewComponent,
     SwButtonComponent,
     SwDialogModule,
     SearchInputComponent,

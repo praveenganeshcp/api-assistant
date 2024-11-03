@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApplicationsGridViewComponent } from './applications-grid-view.component';
+import { ApplicationsGridViewComponent } from './applications-list-view.component';
 
 describe('ApplicationsGridViewComponent', () => {
   let component: ApplicationsGridViewComponent;

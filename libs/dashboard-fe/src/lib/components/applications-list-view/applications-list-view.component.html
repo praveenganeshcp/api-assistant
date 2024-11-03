@@ -1,0 +1,15 @@
+<section class="height-100 width-100">
+  <ng-container *ngIf="isLoading; else appsList">
+    <div class="height-100 width-100 flex align-items-center justify-space-evenly">
+      <sw-loader />
+    </div>
+  </ng-container>
+
+  <ng-template #appsList>
+    <div class="height-100 width-100 flex column-gap-4 row-gap-4 align-items-flex-start justify-space-flex-start" style="flex-wrap: wrap;">
+      <ng-container *ngFor="let application of applications; let i=index">
+        <api-assistant-application-list-item [application]="application" [index]="i" />
+      </ng-container>
+    </div>
+  </ng-template>
+</section>

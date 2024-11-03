@@ -1,22 +1,23 @@
-<section class="dashboard">
+<section class="height-100 width-100 pd-x-3">
 
-  <div class="dashboard-toolbar">
+  <div class="flex align-items-center justify-space-between width-100 height-10">
     <h1>All Applications</h1>
-
 
     <button sw-bordered-button (click)="handleClickCreateApplication()">
       Create Application
     </button>
   </div>
 
-  <ng-container *ngIf="!!(error$ | async); else applicationsList">
-    <span>{{ error$ | async }}</span>
-  </ng-container>
-
-  <ng-template #applicationsList>
-    <api-assistant-applications-grid-view
-      [isLoading]="(loading$ | async) ?? false"
-      [rows]="(applicationRows$ | async) ?? []"
-    />
-  </ng-template>
+  <div class="height-80">
+    <ng-container *ngIf="!!(error$ | async); else applicationsList">
+      <span>{{ error$ | async }}</span>
+    </ng-container>
+  
+    <ng-template #applicationsList>
+      <api-assistant-applications-list-view
+        [isLoading]="(loading$ | async) ?? false"
+        [applications]="(applicationRows$ | async) ?? []"
+      />
+    </ng-template>
+  </div>
 </section>

@@ -1,0 +1,47 @@
+:host {
+    width: 32%;
+    height: 30%;
+    display: block;
+
+    .application {
+        border: 1px solid var(--sw-secondary-color-400);
+
+        h2 {
+            border-bottom: 1px solid var(--sw-secondary-color-300);
+        }
+
+        a {
+            text-decoration: underline;
+        }
+
+        .console-link:hover {
+            cursor: pointer;
+            a, sw-icon {
+                color: var(--sw-primary-color-800);
+            }
+        }
+    }
+}
+
+.light-gradient-1 {
+    background: linear-gradient(135deg, #f0f4f7, #cce8f0);
+  }
+  
+  .light-gradient-2 {
+    background: linear-gradient(135deg, #f2f4f8, #d0e2f2);
+  }
+  
+  .light-gradient-3 {
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  }
+  
+  .light-gradient-4 {
+    background: linear-gradient(135deg, #ffffff, #cfe3ff);
+  }
+  
+  .light-gradient-5 {
+    background: linear-gradient(135deg, #e9ecef, #d0e7ff);
+  }
+  
+  
+  

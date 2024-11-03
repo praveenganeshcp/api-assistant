@@ -1,0 +1,25 @@
+<div *ngIf="application" class="application height-100 width-100 br-1 pd-2 flex flex-column row-gap-2 justify-space-evenly" [ngClass]="backgroundClass">
+    <h2 class="sw-secondary-color-600 xl-font pd-bottom-1">{{ application.name }}</h2>
+    <div class="flex align-items-center pd-1 justify-space-flex-start width-100 row-gap-3" style="flex-wrap: wrap;">
+        <div class="width-50 flex align-items-center column-gap-1">
+            <sw-icon name="link" />
+            <span class="small-font">{{ application.endpointsCount }} endpoints</span>
+        </div>
+
+        <div class="width-50 flex align-items-center justify-flex-end column-gap-1">
+            <sw-icon name="dns" />
+            <span class="small-font">Running</span>
+        </div>
+
+        <div class="width-50 flex align-items-center column-gap-1">
+            <sw-icon name="calendar_month" />
+            <span class="small-font">{{ application.createdOn | date }}</span>
+        </div>
+    </div>
+    <div [routerLink]="['/app', 'applications', application._id, 'endpoints']" class="console-link width-100 flex align-items-center justify-flex-end column-gap-1">
+        <a class="small-font">
+            Go to console
+        </a>
+        <sw-icon name="arrow_forward" />
+    </div>
+</div>
