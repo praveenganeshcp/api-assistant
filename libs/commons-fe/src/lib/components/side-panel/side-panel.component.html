@@ -7,7 +7,7 @@
         *ngFor="let menu of menuItems"
         [routerLink]="menu.url"
       >
-        <div class="flex align-items-center column-gap-1">
+        <div class="flex align-items-center column-gap-1 medium-font">
           <sw-icon *ngIf="menu.icon" [name]="menu.icon"></sw-icon>
           <span>{{ menu.label }}</span>
         </div>
