@@ -1,11 +1,8 @@
 .endpoint {
-  width: 100%;
-  // todo
-  row-gap: 8px;
-  border: 1px solid lightgray;
+  border: 1px solid var(--sw-secondary-color-300);
   cursor: pointer;
 
-  .endpoint-icon-info {
-    column-gap: 8px;
+  &:hover {
+    border-color: var(--sw-primary-color-500);
   }
 }

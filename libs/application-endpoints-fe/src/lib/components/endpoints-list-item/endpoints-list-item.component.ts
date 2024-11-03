@@ -32,7 +32,7 @@ export class EndpointsListItemComponent {
 
   protected get logicTypeToolip(): string {
     return this.minimalEndpointInfo.useCloudCode === true
-      ? "Custom logic"
-      : "Wizard";
+      ? "Built using custom logic"
+      : "Built using Wizard";
   }
 }

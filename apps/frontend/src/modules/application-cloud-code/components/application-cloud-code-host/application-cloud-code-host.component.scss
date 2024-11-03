@@ -1,19 +1,6 @@
-.cloud-code-host {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-
-  .cloud-code-functions-list {
-    width: 20%;
-    height: 100%;
-    background-color: green($color: #000000);
-  }
-
-  .cloud-code-editor {
-    flex-grow: 1;
-    height: 550px;
-  }
+.cloud-code-editor {
+  flex-grow: 1;
+  height: 530px;
 }
 
 sw-icon {
