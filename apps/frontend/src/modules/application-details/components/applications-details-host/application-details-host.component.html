@@ -23,9 +23,9 @@
       <sw-loader size="lg"></sw-loader>
     </div>
     <ng-template #applicationsDataView>
-      <commons-fe-side-panel [menuItems]="sidepanelMenuItems">
+      <sw-side-panel-menu [menuItems]="sidepanelMenuItems">
         <router-outlet></router-outlet>
-      </commons-fe-side-panel>
+      </sw-side-panel-menu>
       <ng-template #errorMsg>
         <div class="application-details__error-msg">
           {{ loadingError$ | async }}

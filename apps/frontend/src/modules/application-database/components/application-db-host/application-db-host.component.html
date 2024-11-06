@@ -1,47 +1,27 @@
-<form
-  style="
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    column-gap: 20px;
-    width: 100%;
-  "
-  [formGroup]="queryForm"
->
-  <api-assistant-db-collections-view
-    [selectedCollectionName]="selectedCollectionName"
-    [collectionNames]="(collectionNames$ | async) ?? []"
-    (change)="handleCollectionChange($event)"
-    style="flex-basis: 20%;"
+<form [formGroup]="queryForm" class="flex align-items-flex-start column-gap-2">
+  <sw-list-view
+    style="flex-basis: 20%"
+    [title]="'Collections'"
+    [showAsHorizontalList]="false"
+    [selectedItemId]="selectedCollectionName"
+    [items]="(collectionNameListItems$ | async) ?? []"
+    (selectItem)="handleCollectionChange($event)"
   />
-  <div
-    style="
-      flex-grow: 1;
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      height: 100%;
-    "
-  >
-    <div
-      style="
-        display: flex;
-        align-items: flex-start;
-        column-gap: 20px;
-        width: 100%;
-      "
-    >
-      <select formControlName="operation">
-        <option *ngFor="let action of options" [value]="action.value">
-          {{ action.label }}
-        </option>
-      </select>
-      <commons-fe-json-input
-        formControlName="payload"
-        style="flex-grow: 1"
-        [label]="'Query'"
+  <div style="flex-grow: 1" class="flex flex-column row-gap-2">
+    <commons-fe-json-input
+      formControlName="payload"
+      style="flex-grow: 1"
+      [label]="'Query'"
+    />
+    <div class="flex align-items-center justify-space-between column-gap-2">
+      <sw-list-view
+        [selectedItemId]="actionControlValue"
+        (selectItem)="handleActionChange($event)"
+        [items]="actionListItems"
       />
-      <button (click)="handleQueryExecute()" sw-primary-button>Execute</button>
+      <button (click)="handleQueryExecute()" sw-primary-button>
+        Execute query
+      </button>
     </div>
     <api-assistant-db-results-viewer
       style="width: 100%"

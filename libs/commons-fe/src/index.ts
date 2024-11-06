@@ -4,5 +4,3 @@ export { BreakPointObserver } from "./lib/services/breakpointobserver.service";
 export { AppInfoService } from "./lib/services/app-info.service";
 export * from "./lib/components/json-input/json-input.component";
 export * from "./lib/components/search-input/search-input.component";
-export * from "./lib/components/side-panel/side-panel.component";
-export * from "./lib/components/side-panel/types";

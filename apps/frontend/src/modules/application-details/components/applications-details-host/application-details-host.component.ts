@@ -1,6 +1,11 @@
 import { Component, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SwIconComponent, SwLoaderComponent } from "ngx-simple-widgets";
+import {
+  SwIconComponent,
+  SwLoaderComponent,
+  SwSidePanelMenuComponent,
+  SwSidepanelMenuItem,
+} from "ngx-simple-widgets";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import {
   Observable,
@@ -12,11 +17,7 @@ import {
   takeUntil,
 } from "rxjs";
 import { AppState } from "../../../app/app.state";
-import {
-  BreakPointObserver,
-  SidePanelComponent,
-  SidepanelMenuItem,
-} from "@api-assistant/commons-fe";
+import { BreakPointObserver } from "@api-assistant/commons-fe";
 import { Store } from "@ngrx/store";
 import {
   applicationDataErrorSelector,
@@ -50,16 +51,16 @@ const routeUrlTabMapping: Record<TabNames, string> = {
   imports: [
     CommonModule,
     SwIconComponent,
-    SidePanelComponent,
     RouterModule,
     SwLoaderComponent,
     ApplicationEndpointsHostComponent,
+    SwSidePanelMenuComponent,
   ],
   templateUrl: "./application-details-host.component.html",
   styleUrls: ["./application-details-host.component.scss"],
 })
 export class ApplicationDetailsHostComponent implements OnDestroy {
-  protected readonly sidepanelMenuItems: SidepanelMenuItem[] = [
+  protected readonly sidepanelMenuItems: SwSidepanelMenuItem[] = [
     {
       label: TabNames.ENDPOINTS,
       url: `/app/applications/${this.applicationId}/${

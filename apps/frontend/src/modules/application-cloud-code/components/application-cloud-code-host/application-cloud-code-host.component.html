@@ -1,7 +1,7 @@
 <main class="flex align-items-flex-start height-100 width-100">
   <aside class="width-20 height-100">
     <api-assistant-cloud-code-functions-list
-      [files]="(requestHandlers$ | async) ?? []"
+      [listItems]="(requestHandlers$ | async) ?? []"
       [selectedFile]="selectedHandler"
       (fileSelected)="handleFileSelection($event)"
     />
