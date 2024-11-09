@@ -1,8 +1,6 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { AsyncPipe, NgFor } from "@angular/common";
-import {
-  DbResultsViewerComponent,
-} from "@api-assistant/application-database-fe";
+import { DbResultsViewerComponent } from "@api-assistant/application-database-fe";
 import { BehaviorSubject, Observable, filter, map } from "rxjs";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { Store } from "@ngrx/store";
@@ -30,7 +28,7 @@ import {
   JsonInputComponent,
   StoreActionDispatcher,
 } from "@api-assistant/commons-fe";
-import { CRUDActionDefinition } from "@api-assistant/applications-crud-engine-core";
+import { CRUDActionDefinition } from "@api-assistant/application-endpoints-core";
 
 @Component({
   selector: "api-assistant-application-db-host",

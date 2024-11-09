@@ -1,11 +1,11 @@
-import { Usecase } from '@api-assistant/commons-be';
-import { ObjectId } from 'mongodb';
+import { Usecase } from "@api-assistant/commons-be";
+import { ObjectId } from "mongodb";
 import {
   CreateEndpointUsecase,
   CreateEndpointUsecaseInput,
-} from './create-endpoint.usecase';
-import { Injectable } from '@nestjs/common';
-import { ALLOWED_DB_OPERATIONS } from '@api-assistant/applications-crud-engine-core';
+} from "./create-endpoint.usecase";
+import { Injectable } from "@nestjs/common";
+import { ALLOWED_DB_OPERATIONS } from "@api-assistant/application-endpoints-core";
 
 interface CreateAllBuiltinEndpointsUsecaseInput {
   userId: ObjectId;
@@ -39,41 +39,41 @@ export class CreateAllBuiltinEndpointsUsecase
     const input: CreateEndpointUsecaseInput = {
       createdBy: userId,
       applicationId,
-      name: 'Signup',
-      description: 'Endpoint to create user accounts',
+      name: "Signup",
+      description: "Endpoint to create user accounts",
       useCloudCode: false,
-      requestHandler: '',
-      url: '/signup',
+      requestHandler: "",
+      url: "/signup",
       isAuthenticated: false,
-      method: 'POST',
+      method: "POST",
       validations: {},
       crud: [
         {
-          collectionName: 'users',
+          collectionName: "users",
           operation: ALLOWED_DB_OPERATIONS.insertOne,
           payload: {
-            username: '${Request.body.username}',
-            emailId: '${Request.body.emailId}',
-            password: '${Request.body.password}',
+            username: "${Request.body.username}",
+            emailId: "${Request.body.emailId}",
+            password: "${Request.body.password}",
           },
         },
         {
-          collectionName: 'users',
+          collectionName: "users",
           operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
             filter: {
-              _id: '${Steps.0.insertedId}',
+              _id: "${Steps.0.insertedId}",
             },
             options: {},
           },
         },
       ],
       response: {
-        message: 'User account created successfully',
+        message: "User account created successfully",
         user: {
-          id: '${Steps.1._id}',
-          username: '${Steps.1.username}',
-          emailId: '${Steps.1.emailId}',
+          id: "${Steps.1._id}",
+          username: "${Steps.1.username}",
+          emailId: "${Steps.1.emailId}",
         },
       },
     };
@@ -87,20 +87,20 @@ export class CreateAllBuiltinEndpointsUsecase
     const input: CreateEndpointUsecaseInput = {
       createdBy: userId,
       applicationId,
-      name: 'Login',
-      description: 'Endpoint to login user accounts',
-      url: '/login',
-      method: 'POST',
+      name: "Login",
+      description: "Endpoint to login user accounts",
+      url: "/login",
+      method: "POST",
       isAuthenticated: false,
       useCloudCode: false,
-      requestHandler: '',
+      requestHandler: "",
       crud: [
         {
-          collectionName: 'users',
+          collectionName: "users",
           operation: ALLOWED_DB_OPERATIONS.findOne,
           payload: {
             filter: {
-              emailId: '${Request.body.emailId}',
+              emailId: "${Request.body.emailId}",
             },
             options: {},
           },
@@ -108,8 +108,8 @@ export class CreateAllBuiltinEndpointsUsecase
       ],
       validations: {},
       response: {
-        message: 'User loggedin successfully',
-        user: '${Steps.0}',
+        message: "User loggedin successfully",
+        user: "${Steps.0}",
       },
     };
     return input;
@@ -122,14 +122,14 @@ export class CreateAllBuiltinEndpointsUsecase
     const input: CreateEndpointUsecaseInput = {
       createdBy: userId,
       useCloudCode: false,
-      requestHandler: '',
+      requestHandler: "",
       applicationId,
       isAuthenticated: false,
-      name: 'Logout',
-      description: 'Endpoint to logout user accounts',
-      url: '/logout',
+      name: "Logout",
+      description: "Endpoint to logout user accounts",
+      url: "/logout",
       crud: [],
-      method: 'POST',
+      method: "POST",
       response: {},
       validations: {},
     };

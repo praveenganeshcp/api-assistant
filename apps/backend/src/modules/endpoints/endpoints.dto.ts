@@ -4,8 +4,8 @@ import {
   CRUDActionResponse,
   CRUDEngineHttpMethods,
   RequestDataValidation,
-} from '@api-assistant/applications-crud-engine-core';
-import { Type } from 'class-transformer';
+} from "@api-assistant/application-endpoints-core";
+import { Type } from "class-transformer";
 import {
   IsArray,
   IsBoolean,
@@ -14,7 +14,7 @@ import {
   IsString,
   Length,
   ValidateNested,
-} from 'class-validator';
+} from "class-validator";
 
 export class EndpointActionDefinitionDto {
   @IsEnum(ALLOWED_DB_OPERATIONS)
@@ -56,10 +56,10 @@ export class CreateEndpointCRUDDto {
   isAuthenticated!: boolean;
 
   @IsString()
-  requestHandler!: string
+  requestHandler!: string;
 
   @IsBoolean()
-  useCloudCode!: boolean
+  useCloudCode!: boolean;
 }
 
 export class PatchEndpointCRUDDto extends CreateEndpointCRUDDto {}

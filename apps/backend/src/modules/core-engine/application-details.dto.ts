@@ -1,8 +1,8 @@
 import {
   ALLOWED_DB_OPERATIONS,
   CRUDActionPayload,
-} from '@api-assistant/applications-crud-engine-core';
-import { IsEnum, IsString } from 'class-validator';
+} from "@api-assistant/application-endpoints-core";
+import { IsEnum, IsString } from "class-validator";
 
 export class ApplicationDatabaseOperation {
   @IsEnum(ALLOWED_DB_OPERATIONS)

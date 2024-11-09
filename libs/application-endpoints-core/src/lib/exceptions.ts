@@ -2,7 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   UnauthorizedException,
-} from '@nestjs/common';
+} from "@nestjs/common";
 
 export class CoreEngineUnSupportedVariableTypeException extends BadRequestException {
   constructor(variableType: string) {
@@ -18,13 +18,13 @@ export class CoreEngineUnSupportedActionException extends BadRequestException {
 
 export class CoreEngineFindActionPayloadMissingException extends BadRequestException {
   constructor() {
-    super('filter or options object is missing in the payload object');
+    super("filter or options object is missing in the payload object");
   }
 }
 
 export class CoreEngineUpdateActionPayloadMissingException extends BadRequestException {
   constructor() {
-    super('filter or patch object is missing in the payload object');
+    super("filter or patch object is missing in the payload object");
   }
 }
 
@@ -36,30 +36,30 @@ export class CoreEngineInvalidVariablePathException extends BadRequestException 
 
 export class CoreEngineInsertManyActionInvalidDataException extends BadRequestException {
   constructor() {
-    super('InsertMany actiom should array type payload');
+    super("InsertMany actiom should array type payload");
   }
 }
 
 export class CoreEngineProcessingException extends BadRequestException {
   constructor() {
-    super('Error in processing the action. Please check the payload');
+    super("Error in processing the action. Please check the payload");
   }
 }
 
 export class InvalidFilePathException extends BadRequestException {
   constructor() {
-    super('File path does not exist in your folder');
+    super("File path does not exist in your folder");
   }
 }
 
 export class InvalidLoginException extends ForbiddenException {
   constructor() {
-    super('Invalid emailId or password');
+    super("Invalid emailId or password");
   }
 }
 
 export class SessionExpiredException extends UnauthorizedException {
   constructor() {
-    super('Session expired');
+    super("Session expired");
   }
 }

@@ -3,8 +3,8 @@ import {
   CRUDActionResponse,
   CRUDEngineHttpMethods,
   RequestDataValidation,
-} from '@api-assistant/applications-crud-engine-core';
-import { ObjectId } from 'mongodb';
+} from "@api-assistant/application-endpoints-core";
+import { ObjectId } from "mongodb";
 
 export interface Endpoint {
   _id: ObjectId;
@@ -15,7 +15,7 @@ export interface Endpoint {
   crud: CRUDActionDefinition[];
   response: CRUDActionResponse;
   requestHandler: string;
-  useCloudCode: boolean
+  useCloudCode: boolean;
   validations: RequestDataValidation;
   createdBy: ObjectId;
   createdOn: Date;
