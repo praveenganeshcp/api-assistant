@@ -6,6 +6,7 @@ import { CloudCodeProcessManagerService } from "./cloud-code-process-manager.ser
 import { FetchAllEndpointsByApplicationIdUsecase } from "../api-builder-usecases/fetch-all-endpoints-by-app-id.usecase";
 import { crudAppConfig } from "@api-assistant/configuration-be";
 import { ConfigType } from "@nestjs/config";
+import { Endpoint } from "../entities";
 
 @Injectable()
 export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
@@ -18,13 +19,24 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
 
     async execute(applicationId: ObjectId): Promise<void> {
         const applicationsRootPath = this.crudApplicationConfig.ROOTDIR;
-        const routesRootPath = `${applicationsRootPath}/${applicationId.toString()}/src/routes.ts`;
         const allEndpoints = await this.fetchAllEndpointsByAppIdUsecase.execute(applicationId);
+
+        const routesScriptPath = `${applicationsRootPath}/${applicationId.toString()}/src/routes.ts`;
         const endpointsUsingCloudCode = allEndpoints.filter(endpoint => endpoint.useCloudCode);
-        const endpointsImportPaths = endpointsUsingCloudCode.map(endpoint => {
-            const moduleName = endpoint.requestHandler.split('.')[0];
+        await this.updateCloudCodeHandlers(endpointsUsingCloudCode, routesScriptPath, 'routes');
+
+        const apiBuilderRoutesScriptPath = `${applicationsRootPath}/${applicationId.toString()}/src/api-builder-routes.ts`;
+        const endpointsWithoutUsingCloudCode = allEndpoints.filter(endpoint => !endpoint.useCloudCode);
+        await this.updateCloudCodeHandlers(endpointsWithoutUsingCloudCode, apiBuilderRoutesScriptPath, 'api-builder-routes');
+
+        await this.cloudCodeProcessManagerService.restartApplication(applicationId);
+    }
+
+    private async updateCloudCodeHandlers(endpoints: Endpoint[], routesScriptPath: string, routesRootPath: string) {
+        const endpointsImportPaths = endpoints.map(endpoint => {
+            const moduleName = endpoint.name;
             return `
-            import ${moduleName} from './routes/${moduleName}';
+            import ${moduleName} from './${routesRootPath}/${moduleName}';
             router.${endpoint.method.toLowerCase()}('${endpoint.url}', ${moduleName});
             `
         })
@@ -34,7 +46,6 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
 
         ${endpointsImportPaths.join('\n')}
         `
-        await writeFile(routesRootPath, baseCode, 'utf-8');
-        await this.cloudCodeProcessManagerService.restartApplication(applicationId);
+        await writeFile(routesScriptPath, baseCode, 'utf-8');
     }
 }

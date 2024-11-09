@@ -18,6 +18,6 @@ export class ApplicationListItemComponent {
   @Input() application: CanBeNull<ApplicationDashboardView> = null;
 
   get backgroundClass(): string {
-      return `light-gradient-${this.index % 5}`;
+      return `light-gradient-${(this.index % 5) + 1}`;
   }
 }
