@@ -21,7 +21,7 @@ export class ApplicationProcessManagerController {
 
     @Patch('restart/:applicationId')
     async restartApplicationProcess(@Param('applicationId') applicationId: string) {
-        return this.cloudCodeProcessManagerService.restartApplication(new ObjectId(applicationId))
+        await this.cloudCodeProcessManagerService.restartApplication(new ObjectId(applicationId))
     }
 
     @Patch('stop/:applicationId')

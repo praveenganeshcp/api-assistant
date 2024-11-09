@@ -1,6 +1,7 @@
 import { crudAppConfig } from "@api-assistant/configuration-be";
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ConfigType } from "@nestjs/config";
+import { exec } from "child_process";
 import { ObjectId } from "mongodb";
 const pm2 = require('pm2');
 
@@ -36,12 +37,33 @@ export class CloudCodeProcessManagerService {
         })
     }
 
-    restartApplication(applicationId: ObjectId) {
+    async restartApplication(applicationId: ObjectId) {
+        const applicationPath = `${this.crudApplicationConfig.ROOTDIR}/${applicationId.toString()}`
+        const cwd = process.cwd();
+        this.logger.log('changing working directory '+applicationPath);
+        process.chdir(applicationPath);
+        await this.executeCommand('npm run build');
+        this.logger.log('build completed');
+        process.chdir(cwd)
+        this.logger.log('working changed to root');
         this.logger.log('restarting application id '+applicationId.toString());
         pm2.restart(applicationId.toString(), (error: any) => {
             if(error) {
                 console.error('error in restarting the application');
             }
+        })
+    }
+
+    private executeCommand(command: string) {
+        return new Promise((resolve, reject) => {
+            exec(command, (error, stdout, stderr) => {
+                if(error) {
+                    reject(error)
+                    return
+                }
+                this.logger.log(stdout)
+                resolve(stdout);
+            })
         })
     }
 

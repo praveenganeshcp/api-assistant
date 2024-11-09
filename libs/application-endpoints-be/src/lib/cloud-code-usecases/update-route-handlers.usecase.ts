@@ -35,6 +35,6 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
         ${endpointsImportPaths.join('\n')}
         `
         await writeFile(routesRootPath, baseCode, 'utf-8');
-        this.cloudCodeProcessManagerService.restartApplication(applicationId);
+        await this.cloudCodeProcessManagerService.restartApplication(applicationId);
     }
 }
