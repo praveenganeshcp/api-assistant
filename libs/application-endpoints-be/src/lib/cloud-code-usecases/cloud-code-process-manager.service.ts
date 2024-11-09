@@ -1,4 +1,6 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { crudAppConfig } from "@api-assistant/configuration-be";
+import { Inject, Injectable, Logger } from "@nestjs/common";
+import { ConfigType } from "@nestjs/config";
 import { ObjectId } from "mongodb";
 const pm2 = require('pm2');
 
@@ -7,7 +9,9 @@ export class CloudCodeProcessManagerService {
 
     private readonly logger = new Logger(CloudCodeProcessManagerService.name);
 
-    constructor() {
+    constructor(
+        @Inject(crudAppConfig.KEY) private readonly crudApplicationConfig: ConfigType<typeof crudAppConfig>,
+    ) {
         this.logger.log('connecting to pm2 daemon')
         pm2.connect((err: any) => {
             if(err) {
@@ -18,7 +22,7 @@ export class CloudCodeProcessManagerService {
     }
 
     startApplication(applicationId: ObjectId): void {
-        const scriptPath = `/Users/praveenkumar/Documents/projects/cloud_code/${applicationId.toString()}/index.js`;
+        const scriptPath = `${this.crudApplicationConfig.ROOTDIR}/${applicationId.toString()}/dist/index.js`;
         this.logger.log('starting service for application '+applicationId.toString())
         this.logger.log('starting script at '+scriptPath)
         pm2.start({

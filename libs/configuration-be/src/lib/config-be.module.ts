@@ -4,6 +4,7 @@ import { validateEnvVariables } from './config/env.validator';
 import { appConfig } from './config/app.config';
 import { dbConfig } from './config/db.config';
 import { emailconfig } from './config/email.config';
+import { crudAppConfig } from './config/crud-app.config';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { emailconfig } from './config/email.config';
       isGlobal: true,
       validate: validateEnvVariables,
       cache: false,
-      load: [appConfig, dbConfig, emailconfig],
+      load: [appConfig, dbConfig, emailconfig, crudAppConfig],
     }),
   ],
 })

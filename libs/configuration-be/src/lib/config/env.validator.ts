@@ -31,6 +31,9 @@ class EnvironmentVariables {
 
   @IsString()
   FE_HOST_ADDRESS!: string;
+
+  @IsString()
+  CRUD_APP_ROOTDIR!: string
 }
 
 export const ENV_VARIABLES: EnvironmentVariables =

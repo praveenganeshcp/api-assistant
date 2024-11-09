@@ -32,9 +32,9 @@ export class CreateApplicationUsecase
       createdBy,
       createdOn: new Date(),
     });
-    await mkdir(applicationMigrationFolder(application._id), {
-      recursive: true,
-    });
+    // await mkdir(applicationMigrationFolder(application._id), {
+    //   recursive: true,
+    // });
     await this.bootstrapCloudCodeUsecase.execute({
       applicationId: application._id,
       port: 5555
