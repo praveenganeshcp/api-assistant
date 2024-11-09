@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { AsyncPipe, NgFor } from "@angular/common";
 import {
-  DbCollectionsViewComponent,
   DbResultsViewerComponent,
 } from "@api-assistant/application-database-fe";
-import { BehaviorSubject, Observable, filter, map, of, tap } from "rxjs";
+import { BehaviorSubject, Observable, filter, map } from "rxjs";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../app/app.state";
@@ -14,7 +13,6 @@ import {
 } from "../../store/selectors";
 import {
   CanBeNull,
-  DropdownOptions,
   SwButtonComponent,
   SwDropdownComponent,
   SwListViewComponent,
@@ -38,7 +36,6 @@ import { CRUDActionDefinition } from "@api-assistant/applications-crud-engine-co
   selector: "api-assistant-application-db-host",
   standalone: true,
   imports: [
-    DbCollectionsViewComponent,
     AsyncPipe,
     NgFor,
     DbResultsViewerComponent,

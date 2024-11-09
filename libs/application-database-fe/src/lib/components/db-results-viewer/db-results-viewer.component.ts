@@ -14,6 +14,8 @@ export class DbResultsViewerComponent {
 
   protected columns: SwColumnDef[] = [];
 
+  @Input() loading: boolean = false;
+
   @Input()
   set results(data: unknown) {
     if (Array.isArray(data)) {

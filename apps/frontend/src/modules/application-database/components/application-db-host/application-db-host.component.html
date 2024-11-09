@@ -26,6 +26,7 @@
     <api-assistant-db-results-viewer
       style="width: 100%"
       [results]="queryResult$ | async"
+      [loading]="(queryExecutionInProgress$ | async) ?? false"
     />
   </div>
 </form>
