@@ -37,6 +37,7 @@ export class CreateAllBuiltinEndpointsUsecase
     userId: ObjectId
   ): CreateEndpointUsecaseInput {
     const input: CreateEndpointUsecaseInput = {
+      skipCloudCodeUpdate: true,
       createdBy: userId,
       applicationId,
       name: "Signup",
@@ -85,6 +86,7 @@ export class CreateAllBuiltinEndpointsUsecase
     userId: ObjectId
   ): CreateEndpointUsecaseInput {
     const input: CreateEndpointUsecaseInput = {
+      skipCloudCodeUpdate: true,
       createdBy: userId,
       applicationId,
       name: "Login",
@@ -120,6 +122,7 @@ export class CreateAllBuiltinEndpointsUsecase
     userId: ObjectId
   ): CreateEndpointUsecaseInput {
     const input: CreateEndpointUsecaseInput = {
+      skipCloudCodeUpdate: true,
       createdBy: userId,
       useCloudCode: false,
       requestHandler: "",

@@ -51,7 +51,8 @@ export class EndpointsController {
       method: payload.method,
       isAuthenticated: payload.isAuthenticated,
       useCloudCode: payload.useCloudCode,
-      requestHandler: payload.requestHandler
+      requestHandler: payload.requestHandler,
+      skipCloudCodeUpdate: false,
     });
   }
 
@@ -91,6 +92,7 @@ export class EndpointsController {
       userId: currentUser._id,
       applicationId: new ObjectId(applicationId),
       id: new ObjectId(endpointId),
+      skipCloudCodeUpdate: false,
     });
   }
 

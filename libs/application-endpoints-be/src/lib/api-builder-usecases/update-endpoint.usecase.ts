@@ -22,6 +22,7 @@ interface UpdateEndpointUsecaseInput {
   >;
   userId: ObjectId;
   applicationId: ObjectId;
+  skipCloudCodeUpdate: boolean
 }
 
 @Injectable()
@@ -58,7 +59,7 @@ export class UpdateEndpointUsecase
       }
     );
     const updatedEndpoint = await this.repo.findOne({ _id: data.id })
-    if(valueIsDefined(updatedEndpoint)) {
+    if(valueIsDefined(updatedEndpoint) && !data.skipCloudCodeUpdate) {
       await this.updateEndpointInAppUsecase.execute(updatedEndpoint);
       await this.updateRouteHandlersUsecase.execute(data.applicationId);
     }

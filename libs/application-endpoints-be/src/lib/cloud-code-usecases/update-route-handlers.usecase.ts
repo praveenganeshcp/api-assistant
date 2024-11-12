@@ -26,7 +26,13 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
         await this.updateCloudCodeHandlers(endpointsUsingCloudCode, routesScriptPath, 'routes');
 
         const apiBuilderRoutesScriptPath = `${applicationsRootPath}/${applicationId.toString()}/src/api-builder-routes.ts`;
-        const endpointsWithoutUsingCloudCode = allEndpoints.filter(endpoint => !endpoint.useCloudCode);
+        const endpointsWithoutUsingCloudCode = allEndpoints.filter(endpoint => 
+            !endpoint.useCloudCode && (
+                endpoint.url  !== "/signup" &&
+                endpoint.url  !== "/login" &&
+                endpoint.url  !== "/logout"
+            )
+        );
         await this.updateCloudCodeHandlers(endpointsWithoutUsingCloudCode, apiBuilderRoutesScriptPath, 'api-builder-routes');
 
         await this.cloudCodeProcessManagerService.restartApplication(applicationId);

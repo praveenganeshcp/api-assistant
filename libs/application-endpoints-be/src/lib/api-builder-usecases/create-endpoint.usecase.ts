@@ -22,6 +22,7 @@ export interface CreateEndpointUsecaseInput
   > {
   createdBy: ObjectId;
   applicationId: ObjectId;
+  skipCloudCodeUpdate: boolean
 }
 
 @Injectable()
@@ -53,8 +54,10 @@ export class CreateEndpointUsecase
       requestHandler: data.requestHandler
     });
     this.logger.log('new endpoint record added in db')
-    await this.updateEndpointCodeInAppUsecase.execute(endpoint);
-    await this.updateRouteHandlersUsecase.execute(data.applicationId)
+    if(!data.skipCloudCodeUpdate) {
+      await this.updateEndpointCodeInAppUsecase.execute(endpoint);
+      await this.updateRouteHandlersUsecase.execute(data.applicationId)
+    }
     this.logger.log('route handlers updated and builded');
     return endpoint;
   }

@@ -13,7 +13,9 @@ interface DeleteEndpointsUsecaseInput {
 export class DeleteEndpointsUsecase
   implements Usecase<DeleteEndpointsUsecaseInput, void>
 {
-  constructor(private readonly repo: EndpointsRepository) {}
+  constructor(
+    private readonly repo: EndpointsRepository
+  ) {}
 
   async execute(data: DeleteEndpointsUsecaseInput): Promise<void> {
     await this.repo.deleteOne({
