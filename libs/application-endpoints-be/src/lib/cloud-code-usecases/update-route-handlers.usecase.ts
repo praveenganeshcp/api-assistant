@@ -40,7 +40,7 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
 
     private async updateCloudCodeHandlers(endpoints: Endpoint[], routesScriptPath: string, routesRootPath: string) {
         const endpointsImportPaths = endpoints.map(endpoint => {
-            const moduleName = endpoint.name;
+            const moduleName = endpoint.useCloudCode ? endpoint.requestHandler.split('.')[0] : endpoint.name.split(' ').join('');
             return `
             import ${moduleName} from './${routesRootPath}/${moduleName}';
             router.${endpoint.method.toLowerCase()}('${endpoint.url}', ${moduleName});
