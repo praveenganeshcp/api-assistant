@@ -30,7 +30,7 @@ export class CloudCodeProcessManagerService {
         })
     }
 
-    private deleteApp(applicationId: ObjectId): Promise<void> {
+    async deleteApp(applicationId: ObjectId): Promise<void> {
         this.logger.log('deleting app '+applicationId.toString());
         return new Promise((resolve, reject) => {
             pm2.delete(applicationId.toString(), () => {

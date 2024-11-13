@@ -5,6 +5,7 @@ import { CreateApplicationUsecase } from './usecases/create-application/usecase'
 import { FetchApplicationsByUserIdUsecase } from './usecases/fetch-applications-by-userid/usecase';
 import { FetchApplicationByIdUsecase } from './usecases/fetch-application-by-id.usecase';
 import { RestartAllApplicationsUsecase } from './usecases/restart-all-apps.usecase';
+import { DeleteApplicationUsecase } from './usecases/delete-application.usecase';
 
 @Module({
   imports: [EndpointsBeModule],
@@ -13,14 +14,16 @@ import { RestartAllApplicationsUsecase } from './usecases/restart-all-apps.useca
     CreateApplicationUsecase,
     FetchApplicationsByUserIdUsecase,
     FetchApplicationByIdUsecase,
-    RestartAllApplicationsUsecase
+    RestartAllApplicationsUsecase,
+    DeleteApplicationUsecase
   ],
   exports: [
     ApplicationRepository,
     CreateApplicationUsecase,
     FetchApplicationsByUserIdUsecase,
     FetchApplicationByIdUsecase,
-    RestartAllApplicationsUsecase
+    RestartAllApplicationsUsecase,
+    DeleteApplicationUsecase
   ],
 })
 export class ApplicationsBeModule {}

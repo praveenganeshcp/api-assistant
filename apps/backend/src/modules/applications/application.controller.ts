@@ -1,9 +1,10 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Delete } from '@nestjs/common';
 import { CreateApplicationDTO } from './applications.dto';
 import { AuthUser } from '@api-assistant/commons-be';
 import { UserDetails } from '@api-assistant/auth-be';
 import {
   CreateApplicationUsecase,
+  DeleteApplicationUsecase,
   FetchApplicationByIdUsecase,
   FetchApplicationsByUserIdUsecase,
 } from '@api-assistant/applications-be';
@@ -14,7 +15,8 @@ export class ApplicationsController {
   constructor(
     private readonly createApplicationUsecase: CreateApplicationUsecase,
     private readonly fetchApplicationsByUserIdUsecase: FetchApplicationsByUserIdUsecase,
-    private readonly fetchApplicationIdUsecase: FetchApplicationByIdUsecase
+    private readonly fetchApplicationIdUsecase: FetchApplicationByIdUsecase,
+    private readonly deleteApplicationUsecase: DeleteApplicationUsecase
   ) {}
 
   @Post()
@@ -36,11 +38,20 @@ export class ApplicationsController {
     return applications;
   }
 
-  @Get(':appliationId')
-  async fetchApplicationsById(@Param('appliationId') applicationId: string) {
+  @Get(':applicationId')
+  async fetchApplicationsById(@Param('applicationId') applicationId: string) {
     const applications = await this.fetchApplicationIdUsecase.execute(
       new ObjectId(applicationId)
     );
     return applications;
   }
+
+
+  @Delete(':applicationId')
+  async deleteApplicationsById(@Param('applicationId') applicationId: string) {
+    await this.deleteApplicationUsecase.execute(
+      new ObjectId(applicationId)
+    );
+  }
+  
 }
