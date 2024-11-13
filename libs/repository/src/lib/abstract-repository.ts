@@ -88,4 +88,9 @@ export class Repository<T extends MongoDocument> {
     this.logger.log(`deleting record in ${this.collectionName}`);
     return this.collection.deleteOne(filter);
   }
+
+  public async deleteAll(filter: Filter<T>) {
+    this.logger.log(`deleting multiple record in ${this.collectionName}`);
+    return this.collection.deleteMany(filter);
+  }
 }

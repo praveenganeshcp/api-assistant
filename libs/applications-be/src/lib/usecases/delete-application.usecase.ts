@@ -6,6 +6,7 @@ import { crudAppConfig } from "@api-assistant/configuration-be";
 import { ConfigType } from "@nestjs/config";
 import { rm } from "fs/promises";
 import { CloudCodeProcessManagerService } from "@api-assistant/application-endpoints-be";
+import { DeleteEndpointsInApplicationUsecase } from "libs/application-endpoints-be/src/lib/api-builder-usecases/delete-endpoints-in-app.usecase";
 
 @Injectable()
 export class DeleteApplicationUsecase implements Usecase<ObjectId, void> {
@@ -15,13 +16,16 @@ export class DeleteApplicationUsecase implements Usecase<ObjectId, void> {
     constructor(
         private readonly repo: ApplicationRepository,
         @Inject(crudAppConfig.KEY) private readonly crudApplicationConfig: ConfigType<typeof crudAppConfig>,
-        private readonly cloudCodeProcessManagerService: CloudCodeProcessManagerService
+        private readonly cloudCodeProcessManagerService: CloudCodeProcessManagerService,
+        private readonly deleteEndpointsInApplicationUsecase: DeleteEndpointsInApplicationUsecase
     ) {}
 
     async execute(applicationId: ObjectId): Promise<void> {
         this.logger.log('deleting application '+applicationId.toString());
         await this.repo.deleteOne({ _id: applicationId });
         this.logger.log('removed from db')
+        this.deleteEndpointsInApplicationUsecase.execute(applicationId);
+        this.logger.log('removed endpoints');
         await this.cloudCodeProcessManagerService.deleteApp(applicationId)
         this.logger.log('cloud code process stopped')
         await this.deleteApplicationFolder(applicationId);

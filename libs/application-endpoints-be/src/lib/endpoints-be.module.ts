@@ -17,6 +17,7 @@ import { FetchRequestHandlerCodeUsecase } from './cloud-code-usecases/fetch-requ
 import { UpdateHandlerCodeUsecase } from './cloud-code-usecases/update-handler-code.usecase';
 import { UpdateRouteHandlersUsecase } from './cloud-code-usecases/update-route-handlers.usecase';
 import { UpdateEndpointCodeInAppUsecase } from './api-builder-usecases/update-endpoint-code-in-app.usecase';
+import { DeleteEndpointsInApplicationUsecase } from './api-builder-usecases/delete-endpoints-in-app.usecase';
 
 @Module({
   controllers: [],
@@ -38,7 +39,8 @@ import { UpdateEndpointCodeInAppUsecase } from './api-builder-usecases/update-en
     FetchRequestHandlerCodeUsecase,
     UpdateHandlerCodeUsecase,
     FetchApplicationStatusUsecase,
-    UpdateEndpointCodeInAppUsecase
+    UpdateEndpointCodeInAppUsecase,
+    DeleteEndpointsInApplicationUsecase
   ],
   exports: [
     CreateEndpointUsecase,
@@ -58,7 +60,8 @@ import { UpdateEndpointCodeInAppUsecase } from './api-builder-usecases/update-en
     FetchRequestHandlerCodeUsecase,
     UpdateHandlerCodeUsecase,
     FetchApplicationStatusUsecase,
-    UpdateEndpointCodeInAppUsecase
+    UpdateEndpointCodeInAppUsecase,
+    DeleteEndpointsInApplicationUsecase
   ],
 })
 export class EndpointsBeModule {}
