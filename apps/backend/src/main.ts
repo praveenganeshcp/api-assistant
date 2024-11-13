@@ -8,6 +8,7 @@ import { CustomValidationPipe } from './modules/app/custom-validation.pipe';
 import { useContainer } from 'class-validator';
 import cookieParser from 'cookie-parser';
 import { appConfig } from '@api-assistant/configuration-be';
+import { RestartAllApplicationsUsecase } from '@api-assistant/applications-be';
 
 async function bootstrap() {
   // bootstrap app module
@@ -30,6 +31,8 @@ async function bootstrap() {
   const globalPrefix = 'api/v6';
   app.setGlobalPrefix(globalPrefix);
 
+  const restartAllAppsUsecase = app.get(RestartAllApplicationsUsecase);
+
   // global pipes
   app.useGlobalPipes(new CustomValidationPipe());
 
@@ -44,6 +47,10 @@ async function bootstrap() {
   Logger.log(
     `🚀 Application is running on: http://localhost:${applicationConfig.PORT}/${globalPrefix}`
   );
+
+  setTimeout(() => {
+    restartAllAppsUsecase.execute();
+  }, 1000);
 }
 
 bootstrap();

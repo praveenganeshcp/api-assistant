@@ -22,6 +22,24 @@ export class CloudCodeProcessManagerService {
         })
     }
 
+    async restartApps(applicationIds: ObjectId[]) {
+        this.logger.log('restarting all apps')
+        await Promise.all(applicationIds.map(applicationId => this.deleteApp(applicationId)));
+        applicationIds.forEach(applicationId => {
+            this.startApplication(applicationId);
+        })
+    }
+
+    private deleteApp(applicationId: ObjectId): Promise<void> {
+        this.logger.log('deleting app '+applicationId.toString());
+        return new Promise((resolve, reject) => {
+            pm2.delete(applicationId.toString(), () => {
+                this.logger.log('application  '+ applicationId.toString() +' deleted');
+                resolve();
+            })
+        })
+    }
+
     startApplication(applicationId: ObjectId): void {
         const scriptPath = `${this.crudApplicationConfig.ROOTDIR}/${applicationId.toString()}/dist/index.js`;
         this.logger.log('starting service for application '+applicationId.toString())

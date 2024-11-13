@@ -11,6 +11,7 @@ import { EndpointsModule } from '../endpoints/endpoints.module';
 import { ApplicationModule } from '../applications/applications.module';
 import { ApplicationMigrationsModule } from '../app-migrations/app-migrations.module';
 import { CloudCodeModule } from '../cloud-code/cloud-code.module';
+import { ApplicationsBeModule } from '@api-assistant/applications-be';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { CloudCodeModule } from '../cloud-code/cloud-code.module';
     CoreEngineModule,
     EndpointsModule,
     ApplicationMigrationsModule,
-    CloudCodeModule
+    CloudCodeModule,
+    ApplicationsBeModule
   ],
   controllers: [AppController],
   providers: [AppService],
