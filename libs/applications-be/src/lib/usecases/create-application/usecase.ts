@@ -32,8 +32,10 @@ export class CreateApplicationUsecase
       name,
       createdBy,
       createdOn: new Date(),
-      port
+      port,
+      apiKey: ''
     });
+    await this.applicationRepo.updateOne({ _id: application._id }, {$set: { apiKey: this.createApiApplicationKey(application._id.toString()) }});
     await this.bootstrapCloudCodeUsecase.execute({
       applicationId: application._id,
       port

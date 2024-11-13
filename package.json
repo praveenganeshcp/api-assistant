@@ -109,6 +109,7 @@
     "class-validator": "^0.14.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "http-proxy-middleware": "^3.0.3",
     "jsoneditor": "^9.10.2",
     "jsonwebtoken": "^9.0.1",
     "migrate-mongo": "^11.0.0",

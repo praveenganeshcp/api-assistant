@@ -5,6 +5,6 @@ declare namespace Express {
 
   export interface Request {
     authUser: import('../backend/src/modules/accounts/entities/user.entity').UserDetails;
-    applicationId: string;
+    port: number;
   }
 }

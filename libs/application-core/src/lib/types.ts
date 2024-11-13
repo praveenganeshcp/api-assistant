@@ -6,9 +6,10 @@ export interface Application {
   createdBy: ObjectId;
   createdOn: Date;
   port: number
+  apiKey: string
 }
 
-export interface ApplicationDashboardView extends Omit<Application, '_id' | 'port'> {
+export interface ApplicationDashboardView extends Omit<Application, '_id' | 'port' | 'apiKey'> {
   _id: string;
   endpointsCount: number;
 }
