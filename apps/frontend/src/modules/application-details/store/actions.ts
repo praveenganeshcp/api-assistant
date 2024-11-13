@@ -47,3 +47,16 @@ export const errorInLoadingApplicationDetailsAction = createActionWithProps(
   'Error occured',
   props<{ error: string }>()
 );
+
+
+export const deleteApplicationAction = createActionWithProps(
+  'Delete application',
+  props<{ applicationId: string }>()
+)
+
+export const applicationDeletedAction = createAction('Application Deleted');
+
+export const errorInDeletingApplicationAction = createActionWithProps(
+  'Error in deleting application',
+  props<{ error: string }>()
+)

@@ -1,0 +1,9 @@
+<main class="flex">
+    <section class="settings-card pd-2 br-1 flex flex-column row-gap-3">
+        <h3>Delete application</h3>
+        <p class="font-weight-lighter">This action will remove database and all the endpoints</p>
+        <div class="flex justify-flex-end">
+            <button (click)="handleDelete()" [showLoader]="(deleteAppInProgress$ | async) ?? false" sw-danger-button>Delete</button>
+        </div>
+    </section>
+</main>

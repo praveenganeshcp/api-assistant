@@ -89,6 +89,13 @@ export class ApplicationDetailsHostComponent implements OnDestroy {
       }`,
       icon: "table_edit",
     },
+    {
+      label: TabNames.SETTINGS,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.SETTINGS]
+      }`,
+      icon: "settings",
+    },
   ];
 
   private readonly destroy$ = new Subject();

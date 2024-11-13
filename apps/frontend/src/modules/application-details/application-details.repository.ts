@@ -18,4 +18,13 @@ export class ApplicationDetailsRepository {
       }
     );
   }
+
+  deleteApplicationById(applicationId: string): Observable<void> {
+    return this.httpClient.delete<void>(
+      `${environment.apiUrl}api/v6/applications/${applicationId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApplicationDetailsRepository } from '../application-details.repository';
 import {
+  applicationDeletedAction,
   applicationDetailsLoadedAction,
+  deleteApplicationAction,
+  errorInDeletingApplicationAction,
   errorInLoadingApplicationDetailsAction,
   loadApplicationDetailsAction,
 } from './actions';
@@ -27,6 +30,26 @@ export class ApplicationDetailsEffects {
             of(
               errorInLoadingApplicationDetailsAction({
                 error: 'Error in fetching details',
+              })
+            )
+          )
+        );
+      })
+    );
+  });
+
+  deleteApplication$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(deleteApplicationAction),
+      exhaustMap((payload) => {
+        return this.repo.deleteApplicationById(payload.applicationId).pipe(
+          map(() =>
+            applicationDeletedAction()
+          ),
+          catchError(() =>
+            of(
+              errorInDeletingApplicationAction({
+                error: 'Error in deleting application',
               })
             )
           )

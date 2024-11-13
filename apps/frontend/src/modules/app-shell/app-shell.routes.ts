@@ -111,6 +111,10 @@ export default [
             loadComponent: () => import("../application-cloud-code/components/application-cloud-code-host/application-cloud-code-host.component").then(c => c.ApplicationCloudCodeHostComponent)
           },
           {
+            path: "settings",
+            loadComponent: () => import("../application-settings/components/application-settings-host/application-settings-host.component").then(c => c.ApplicationSettingsHostComponent)
+          },
+          {
             path: '',
             pathMatch: 'full',
             redirectTo: 'endpoints',

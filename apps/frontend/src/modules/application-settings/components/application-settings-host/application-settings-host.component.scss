@@ -1,0 +1,7 @@
+.settings-card {
+    border: 1px solid var(--sw-secondary-color-400);
+
+    &:hover {
+        border-color: var(--sw-primary-color-600);
+    }
+}
