@@ -6,9 +6,8 @@ import { createHash } from 'crypto';
 import { CreateAllBuiltinEndpointsUsecase } from '@api-assistant/application-endpoints-be';
 import { Application } from '@api-assistant/application-core';
 import { ApplicationRepository } from '../../repositories/application.repository';
-import { mkdir } from 'fs/promises';
-import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
 import { BootstrapApplicationUsecase } from '@api-assistant/application-endpoints-be';
+import { ApplicationCounterRepository } from '../../repositories/application-counter.repository';
 
 interface CreateApplicationUsecaseInput {
   createdBy: ObjectId;
@@ -23,21 +22,21 @@ export class CreateApplicationUsecase
     private readonly applicationRepo: ApplicationRepository,
     private readonly createAllBuiltinEndpointsUsecase: CreateAllBuiltinEndpointsUsecase,
     private readonly bootstrapCloudCodeUsecase: BootstrapApplicationUsecase,
+    private readonly applicationCounterRepository: ApplicationCounterRepository
   ) {}
 
   async execute(input: CreateApplicationUsecaseInput): Promise<Application> {
     const { name, createdBy } = input;
+    const port = await this.applicationCounterRepository.getPort();
     const application = await this.applicationRepo.save({
       name,
       createdBy,
       createdOn: new Date(),
+      port
     });
-    // await mkdir(applicationMigrationFolder(application._id), {
-    //   recursive: true,
-    // });
     await this.bootstrapCloudCodeUsecase.execute({
       applicationId: application._id,
-      port: 5555
+      port
     })
     await this.createAllBuiltinEndpointsUsecase.execute({
       userId: createdBy,

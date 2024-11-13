@@ -2,6 +2,7 @@ import {
   Collection,
   Db,
   Filter,
+  FindOneAndUpdateOptions,
   FindOptions,
   OptionalId,
   OptionalUnlessRequiredId,
@@ -24,6 +25,18 @@ export class Repository<T extends MongoDocument> {
     setTimeout(() => {
       this.collection = this.dbConnection.collection(collectionName);
     }, 0);
+  }
+
+  public async findOneAndUpdate(
+    filter: Filter<T>,
+    update: UpdateFilter<T>,
+    options: FindOneAndUpdateOptions
+  ) {
+    return this.collection.findOneAndUpdate(
+      filter,
+      update,
+      options
+    )
   }
 
   public async findOne(
