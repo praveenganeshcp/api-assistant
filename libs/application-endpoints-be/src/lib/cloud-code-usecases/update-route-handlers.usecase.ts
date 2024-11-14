@@ -1,4 +1,4 @@
-import { Usecase } from "@api-assistant/commons-be";
+import { CORE_ENGINE_PREFIX, Usecase } from "@api-assistant/commons-be";
 import { Inject, Injectable } from "@nestjs/common";
 import { writeFile } from "fs/promises";
 import { ObjectId } from "mongodb";
@@ -43,7 +43,7 @@ export class UpdateRouteHandlersUsecase implements Usecase<ObjectId, void> {
             const moduleName = endpoint.useCloudCode ? endpoint.requestHandler.split('.')[0] : endpoint.name.split(' ').join('');
             return `
             import ${moduleName} from './${routesRootPath}/${moduleName}';
-            router.${endpoint.method.toLowerCase()}('/api/v6/core-engine${endpoint.url}', ${moduleName});
+            router.${endpoint.method.toLowerCase()}('${CORE_ENGINE_PREFIX}${endpoint.url}', ${moduleName});
             `
         })
         const baseCode = `

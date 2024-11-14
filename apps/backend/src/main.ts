@@ -9,6 +9,7 @@ import { useContainer } from 'class-validator';
 import cookieParser from 'cookie-parser';
 import { appConfig } from '@api-assistant/configuration-be';
 import { RestartAllApplicationsUsecase } from '@api-assistant/applications-be';
+import { GLOBAL_PREFIX } from '@api-assistant/commons-be';
 
 async function bootstrap() {
   // bootstrap app module
@@ -28,8 +29,7 @@ async function bootstrap() {
   });
 
   // set global prefix
-  const globalPrefix = 'api/v6';
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(GLOBAL_PREFIX);
 
   const restartAllAppsUsecase = app.get(RestartAllApplicationsUsecase);
 
@@ -45,7 +45,7 @@ async function bootstrap() {
   await app.listen(applicationConfig.PORT);
 
   Logger.log(
-    `🚀 Application is running on: http://localhost:${applicationConfig.PORT}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${applicationConfig.PORT}${GLOBAL_PREFIX}`
   );
 
   setTimeout(() => {

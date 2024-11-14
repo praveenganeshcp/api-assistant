@@ -1,11 +1,16 @@
 <div class="endpoint flex flex-column pd-2 br-1 row-gap-2">
+  <div class="flex align-items-center justify-flex-end column-gap-1">
+    <button (click)="handleEndpointURLCopy($event)" sw-icon-button>
+      <sw-icon [name]="copyIcon"></sw-icon>
+    </button>
+    <p class="small-font sw-primary-color-600">
+      {{ minimalEndpointInfo.method }} : {{ minimalEndpointInfo.url | endpointFullUrl }}
+    </p>
+  </div>
   <div
     class="flex align-items-center justify-space-between sw-secondary-color-600 small-font"
   >
     <h2>{{ minimalEndpointInfo.name }}</h2>
-    <p class="small-font sw-primary-color-600">
-      {{ minimalEndpointInfo.method }} : {{ minimalEndpointInfo.url }}
-    </p>
   </div>
   <p class="font-weight-lighter sw-secondary-color-600">
     {{ minimalEndpointInfo.description }}

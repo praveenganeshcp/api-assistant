@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, Input } from "@angular/core";
 import { MinimalEndpointInfo } from "../../types";
 import { DatePipe } from "@angular/common";
-import { SwIconComponent, SwTooltipComponent } from "ngx-simple-widgets";
+import { SwButtonComponent, SwIconComponent, SwTooltipComponent } from "ngx-simple-widgets";
+import { EndpointFullUrlPipe } from "../../pipes/endpoint-full-url.pipe";
 
 @Component({
   selector: "api-assistant-endpoints-list-item",
@@ -9,10 +10,15 @@ import { SwIconComponent, SwTooltipComponent } from "ngx-simple-widgets";
   styleUrls: ["./endpoints-list-item.component.scss"],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, SwTooltipComponent, SwIconComponent],
+  imports: [DatePipe, SwTooltipComponent, SwIconComponent, SwButtonComponent, EndpointFullUrlPipe],
+  providers: [EndpointFullUrlPipe]
 })
 export class EndpointsListItemComponent {
   @Input() minimalEndpointInfo!: MinimalEndpointInfo;
+
+  private readonly endpointFullUrlPipe = inject(EndpointFullUrlPipe);
+
+  protected copyIcon: string = 'content_copy';
 
   protected get securityIcon(): string {
     return this.minimalEndpointInfo.isAuthenticated ? "key" : "key_off";
@@ -34,5 +40,14 @@ export class EndpointsListItemComponent {
     return this.minimalEndpointInfo.useCloudCode === true
       ? "Built using custom logic"
       : "Built using Wizard";
+  }
+
+  protected handleEndpointURLCopy(event: MouseEvent) {
+    event.stopPropagation();
+    this.copyIcon = 'check';
+    navigator.clipboard.writeText(this.endpointFullUrlPipe.transform(this.minimalEndpointInfo.url));
+    setTimeout(() => {
+      this.copyIcon = 'content_copy';
+    }, 1000);
   }
 }

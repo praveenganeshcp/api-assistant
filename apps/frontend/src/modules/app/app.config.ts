@@ -11,7 +11,7 @@ import { appRoutes } from './app.routes';
 import { StoreModule, provideStore } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SwToastModule } from 'ngx-simple-widgets';
-import { API_BASE_URL } from '@api-assistant/commons-fe';
+import { API_BASE_URL, FE_HOST_URL } from '@api-assistant/commons-fe';
 import { environment } from '../../environments/environment.dev';
 import { PROFILE_STATE_SLICE_NAME } from '../accounts/store/state';
 import { accountsReducer } from '../accounts/store/reducer';
@@ -22,6 +22,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: API_BASE_URL,
       useValue: environment.apiUrl,
+    },
+    {
+      provide: FE_HOST_URL,
+      useValue: environment.hostUrl
     },
     provideStore(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
