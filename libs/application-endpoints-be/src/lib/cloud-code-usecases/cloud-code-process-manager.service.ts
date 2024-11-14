@@ -47,6 +47,9 @@ export class CloudCodeProcessManagerService {
         pm2.start({
             script: scriptPath,
             name: applicationId.toString(),
+            log_file: `${this.crudApplicationConfig.ROOTDIR}/${applicationId.toString()}/logs/log.log`,
+            compress: true,
+            log_date_format: 'YYYY-MM-DD HH:mm:ss',
         }, (error: any) => {
             if(error) {
                 console.error(error)

@@ -35,6 +35,7 @@ enum TabNames {
   DATABASE = "Database",
   MIGRATIONS = "Migrations",
   CLOUD_CODE = "Cloud code",
+  LOGS = "Logs"
 }
 
 const routeUrlTabMapping: Record<TabNames, string> = {
@@ -43,6 +44,7 @@ const routeUrlTabMapping: Record<TabNames, string> = {
   [TabNames.MIGRATIONS]: "migrations",
   [TabNames.SETTINGS]: "settings",
   [TabNames.CLOUD_CODE]: "cloud-code",
+  [TabNames.LOGS]: "logs"
 };
 
 @Component({
@@ -90,12 +92,20 @@ export class ApplicationDetailsHostComponent implements OnDestroy {
       icon: "table_edit",
     },
     {
+      label: TabNames.LOGS,
+      url: `/app/applications/${this.applicationId}/${
+        routeUrlTabMapping[TabNames.LOGS]
+      }`,
+      icon: "contract",
+    },
+    {
       label: TabNames.SETTINGS,
       url: `/app/applications/${this.applicationId}/${
         routeUrlTabMapping[TabNames.SETTINGS]
       }`,
       icon: "settings",
     },
+   
   ];
 
   private readonly destroy$ = new Subject();

@@ -36,6 +36,10 @@ export class BootstrapApplicationUsecase implements Usecase<BootstrapApplication
         this.logger.log('repo cloned')
         await this.executeCommand('npm install');
         this.logger.log('dependencies installed')
+        // await this.executeCommand('pm2 install pm2-logrotate');
+        // await this.executeCommand('pm2 set pm2-logrotate:max_size 1K');
+        // await this.executeCommand('pm2 set pm2-logrotate:compress true');
+        // this.logger.log('pm2 dependcies installed and configured')
         this.logger.log('creating env');
         await writeFile(`${applicationPath}/src/commons/config.ts`, `
         export const CONFIG = {

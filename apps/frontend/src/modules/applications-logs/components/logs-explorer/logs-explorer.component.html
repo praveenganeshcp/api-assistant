@@ -1,0 +1,10 @@
+<div class="flex flex-column row-gap-2">
+    <div class="flex align-items-center justify-flex-end">
+        <p>Automatically refreshed for every 5 secs</p>
+    </div>
+    <div class="logs-container pd-3 br-2">
+        <div *ngFor="let log of logs">
+            <p>{{ log }}</p>
+        </div>
+    </div>
+</div>

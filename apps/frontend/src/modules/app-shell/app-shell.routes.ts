@@ -17,6 +17,7 @@ import { APPLICATION_DETAILS_SLICE_NAME } from '../application-details/store/typ
 import { applicationDetailsreducer } from '../application-details/store/reducers';
 import { APPLICATION_CLOUD_CODE_SLICE_NAME, applicationCloudCodeReducer } from '../application-cloud-code/store/reducers';
 import { ApplicationCloudCodeEffects } from '../application-cloud-code/store/effects';
+import { ApplicationsLogsEffects } from '../applications-logs/store/effects';
 
 const applicationFeatureStates = combineReducers({
   [APPLICATION_DETAILS_SLICE_NAME]: applicationDetailsreducer,
@@ -31,7 +32,8 @@ const applicationEffects = [
   ApplicationDatabaseEffects,
   ApplicationEndpointsEffects,
   ApplicationDetailsEffects,
-  ApplicationCloudCodeEffects
+  ApplicationCloudCodeEffects,
+  ApplicationsLogsEffects
 ];
 
 export default [
@@ -113,6 +115,10 @@ export default [
           {
             path: "settings",
             loadComponent: () => import("../application-settings/components/application-settings-host/application-settings-host.component").then(c => c.ApplicationSettingsHostComponent)
+          },
+          {
+            path: "logs",
+            loadComponent: () => import("../applications-logs/components/logs-explorer/logs-explorer.component").then(c => c.LogsExplorerComponent)
           },
           {
             path: '',

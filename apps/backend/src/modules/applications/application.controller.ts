@@ -6,6 +6,7 @@ import {
   CreateApplicationUsecase,
   DeleteApplicationUsecase,
   FetchApplicationByIdUsecase,
+  FetchApplicationLogsUsecase,
   FetchApplicationsByUserIdUsecase,
 } from '@api-assistant/applications-be';
 import { ObjectId } from 'mongodb';
@@ -16,7 +17,8 @@ export class ApplicationsController {
     private readonly createApplicationUsecase: CreateApplicationUsecase,
     private readonly fetchApplicationsByUserIdUsecase: FetchApplicationsByUserIdUsecase,
     private readonly fetchApplicationIdUsecase: FetchApplicationByIdUsecase,
-    private readonly deleteApplicationUsecase: DeleteApplicationUsecase
+    private readonly deleteApplicationUsecase: DeleteApplicationUsecase,
+    private readonly fetchApplicationsLogsUsecase: FetchApplicationLogsUsecase
   ) {}
 
   @Post()
@@ -44,6 +46,14 @@ export class ApplicationsController {
       new ObjectId(applicationId)
     );
     return applications;
+  }
+
+  @Get(':applicationId/logs')
+  async fetchApplicationLogsById(@Param('applicationId') applicationId: string) {
+    const logs = await this.fetchApplicationsLogsUsecase.execute(
+      new ObjectId(applicationId)
+    );
+    return { logs };
   }
 
 
