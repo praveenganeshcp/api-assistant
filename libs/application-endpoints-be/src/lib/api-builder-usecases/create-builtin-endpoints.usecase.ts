@@ -29,6 +29,9 @@ export class CreateAllBuiltinEndpointsUsecase
     await this.createEndpointUsecase.execute(
       this.buildLogoutEndpoint(applicationId, userId)
     );
+    await this.createEndpointUsecase.execute(
+      this.buildHelloWorldpoint(applicationId, userId)
+    );
     return;
   }
 
@@ -133,6 +136,28 @@ export class CreateAllBuiltinEndpointsUsecase
       url: "/logout",
       crud: [],
       method: "POST",
+      response: {},
+      validations: {},
+    };
+    return input;
+  }
+
+  private buildHelloWorldpoint(
+    applicationId: ObjectId,
+    userId: ObjectId
+  ): CreateEndpointUsecaseInput {
+    const input: CreateEndpointUsecaseInput = {
+      skipCloudCodeUpdate: false,
+      createdBy: userId,
+      useCloudCode: true,
+      requestHandler: "hello_world.ts",
+      applicationId,
+      isAuthenticated: false,
+      name: "Hello world",
+      description: "Hello world endpoint",
+      url: "/hello_world",
+      crud: [],
+      method: "GET",
       response: {},
       validations: {},
     };
