@@ -9,6 +9,11 @@ export const applicationDataSelector = createSelector(
   (applicationDetails) => applicationDetails.data
 );
 
+export const applicationAPIKeySelector = createSelector(
+  applicationDataSelector,
+  (applicationDetails) => applicationDetails?.apiKey
+);
+
 export const applicationDataLoadingSelector = createSelector(
   applicationDetailsSelector,
   (applicationDetails) => applicationDetails.isLoading

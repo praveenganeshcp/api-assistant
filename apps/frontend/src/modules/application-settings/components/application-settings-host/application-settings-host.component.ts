@@ -4,12 +4,15 @@ import { BehaviorSubject } from "rxjs";
 import { StoreActionDispatcher } from "@api-assistant/commons-fe";
 import { ActivatedRoute, Router } from "@angular/router";
 import { applicationDeletedAction, deleteApplicationAction, errorInDeletingApplicationAction } from "../../../application-details/store/actions";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../app/app.state";
+import { applicationAPIKeySelector } from "../../../application-details/store/selectors";
 
 @Component({
   selector: "api-assistant-application-settings-host",
   standalone: true,
-  imports: [SwButtonComponent, AsyncPipe],
+  imports: [SwButtonComponent, AsyncPipe, NgIf],
   templateUrl: "./application-settings-host.component.html",
   styleUrls: ["./application-settings-host.component.scss"],
 })
@@ -19,6 +22,10 @@ export class ApplicationSettingsHostComponent {
   private readonly actionDispatcher = inject(StoreActionDispatcher);
 
   private readonly activatedRoute = inject(ActivatedRoute);
+
+  private readonly store: Store<AppState> = inject(Store);
+
+  protected readonly appAPIKey$ = this.store.select(applicationAPIKeySelector)
 
   private readonly router = inject(Router);
 
@@ -37,5 +44,9 @@ export class ApplicationSettingsHostComponent {
         this.router.navigate(['app', 'applications'])
       }
     })
+  }
+
+  protected handleAPIKeyCopy(apiKey: string) {
+    navigator.clipboard.writeText(apiKey);
   }
 }

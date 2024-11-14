@@ -1,5 +1,14 @@
-<main class="flex">
-    <section class="settings-card pd-2 br-1 flex flex-column row-gap-3">
+<main class="width-100 flex column-gap-3">
+
+    <section *ngIf="appAPIKey$ | async as appAPIKey" class="width-50 settings-card pd-2 br-1 flex flex-column row-gap-3">
+        <h3>API Key</h3>
+        <p class="font-weight-lighter">Send API Key in <b class="font-weight-700">api-assist-auth </b> header for all the requests</p>
+        <div class="flex justify-flex-end">
+            <button (click)="handleAPIKeyCopy(appAPIKey)" sw-bordered-button>Copy</button>
+        </div>
+    </section>
+
+    <section class="width-50 settings-card pd-2  br-1 flex flex-column row-gap-3">
         <h3>Delete application</h3>
         <p class="font-weight-lighter">This action will remove database and all the endpoints</p>
         <div class="flex justify-flex-end">
