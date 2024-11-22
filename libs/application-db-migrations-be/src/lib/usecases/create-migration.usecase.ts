@@ -1,9 +1,9 @@
 import { Usecase } from '@api-assistant/commons-be';
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
-import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
-import path = require('path');
 import { writeFile } from 'fs/promises';
+import { crudAppConfig } from '@api-assistant/configuration-be';
+import { ConfigType } from '@nestjs/config';
 
 interface CreateMigrationUsecaseInput {
   fileName: string;
@@ -16,17 +16,16 @@ export class CreateMigrationUsecase
 {
   private readonly logger = new Logger(CreateMigrationUsecase.name);
 
-  constructor() {}
+  constructor(
+    @Inject(crudAppConfig.KEY) private readonly crudApplicationConfig: ConfigType<typeof crudAppConfig>
+  ) {}
 
   async execute(data: CreateMigrationUsecaseInput): Promise<void> {
     this.logger.log('creating migration', data);
     const timestamp = this.generateTimestamp();
-    const fileName = `${timestamp}-${data.fileName}.js`;
+    const fileName = `${timestamp}-${data.fileName}.ts`;
     this.logger.log('file name created' + fileName);
-    const filePath = path.join(
-      applicationMigrationFolder(data.applicationId),
-      fileName
-    );
+    const filePath = `${this.crudApplicationConfig.ROOTDIR}/${data.applicationId.toString()}/src/migration-files/${fileName}`;
     await writeFile(
       filePath,
       this.generateBoilerplateCode(data.fileName, timestamp),

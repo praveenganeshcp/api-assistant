@@ -1,11 +1,7 @@
-import { Usecase } from "@api-assistant/commons-be";
-import { dbConfig } from "@api-assistant/configuration-be";
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import { ConfigType } from "@nestjs/config";
+import { CRUDAppAPIAdapter, Usecase } from "@api-assistant/commons-be";
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { ObjectId } from "mongodb";
-import { config, database, status, up } from "migrate-mongo";
-import { buildMigrationConfig } from "../utils";
-import { applicationDbName } from "@api-assistant/application-endpoints-core";
+import { FetchApplicationByIdUsecase } from "@api-assistant/applications-be";
 
 interface ApplyMigrationUsecaseInput {
   applicationId: ObjectId;
@@ -18,29 +14,15 @@ export class ApplyMigrationUsecase
   private readonly logger = new Logger(ApplyMigrationUsecase.name);
 
   constructor(
-    @Inject(dbConfig.KEY)
-    private readonly databaseConfig: ConfigType<typeof dbConfig>
+    private readonly fetchApplicationByIdUsecase: FetchApplicationByIdUsecase,
+    private readonly crudAppAPIAdapter: CRUDAppAPIAdapter
   ) {}
 
   async execute(data: ApplyMigrationUsecaseInput): Promise<void> {
-    this.logger.log("applying migration");
-    const migrationConfig = buildMigrationConfig({
-      dbName: applicationDbName(data.applicationId),
-      dbUrl: this.databaseConfig.DB_URL,
-      applicationId: data.applicationId,
-    });
-    config.set(migrationConfig);
-    this.logger.log("migration config ready");
-    const { db, client } = await database.connect();
-    this.logger.log("connected to db");
-    await up(db, client);
-    this.logger.log("migration applied");
-    const migrationStatus = await status(db);
-    migrationStatus.forEach(({ fileName, appliedAt }) =>
-      this.logger.log(fileName + ":" + appliedAt)
-    );
-    client.close();
-    this.logger.log("db connection closed");
-    return;
+    const application = await this.fetchApplicationByIdUsecase.execute(data.applicationId);
+    if(!application) {
+      throw new BadRequestException('invalid app id');
+    }
+    await this.crudAppAPIAdapter.patch(application.port, '/api/v6/database/migrations', {});
   }
 }

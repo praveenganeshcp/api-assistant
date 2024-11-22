@@ -1,13 +1,13 @@
 import { Usecase } from '@api-assistant/commons-be';
-import { ObjectId } from 'mongodb';
 import { writeFile } from 'fs/promises';
-import path = require('path');
-import { applicationMigrationFolder } from '@api-assistant/application-migrations-core';
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { crudAppConfig } from '@api-assistant/configuration-be';
+import { ConfigType } from '@nestjs/config';
+import { ObjectId } from 'mongodb';
 
 interface UpdateMigrationLogicUsecaseInput {
+  applicationId: ObjectId,
   logic: string;
-  applicationId: ObjectId;
   fileName: string;
 }
 
@@ -17,10 +17,14 @@ export class UpdateMigrationLogicUsecase
 {
   private readonly logger = new Logger(UpdateMigrationLogicUsecase.name);
 
+  constructor(
+    @Inject(crudAppConfig.KEY) private readonly crudApplicationConfig: ConfigType<typeof crudAppConfig>,
+  ) {}
+
   async execute(data: UpdateMigrationLogicUsecaseInput): Promise<void> {
     this.logger.log('Updating migration logic');
     await writeFile(
-      path.join(applicationMigrationFolder(data.applicationId), data.fileName),
+      `${this.crudApplicationConfig.ROOTDIR}/${data.applicationId.toString()}/src/migration-files/${data.fileName}`,
       data.logic,
       'utf-8'
     );
