@@ -15,3 +15,4 @@ export * from "./lib/cloud-code-usecases/update-route-handlers.usecase";
 export * from "./lib/cloud-code-usecases/fetch-request-handler-code.usecase";
 export * from "./lib/cloud-code-usecases/update-handler-code.usecase";
 export * from "./lib/cloud-code-usecases/fetch-application-status.usecase";
+export * from "./lib/api-builder-usecases/delete-endpoints-in-app.usecase";

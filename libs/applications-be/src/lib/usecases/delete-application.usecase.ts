@@ -5,8 +5,7 @@ import { ApplicationRepository } from "../repositories/application.repository";
 import { crudAppConfig } from "@api-assistant/configuration-be";
 import { ConfigType } from "@nestjs/config";
 import { rm } from "fs/promises";
-import { CloudCodeProcessManagerService } from "@api-assistant/application-endpoints-be";
-import { DeleteEndpointsInApplicationUsecase } from "libs/application-endpoints-be/src/lib/api-builder-usecases/delete-endpoints-in-app.usecase";
+import { CloudCodeProcessManagerService, DeleteEndpointsInApplicationUsecase } from "@api-assistant/application-endpoints-be";
 
 @Injectable()
 export class DeleteApplicationUsecase implements Usecase<ObjectId, void> {
