@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://65.2.191.107:3000/',
-  hostUrl: 'http://localhost:4200'
+  apiUrl: 'http://api-assistant.mvp-by-praveen.click:3000/',
+  hostUrl: 'http://api-assistant.mvp-by-praveen.click:4200'
 };
