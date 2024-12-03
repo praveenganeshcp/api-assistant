@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class AppInfoService {
   private readonly _appName: string = 'API Assistant';
 
-  private readonly _appCaption: string = 'Declarative Backend for trivial apps';
+  private readonly _appCaption: string = 'Build REST APIs in seconds';
 
   get appName() {
     return this._appName;

@@ -46,21 +46,27 @@
   </div>
   <!-- End of banner content -->
 
+  <h4 class="brief-intro">"API Assistant is a backend-as-a-service platform that lets you build REST APIs at lightning speed, enabling you to consume them in any web or mobile app in the classic way, without the need for SDKs"</h4>
+
   <!-- Features card  -->
   <div class="landing-page__features">
     <h1>Features</h1>
 
     <!-- List of feature cards -->
+     <div class="flex align-items-center flex-wrap column-gap-2 row-gap-2">
+
     <ng-container
       *ngFor="let feature of landingPageFeatures; trackBy: trackFeatureCard"
     >
       <div class="landing-page__feature-card">
+        <sw-icon [name]="feature.icon"></sw-icon>
         <h3 aria-label="feature-name">{{ feature.title }}</h3>
         <span role="text" aria-label="feature-description">{{
           feature.description
         }}</span>
       </div>
     </ng-container>
+  </div>
   </div>
   <!-- End of features card -->
 
@@ -77,7 +83,7 @@
     <!-- Nudge users to signup if not loggedin -->
     <ng-template #nudgeCreateAccount>
       <span>
-        Want to build application with {{ appName }}?
+        Build application with {{ appName }} today
         <a aria-label="signup-from-footer" routerLink="/accounts/signup"
           >Signup here</a
         >

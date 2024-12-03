@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app.state';
-import { SwButtonComponent } from 'ngx-simple-widgets';
+import { SwButtonComponent, SwIconComponent } from 'ngx-simple-widgets';
 import { AppInfoService } from '@api-assistant/commons-fe';
 import { isUserLoggedInSelector } from '../../../accounts/store/selectors';
 import { logoutAccountAction } from '../../../accounts/store/actions';
@@ -13,6 +13,7 @@ interface LandingPageFeatureCard {
   id: number;
   title: string;
   description: string;
+  icon: string
 }
 
 @Component({
@@ -21,7 +22,7 @@ interface LandingPageFeatureCard {
   styleUrls: ['./landing-page.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterModule, SwButtonComponent],
+  imports: [CommonModule, RouterModule, SwButtonComponent, SwIconComponent],
 })
 export class LandingPageComponent {
   /**
@@ -47,25 +48,29 @@ export class LandingPageComponent {
   public readonly landingPageFeatures: LandingPageFeatureCard[] = [
     {
       id: 1,
-      title: 'Queries on Frontend',
+      title: 'Declarative',
       description:
-        'Write queries in frontend and API Assistant executes it for you',
+        'Define what your API achieves, not how it works',
+        icon: 'bolt'
     },
     {
       id: 2,
       title: 'Welcome users at ease',
-      description: 'Integrate username-password authentication in minutes',
+      description: 'Enable username-password authentication',
+      icon: 'group'
     },
     {
       id: 3,
-      title: 'Upload files',
+      title: 'Migrations',
       description:
-        'Store user uploaded files without worrying about infrastructure',
+        'Effortlessly manage database and schema changes',
+      icon: 'database'
     },
     {
       id: 4,
-      title: 'Clean and intutive UI',
-      description: 'Explore your data and files with simple and smooth UI',
+      title: 'Cloud Code',
+      description: 'Write custom logic for your API',
+      icon: 'code'
     },
   ];
 
